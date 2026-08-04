@@ -1,0 +1,29 @@
+[package]
+name = "akashic-bench"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+# akashic-domain: service traits (NavigationService / GraphService), the
+# algos::{impact,dead_code} formatters, and the DTOs (ImpactReport,
+# SymbolCandidate, …) the akashic strategy reproduces.
+akashic-domain = { path = "../akashic-domain" }
+# akashic-context: the AppState type whose service fields we read.
+akashic-context = { path = "../akashic-context" }
+# akashic-test-support: build_app_state() — the exact live PG+Neo4j service
+# wiring the e2e tests use; the akashic strategy reuses it verbatim so the
+# dispatcher never drifts from the real service construction.
+akashic-test-support.workspace = true
+anyhow.workspace = true
+async-trait.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+clap.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+regex.workspace = true
+tiktoken-rs = "0.6"
+
+[dev-dependencies]
+tempfile.workspace = true

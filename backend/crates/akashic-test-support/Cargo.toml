@@ -1,0 +1,32 @@
+[package]
+name = "akashic-test-support"
+version.workspace = true
+edition.workspace = true
+description.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+akashic-context.workspace = true
+akashic-config.workspace = true
+akashic-domain.workspace = true
+akashic-identity.workspace = true
+akashic-gitlab.workspace = true
+akashic-embed.workspace = true
+akashic-llm.workspace = true
+akashic-retrieval.workspace = true
+akashic-ingestion.workspace = true
+akashic-curation.workspace = true
+akashic-store-pg.workspace = true
+akashic-store-neo4j.workspace = true
+akashic-kernel.workspace = true
+akashic-platform = { path = "../akashic-platform" }
+async-trait.workspace = true
+secrecy.workspace = true
+tokio.workspace = true
+tokio-util.workspace = true
+sqlx.workspace = true
+reqwest.workspace = true
+metrics-exporter-prometheus.workspace = true
+anyhow.workspace = true

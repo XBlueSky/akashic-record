@@ -1,0 +1,118 @@
+[
+  {
+    "id": "who-calls-01",
+    "category": "who-calls",
+    "question": "Which functions call `aggregate_impacts`?",
+    "ground_truth": ["analyze_impact", "verify_risk_thresholds"],
+    "baseline_plan": [
+      {"op": "grep", "pattern": "aggregate_impacts", "glob": "**/*.rs"},
+      {"op": "read", "file": "crates/akashic-domain/src/algos/impact.rs"},
+      {"op": "read", "file": "crates/akashic-server/src/verification.rs"}
+    ],
+    "akashic_plan": [
+      {"tool": "traverse_code_calls", "args": {"repo": "d1-measure", "symbol": "aggregate_impacts", "direction": "upstream", "max_depth": 1}}
+    ]
+  },
+  {
+    "id": "who-calls-02",
+    "category": "who-calls",
+    "question": "Which functions call `run_leiden`?",
+    "ground_truth": ["detect_communities", "run_leiden_bounded"],
+    "baseline_plan": [
+      {"op": "grep", "pattern": "run_leiden", "glob": "**/*.rs"},
+      {"op": "read", "file": "crates/akashic-domain/src/algos/community.rs"},
+      {"op": "read", "file": "crates/akashic-domain/src/algos/code_community.rs"}
+    ],
+    "akashic_plan": [
+      {"tool": "traverse_code_calls", "args": {"repo": "d1-measure", "symbol": "run_leiden", "direction": "upstream", "max_depth": 1}}
+    ]
+  },
+  {
+    "id": "blast-radius-01",
+    "category": "blast-radius",
+    "question": "What is the blast radius of changing `aggregate_impacts`?",
+    "ground_truth": ["analyze_impact"],
+    "baseline_plan": [
+      {"op": "grep", "pattern": "aggregate_impacts", "glob": "**/*.rs"},
+      {"op": "read", "file": "crates/akashic-domain/src/algos/impact.rs"}
+    ],
+    "akashic_plan": [
+      {"tool": "analyze_impact", "args": {"repo": "d1-measure", "target": "aggregate_impacts", "max_depth": 2}}
+    ]
+  },
+  {
+    "id": "blast-radius-02",
+    "category": "blast-radius",
+    "question": "What is the blast radius of changing `run_leiden`?",
+    "ground_truth": ["detect_communities"],
+    "baseline_plan": [
+      {"op": "grep", "pattern": "run_leiden", "glob": "**/*.rs"},
+      {"op": "read", "file": "crates/akashic-domain/src/algos/community.rs"},
+      {"op": "read", "file": "crates/akashic-domain/src/algos/code_community.rs"}
+    ],
+    "akashic_plan": [
+      {"tool": "analyze_impact", "args": {"repo": "d1-measure", "target": "run_leiden", "max_depth": 2}}
+    ]
+  },
+  {
+    "id": "find-def-01",
+    "category": "find-def",
+    "question": "Where is `aggregate_impacts` defined?",
+    "ground_truth": ["aggregate_impacts", "akashic-domain"],
+    "baseline_plan": [
+      {"op": "grep", "pattern": "aggregate_impacts", "glob": "**/*.rs"}
+    ],
+    "akashic_plan": [
+      {"tool": "goto_definition", "args": {"repo": "d1-measure", "name": "aggregate_impacts"}}
+    ]
+  },
+  {
+    "id": "find-def-02",
+    "category": "find-def",
+    "question": "Where is the `RetrievalServices` type defined?",
+    "ground_truth": ["RetrievalServices", "akashic-retrieval"],
+    "baseline_plan": [
+      {"op": "grep", "pattern": "RetrievalServices", "glob": "**/*.rs"}
+    ],
+    "akashic_plan": [
+      {"tool": "goto_definition", "args": {"repo": "d1-measure", "name": "RetrievalServices"}}
+    ]
+  },
+  {
+    "id": "find-def-03",
+    "category": "find-def",
+    "question": "Where is `run_leiden` defined?",
+    "ground_truth": ["run_leiden", "akashic-domain"],
+    "baseline_plan": [
+      {"op": "grep", "pattern": "run_leiden", "glob": "**/*.rs"}
+    ],
+    "akashic_plan": [
+      {"tool": "goto_definition", "args": {"repo": "d1-measure", "name": "run_leiden"}}
+    ]
+  },
+  {
+    "id": "dead-code-01",
+    "category": "dead-code",
+    "question": "Which private functions have no callers (dead-code candidates)?",
+    "ground_truth": ["format_empty"],
+    "baseline_plan": [
+      {"op": "grep", "pattern": "fn ", "glob": "**/*.rs"}
+    ],
+    "akashic_plan": [
+      {"tool": "detect_dead_code", "args": {"repo": "d1-measure", "max_candidates": 100}}
+    ]
+  },
+  {
+    "id": "execution-flow-01",
+    "category": "execution-flow",
+    "question": "Trace the execution flow through the `health_router` entry point.",
+    "ground_truth": ["health_router"],
+    "baseline_plan": [
+      {"op": "grep", "pattern": "health_router", "glob": "**/*.rs"},
+      {"op": "read", "file": "crates/akashic-http/src/api/routes/health_oauth.rs"}
+    ],
+    "akashic_plan": [
+      {"tool": "trace_execution_flow", "args": {"repo": "d1-measure", "symbol": "health_router", "list_all": false}}
+    ]
+  }
+]

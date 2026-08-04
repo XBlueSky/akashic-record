@@ -1,0 +1,31 @@
+[package]
+name = "akashic-embed-eval"
+version.workspace = true
+edition.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+akashic-embed.workspace = true
+akashic-config.workspace = true
+akashic-store-pg.workspace = true
+akashic-domain.workspace = true
+anyhow.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+clap.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+secrecy.workspace = true
+tokio-util.workspace = true
+sqlx.workspace = true
+
+[dev-dependencies]
+async-trait.workspace = true
+pgvector.workspace = true
+
+[[bin]]
+name = "embed-eval"
+path = "src/bin/embed-eval.rs"

@@ -1,0 +1,5 @@
+[
+  { "label": "minilm-local",      "provider": "local",  "model": "all-MiniLM-L6-v2" },
+  { "label": "nomic-embed-code",  "provider": "ollama", "model": "nomic-embed-code", "base_url": "http://localhost:11434/v1" },
+  { "label": "openai-3-large",    "provider": "openai", "model": "text-embedding-3-large", "api_key_env": "OPENAI_API_KEY" }
+]
