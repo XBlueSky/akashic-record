@@ -1,0 +1,32 @@
+[package]
+name = "akashic-context"
+version.workspace = true
+edition.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+# Domain + config + kernel (no cycles)
+akashic-domain.workspace = true
+akashic-kernel.workspace = true
+akashic-config.workspace = true
+
+# A1 service-implementation crates
+akashic-retrieval.workspace = true
+akashic-ingestion.workspace = true
+akashic-curation.workspace = true
+akashic-identity.workspace = true
+
+# Infrastructure handle types that live on AppState
+akashic-store-neo4j.workspace = true
+
+# Standard async + data-layer deps
+sqlx.workspace = true
+tokio.workspace = true
+tokio-util.workspace = true
+metrics-exporter-prometheus.workspace = true
+
+# Shared utilities
+serde.workspace = true
+uuid.workspace = true
