@@ -1,0 +1,480 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "app",
+      "fqn": "app",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 8,
+      "start_byte": 50,
+      "end_byte": 226,
+      "signature": "pub fn app() -> Router",
+      "content": "pub fn app() -> Router {\n    Router::new()\n        .route(\"/users\", get(list_users))\n        .route(\"/users\", post(create_user))\n        .route(\"/health\", get(health::check))\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "route",
+      "name": "GET /users",
+      "fqn": "GET /users@108",
+      "parent_fqn": null,
+      "start_line": 5,
+      "end_line": 5,
+      "start_byte": 102,
+      "end_byte": 134,
+      "signature": null,
+      "content": "route(\"/users\", get(list_users))",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "http_method": {
+            "String": "GET"
+          },
+          "http_path": {
+            "String": "/users"
+          }
+        }
+      }
+    },
+    {
+      "chunk_type": "route",
+      "name": "POST /users",
+      "fqn": "POST /users@150",
+      "parent_fqn": null,
+      "start_line": 6,
+      "end_line": 6,
+      "start_byte": 144,
+      "end_byte": 178,
+      "signature": null,
+      "content": "route(\"/users\", post(create_user))",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "http_method": {
+            "String": "POST"
+          },
+          "http_path": {
+            "String": "/users"
+          }
+        }
+      }
+    },
+    {
+      "chunk_type": "route",
+      "name": "GET /health",
+      "fqn": "GET /health@194",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 7,
+      "start_byte": 188,
+      "end_byte": 224,
+      "signature": null,
+      "content": "route(\"/health\", get(health::check))",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "http_method": {
+            "String": "GET"
+          },
+          "http_path": {
+            "String": "/health"
+          }
+        }
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "list_users",
+      "fqn": "list_users",
+      "parent_fqn": null,
+      "start_line": 10,
+      "end_line": 12,
+      "start_byte": 228,
+      "end_byte": 281,
+      "signature": "async fn list_users() -> &'static str",
+      "content": "async fn list_users() -> &'static str {\n    \"users\"\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": true,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "create_user",
+      "fqn": "create_user",
+      "parent_fqn": null,
+      "start_line": 14,
+      "end_line": 16,
+      "start_byte": 283,
+      "end_byte": 339,
+      "signature": "async fn create_user() -> &'static str",
+      "content": "async fn create_user() -> &'static str {\n    \"created\"\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": true,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 118,
+          "end": 133
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "get",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 205,
+          "end": 223
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "get",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 79,
+          "end": 92
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "new",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "edge.recv_type": {
+            "String": "Router"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 160,
+          "end": 177
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "post",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 79,
+          "end": 224
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "route",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 79,
+          "end": 178
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "route",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 79,
+          "end": 134
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "route",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "rust/13-chained-routes",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Router",
+          "module_specifier": "axum"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "rust/13-chained-routes",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "get",
+          "module_specifier": "axum"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "rust/13-chained-routes",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "post",
+          "module_specifier": "axum"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 66,
+          "end": 72
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Router",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 209,
+          "end": 222
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "check",
+          "module_specifier": null
+        }
+      },
+      "kind": "RoutesTo",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "http_method": {
+            "String": "GET"
+          },
+          "http_path": {
+            "String": "/health"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 165,
+          "end": 176
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "create_user",
+          "module_specifier": null
+        }
+      },
+      "kind": "RoutesTo",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {
+          "http_method": {
+            "String": "POST"
+          },
+          "http_path": {
+            "String": "/users"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 122,
+          "end": 132
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "list_users",
+          "module_specifier": null
+        }
+      },
+      "kind": "RoutesTo",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {
+          "http_method": {
+            "String": "GET"
+          },
+          "http_path": {
+            "String": "/users"
+          }
+        }
+      }
+    }
+  ]
+}

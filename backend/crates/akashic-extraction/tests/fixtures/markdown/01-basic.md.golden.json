@@ -1,0 +1,71 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "section",
+      "name": "Project Title",
+      "fqn": "Project Title",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 3,
+      "start_byte": 0,
+      "end_byte": 37,
+      "signature": "Project Title",
+      "content": "Project Title\n\nA short description.",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "section",
+      "name": "Installation",
+      "fqn": "Project Title.Installation",
+      "parent_fqn": "Project Title",
+      "start_line": 5,
+      "end_line": 7,
+      "start_byte": 39,
+      "end_byte": 74,
+      "signature": "Installation",
+      "content": "Installation\n\nRun the installer.",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "section",
+      "name": "Usage",
+      "fqn": "Project Title.Usage",
+      "parent_fqn": "Project Title",
+      "start_line": 9,
+      "end_line": 11,
+      "start_byte": 76,
+      "end_byte": 100,
+      "signature": "Usage",
+      "content": "Usage\n\nStart the app.",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": []
+}

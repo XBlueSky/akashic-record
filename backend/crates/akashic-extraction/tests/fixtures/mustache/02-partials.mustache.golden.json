@@ -1,0 +1,100 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "section",
+      "name": "content",
+      "fqn": "content",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 6,
+      "start_byte": 21,
+      "end_byte": 93,
+      "signature": "{{#content}}",
+      "content": "{{#content}}\n    {{>nav}}\n    <article>{{body}}</article>\n  {{/content}}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "02-partials",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "footer",
+          "module_specifier": "footer"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {
+          "tag": {
+            "String": "partial"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "02-partials",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "header",
+          "module_specifier": "header"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "tag": {
+            "String": "partial"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "content",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "nav",
+          "module_specifier": "nav"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "tag": {
+            "String": "partial"
+          }
+        }
+      }
+    }
+  ]
+}

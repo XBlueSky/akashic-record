@@ -1,0 +1,45 @@
+{
+  "chunks": [],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "bash/02-source",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "./lib.sh",
+          "module_specifier": "./lib.sh"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "bash/02-source",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "./other.sh",
+          "module_specifier": "./other.sh"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

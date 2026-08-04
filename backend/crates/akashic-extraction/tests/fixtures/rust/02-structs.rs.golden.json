@@ -1,0 +1,74 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "struct",
+      "name": "User",
+      "fqn": "User",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 4,
+      "start_byte": 0,
+      "end_byte": 54,
+      "signature": "pub struct User",
+      "content": "pub struct User {\n    pub id: u64,\n    name: String,\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "struct",
+      "name": "Config",
+      "fqn": "Config",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 9,
+      "start_byte": 80,
+      "end_byte": 112,
+      "signature": "struct Config",
+      "content": "struct Config {\n    port: u16,\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 45,
+          "end": 51
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

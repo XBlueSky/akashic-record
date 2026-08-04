@@ -1,0 +1,125 @@
+{
+  "chunks": [],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "csharp/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "MyApp.Models",
+          "module_specifier": "MyApp.Models"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "csharp/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "MyApp.Services",
+          "module_specifier": "MyApp.Services"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "csharp/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "System",
+          "module_specifier": "System"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "csharp/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "System.Collections.Generic",
+          "module_specifier": "System.Collections.Generic"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "csharp/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "System.Linq",
+          "module_specifier": "System.Linq"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "csharp/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "System.Threading.Tasks",
+          "module_specifier": "System.Threading.Tasks"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

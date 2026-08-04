@@ -1,0 +1,244 @@
+{
+  "chunks": [],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "rust/06-uses",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Arc",
+          "module_specifier": "std::sync"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "rust/06-uses",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "AtomicU64",
+          "module_specifier": "std::sync"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "rust/06-uses",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Deserialize",
+          "module_specifier": "serde"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "rust/06-uses",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "HashMap",
+          "module_specifier": "std::collections::HashMap"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "rust/06-uses",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "IoResult",
+          "module_specifier": "std::io::Result as IoResult"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {
+          "edge.import_source": {
+            "String": "Result"
+          },
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "rust/06-uses",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Language",
+          "module_specifier": "crate::ingestion::analyzer::Language"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "rust/06-uses",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Ordering",
+          "module_specifier": "std::sync"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "rust/06-uses",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Serialize",
+          "module_specifier": "serde"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "rust/06-uses",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "helpers",
+          "module_specifier": "super::helpers"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "rust/06-uses",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "std::fmt",
+          "module_specifier": "std::fmt"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

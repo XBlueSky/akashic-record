@@ -1,0 +1,302 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "trait",
+      "name": "Greeter",
+      "fqn": "Greeter",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 7,
+      "start_byte": 0,
+      "end_byte": 88,
+      "signature": "trait Greeter",
+      "content": "trait Greeter {\n  def name: String\n\n  def greet(): String = {\n    \"Hello, \" + name\n  }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "name",
+      "fqn": "Greeter.name",
+      "parent_fqn": "Greeter",
+      "start_line": 2,
+      "end_line": 2,
+      "start_byte": 18,
+      "end_byte": 34,
+      "signature": "def name: String",
+      "content": "def name: String",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "greet",
+      "fqn": "Greeter.greet",
+      "parent_fqn": "Greeter",
+      "start_line": 4,
+      "end_line": 6,
+      "start_byte": 38,
+      "end_byte": 86,
+      "signature": "def greet(): String =",
+      "content": "def greet(): String = {\n    \"Hello, \" + name\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "class",
+      "name": "EnglishGreeter",
+      "fqn": "EnglishGreeter",
+      "parent_fqn": null,
+      "start_line": 9,
+      "end_line": 15,
+      "start_byte": 90,
+      "end_byte": 203,
+      "signature": "object EnglishGreeter extends Greeter",
+      "content": "object EnglishGreeter extends Greeter {\n  def name: String = \"World\"\n\n  def shout(): String = {\n    greet()\n  }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "name",
+      "fqn": "EnglishGreeter.name",
+      "parent_fqn": "EnglishGreeter",
+      "start_line": 10,
+      "end_line": 10,
+      "start_byte": 132,
+      "end_byte": 158,
+      "signature": "def name: String = \"World\"",
+      "content": "def name: String = \"World\"",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "shout",
+      "fqn": "EnglishGreeter.shout",
+      "parent_fqn": "EnglishGreeter",
+      "start_line": 12,
+      "end_line": 14,
+      "start_byte": 162,
+      "end_byte": 201,
+      "signature": "def shout(): String =",
+      "content": "def shout(): String = {\n    greet()\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 190,
+          "end": 197
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "greet",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 13,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "EnglishGreeter",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Greeter",
+          "module_specifier": null
+        }
+      },
+      "kind": "Extends",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {
+          "impl_kind": {
+            "String": "extends"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 120,
+          "end": 127
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Greeter",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 28,
+          "end": 34
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 51,
+          "end": 57
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 142,
+          "end": 148
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 175,
+          "end": 181
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 12,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

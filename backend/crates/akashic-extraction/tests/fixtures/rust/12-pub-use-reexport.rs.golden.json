@@ -1,0 +1,101 @@
+{
+  "chunks": [],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "rust/12-pub-use-reexport",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Deserialize",
+          "module_specifier": "serde"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "rust/12-pub-use-reexport",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "HashMap",
+          "module_specifier": "std::collections::HashMap"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "rust/12-pub-use-reexport",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Language",
+          "module_specifier": "crate::ingestion::analyzer::Language"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "rust/12-pub-use-reexport",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Serialize",
+          "module_specifier": "serde"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    }
+  ]
+}

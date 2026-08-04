@@ -1,0 +1,248 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "type",
+      "name": "Point",
+      "fqn": "Point",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 5,
+      "start_byte": 14,
+      "end_byte": 49,
+      "signature": "type Point struct",
+      "content": "type Point struct {\n\tX, Y float64\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "Distance",
+      "fqn": "Distance",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 9,
+      "start_byte": 51,
+      "end_byte": 107,
+      "signature": "func (p Point) Distance(q Point) float64",
+      "content": "func (p Point) Distance(q Point) float64 {\n\treturn 0.0\n}",
+      "doc": null,
+      "receiver": {
+        "type_name": "Point",
+        "is_pointer": false,
+        "is_mutable": false
+      },
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "Translate",
+      "fqn": "Translate",
+      "parent_fqn": null,
+      "start_line": 11,
+      "end_line": 14,
+      "start_byte": 109,
+      "end_byte": 176,
+      "signature": "func (p *Point) Translate(dx, dy float64)",
+      "content": "func (p *Point) Translate(dx, dy float64) {\n\tp.X += dx\n\tp.Y += dy\n}",
+      "doc": null,
+      "receiver": {
+        "type_name": "Point",
+        "is_pointer": true,
+        "is_mutable": false
+      },
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 19,
+          "end": 24
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Point",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 59,
+          "end": 64
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Point",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 77,
+          "end": 82
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Point",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 118,
+          "end": 123
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Point",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 11,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 40,
+          "end": 47
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "float64",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 84,
+          "end": 91
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "float64",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 142,
+          "end": 149
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "float64",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 11,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

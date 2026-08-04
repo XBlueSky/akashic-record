@@ -1,0 +1,382 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "class",
+      "name": "Repo",
+      "fqn": "Repo",
+      "parent_fqn": null,
+      "start_line": 2,
+      "end_line": 4,
+      "start_byte": 83,
+      "end_byte": 166,
+      "signature": "class Repo extends data.Base with mutable.Cloneable[Repo]",
+      "content": "class Repo extends data.Base with mutable.Cloneable[Repo] {\n  def find(): Int = 0\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "find",
+      "fqn": "Repo.find",
+      "parent_fqn": "Repo",
+      "start_line": 3,
+      "end_line": 3,
+      "start_byte": 145,
+      "end_byte": 164,
+      "signature": "def find(): Int = 0",
+      "content": "def find(): Int = 0",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "trait",
+      "name": "Service",
+      "fqn": "Service",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 9,
+      "start_byte": 245,
+      "end_byte": 330,
+      "signature": "trait Service extends Greeter with util.Comparable[Service]",
+      "content": "trait Service extends Greeter with util.Comparable[Service] {\n  def serve(): String\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "serve",
+      "fqn": "Service.serve",
+      "parent_fqn": "Service",
+      "start_line": 8,
+      "end_line": 8,
+      "start_byte": 309,
+      "end_byte": 328,
+      "signature": "def serve(): String",
+      "content": "def serve(): String",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "Repo",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Base",
+          "module_specifier": null
+        }
+      },
+      "kind": "Extends",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "impl_kind": {
+            "String": "extends"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "Service",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Greeter",
+          "module_specifier": null
+        }
+      },
+      "kind": "Extends",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "impl_kind": {
+            "String": "extends"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "Repo",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Cloneable",
+          "module_specifier": null
+        }
+      },
+      "kind": "Implements",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "impl_kind": {
+            "String": "implements"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "Service",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Comparable",
+          "module_specifier": null
+        }
+      },
+      "kind": "Implements",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "impl_kind": {
+            "String": "implements"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 107,
+          "end": 111
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Base",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 125,
+          "end": 134
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Cloneable",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 285,
+          "end": 295
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Comparable",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 267,
+          "end": 274
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Greeter",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 157,
+          "end": 160
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 135,
+          "end": 139
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Repo",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 296,
+          "end": 303
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Service",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 322,
+          "end": 328
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

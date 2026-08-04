@@ -1,0 +1,118 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "trait",
+      "name": "Animal",
+      "fqn": "Animal",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 6,
+      "start_byte": 0,
+      "end_byte": 114,
+      "signature": "pub trait Animal",
+      "content": "pub trait Animal {\n    fn name(&self) -> String;\n    fn sound(&self) -> String {\n        \"...\".to_string()\n    }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "sound",
+      "fqn": "Animal.sound",
+      "parent_fqn": "Animal",
+      "start_line": 3,
+      "end_line": 5,
+      "start_byte": 53,
+      "end_byte": 112,
+      "signature": "fn sound(&self) -> String",
+      "content": "fn sound(&self) -> String {\n        \"...\".to_string()\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 89,
+          "end": 106
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "to_string",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 41,
+          "end": 47
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 72,
+          "end": 78
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

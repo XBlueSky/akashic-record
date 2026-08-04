@@ -1,0 +1,230 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "class",
+      "name": "UserService",
+      "fqn": "UserService",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 11,
+      "start_byte": 7,
+      "end_byte": 237,
+      "signature": "class UserService",
+      "content": "class UserService {\n  private users: User[] = [];\n\n  public addUser(user: User): void {\n    this.users.push(user);\n  }\n\n  async fetchUser(id: string): Promise<User | undefined> {\n    return this.users.find(u => u.id === id);\n  }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "addUser",
+      "fqn": "UserService.addUser",
+      "parent_fqn": "UserService",
+      "start_line": 4,
+      "end_line": 6,
+      "start_byte": 60,
+      "end_byte": 125,
+      "signature": "public addUser(user: User): void",
+      "content": "public addUser(user: User): void {\n    this.users.push(user);\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "fetchUser",
+      "fqn": "UserService.fetchUser",
+      "parent_fqn": "UserService",
+      "start_line": 8,
+      "end_line": 10,
+      "start_byte": 129,
+      "end_byte": 235,
+      "signature": "async fetchUser(id: string): Promise<User | undefined>",
+      "content": "async fetchUser(id: string): Promise<User | undefined> {\n    return this.users.find(u => u.id === id);\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": true,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "interface",
+      "name": "User",
+      "fqn": "User",
+      "parent_fqn": null,
+      "start_line": 13,
+      "end_line": 16,
+      "start_byte": 239,
+      "end_byte": 287,
+      "signature": "interface User",
+      "content": "interface User {\n  id: string;\n  name: string;\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 197,
+          "end": 230
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "find",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 99,
+          "end": 120
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "push",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 158,
+          "end": 165
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Promise",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 44,
+          "end": 48
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "User",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 81,
+          "end": 85
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "User",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 166,
+          "end": 170
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "User",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

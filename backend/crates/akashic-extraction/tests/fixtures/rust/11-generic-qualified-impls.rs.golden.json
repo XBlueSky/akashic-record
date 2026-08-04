@@ -1,0 +1,530 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "struct",
+      "name": "Wrapper",
+      "fqn": "Wrapper",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 1,
+      "start_byte": 0,
+      "end_byte": 24,
+      "signature": "pub struct Wrapper(u32);",
+      "content": "pub struct Wrapper(u32);",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "struct",
+      "name": "Holder",
+      "fqn": "Holder",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 3,
+      "start_byte": 26,
+      "end_byte": 50,
+      "signature": "pub struct Holder<T>(T);",
+      "content": "pub struct Holder<T>(T);",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "from",
+      "fqn": "Wrapper.from",
+      "parent_fqn": "Wrapper",
+      "start_line": 7,
+      "end_line": 9,
+      "start_byte": 164,
+      "end_byte": 214,
+      "signature": "fn from(v: u32) -> Self",
+      "content": "fn from(v: u32) -> Self {\n        Wrapper(v)\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "fmt",
+      "fqn": "Wrapper.fmt",
+      "parent_fqn": "Wrapper",
+      "start_line": 15,
+      "end_line": 17,
+      "start_byte": 369,
+      "end_byte": 471,
+      "signature": "fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result",
+      "content": "fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {\n        write!(f, \"{}\", self.0)\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "clone",
+      "fqn": "Holder<T>.clone",
+      "parent_fqn": "Holder<T>",
+      "start_line": 23,
+      "end_line": 25,
+      "start_byte": 641,
+      "end_byte": 703,
+      "signature": "fn clone(&self) -> Self",
+      "content": "fn clone(&self) -> Self {\n        Holder(self.0.clone())\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "trait",
+      "name": "Loud",
+      "fqn": "Loud",
+      "parent_fqn": null,
+      "start_line": 30,
+      "end_line": 30,
+      "start_byte": 858,
+      "end_byte": 903,
+      "signature": "pub trait Loud: std::fmt::Debug + From<u8> {}",
+      "content": "pub trait Loud: std::fmt::Debug + From<u8> {}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 675,
+          "end": 697
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Holder",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 24,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 198,
+          "end": 208
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Wrapper",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 682,
+          "end": 696
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "clone",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 24,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 442,
+          "end": 465
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "write",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 16,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "Holder<T>",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Clone",
+          "module_specifier": null
+        }
+      },
+      "kind": "Implements",
+      "provenance": "Static",
+      "line": 22,
+      "metadata": {
+        "fields": {
+          "impl_kind": {
+            "String": "implements"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "Loud",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Debug",
+          "module_specifier": null
+        }
+      },
+      "kind": "Implements",
+      "provenance": "Static",
+      "line": 30,
+      "metadata": {
+        "fields": {
+          "impl_kind": {
+            "String": "implements"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "Wrapper",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Display",
+          "module_specifier": null
+        }
+      },
+      "kind": "Implements",
+      "provenance": "Static",
+      "line": 14,
+      "metadata": {
+        "fields": {
+          "impl_kind": {
+            "String": "implements"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "Wrapper",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "From",
+          "module_specifier": null
+        }
+      },
+      "kind": "Implements",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {
+          "impl_kind": {
+            "String": "implements"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "Loud",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "From",
+          "module_specifier": null
+        }
+      },
+      "kind": "Implements",
+      "provenance": "Static",
+      "line": 30,
+      "metadata": {
+        "fields": {
+          "impl_kind": {
+            "String": "implements"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 884,
+          "end": 889
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Debug",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 30,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 401,
+          "end": 410
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Formatter",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 15,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 892,
+          "end": 896
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "From",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 30,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 425,
+          "end": 431
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Result",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 15,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 183,
+          "end": 187
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Self",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 660,
+          "end": 664
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Self",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 23,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 44,
+          "end": 45
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "T",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 47,
+          "end": 48
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "T",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

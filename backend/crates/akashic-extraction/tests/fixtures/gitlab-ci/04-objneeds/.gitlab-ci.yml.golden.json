@@ -1,0 +1,144 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "job",
+      "name": "compile",
+      "fqn": "compile",
+      "parent_fqn": null,
+      "start_line": 6,
+      "end_line": 9,
+      "start_byte": 98,
+      "end_byte": 182,
+      "signature": "compile:                 # the build job",
+      "content": "compile:                 # the build job\n  stage: build\n  script:\n    - make compile",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "job",
+      "name": "lint",
+      "fqn": "lint",
+      "parent_fqn": null,
+      "start_line": 11,
+      "end_line": 14,
+      "start_byte": 184,
+      "end_byte": 230,
+      "signature": "lint:",
+      "content": "lint:\n  stage: build\n  script:\n    - make lint",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "job",
+      "name": "test",
+      "fqn": "test",
+      "parent_fqn": null,
+      "start_line": 16,
+      "end_line": 26,
+      "start_byte": 232,
+      "end_byte": 554,
+      "signature": "test:",
+      "content": "test:\n  stage: test             # run after both build jobs\n  needs:\n    - job: compile        # long-form need\n    - job: \"lint\"         # quoted long-form need\n    - project: group/other-repo   # cross-project need (skipped as edge)\n      ref: main\n      job: upstream\n  dependencies: [compile]\n  script:\n    - make test",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "test",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "compile",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 19,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "needs"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "test",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "compile",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 24,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "dependencies"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "test",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "lint",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 20,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "needs"
+          }
+        }
+      }
+    }
+  ]
+}

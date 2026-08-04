@@ -1,0 +1,74 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "section",
+      "name": "if user.active",
+      "fqn": "if user.active",
+      "parent_fqn": null,
+      "start_line": 2,
+      "end_line": 2,
+      "start_byte": 48,
+      "end_byte": 117,
+      "signature": "{{#if user.active}}",
+      "content": "{{#if user.active}}Hello {{user.name}}, {{>greeting}} welcome.{{/if}}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "section",
+      "name": "each items",
+      "fqn": "each items",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 3,
+      "start_byte": 118,
+      "end_byte": 156,
+      "signature": "{{#each items}}",
+      "content": "{{#each items}}<li>{{.}}</li>{{/each}}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "if user.active",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "greeting",
+          "module_specifier": "greeting"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "tag": {
+            "String": "partial"
+          }
+        }
+      }
+    }
+  ]
+}

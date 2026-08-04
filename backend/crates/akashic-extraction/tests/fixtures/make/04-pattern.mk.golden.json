@@ -1,0 +1,74 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "target",
+      "name": "%.o",
+      "fqn": "%.o",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 4,
+      "start_byte": 15,
+      "end_byte": 42,
+      "signature": "%.o: %.c",
+      "content": "%.o: %.c\n\t$(CC) -c $< -o $@",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "target",
+      "name": "clean",
+      "fqn": "clean",
+      "parent_fqn": null,
+      "start_line": 6,
+      "end_line": 7,
+      "start_byte": 44,
+      "end_byte": 61,
+      "signature": "clean:",
+      "content": "clean:\n\trm -f *.o",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "%.o",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "%.c",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "prerequisite"
+          }
+        }
+      }
+    }
+  ]
+}

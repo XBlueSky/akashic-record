@@ -1,0 +1,216 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "target",
+      "name": "a",
+      "fqn": "a",
+      "parent_fqn": null,
+      "start_line": 4,
+      "end_line": 5,
+      "start_byte": 40,
+      "end_byte": 67,
+      "signature": "a b: dep",
+      "content": "a b: dep\n\t@echo building $@",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "target",
+      "name": "b",
+      "fqn": "b",
+      "parent_fqn": null,
+      "start_line": 4,
+      "end_line": 5,
+      "start_byte": 40,
+      "end_byte": 67,
+      "signature": "a b: dep",
+      "content": "a b: dep\n\t@echo building $@",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "target",
+      "name": "dep",
+      "fqn": "dep",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 9,
+      "start_byte": 69,
+      "end_byte": 108,
+      "signature": "dep: prereq1  prereq2",
+      "content": "dep: prereq1 \\\n     prereq2\n\t@echo done",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "a",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "dep",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "prerequisite"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "b",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "dep",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "prerequisite"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "dep",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "prereq1",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "prerequisite"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "dep",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "prereq2",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "prerequisite"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "03-multi-include",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "common.mk",
+          "module_specifier": "common.mk"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "include"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "03-multi-include",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "optional.mk",
+          "module_specifier": "optional.mk"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "include"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "target",
+      "name": "app",
+      "fqn": "app",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 8,
+      "start_byte": 91,
+      "end_byte": 133,
+      "signature": "app: $(OBJ)",
+      "content": "app: $(OBJ)\n\t$(CC) $(CFLAGS) -o app $(OBJ)",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "target",
+      "name": "clean",
+      "fqn": "clean",
+      "parent_fqn": null,
+      "start_line": 10,
+      "end_line": 11,
+      "start_byte": 135,
+      "end_byte": 156,
+      "signature": "clean:",
+      "content": "clean:\n\trm -f app *.o",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "app",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "$(OBJ)",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "prerequisite"
+          }
+        }
+      }
+    }
+  ]
+}

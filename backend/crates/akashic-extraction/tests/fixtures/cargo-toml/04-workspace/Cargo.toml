@@ -1,0 +1,6 @@
+[workspace]
+resolver = "2"
+members = ["crates/core", "crates/cli"]
+
+[workspace.dependencies]
+serde = "1.0"

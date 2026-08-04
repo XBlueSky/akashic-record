@@ -1,0 +1,71 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "double",
+      "fqn": "double",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 5,
+      "start_byte": 72,
+      "end_byte": 110,
+      "signature": "function double(x)",
+      "content": "function double(x) {\n  return x * 2;\n}",
+      "doc": "/** Doubles a value. */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "class",
+      "name": "Counter",
+      "fqn": "Counter",
+      "parent_fqn": null,
+      "start_line": 8,
+      "end_line": 13,
+      "start_byte": 137,
+      "end_byte": 250,
+      "signature": "class Counter",
+      "content": "class Counter {\n  // increment has no doc; it must NOT inherit the class doc.\n  increment() {\n    return 1;\n  }\n}",
+      "doc": "/** A simple counter. */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "increment",
+      "fqn": "Counter.increment",
+      "parent_fqn": "Counter",
+      "start_line": 10,
+      "end_line": 12,
+      "start_byte": 217,
+      "end_byte": 248,
+      "signature": "increment()",
+      "content": "increment() {\n    return 1;\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": []
+}

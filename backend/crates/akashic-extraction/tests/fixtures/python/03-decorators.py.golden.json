@@ -1,0 +1,186 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "route",
+      "name": "ANY /users",
+      "fqn": "ANY /users@58",
+      "parent_fqn": null,
+      "start_line": 4,
+      "end_line": 6,
+      "start_byte": 47,
+      "end_byte": 99,
+      "signature": null,
+      "content": "@app.route('/users')\ndef list_users():\n    return []",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "http_method": {
+            "String": "ANY"
+          },
+          "http_path": {
+            "String": "/users"
+          }
+        }
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "list_users",
+      "fqn": "list_users",
+      "parent_fqn": null,
+      "start_line": 5,
+      "end_line": 6,
+      "start_byte": 68,
+      "end_byte": 99,
+      "signature": "def list_users():",
+      "content": "def list_users():\n    return []",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "route",
+      "name": "ANY /users",
+      "fqn": "ANY /users@112",
+      "parent_fqn": null,
+      "start_line": 8,
+      "end_line": 10,
+      "start_byte": 101,
+      "end_byte": 172,
+      "signature": null,
+      "content": "@app.route('/users', methods=['POST'])\ndef create_user():\n    return {}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "http_method": {
+            "String": "ANY"
+          },
+          "http_path": {
+            "String": "/users"
+          }
+        }
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "create_user",
+      "fqn": "create_user",
+      "parent_fqn": null,
+      "start_line": 9,
+      "end_line": 10,
+      "start_byte": 140,
+      "end_byte": 172,
+      "signature": "def create_user():",
+      "content": "def create_user():\n    return {}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "python/03-decorators",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Flask",
+          "module_specifier": "flask"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 144,
+          "end": 155
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "create_user",
+          "module_specifier": null
+        }
+      },
+      "kind": "RoutesTo",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {
+          "http_method": {
+            "String": "ANY"
+          },
+          "http_path": {
+            "String": "/users"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 72,
+          "end": 82
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "list_users",
+          "module_specifier": null
+        }
+      },
+      "kind": "RoutesTo",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {
+          "http_method": {
+            "String": "ANY"
+          },
+          "http_path": {
+            "String": "/users"
+          }
+        }
+      }
+    }
+  ]
+}

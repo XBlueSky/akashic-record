@@ -1,0 +1,131 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "manifest",
+      "name": "layered-crate",
+      "fqn": "layered-crate",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 15,
+      "start_byte": 0,
+      "end_byte": 200,
+      "signature": "layered-crate@2.0.0",
+      "content": "[package]\nname = \"layered-crate\"\nversion = \"2.0.0\"\nedition = \"2024\"\n\n[dependencies]\nserde = \"1.0\"\n\n[dev-dependencies]\ncriterion = \"0.5\"\nproptest = { version = \"1.4\" }\n\n[build-dependencies]\ncc = \"1.0\"\n",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "edition": {
+            "String": "2024"
+          },
+          "version": {
+            "String": "2.0.0"
+          }
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "layered-crate",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "cc",
+          "module_specifier": "cc@1.0"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "build-dependencies"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "layered-crate",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "criterion",
+          "module_specifier": "criterion@0.5"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "dev-dependencies"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "layered-crate",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "proptest",
+          "module_specifier": "proptest@1.4"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "dev-dependencies"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "layered-crate",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "serde",
+          "module_specifier": "serde@1.0"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "dependencies"
+          }
+        }
+      }
+    }
+  ]
+}

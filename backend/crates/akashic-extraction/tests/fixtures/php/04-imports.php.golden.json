@@ -1,0 +1,152 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "namespace",
+      "name": "App.Http",
+      "fqn": "App.Http",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 16,
+      "start_byte": 7,
+      "end_byte": 287,
+      "signature": "namespace App\\Http",
+      "content": "namespace App\\Http {\n    use App\\Models\\User;\n    use App\\Models\\Post as Article;\n    use App\\Support\\{Arr, Str};\n    use function App\\Helpers\\format_name;\n\n    class Controller\n    {\n        public function index(): User\n        {\n            return new User();\n        }\n    }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "class",
+      "name": "Controller",
+      "fqn": "App.Http.Controller",
+      "parent_fqn": "App.Http",
+      "start_line": 9,
+      "end_line": 15,
+      "start_byte": 168,
+      "end_byte": 285,
+      "signature": "class Controller",
+      "content": "class Controller\n    {\n        public function index(): User\n        {\n            return new User();\n        }\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "index",
+      "fqn": "App.Http.Controller.index",
+      "parent_fqn": "App.Http.Controller",
+      "start_line": 11,
+      "end_line": 14,
+      "start_byte": 199,
+      "end_byte": 279,
+      "signature": "public function index(): User",
+      "content": "public function index(): User\n        {\n            return new User();\n        }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "php/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "App\\Helpers\\format_name",
+          "module_specifier": "App\\Helpers\\format_name"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "php/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "App\\Models\\Post",
+          "module_specifier": "App\\Models\\Post"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "php/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "App\\Models\\User",
+          "module_specifier": "App\\Models\\User"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "php/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "App\\Support\\Arr",
+          "module_specifier": "App\\Support\\Arr"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

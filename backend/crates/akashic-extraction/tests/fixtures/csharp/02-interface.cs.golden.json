@@ -1,0 +1,234 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "interface",
+      "name": "IShape",
+      "fqn": "IShape",
+      "parent_fqn": null,
+      "start_line": 4,
+      "end_line": 9,
+      "start_byte": 98,
+      "end_byte": 211,
+      "signature": "public interface IShape",
+      "content": "public interface IShape\n    {\n        double Area();\n        double Perimeter();\n        string Describe();\n    }",
+      "doc": "/// <summary>Defines a shape with area computation.</summary>",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "Area",
+      "fqn": "IShape.Area",
+      "parent_fqn": "IShape",
+      "start_line": 6,
+      "end_line": 6,
+      "start_byte": 136,
+      "end_byte": 150,
+      "signature": "double Area();",
+      "content": "double Area();",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "Perimeter",
+      "fqn": "IShape.Perimeter",
+      "parent_fqn": "IShape",
+      "start_line": 7,
+      "end_line": 7,
+      "start_byte": 159,
+      "end_byte": 178,
+      "signature": "double Perimeter();",
+      "content": "double Perimeter();",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "Describe",
+      "fqn": "IShape.Describe",
+      "parent_fqn": "IShape",
+      "start_line": 8,
+      "end_line": 8,
+      "start_byte": 187,
+      "end_byte": 205,
+      "signature": "string Describe();",
+      "content": "string Describe();",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "interface",
+      "name": "ISerializable",
+      "fqn": "ISerializable",
+      "parent_fqn": null,
+      "start_line": 12,
+      "end_line": 15,
+      "start_byte": 283,
+      "end_byte": 353,
+      "signature": "public interface ISerializable",
+      "content": "public interface ISerializable\n    {\n        string Serialize();\n    }",
+      "doc": "/// <summary>An interface for serializable objects.</summary>",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "Serialize",
+      "fqn": "ISerializable.Serialize",
+      "parent_fqn": "ISerializable",
+      "start_line": 14,
+      "end_line": 14,
+      "start_byte": 328,
+      "end_byte": 347,
+      "signature": "string Serialize();",
+      "content": "string Serialize();",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 136,
+          "end": 142
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "double",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 159,
+          "end": 165
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "double",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 187,
+          "end": 193
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "string",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 328,
+          "end": 334
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "string",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 14,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

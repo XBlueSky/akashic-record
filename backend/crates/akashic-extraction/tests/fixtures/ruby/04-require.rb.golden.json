@@ -1,0 +1,130 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "class",
+      "name": "Loader",
+      "fqn": "Loader",
+      "parent_fqn": null,
+      "start_line": 5,
+      "end_line": 9,
+      "start_byte": 63,
+      "end_byte": 123,
+      "signature": "class Loader",
+      "content": "class Loader\n  def load(path)\n    JSON.parse(path)\n  end\nend",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "load",
+      "fqn": "Loader.load",
+      "parent_fqn": "Loader",
+      "start_line": 6,
+      "end_line": 8,
+      "start_byte": 78,
+      "end_byte": 119,
+      "signature": "def load(path)",
+      "content": "def load(path)\n    JSON.parse(path)\n  end",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 97,
+          "end": 113
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "parse",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "ruby/04-require",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "../lib/helper",
+          "module_specifier": "../lib/helper"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "ruby/04-require",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "json",
+          "module_specifier": "json"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "ruby/04-require",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "set",
+          "module_specifier": "set"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

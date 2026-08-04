@@ -1,0 +1,5612 @@
+[
+  {
+    "rel_path": "src/ingestion/chunker.rs",
+    "chunk_type": "constant",
+    "name": "MIN_CHUNK_SIZE",
+    "fqn": "MIN_CHUNK_SIZE"
+  },
+  {
+    "rel_path": "src/ingestion/chunker.rs",
+    "chunk_type": "function",
+    "name": "extract_file",
+    "fqn": "extract_file"
+  },
+  {
+    "rel_path": "src/ingestion/clone.rs",
+    "chunk_type": "function",
+    "name": "clone_repo",
+    "fqn": "clone_repo"
+  },
+  {
+    "rel_path": "src/ingestion/crawler.rs",
+    "chunk_type": "function",
+    "name": "crawl_website",
+    "fqn": "crawl_website"
+  },
+  {
+    "rel_path": "src/ingestion/crawler.rs",
+    "chunk_type": "function",
+    "name": "extract_links",
+    "fqn": "extract_links"
+  },
+  {
+    "rel_path": "src/ingestion/crawler.rs",
+    "chunk_type": "function",
+    "name": "fetch_page",
+    "fqn": "fetch_page"
+  },
+  {
+    "rel_path": "src/ingestion/crawler.rs",
+    "chunk_type": "function",
+    "name": "glob_match",
+    "fqn": "glob_match"
+  },
+  {
+    "rel_path": "src/ingestion/crawler.rs",
+    "chunk_type": "function",
+    "name": "html_to_markdown",
+    "fqn": "html_to_markdown"
+  },
+  {
+    "rel_path": "src/ingestion/crawler.rs",
+    "chunk_type": "function",
+    "name": "normalize_url",
+    "fqn": "normalize_url"
+  },
+  {
+    "rel_path": "src/ingestion/crawler.rs",
+    "chunk_type": "function",
+    "name": "url_to_filepath",
+    "fqn": "url_to_filepath"
+  },
+  {
+    "rel_path": "src/ingestion/crawler.rs",
+    "chunk_type": "struct",
+    "name": "CrawlResult",
+    "fqn": "CrawlResult"
+  },
+  {
+    "rel_path": "src/ingestion/doc_clustering.rs",
+    "chunk_type": "function",
+    "name": "assign_sections_to_cluster",
+    "fqn": "DocClustering.assign_sections_to_cluster"
+  },
+  {
+    "rel_path": "src/ingestion/doc_clustering.rs",
+    "chunk_type": "function",
+    "name": "clean_clusters",
+    "fqn": "DocClustering.clean_clusters"
+  },
+  {
+    "rel_path": "src/ingestion/doc_clustering.rs",
+    "chunk_type": "function",
+    "name": "cluster_embeddings",
+    "fqn": "cluster_embeddings"
+  },
+  {
+    "rel_path": "src/ingestion/doc_clustering.rs",
+    "chunk_type": "function",
+    "name": "cluster_repo_sections",
+    "fqn": "DocClustering.cluster_repo_sections"
+  },
+  {
+    "rel_path": "src/ingestion/doc_clustering.rs",
+    "chunk_type": "function",
+    "name": "compute_centroid",
+    "fqn": "compute_centroid"
+  },
+  {
+    "rel_path": "src/ingestion/doc_clustering.rs",
+    "chunk_type": "function",
+    "name": "cosine_sim",
+    "fqn": "cosine_sim"
+  },
+  {
+    "rel_path": "src/ingestion/doc_clustering.rs",
+    "chunk_type": "function",
+    "name": "create_neo4j_cluster",
+    "fqn": "DocClustering.create_neo4j_cluster"
+  },
+  {
+    "rel_path": "src/ingestion/doc_clustering.rs",
+    "chunk_type": "function",
+    "name": "derive_cluster_name",
+    "fqn": "derive_cluster_name"
+  },
+  {
+    "rel_path": "src/ingestion/doc_clustering.rs",
+    "chunk_type": "function",
+    "name": "determine_k",
+    "fqn": "determine_k"
+  },
+  {
+    "rel_path": "src/ingestion/doc_clustering.rs",
+    "chunk_type": "function",
+    "name": "fetch_section_embeddings",
+    "fqn": "DocClustering.fetch_section_embeddings"
+  },
+  {
+    "rel_path": "src/ingestion/doc_clustering.rs",
+    "chunk_type": "function",
+    "name": "name_cluster",
+    "fqn": "DocClustering.name_cluster"
+  },
+  {
+    "rel_path": "src/ingestion/doc_clustering.rs",
+    "chunk_type": "function",
+    "name": "new",
+    "fqn": "DocClustering.new"
+  },
+  {
+    "rel_path": "src/ingestion/doc_clustering.rs",
+    "chunk_type": "function",
+    "name": "store_cluster",
+    "fqn": "DocClustering.store_cluster"
+  },
+  {
+    "rel_path": "src/ingestion/doc_clustering.rs",
+    "chunk_type": "struct",
+    "name": "DocClustering",
+    "fqn": "DocClustering"
+  },
+  {
+    "rel_path": "src/ingestion/doc_clustering.rs",
+    "chunk_type": "struct",
+    "name": "SectionEmbedding",
+    "fqn": "SectionEmbedding"
+  },
+  {
+    "rel_path": "src/ingestion/doc_store.rs",
+    "chunk_type": "function",
+    "name": "clean_repo_docs",
+    "fqn": "DocStore.clean_repo_docs"
+  },
+  {
+    "rel_path": "src/ingestion/doc_store.rs",
+    "chunk_type": "function",
+    "name": "create_document",
+    "fqn": "DocStore.create_document"
+  },
+  {
+    "rel_path": "src/ingestion/doc_store.rs",
+    "chunk_type": "function",
+    "name": "new",
+    "fqn": "DocStore.new"
+  },
+  {
+    "rel_path": "src/ingestion/doc_store.rs",
+    "chunk_type": "function",
+    "name": "store_sections",
+    "fqn": "DocStore.store_sections"
+  },
+  {
+    "rel_path": "src/ingestion/doc_store.rs",
+    "chunk_type": "struct",
+    "name": "DocStore",
+    "fqn": "DocStore"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "constant",
+    "name": "DIM",
+    "fqn": "DIM"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "constant",
+    "name": "REPO",
+    "fqn": "REPO"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "constant",
+    "name": "REPO_GOSTRUCT",
+    "fqn": "REPO_GOSTRUCT"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "constant",
+    "name": "REPO_IMPL",
+    "fqn": "REPO_IMPL"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "constant",
+    "name": "REPO_IMPREF",
+    "fqn": "REPO_IMPREF"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "constant",
+    "name": "REPO_METRICS",
+    "fqn": "REPO_METRICS"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "constant",
+    "name": "REPO_REFS",
+    "fqn": "REPO_REFS"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "constant",
+    "name": "REPO_ROUTES",
+    "fqn": "REPO_ROUTES"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "constant",
+    "name": "REPO_TIER0",
+    "fqn": "REPO_TIER0"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "constant",
+    "name": "REPO_TYPEREF",
+    "fqn": "REPO_TYPEREF"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "constant",
+    "name": "REPO_XF",
+    "fqn": "REPO_XF"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "function",
+    "name": "cleanup",
+    "fqn": "cleanup"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "function",
+    "name": "dimensions",
+    "fqn": "FakeEmbedder.dimensions"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "function",
+    "name": "e2e_axum_routes",
+    "fqn": "e2e_axum_routes"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "function",
+    "name": "e2e_cross_file_resolution",
+    "fqn": "e2e_cross_file_resolution"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "function",
+    "name": "e2e_go_structural_implements",
+    "fqn": "e2e_go_structural_implements"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "function",
+    "name": "e2e_goto_definition_and_references",
+    "fqn": "e2e_goto_definition_and_references"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "function",
+    "name": "e2e_implements",
+    "fqn": "e2e_implements"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "function",
+    "name": "e2e_import_references",
+    "fqn": "e2e_import_references"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "function",
+    "name": "e2e_ingestion_against_live_dbs",
+    "fqn": "e2e_ingestion_against_live_dbs"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "function",
+    "name": "e2e_metrics_real_repo",
+    "fqn": "e2e_metrics_real_repo"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "function",
+    "name": "e2e_tier0_inherits",
+    "fqn": "e2e_tier0_inherits"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "function",
+    "name": "e2e_type_references",
+    "fqn": "e2e_type_references"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "function",
+    "name": "embed",
+    "fqn": "FakeEmbedder.embed"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "function",
+    "name": "generate_json",
+    "fqn": "FakeLlm.generate_json"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "function",
+    "name": "test_config",
+    "fqn": "test_config"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "function",
+    "name": "write_cross_file_fixture",
+    "fqn": "write_cross_file_fixture"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "function",
+    "name": "write_fixture",
+    "fqn": "write_fixture"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "struct",
+    "name": "FakeEmbedder",
+    "fqn": "FakeEmbedder"
+  },
+  {
+    "rel_path": "src/ingestion/e2e_test.rs",
+    "chunk_type": "struct",
+    "name": "FakeLlm",
+    "fqn": "FakeLlm"
+  },
+  {
+    "rel_path": "src/ingestion/entry_points.rs",
+    "chunk_type": "constant",
+    "name": "RE_RUST_AXUM_HANDLER",
+    "fqn": "RE_RUST_AXUM_HANDLER"
+  },
+  {
+    "rel_path": "src/ingestion/entry_points.rs",
+    "chunk_type": "constant",
+    "name": "RE_RUST_MAIN",
+    "fqn": "RE_RUST_MAIN"
+  },
+  {
+    "rel_path": "src/ingestion/entry_points.rs",
+    "chunk_type": "constant",
+    "name": "RE_RUST_TEST",
+    "fqn": "RE_RUST_TEST"
+  },
+  {
+    "rel_path": "src/ingestion/entry_points.rs",
+    "chunk_type": "constant",
+    "name": "RE_RUST_TOKIO_MAIN",
+    "fqn": "RE_RUST_TOKIO_MAIN"
+  },
+  {
+    "rel_path": "src/ingestion/entry_points.rs",
+    "chunk_type": "constant",
+    "name": "RE_TS_APP_ROUTE",
+    "fqn": "RE_TS_APP_ROUTE"
+  },
+  {
+    "rel_path": "src/ingestion/entry_points.rs",
+    "chunk_type": "constant",
+    "name": "RE_TS_EXPORT_DEFAULT",
+    "fqn": "RE_TS_EXPORT_DEFAULT"
+  },
+  {
+    "rel_path": "src/ingestion/entry_points.rs",
+    "chunk_type": "constant",
+    "name": "RE_TS_LISTENER",
+    "fqn": "RE_TS_LISTENER"
+  },
+  {
+    "rel_path": "src/ingestion/entry_points.rs",
+    "chunk_type": "function",
+    "name": "detect",
+    "fqn": "detect"
+  },
+  {
+    "rel_path": "src/ingestion/entry_points.rs",
+    "chunk_type": "function",
+    "name": "detect_rust",
+    "fqn": "detect_rust"
+  },
+  {
+    "rel_path": "src/ingestion/entry_points.rs",
+    "chunk_type": "function",
+    "name": "detect_typescript",
+    "fqn": "detect_typescript"
+  },
+  {
+    "rel_path": "src/ingestion/entry_points.rs",
+    "chunk_type": "function",
+    "name": "test_not_entry_point",
+    "fqn": "tests.test_not_entry_point"
+  },
+  {
+    "rel_path": "src/ingestion/entry_points.rs",
+    "chunk_type": "function",
+    "name": "test_rust_axum_handler",
+    "fqn": "tests.test_rust_axum_handler"
+  },
+  {
+    "rel_path": "src/ingestion/entry_points.rs",
+    "chunk_type": "function",
+    "name": "test_rust_main",
+    "fqn": "tests.test_rust_main"
+  },
+  {
+    "rel_path": "src/ingestion/entry_points.rs",
+    "chunk_type": "function",
+    "name": "test_rust_test",
+    "fqn": "tests.test_rust_test"
+  },
+  {
+    "rel_path": "src/ingestion/entry_points.rs",
+    "chunk_type": "function",
+    "name": "test_rust_tokio_main",
+    "fqn": "tests.test_rust_tokio_main"
+  },
+  {
+    "rel_path": "src/ingestion/entry_points.rs",
+    "chunk_type": "function",
+    "name": "test_ts_event_listener",
+    "fqn": "tests.test_ts_event_listener"
+  },
+  {
+    "rel_path": "src/ingestion/entry_points.rs",
+    "chunk_type": "function",
+    "name": "test_ts_export_default",
+    "fqn": "tests.test_ts_export_default"
+  },
+  {
+    "rel_path": "src/ingestion/entry_points.rs",
+    "chunk_type": "function",
+    "name": "test_ts_express_route",
+    "fqn": "tests.test_ts_express_route"
+  },
+  {
+    "rel_path": "src/ingestion/entry_points.rs",
+    "chunk_type": "function",
+    "name": "test_unknown_language",
+    "fqn": "tests.test_unknown_language"
+  },
+  {
+    "rel_path": "src/ingestion/entry_points.rs",
+    "chunk_type": "module",
+    "name": "tests",
+    "fqn": "tests"
+  },
+  {
+    "rel_path": "src/ingestion/entry_points.rs",
+    "chunk_type": "struct",
+    "name": "DetectedEntryPoint",
+    "fqn": "DetectedEntryPoint"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/bash.rs",
+    "chunk_type": "constant",
+    "name": "BASH",
+    "fqn": "BASH"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/bash.rs",
+    "chunk_type": "constant",
+    "name": "EMPTY_QUERIES",
+    "fqn": "EMPTY_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/bash.rs",
+    "chunk_type": "function",
+    "name": "bash_resolve_call_name",
+    "fqn": "bash_resolve_call_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/bash.rs",
+    "chunk_type": "function",
+    "name": "bash_resolve_fqn",
+    "fqn": "bash_resolve_fqn"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/bash.rs",
+    "chunk_type": "function",
+    "name": "bash_resolve_import_specifier",
+    "fqn": "bash_resolve_import_specifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/bash.rs",
+    "chunk_type": "function",
+    "name": "bash_resolve_module_path",
+    "fqn": "bash_resolve_module_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/bash.rs",
+    "chunk_type": "function",
+    "name": "bash_should_recurse",
+    "fqn": "bash_should_recurse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/bash.rs",
+    "chunk_type": "function",
+    "name": "bash_visibility",
+    "fqn": "bash_visibility"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/bash.rs",
+    "chunk_type": "function",
+    "name": "command_name_text",
+    "fqn": "command_name_text"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/bash.rs",
+    "chunk_type": "function",
+    "name": "language",
+    "fqn": "language"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/c.rs",
+    "chunk_type": "constant",
+    "name": "C",
+    "fqn": "C"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/c.rs",
+    "chunk_type": "constant",
+    "name": "EMPTY_QUERIES",
+    "fqn": "EMPTY_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/c.rs",
+    "chunk_type": "function",
+    "name": "c_is_static",
+    "fqn": "c_is_static"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/c.rs",
+    "chunk_type": "function",
+    "name": "c_resolve_import_specifier",
+    "fqn": "c_resolve_import_specifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/c.rs",
+    "chunk_type": "function",
+    "name": "c_resolve_module_path",
+    "fqn": "c_resolve_module_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/c.rs",
+    "chunk_type": "function",
+    "name": "c_resolve_name",
+    "fqn": "c_resolve_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/c.rs",
+    "chunk_type": "function",
+    "name": "innermost_identifier",
+    "fqn": "innermost_identifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/c.rs",
+    "chunk_type": "function",
+    "name": "language",
+    "fqn": "language"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/cpp.rs",
+    "chunk_type": "constant",
+    "name": "CPP",
+    "fqn": "CPP"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/cpp.rs",
+    "chunk_type": "constant",
+    "name": "EMPTY_QUERIES",
+    "fqn": "EMPTY_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/cpp.rs",
+    "chunk_type": "function",
+    "name": "cpp_is_static",
+    "fqn": "cpp_is_static"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/cpp.rs",
+    "chunk_type": "function",
+    "name": "cpp_resolve_import_specifier",
+    "fqn": "cpp_resolve_import_specifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/cpp.rs",
+    "chunk_type": "function",
+    "name": "cpp_resolve_module_path",
+    "fqn": "cpp_resolve_module_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/cpp.rs",
+    "chunk_type": "function",
+    "name": "cpp_resolve_name",
+    "fqn": "cpp_resolve_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/cpp.rs",
+    "chunk_type": "function",
+    "name": "cpp_resolve_supertypes",
+    "fqn": "cpp_resolve_supertypes"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/cpp.rs",
+    "chunk_type": "function",
+    "name": "cpp_should_recurse",
+    "fqn": "cpp_should_recurse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/cpp.rs",
+    "chunk_type": "function",
+    "name": "cpp_strip_generics",
+    "fqn": "cpp_strip_generics"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/cpp.rs",
+    "chunk_type": "function",
+    "name": "innermost_identifier",
+    "fqn": "innermost_identifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/cpp.rs",
+    "chunk_type": "function",
+    "name": "language",
+    "fqn": "language"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/csharp.rs",
+    "chunk_type": "constant",
+    "name": "CSHARP",
+    "fqn": "CSHARP"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/csharp.rs",
+    "chunk_type": "constant",
+    "name": "CSHARP_CHUNK_KINDS",
+    "fqn": "CSHARP_CHUNK_KINDS"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/csharp.rs",
+    "chunk_type": "constant",
+    "name": "EMPTY_QUERIES",
+    "fqn": "EMPTY_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/csharp.rs",
+    "chunk_type": "function",
+    "name": "csharp_collect_type_refs",
+    "fqn": "csharp_collect_type_refs"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/csharp.rs",
+    "chunk_type": "function",
+    "name": "csharp_resolve_call_name",
+    "fqn": "csharp_resolve_call_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/csharp.rs",
+    "chunk_type": "function",
+    "name": "csharp_resolve_fqn",
+    "fqn": "csharp_resolve_fqn"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/csharp.rs",
+    "chunk_type": "function",
+    "name": "csharp_resolve_import_specifier",
+    "fqn": "csharp_resolve_import_specifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/csharp.rs",
+    "chunk_type": "function",
+    "name": "csharp_resolve_module_path",
+    "fqn": "csharp_resolve_module_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/csharp.rs",
+    "chunk_type": "function",
+    "name": "csharp_resolve_supertypes",
+    "fqn": "csharp_resolve_supertypes"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/csharp.rs",
+    "chunk_type": "function",
+    "name": "csharp_resolve_type_refs",
+    "fqn": "csharp_resolve_type_refs"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/csharp.rs",
+    "chunk_type": "function",
+    "name": "csharp_should_recurse",
+    "fqn": "csharp_should_recurse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/csharp.rs",
+    "chunk_type": "function",
+    "name": "csharp_visibility",
+    "fqn": "csharp_visibility"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/csharp.rs",
+    "chunk_type": "function",
+    "name": "language",
+    "fqn": "language"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/csharp.rs",
+    "chunk_type": "function",
+    "name": "resolve_type_node",
+    "fqn": "resolve_type_node"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/dart.rs",
+    "chunk_type": "constant",
+    "name": "DART",
+    "fqn": "DART"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/dart.rs",
+    "chunk_type": "constant",
+    "name": "EMPTY_QUERIES",
+    "fqn": "EMPTY_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/dart.rs",
+    "chunk_type": "function",
+    "name": "dart_push_type_identifier",
+    "fqn": "dart_push_type_identifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/dart.rs",
+    "chunk_type": "function",
+    "name": "dart_resolve_fqn",
+    "fqn": "dart_resolve_fqn"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/dart.rs",
+    "chunk_type": "function",
+    "name": "dart_resolve_import_specifier",
+    "fqn": "dart_resolve_import_specifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/dart.rs",
+    "chunk_type": "function",
+    "name": "dart_resolve_name",
+    "fqn": "dart_resolve_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/dart.rs",
+    "chunk_type": "function",
+    "name": "dart_resolve_supertypes",
+    "fqn": "dart_resolve_supertypes"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/dart.rs",
+    "chunk_type": "function",
+    "name": "dart_should_recurse",
+    "fqn": "dart_should_recurse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/dart.rs",
+    "chunk_type": "function",
+    "name": "dart_visibility",
+    "fqn": "dart_visibility"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/dart.rs",
+    "chunk_type": "function",
+    "name": "find_uri_text",
+    "fqn": "find_uri_text"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/dart.rs",
+    "chunk_type": "function",
+    "name": "first_named_child_of_kind",
+    "fqn": "first_named_child_of_kind"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/dart.rs",
+    "chunk_type": "function",
+    "name": "language",
+    "fqn": "language"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/go.rs",
+    "chunk_type": "constant",
+    "name": "GO",
+    "fqn": "GO"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/go.rs",
+    "chunk_type": "constant",
+    "name": "GO_FRAMEWORK_ROUTES",
+    "fqn": "GO_FRAMEWORK_ROUTES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/go.rs",
+    "chunk_type": "constant",
+    "name": "GO_QUERIES",
+    "fqn": "GO_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/go.rs",
+    "chunk_type": "function",
+    "name": "go_resolve_call_name",
+    "fqn": "go_resolve_call_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/go.rs",
+    "chunk_type": "function",
+    "name": "go_resolve_import_specifier",
+    "fqn": "go_resolve_import_specifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/go.rs",
+    "chunk_type": "function",
+    "name": "go_resolve_method_receiver",
+    "fqn": "go_resolve_method_receiver"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/go.rs",
+    "chunk_type": "function",
+    "name": "go_resolve_module_path",
+    "fqn": "go_resolve_module_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/go.rs",
+    "chunk_type": "function",
+    "name": "go_resolve_name",
+    "fqn": "go_resolve_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/go.rs",
+    "chunk_type": "function",
+    "name": "go_should_recurse",
+    "fqn": "go_should_recurse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/go.rs",
+    "chunk_type": "function",
+    "name": "language",
+    "fqn": "language"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/java.rs",
+    "chunk_type": "constant",
+    "name": "JAVA",
+    "fqn": "JAVA"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/java.rs",
+    "chunk_type": "constant",
+    "name": "JAVA_FRAMEWORK_ROUTES",
+    "fqn": "JAVA_FRAMEWORK_ROUTES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/java.rs",
+    "chunk_type": "constant",
+    "name": "JAVA_QUERIES",
+    "fqn": "JAVA_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/java.rs",
+    "chunk_type": "function",
+    "name": "collect_type_identifiers",
+    "fqn": "collect_type_identifiers"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/java.rs",
+    "chunk_type": "function",
+    "name": "java_resolve_call_name",
+    "fqn": "java_resolve_call_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/java.rs",
+    "chunk_type": "function",
+    "name": "java_resolve_fqn",
+    "fqn": "java_resolve_fqn"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/java.rs",
+    "chunk_type": "function",
+    "name": "java_resolve_import_specifier",
+    "fqn": "java_resolve_import_specifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/java.rs",
+    "chunk_type": "function",
+    "name": "java_resolve_module_path",
+    "fqn": "java_resolve_module_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/java.rs",
+    "chunk_type": "function",
+    "name": "java_resolve_supertypes",
+    "fqn": "java_resolve_supertypes"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/java.rs",
+    "chunk_type": "function",
+    "name": "java_should_recurse",
+    "fqn": "java_should_recurse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/java.rs",
+    "chunk_type": "function",
+    "name": "java_visibility",
+    "fqn": "java_visibility"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/java.rs",
+    "chunk_type": "function",
+    "name": "language",
+    "fqn": "language"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/java.rs",
+    "chunk_type": "function",
+    "name": "push_bare_name",
+    "fqn": "push_bare_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/java.rs",
+    "chunk_type": "function",
+    "name": "strip_generics",
+    "fqn": "strip_generics"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/javascript.rs",
+    "chunk_type": "constant",
+    "name": "JAVASCRIPT",
+    "fqn": "JAVASCRIPT"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/javascript.rs",
+    "chunk_type": "constant",
+    "name": "JS_FRAMEWORK_ROUTES",
+    "fqn": "JS_FRAMEWORK_ROUTES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/javascript.rs",
+    "chunk_type": "constant",
+    "name": "JS_QUERIES",
+    "fqn": "JS_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/javascript.rs",
+    "chunk_type": "function",
+    "name": "js_is_async",
+    "fqn": "js_is_async"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/javascript.rs",
+    "chunk_type": "function",
+    "name": "js_is_exported",
+    "fqn": "js_is_exported"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/javascript.rs",
+    "chunk_type": "function",
+    "name": "js_is_static",
+    "fqn": "js_is_static"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/javascript.rs",
+    "chunk_type": "function",
+    "name": "js_resolve_import_names",
+    "fqn": "js_resolve_import_names"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/javascript.rs",
+    "chunk_type": "function",
+    "name": "js_resolve_import_specifier",
+    "fqn": "js_resolve_import_specifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/javascript.rs",
+    "chunk_type": "function",
+    "name": "js_resolve_module_path",
+    "fqn": "js_resolve_module_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/javascript.rs",
+    "chunk_type": "function",
+    "name": "js_resolve_name",
+    "fqn": "js_resolve_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/javascript.rs",
+    "chunk_type": "function",
+    "name": "js_should_recurse",
+    "fqn": "js_should_recurse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/javascript.rs",
+    "chunk_type": "function",
+    "name": "js_should_skip_call",
+    "fqn": "js_should_skip_call"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/javascript.rs",
+    "chunk_type": "function",
+    "name": "js_visibility",
+    "fqn": "js_visibility"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/javascript.rs",
+    "chunk_type": "function",
+    "name": "language",
+    "fqn": "language"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/kotlin.rs",
+    "chunk_type": "constant",
+    "name": "EMPTY_QUERIES",
+    "fqn": "EMPTY_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/kotlin.rs",
+    "chunk_type": "constant",
+    "name": "KOTLIN",
+    "fqn": "KOTLIN"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/kotlin.rs",
+    "chunk_type": "function",
+    "name": "kotlin_refine_category",
+    "fqn": "kotlin_refine_category"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/kotlin.rs",
+    "chunk_type": "function",
+    "name": "kotlin_resolve_call_name",
+    "fqn": "kotlin_resolve_call_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/kotlin.rs",
+    "chunk_type": "function",
+    "name": "kotlin_resolve_fqn",
+    "fqn": "kotlin_resolve_fqn"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/kotlin.rs",
+    "chunk_type": "function",
+    "name": "kotlin_resolve_import_specifier",
+    "fqn": "kotlin_resolve_import_specifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/kotlin.rs",
+    "chunk_type": "function",
+    "name": "kotlin_resolve_module_path",
+    "fqn": "kotlin_resolve_module_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/kotlin.rs",
+    "chunk_type": "function",
+    "name": "kotlin_resolve_name",
+    "fqn": "kotlin_resolve_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/kotlin.rs",
+    "chunk_type": "function",
+    "name": "kotlin_resolve_supertypes",
+    "fqn": "kotlin_resolve_supertypes"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/kotlin.rs",
+    "chunk_type": "function",
+    "name": "kotlin_should_recurse",
+    "fqn": "kotlin_should_recurse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/kotlin.rs",
+    "chunk_type": "function",
+    "name": "kotlin_visibility",
+    "fqn": "kotlin_visibility"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/kotlin.rs",
+    "chunk_type": "function",
+    "name": "language",
+    "fqn": "language"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/kotlin.rs",
+    "chunk_type": "function",
+    "name": "push_user_type_name",
+    "fqn": "push_user_type_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/kotlin.rs",
+    "chunk_type": "function",
+    "name": "strip_generics",
+    "fqn": "strip_generics"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/lua.rs",
+    "chunk_type": "constant",
+    "name": "EMPTY_QUERIES",
+    "fqn": "EMPTY_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/lua.rs",
+    "chunk_type": "constant",
+    "name": "LUA",
+    "fqn": "LUA"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/lua.rs",
+    "chunk_type": "function",
+    "name": "language",
+    "fqn": "language"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/lua.rs",
+    "chunk_type": "function",
+    "name": "lua_resolve_call_name",
+    "fqn": "lua_resolve_call_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/lua.rs",
+    "chunk_type": "function",
+    "name": "lua_resolve_fqn",
+    "fqn": "lua_resolve_fqn"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/lua.rs",
+    "chunk_type": "function",
+    "name": "lua_resolve_import_specifier",
+    "fqn": "lua_resolve_import_specifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/lua.rs",
+    "chunk_type": "function",
+    "name": "lua_resolve_module_path",
+    "fqn": "lua_resolve_module_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/lua.rs",
+    "chunk_type": "function",
+    "name": "lua_resolve_name",
+    "fqn": "lua_resolve_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/lua.rs",
+    "chunk_type": "function",
+    "name": "lua_should_recurse",
+    "fqn": "lua_should_recurse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/lua.rs",
+    "chunk_type": "function",
+    "name": "lua_visibility",
+    "fqn": "lua_visibility"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/luau.rs",
+    "chunk_type": "constant",
+    "name": "EMPTY_QUERIES",
+    "fqn": "EMPTY_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/luau.rs",
+    "chunk_type": "constant",
+    "name": "LUAU",
+    "fqn": "LUAU"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/luau.rs",
+    "chunk_type": "function",
+    "name": "language",
+    "fqn": "language"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/luau.rs",
+    "chunk_type": "function",
+    "name": "luau_resolve_call_name",
+    "fqn": "luau_resolve_call_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/luau.rs",
+    "chunk_type": "function",
+    "name": "luau_resolve_fqn",
+    "fqn": "luau_resolve_fqn"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/luau.rs",
+    "chunk_type": "function",
+    "name": "luau_resolve_import_specifier",
+    "fqn": "luau_resolve_import_specifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/luau.rs",
+    "chunk_type": "function",
+    "name": "luau_resolve_module_path",
+    "fqn": "luau_resolve_module_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/luau.rs",
+    "chunk_type": "function",
+    "name": "luau_resolve_name",
+    "fqn": "luau_resolve_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/luau.rs",
+    "chunk_type": "function",
+    "name": "luau_should_recurse",
+    "fqn": "luau_should_recurse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/luau.rs",
+    "chunk_type": "function",
+    "name": "luau_visibility",
+    "fqn": "luau_visibility"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/mod.rs",
+    "chunk_type": "module",
+    "name": "bash",
+    "fqn": "bash"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/mod.rs",
+    "chunk_type": "module",
+    "name": "c",
+    "fqn": "c"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/mod.rs",
+    "chunk_type": "module",
+    "name": "cpp",
+    "fqn": "cpp"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/mod.rs",
+    "chunk_type": "module",
+    "name": "csharp",
+    "fqn": "csharp"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/mod.rs",
+    "chunk_type": "module",
+    "name": "dart",
+    "fqn": "dart"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/mod.rs",
+    "chunk_type": "module",
+    "name": "go",
+    "fqn": "go"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/mod.rs",
+    "chunk_type": "module",
+    "name": "java",
+    "fqn": "java"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/mod.rs",
+    "chunk_type": "module",
+    "name": "javascript",
+    "fqn": "javascript"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/mod.rs",
+    "chunk_type": "module",
+    "name": "kotlin",
+    "fqn": "kotlin"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/mod.rs",
+    "chunk_type": "module",
+    "name": "lua",
+    "fqn": "lua"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/mod.rs",
+    "chunk_type": "module",
+    "name": "luau",
+    "fqn": "luau"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/mod.rs",
+    "chunk_type": "module",
+    "name": "objc",
+    "fqn": "objc"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/mod.rs",
+    "chunk_type": "module",
+    "name": "php",
+    "fqn": "php"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/mod.rs",
+    "chunk_type": "module",
+    "name": "python",
+    "fqn": "python"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/mod.rs",
+    "chunk_type": "module",
+    "name": "ruby",
+    "fqn": "ruby"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/mod.rs",
+    "chunk_type": "module",
+    "name": "rust",
+    "fqn": "rust"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/mod.rs",
+    "chunk_type": "module",
+    "name": "scala",
+    "fqn": "scala"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/mod.rs",
+    "chunk_type": "module",
+    "name": "swift",
+    "fqn": "swift"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/mod.rs",
+    "chunk_type": "module",
+    "name": "typescript",
+    "fqn": "typescript"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/objc.rs",
+    "chunk_type": "constant",
+    "name": "EMPTY_QUERIES",
+    "fqn": "EMPTY_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/objc.rs",
+    "chunk_type": "constant",
+    "name": "OBJC",
+    "fqn": "OBJC"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/objc.rs",
+    "chunk_type": "function",
+    "name": "first_identifier",
+    "fqn": "first_identifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/objc.rs",
+    "chunk_type": "function",
+    "name": "innermost_identifier",
+    "fqn": "innermost_identifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/objc.rs",
+    "chunk_type": "function",
+    "name": "language",
+    "fqn": "language"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/objc.rs",
+    "chunk_type": "function",
+    "name": "objc_assemble_method_selector",
+    "fqn": "objc_assemble_method_selector"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/objc.rs",
+    "chunk_type": "function",
+    "name": "objc_is_static",
+    "fqn": "objc_is_static"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/objc.rs",
+    "chunk_type": "function",
+    "name": "objc_resolve_call_name",
+    "fqn": "objc_resolve_call_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/objc.rs",
+    "chunk_type": "function",
+    "name": "objc_resolve_fqn",
+    "fqn": "objc_resolve_fqn"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/objc.rs",
+    "chunk_type": "function",
+    "name": "objc_resolve_import_specifier",
+    "fqn": "objc_resolve_import_specifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/objc.rs",
+    "chunk_type": "function",
+    "name": "objc_resolve_module_path",
+    "fqn": "objc_resolve_module_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/objc.rs",
+    "chunk_type": "function",
+    "name": "objc_resolve_name",
+    "fqn": "objc_resolve_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/objc.rs",
+    "chunk_type": "function",
+    "name": "objc_should_recurse",
+    "fqn": "objc_should_recurse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/php.rs",
+    "chunk_type": "constant",
+    "name": "PHP",
+    "fqn": "PHP"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/php.rs",
+    "chunk_type": "constant",
+    "name": "PHP_FRAMEWORK_ROUTES",
+    "fqn": "PHP_FRAMEWORK_ROUTES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/php.rs",
+    "chunk_type": "constant",
+    "name": "PHP_QUERIES",
+    "fqn": "PHP_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/php.rs",
+    "chunk_type": "function",
+    "name": "clause_qualified_name",
+    "fqn": "clause_qualified_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/php.rs",
+    "chunk_type": "function",
+    "name": "language",
+    "fqn": "language"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/php.rs",
+    "chunk_type": "function",
+    "name": "php_resolve_call_name",
+    "fqn": "php_resolve_call_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/php.rs",
+    "chunk_type": "function",
+    "name": "php_resolve_fqn",
+    "fqn": "php_resolve_fqn"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/php.rs",
+    "chunk_type": "function",
+    "name": "php_resolve_import_specifier",
+    "fqn": "php_resolve_import_specifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/php.rs",
+    "chunk_type": "function",
+    "name": "php_resolve_module_path",
+    "fqn": "php_resolve_module_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/php.rs",
+    "chunk_type": "function",
+    "name": "php_resolve_name",
+    "fqn": "php_resolve_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/php.rs",
+    "chunk_type": "function",
+    "name": "php_should_recurse",
+    "fqn": "php_should_recurse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/php.rs",
+    "chunk_type": "function",
+    "name": "php_visibility",
+    "fqn": "php_visibility"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/python.rs",
+    "chunk_type": "constant",
+    "name": "PYTHON",
+    "fqn": "PYTHON"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/python.rs",
+    "chunk_type": "constant",
+    "name": "PYTHON_FRAMEWORK_ROUTES",
+    "fqn": "PYTHON_FRAMEWORK_ROUTES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/python.rs",
+    "chunk_type": "constant",
+    "name": "PYTHON_QUERIES",
+    "fqn": "PYTHON_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/python.rs",
+    "chunk_type": "function",
+    "name": "language",
+    "fqn": "language"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/python.rs",
+    "chunk_type": "function",
+    "name": "py_is_async",
+    "fqn": "py_is_async"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/python.rs",
+    "chunk_type": "function",
+    "name": "py_resolve_import_names",
+    "fqn": "py_resolve_import_names"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/python.rs",
+    "chunk_type": "function",
+    "name": "py_resolve_import_specifier",
+    "fqn": "py_resolve_import_specifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/python.rs",
+    "chunk_type": "function",
+    "name": "py_resolve_module_path",
+    "fqn": "py_resolve_module_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/python.rs",
+    "chunk_type": "function",
+    "name": "python_resolve_type_name",
+    "fqn": "python_resolve_type_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/python.rs",
+    "chunk_type": "function",
+    "name": "python_should_recurse",
+    "fqn": "python_should_recurse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/ruby.rs",
+    "chunk_type": "constant",
+    "name": "RUBY",
+    "fqn": "RUBY"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/ruby.rs",
+    "chunk_type": "constant",
+    "name": "RUBY_FRAMEWORK_ROUTES",
+    "fqn": "RUBY_FRAMEWORK_ROUTES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/ruby.rs",
+    "chunk_type": "constant",
+    "name": "RUBY_QUERIES",
+    "fqn": "RUBY_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/ruby.rs",
+    "chunk_type": "function",
+    "name": "language",
+    "fqn": "language"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/ruby.rs",
+    "chunk_type": "function",
+    "name": "ruby_resolve_call_name",
+    "fqn": "ruby_resolve_call_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/ruby.rs",
+    "chunk_type": "function",
+    "name": "ruby_resolve_fqn",
+    "fqn": "ruby_resolve_fqn"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/ruby.rs",
+    "chunk_type": "function",
+    "name": "ruby_resolve_import_specifier",
+    "fqn": "ruby_resolve_import_specifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/ruby.rs",
+    "chunk_type": "function",
+    "name": "ruby_resolve_module_path",
+    "fqn": "ruby_resolve_module_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/ruby.rs",
+    "chunk_type": "function",
+    "name": "ruby_should_recurse",
+    "fqn": "ruby_should_recurse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/ruby.rs",
+    "chunk_type": "function",
+    "name": "ruby_visibility",
+    "fqn": "ruby_visibility"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/rust.rs",
+    "chunk_type": "constant",
+    "name": "RUST",
+    "fqn": "RUST"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/rust.rs",
+    "chunk_type": "constant",
+    "name": "RUST_FRAMEWORK_ROUTES",
+    "fqn": "RUST_FRAMEWORK_ROUTES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/rust.rs",
+    "chunk_type": "constant",
+    "name": "RUST_QUERIES",
+    "fqn": "RUST_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/rust.rs",
+    "chunk_type": "function",
+    "name": "collect_use_leaves",
+    "fqn": "collect_use_leaves"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/rust.rs",
+    "chunk_type": "function",
+    "name": "language",
+    "fqn": "language"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/rust.rs",
+    "chunk_type": "function",
+    "name": "rust_is_async",
+    "fqn": "rust_is_async"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/rust.rs",
+    "chunk_type": "function",
+    "name": "rust_resolve_call_name",
+    "fqn": "rust_resolve_call_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/rust.rs",
+    "chunk_type": "function",
+    "name": "rust_resolve_import_names",
+    "fqn": "rust_resolve_import_names"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/rust.rs",
+    "chunk_type": "function",
+    "name": "rust_resolve_import_specifier",
+    "fqn": "rust_resolve_import_specifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/rust.rs",
+    "chunk_type": "function",
+    "name": "rust_resolve_module_path",
+    "fqn": "rust_resolve_module_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/rust.rs",
+    "chunk_type": "function",
+    "name": "rust_resolve_name",
+    "fqn": "rust_resolve_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/rust.rs",
+    "chunk_type": "function",
+    "name": "rust_resolve_supertypes",
+    "fqn": "rust_resolve_supertypes"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/rust.rs",
+    "chunk_type": "function",
+    "name": "rust_should_recurse",
+    "fqn": "rust_should_recurse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/rust.rs",
+    "chunk_type": "function",
+    "name": "rust_visibility",
+    "fqn": "rust_visibility"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/rust.rs",
+    "chunk_type": "function",
+    "name": "use_path_leaf_name",
+    "fqn": "use_path_leaf_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/scala.rs",
+    "chunk_type": "constant",
+    "name": "EMPTY_QUERIES",
+    "fqn": "EMPTY_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/scala.rs",
+    "chunk_type": "constant",
+    "name": "SCALA",
+    "fqn": "SCALA"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/scala.rs",
+    "chunk_type": "function",
+    "name": "callee_trailing_name",
+    "fqn": "callee_trailing_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/scala.rs",
+    "chunk_type": "function",
+    "name": "language",
+    "fqn": "language"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/scala.rs",
+    "chunk_type": "function",
+    "name": "scala_resolve_call_name",
+    "fqn": "scala_resolve_call_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/scala.rs",
+    "chunk_type": "function",
+    "name": "scala_resolve_fqn",
+    "fqn": "scala_resolve_fqn"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/scala.rs",
+    "chunk_type": "function",
+    "name": "scala_resolve_import_specifier",
+    "fqn": "scala_resolve_import_specifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/scala.rs",
+    "chunk_type": "function",
+    "name": "scala_resolve_module_path",
+    "fqn": "scala_resolve_module_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/scala.rs",
+    "chunk_type": "function",
+    "name": "scala_resolve_supertypes",
+    "fqn": "scala_resolve_supertypes"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/scala.rs",
+    "chunk_type": "function",
+    "name": "scala_should_recurse",
+    "fqn": "scala_should_recurse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/scala.rs",
+    "chunk_type": "function",
+    "name": "scala_strip_generics",
+    "fqn": "scala_strip_generics"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/scala.rs",
+    "chunk_type": "function",
+    "name": "scala_visibility",
+    "fqn": "scala_visibility"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/swift.rs",
+    "chunk_type": "constant",
+    "name": "EMPTY_QUERIES",
+    "fqn": "EMPTY_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/swift.rs",
+    "chunk_type": "constant",
+    "name": "SWIFT",
+    "fqn": "SWIFT"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/swift.rs",
+    "chunk_type": "function",
+    "name": "language",
+    "fqn": "language"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/swift.rs",
+    "chunk_type": "function",
+    "name": "swift_refine_category",
+    "fqn": "swift_refine_category"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/swift.rs",
+    "chunk_type": "function",
+    "name": "swift_resolve_call_name",
+    "fqn": "swift_resolve_call_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/swift.rs",
+    "chunk_type": "function",
+    "name": "swift_resolve_fqn",
+    "fqn": "swift_resolve_fqn"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/swift.rs",
+    "chunk_type": "function",
+    "name": "swift_resolve_import_specifier",
+    "fqn": "swift_resolve_import_specifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/swift.rs",
+    "chunk_type": "function",
+    "name": "swift_resolve_module_path",
+    "fqn": "swift_resolve_module_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/swift.rs",
+    "chunk_type": "function",
+    "name": "swift_resolve_name",
+    "fqn": "swift_resolve_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/swift.rs",
+    "chunk_type": "function",
+    "name": "swift_resolve_supertypes",
+    "fqn": "swift_resolve_supertypes"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/swift.rs",
+    "chunk_type": "function",
+    "name": "swift_should_recurse",
+    "fqn": "swift_should_recurse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/swift.rs",
+    "chunk_type": "function",
+    "name": "swift_strip_generics",
+    "fqn": "swift_strip_generics"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/swift.rs",
+    "chunk_type": "function",
+    "name": "swift_visibility",
+    "fqn": "swift_visibility"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/typescript.rs",
+    "chunk_type": "constant",
+    "name": "TSX",
+    "fqn": "TSX"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/typescript.rs",
+    "chunk_type": "constant",
+    "name": "TSX_FRAMEWORK_ROUTES",
+    "fqn": "TSX_FRAMEWORK_ROUTES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/typescript.rs",
+    "chunk_type": "constant",
+    "name": "TSX_QUERIES",
+    "fqn": "TSX_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/typescript.rs",
+    "chunk_type": "constant",
+    "name": "TS_FRAMEWORK_ROUTES",
+    "fqn": "TS_FRAMEWORK_ROUTES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/typescript.rs",
+    "chunk_type": "constant",
+    "name": "TS_QUERIES",
+    "fqn": "TS_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/typescript.rs",
+    "chunk_type": "constant",
+    "name": "TYPESCRIPT",
+    "fqn": "TYPESCRIPT"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/typescript.rs",
+    "chunk_type": "function",
+    "name": "extract_ts_type_name",
+    "fqn": "extract_ts_type_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/typescript.rs",
+    "chunk_type": "function",
+    "name": "language",
+    "fqn": "language"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/typescript.rs",
+    "chunk_type": "function",
+    "name": "language_tsx",
+    "fqn": "language_tsx"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/typescript.rs",
+    "chunk_type": "function",
+    "name": "ts_is_async",
+    "fqn": "ts_is_async"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/typescript.rs",
+    "chunk_type": "function",
+    "name": "ts_is_exported",
+    "fqn": "ts_is_exported"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/typescript.rs",
+    "chunk_type": "function",
+    "name": "ts_is_static",
+    "fqn": "ts_is_static"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/typescript.rs",
+    "chunk_type": "function",
+    "name": "ts_resolve_import_names",
+    "fqn": "ts_resolve_import_names"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/typescript.rs",
+    "chunk_type": "function",
+    "name": "ts_resolve_import_specifier",
+    "fqn": "ts_resolve_import_specifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/typescript.rs",
+    "chunk_type": "function",
+    "name": "ts_resolve_module_path",
+    "fqn": "ts_resolve_module_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/typescript.rs",
+    "chunk_type": "function",
+    "name": "ts_resolve_name",
+    "fqn": "ts_resolve_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/typescript.rs",
+    "chunk_type": "function",
+    "name": "ts_resolve_supertypes",
+    "fqn": "ts_resolve_supertypes"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/typescript.rs",
+    "chunk_type": "function",
+    "name": "ts_should_recurse",
+    "fqn": "ts_should_recurse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/typescript.rs",
+    "chunk_type": "function",
+    "name": "ts_should_skip_call",
+    "fqn": "ts_should_skip_call"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/typescript.rs",
+    "chunk_type": "function",
+    "name": "ts_type_leaf_name",
+    "fqn": "ts_type_leaf_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/languages/typescript.rs",
+    "chunk_type": "function",
+    "name": "ts_visibility",
+    "fqn": "ts_visibility"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/mod.rs",
+    "chunk_type": "module",
+    "name": "corpus_snapshot",
+    "fqn": "corpus_snapshot"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/mod.rs",
+    "chunk_type": "module",
+    "name": "golden",
+    "fqn": "golden"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/mod.rs",
+    "chunk_type": "module",
+    "name": "languages",
+    "fqn": "languages"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/mod.rs",
+    "chunk_type": "module",
+    "name": "parser_pool",
+    "fqn": "parser_pool"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/mod.rs",
+    "chunk_type": "module",
+    "name": "query_cache",
+    "fqn": "query_cache"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/mod.rs",
+    "chunk_type": "module",
+    "name": "registry",
+    "fqn": "registry"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/mod.rs",
+    "chunk_type": "module",
+    "name": "resolution",
+    "fqn": "resolution"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/mod.rs",
+    "chunk_type": "module",
+    "name": "special",
+    "fqn": "special"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/mod.rs",
+    "chunk_type": "module",
+    "name": "types",
+    "fqn": "types"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/mod.rs",
+    "chunk_type": "module",
+    "name": "walker",
+    "fqn": "walker"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/mod.rs",
+    "chunk_type": "module",
+    "name": "walker_helpers",
+    "fqn": "walker_helpers"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/parser_pool.rs",
+    "chunk_type": "constant",
+    "name": "EMPTY_QUERIES",
+    "fqn": "tests.EMPTY_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/parser_pool.rs",
+    "chunk_type": "constant",
+    "name": "INIT_COUNT",
+    "fqn": "tests.INIT_COUNT"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/parser_pool.rs",
+    "chunk_type": "constant",
+    "name": "TEST_LANG",
+    "fqn": "tests.TEST_LANG"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/parser_pool.rs",
+    "chunk_type": "function",
+    "name": "parse_with",
+    "fqn": "parse_with"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/parser_pool.rs",
+    "chunk_type": "function",
+    "name": "parser_initialized_once_per_thread",
+    "fqn": "tests.parser_initialized_once_per_thread"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/parser_pool.rs",
+    "chunk_type": "function",
+    "name": "ts_language",
+    "fqn": "tests.ts_language"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/parser_pool.rs",
+    "chunk_type": "function",
+    "name": "validate_languages",
+    "fqn": "validate_languages"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/parser_pool.rs",
+    "chunk_type": "module",
+    "name": "tests",
+    "fqn": "tests"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/query_cache.rs",
+    "chunk_type": "constant",
+    "name": "SAMPLE",
+    "fqn": "tests.SAMPLE"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/query_cache.rs",
+    "chunk_type": "function",
+    "name": "compile",
+    "fqn": "QueryDef.compile"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/query_cache.rs",
+    "chunk_type": "function",
+    "name": "compiles_lazily_and_caches",
+    "fqn": "tests.compiles_lazily_and_caches"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/query_cache.rs",
+    "chunk_type": "function",
+    "name": "surfaces_query_compile_error",
+    "fqn": "tests.surfaces_query_compile_error"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/query_cache.rs",
+    "chunk_type": "module",
+    "name": "tests",
+    "fqn": "tests"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "BASH_EXTRACTOR",
+    "fqn": "BASH_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "CARGO_TOML_EXTRACTOR",
+    "fqn": "CARGO_TOML_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "CPP_EXTRACTOR",
+    "fqn": "CPP_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "CSHARP_EXTRACTOR",
+    "fqn": "CSHARP_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "C_EXTRACTOR",
+    "fqn": "C_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "DART_EXTRACTOR",
+    "fqn": "DART_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "DOCKERFILE_EXTRACTOR",
+    "fqn": "DOCKERFILE_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "DRUPAL_ROUTING_EXTRACTOR",
+    "fqn": "DRUPAL_ROUTING_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "EXTRACTORS",
+    "fqn": "EXTRACTORS"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "FALLBACK_EXTRACTOR",
+    "fqn": "FALLBACK_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "GITLAB_CI_EXTRACTOR",
+    "fqn": "GITLAB_CI_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "GO_EXTRACTOR",
+    "fqn": "GO_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "HCL_EXTRACTOR",
+    "fqn": "HCL_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "JAVASCRIPT_EXTRACTOR",
+    "fqn": "JAVASCRIPT_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "JAVA_EXTRACTOR",
+    "fqn": "JAVA_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "KOTLIN_EXTRACTOR",
+    "fqn": "KOTLIN_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "LUAU_EXTRACTOR",
+    "fqn": "LUAU_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "LUA_EXTRACTOR",
+    "fqn": "LUA_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "MAKEFILE_EXTRACTOR",
+    "fqn": "MAKEFILE_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "MARKDOWN_EXTRACTOR",
+    "fqn": "MARKDOWN_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "MUSTACHE_EXTRACTOR",
+    "fqn": "MUSTACHE_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "NGINX_EXTRACTOR",
+    "fqn": "NGINX_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "OBJC_EXTRACTOR",
+    "fqn": "OBJC_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "PACKAGE_JSON_EXTRACTOR",
+    "fqn": "PACKAGE_JSON_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "PHP_EXTRACTOR",
+    "fqn": "PHP_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "PYPROJECT_TOML_EXTRACTOR",
+    "fqn": "PYPROJECT_TOML_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "PYTHON_EXTRACTOR",
+    "fqn": "PYTHON_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "RUBY_EXTRACTOR",
+    "fqn": "RUBY_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "RUST_EXTRACTOR",
+    "fqn": "RUST_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "SCALA_EXTRACTOR",
+    "fqn": "SCALA_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "SWIFT_EXTRACTOR",
+    "fqn": "SWIFT_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "TSX_EXTRACTOR",
+    "fqn": "TSX_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "TS_EXTRACTOR",
+    "fqn": "TS_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "constant",
+    "name": "VUE_EXTRACTOR",
+    "fqn": "VUE_EXTRACTOR"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "function",
+    "name": "drupal_routing_yml_dispatch",
+    "fqn": "tests.drupal_routing_yml_dispatch"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "function",
+    "name": "extractor_extensions",
+    "fqn": "extractor_extensions"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "function",
+    "name": "extractor_filenames",
+    "fqn": "extractor_filenames"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "function",
+    "name": "extractor_suffixes",
+    "fqn": "extractor_suffixes"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "function",
+    "name": "header_maps_to_cpp",
+    "fqn": "tests.header_maps_to_cpp"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "function",
+    "name": "lookup_for_path",
+    "fqn": "lookup_for_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "function",
+    "name": "name_of",
+    "fqn": "tests.name_of"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "function",
+    "name": "plain_yml_not_hijacked_by_drupal_routing",
+    "fqn": "tests.plain_yml_not_hijacked_by_drupal_routing"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "function",
+    "name": "resolves_known_extensions",
+    "fqn": "tests.resolves_known_extensions"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "function",
+    "name": "tree_sitter_languages",
+    "fqn": "tree_sitter_languages"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "function",
+    "name": "tree_sitter_languages_yields_ten",
+    "fqn": "tests.tree_sitter_languages_yields_ten"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "function",
+    "name": "unknown_falls_back",
+    "fqn": "tests.unknown_falls_back"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/registry.rs",
+    "chunk_type": "module",
+    "name": "tests",
+    "fqn": "tests"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/chunk_index.rs",
+    "chunk_type": "function",
+    "name": "build_from",
+    "fqn": "ChunkIndex.build_from"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/chunk_index.rs",
+    "chunk_type": "function",
+    "name": "call_edge",
+    "fqn": "tests.call_edge"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/chunk_index.rs",
+    "chunk_type": "function",
+    "name": "import_scoped_ambiguous_within_imports_falls_through",
+    "fqn": "tests.import_scoped_ambiguous_within_imports_falls_through"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/chunk_index.rs",
+    "chunk_type": "function",
+    "name": "insert",
+    "fqn": "ChunkIndex.insert"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/chunk_index.rs",
+    "chunk_type": "function",
+    "name": "no_imports",
+    "fqn": "tests.no_imports"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/chunk_index.rs",
+    "chunk_type": "function",
+    "name": "resolve_call_edge",
+    "fqn": "resolve_call_edge"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/chunk_index.rs",
+    "chunk_type": "function",
+    "name": "same_file_shadows_import_scoped",
+    "fqn": "tests.same_file_shadows_import_scoped"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/chunk_index.rs",
+    "chunk_type": "function",
+    "name": "tier1_aliased_import_bridges_to_source",
+    "fqn": "tests.tier1_aliased_import_bridges_to_source"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/chunk_index.rs",
+    "chunk_type": "function",
+    "name": "tier1_import_resolved",
+    "fqn": "tests.tier1_import_resolved"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/chunk_index.rs",
+    "chunk_type": "function",
+    "name": "tier2_same_file",
+    "fqn": "tests.tier2_same_file"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/chunk_index.rs",
+    "chunk_type": "function",
+    "name": "tier3_ambiguous_drops",
+    "fqn": "tests.tier3_ambiguous_drops"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/chunk_index.rs",
+    "chunk_type": "function",
+    "name": "tier3_import_scoped_disambiguates",
+    "fqn": "tests.tier3_import_scoped_disambiguates"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/chunk_index.rs",
+    "chunk_type": "function",
+    "name": "tier3_repo_unique",
+    "fqn": "tests.tier3_repo_unique"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/chunk_index.rs",
+    "chunk_type": "module",
+    "name": "tests",
+    "fqn": "tests"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/chunk_index.rs",
+    "chunk_type": "struct",
+    "name": "ChunkIndex",
+    "fqn": "ChunkIndex"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/chunk_index.rs",
+    "chunk_type": "struct",
+    "name": "ResolvedEdge",
+    "fqn": "ResolvedEdge"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/chunk_index.rs",
+    "chunk_type": "type",
+    "name": "ImportMap",
+    "fqn": "ImportMap"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/edge_resolver.rs",
+    "chunk_type": "function",
+    "name": "drops_call_with_no_enclosing_chunk",
+    "fqn": "tests.drops_call_with_no_enclosing_chunk"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/edge_resolver.rs",
+    "chunk_type": "function",
+    "name": "resolve_edges",
+    "fqn": "resolve_edges"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/edge_resolver.rs",
+    "chunk_type": "function",
+    "name": "resolves_call_via_enclosing_lookup",
+    "fqn": "tests.resolves_call_via_enclosing_lookup"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/edge_resolver.rs",
+    "chunk_type": "module",
+    "name": "tests",
+    "fqn": "tests"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/mod.rs",
+    "chunk_type": "module",
+    "name": "chunk_index",
+    "fqn": "chunk_index"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/mod.rs",
+    "chunk_type": "module",
+    "name": "edge_resolver",
+    "fqn": "edge_resolver"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/resolution/mod.rs",
+    "chunk_type": "module",
+    "name": "module_path",
+    "fqn": "module_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/cargo_toml.rs",
+    "chunk_type": "constant",
+    "name": "CARGO_TOML",
+    "fqn": "CARGO_TOML"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/cargo_toml.rs",
+    "chunk_type": "constant",
+    "name": "DEP_GROUPS",
+    "fqn": "DEP_GROUPS"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/cargo_toml.rs",
+    "chunk_type": "function",
+    "name": "dep_requirement",
+    "fqn": "dep_requirement"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/cargo_toml.rs",
+    "chunk_type": "function",
+    "name": "emit_dep_edges",
+    "fqn": "emit_dep_edges"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/cargo_toml.rs",
+    "chunk_type": "function",
+    "name": "extensions",
+    "fqn": "CargoTomlExtractor.extensions"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/cargo_toml.rs",
+    "chunk_type": "function",
+    "name": "filename_matches",
+    "fqn": "CargoTomlExtractor.filename_matches"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/cargo_toml.rs",
+    "chunk_type": "function",
+    "name": "git_and_path_specifiers",
+    "fqn": "tests.git_and_path_specifiers"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/cargo_toml.rs",
+    "chunk_type": "function",
+    "name": "malformed_toml_degrades_to_empty",
+    "fqn": "tests.malformed_toml_degrades_to_empty"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/cargo_toml.rs",
+    "chunk_type": "function",
+    "name": "manifest_dir_name",
+    "fqn": "manifest_dir_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/cargo_toml.rs",
+    "chunk_type": "function",
+    "name": "name",
+    "fqn": "CargoTomlExtractor.name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/cargo_toml.rs",
+    "chunk_type": "function",
+    "name": "name_falls_back_to_manifest_dir",
+    "fqn": "tests.name_falls_back_to_manifest_dir"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/cargo_toml.rs",
+    "chunk_type": "function",
+    "name": "parse",
+    "fqn": "CargoTomlExtractor.parse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/cargo_toml.rs",
+    "chunk_type": "function",
+    "name": "parse_cargo_toml",
+    "fqn": "parse_cargo_toml"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/cargo_toml.rs",
+    "chunk_type": "function",
+    "name": "version_extracted_from_string_and_table_forms",
+    "fqn": "tests.version_extracted_from_string_and_table_forms"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/cargo_toml.rs",
+    "chunk_type": "module",
+    "name": "tests",
+    "fqn": "tests"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/cargo_toml.rs",
+    "chunk_type": "struct",
+    "name": "CargoTomlExtractor",
+    "fqn": "CargoTomlExtractor"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/dockerfile.rs",
+    "chunk_type": "constant",
+    "name": "DOCKERFILE",
+    "fqn": "DOCKERFILE"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/dockerfile.rs",
+    "chunk_type": "function",
+    "name": "copy_from_ref",
+    "fqn": "copy_from_ref"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/dockerfile.rs",
+    "chunk_type": "function",
+    "name": "ends_with_continuation",
+    "fqn": "ends_with_continuation"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/dockerfile.rs",
+    "chunk_type": "function",
+    "name": "extensions",
+    "fqn": "DockerfileExtractor.extensions"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/dockerfile.rs",
+    "chunk_type": "function",
+    "name": "file_stem",
+    "fqn": "file_stem"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/dockerfile.rs",
+    "chunk_type": "function",
+    "name": "filename_matches",
+    "fqn": "DockerfileExtractor.filename_matches"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/dockerfile.rs",
+    "chunk_type": "function",
+    "name": "instruction_meta",
+    "fqn": "instruction_meta"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/dockerfile.rs",
+    "chunk_type": "function",
+    "name": "lex_instructions",
+    "fqn": "lex_instructions"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/dockerfile.rs",
+    "chunk_type": "function",
+    "name": "name",
+    "fqn": "DockerfileExtractor.name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/dockerfile.rs",
+    "chunk_type": "function",
+    "name": "parse",
+    "fqn": "DockerfileExtractor.parse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/dockerfile.rs",
+    "chunk_type": "function",
+    "name": "parse_dockerfile",
+    "fqn": "parse_dockerfile"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/dockerfile.rs",
+    "chunk_type": "function",
+    "name": "parse_from_args",
+    "fqn": "parse_from_args"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/dockerfile.rs",
+    "chunk_type": "function",
+    "name": "run_mount_from_ref",
+    "fqn": "run_mount_from_ref"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/dockerfile.rs",
+    "chunk_type": "function",
+    "name": "strip_continuation",
+    "fqn": "strip_continuation"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/dockerfile.rs",
+    "chunk_type": "struct",
+    "name": "DockerfileExtractor",
+    "fqn": "DockerfileExtractor"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/dockerfile.rs",
+    "chunk_type": "struct",
+    "name": "Instruction",
+    "fqn": "Instruction"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "constant",
+    "name": "DRUPAL_ROUTING",
+    "fqn": "DRUPAL_ROUTING"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "constant",
+    "name": "HANDLER_KEYS",
+    "fqn": "HANDLER_KEYS"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "constant",
+    "name": "SAMPLE",
+    "fqn": "tests.SAMPLE"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "function",
+    "name": "drupal_routing_no_path_skipped",
+    "fqn": "tests.drupal_routing_no_path_skipped"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "function",
+    "name": "drupal_routing_routes_to_controller_method",
+    "fqn": "tests.drupal_routing_routes_to_controller_method"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "function",
+    "name": "drupal_routing_routes_to_form_class",
+    "fqn": "tests.drupal_routing_routes_to_form_class"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "function",
+    "name": "drupal_routing_source_byterange_inside_chunk",
+    "fqn": "tests.drupal_routing_source_byterange_inside_chunk"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "function",
+    "name": "drupal_routing_two_route_chunks",
+    "fqn": "tests.drupal_routing_two_route_chunks"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "function",
+    "name": "extensions",
+    "fqn": "DrupalRouting.extensions"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "function",
+    "name": "extract_handler",
+    "fqn": "extract_handler"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "function",
+    "name": "extract_handler_short",
+    "fqn": "extract_handler_short"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "function",
+    "name": "extract_handler_short_controller",
+    "fqn": "tests.extract_handler_short_controller"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "function",
+    "name": "extract_handler_short_form",
+    "fqn": "tests.extract_handler_short_form"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "function",
+    "name": "extract_path",
+    "fqn": "extract_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "function",
+    "name": "filename_matches",
+    "fqn": "DrupalRouting.filename_matches"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "function",
+    "name": "find_routes",
+    "fqn": "find_routes"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "function",
+    "name": "name",
+    "fqn": "DrupalRouting.name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "function",
+    "name": "parse",
+    "fqn": "DrupalRouting.parse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "function",
+    "name": "parse_drupal_routing",
+    "fqn": "parse_drupal_routing"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "function",
+    "name": "path_suffix_matches",
+    "fqn": "DrupalRouting.path_suffix_matches"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "function",
+    "name": "split_lines",
+    "fqn": "split_lines"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "function",
+    "name": "strip_comment",
+    "fqn": "strip_comment"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "function",
+    "name": "top_level_route_key",
+    "fqn": "top_level_route_key"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "function",
+    "name": "unquote",
+    "fqn": "unquote"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "module",
+    "name": "tests",
+    "fqn": "tests"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "struct",
+    "name": "DrupalRouting",
+    "fqn": "DrupalRouting"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "struct",
+    "name": "Line",
+    "fqn": "Line"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/drupal_routing.rs",
+    "chunk_type": "struct",
+    "name": "RouteBlock",
+    "fqn": "RouteBlock"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/fallback.rs",
+    "chunk_type": "constant",
+    "name": "FALLBACK",
+    "fqn": "FALLBACK"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/fallback.rs",
+    "chunk_type": "function",
+    "name": "extensions",
+    "fqn": "FallbackExtractor.extensions"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/fallback.rs",
+    "chunk_type": "function",
+    "name": "fallback_emits_single_document_chunk",
+    "fqn": "tests.fallback_emits_single_document_chunk"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/fallback.rs",
+    "chunk_type": "function",
+    "name": "fallback_handles_empty_source",
+    "fqn": "tests.fallback_handles_empty_source"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/fallback.rs",
+    "chunk_type": "function",
+    "name": "name",
+    "fqn": "FallbackExtractor.name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/fallback.rs",
+    "chunk_type": "function",
+    "name": "parse",
+    "fqn": "FallbackExtractor.parse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/fallback.rs",
+    "chunk_type": "module",
+    "name": "tests",
+    "fqn": "tests"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/fallback.rs",
+    "chunk_type": "struct",
+    "name": "FallbackExtractor",
+    "fqn": "FallbackExtractor"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "constant",
+    "name": "GITLAB_CI",
+    "fqn": "GITLAB_CI"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "constant",
+    "name": "GLOBAL_KEYWORDS",
+    "fqn": "GLOBAL_KEYWORDS"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "function",
+    "name": "collect_key_values",
+    "fqn": "collect_key_values"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "function",
+    "name": "emit_dag_edges",
+    "fqn": "emit_dag_edges"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "function",
+    "name": "emit_include_edges",
+    "fqn": "emit_include_edges"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "function",
+    "name": "extensions",
+    "fqn": "GitlabCiExtractor.extensions"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "function",
+    "name": "file_stem",
+    "fqn": "file_stem"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "function",
+    "name": "filename_matches",
+    "fqn": "GitlabCiExtractor.filename_matches"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "function",
+    "name": "find_top_keys",
+    "fqn": "find_top_keys"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "function",
+    "name": "indent_of",
+    "fqn": "indent_of"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "function",
+    "name": "is_global_keyword",
+    "fqn": "is_global_keyword"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "function",
+    "name": "name",
+    "fqn": "GitlabCiExtractor.name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "function",
+    "name": "parse",
+    "fqn": "GitlabCiExtractor.parse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "function",
+    "name": "parse_flow_list",
+    "fqn": "parse_flow_list"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "function",
+    "name": "parse_gitlab_ci",
+    "fqn": "parse_gitlab_ci"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "function",
+    "name": "parse_list_item",
+    "fqn": "parse_list_item"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "function",
+    "name": "relation_meta",
+    "fqn": "relation_meta"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "function",
+    "name": "split_lines",
+    "fqn": "split_lines"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "function",
+    "name": "strip_comment",
+    "fqn": "strip_comment"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "function",
+    "name": "top_level_key",
+    "fqn": "top_level_key"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "function",
+    "name": "unquote",
+    "fqn": "unquote"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "struct",
+    "name": "GitlabCiExtractor",
+    "fqn": "GitlabCiExtractor"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "struct",
+    "name": "Line",
+    "fqn": "Line"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/gitlab_ci.rs",
+    "chunk_type": "struct",
+    "name": "TopKey",
+    "fqn": "TopKey"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "constant",
+    "name": "HCL",
+    "fqn": "HCL"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "constant",
+    "name": "RESERVED_SCOPES",
+    "fqn": "RESERVED_SCOPES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "enum",
+    "name": "TokKind",
+    "fqn": "TokKind"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "function",
+    "name": "collect_references",
+    "fqn": "collect_references"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "function",
+    "name": "emit_blocks",
+    "fqn": "emit_blocks"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "function",
+    "name": "extensions",
+    "fqn": "HclExtractor.extensions"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "function",
+    "name": "filename_matches",
+    "fqn": "HclExtractor.filename_matches"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "function",
+    "name": "is_ident_byte",
+    "fqn": "is_ident_byte"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "function",
+    "name": "is_ident_start",
+    "fqn": "is_ident_start"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "function",
+    "name": "is_type_ident",
+    "fqn": "is_type_ident"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "function",
+    "name": "name",
+    "fqn": "HclExtractor.name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "function",
+    "name": "parse",
+    "fqn": "HclExtractor.parse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "function",
+    "name": "parse_block_body",
+    "fqn": "parse_block_body"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "function",
+    "name": "parse_hcl",
+    "fqn": "parse_hcl"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "function",
+    "name": "parse_level",
+    "fqn": "parse_level"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "function",
+    "name": "ref_kind_meta",
+    "fqn": "ref_kind_meta"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "function",
+    "name": "relation_meta",
+    "fqn": "relation_meta"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "function",
+    "name": "scan_references",
+    "fqn": "scan_references"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "function",
+    "name": "skip_attribute_value",
+    "fqn": "skip_attribute_value"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "function",
+    "name": "tokenize",
+    "fqn": "tokenize"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "function",
+    "name": "try_reference",
+    "fqn": "try_reference"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "function",
+    "name": "unquote",
+    "fqn": "unquote"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "struct",
+    "name": "Attribute",
+    "fqn": "Attribute"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "struct",
+    "name": "Block",
+    "fqn": "Block"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "struct",
+    "name": "HclExtractor",
+    "fqn": "HclExtractor"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "struct",
+    "name": "Reference",
+    "fqn": "Reference"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/hcl.rs",
+    "chunk_type": "struct",
+    "name": "Token",
+    "fqn": "Token"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/makefile.rs",
+    "chunk_type": "constant",
+    "name": "MAKEFILE",
+    "fqn": "MAKEFILE"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/makefile.rs",
+    "chunk_type": "function",
+    "name": "ends_with_continuation",
+    "fqn": "ends_with_continuation"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/makefile.rs",
+    "chunk_type": "function",
+    "name": "extensions",
+    "fqn": "MakefileExtractor.extensions"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/makefile.rs",
+    "chunk_type": "function",
+    "name": "file_stem",
+    "fqn": "file_stem"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/makefile.rs",
+    "chunk_type": "function",
+    "name": "filename_matches",
+    "fqn": "MakefileExtractor.filename_matches"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/makefile.rs",
+    "chunk_type": "function",
+    "name": "is_special_target",
+    "fqn": "is_special_target"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/makefile.rs",
+    "chunk_type": "function",
+    "name": "name",
+    "fqn": "MakefileExtractor.name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/makefile.rs",
+    "chunk_type": "function",
+    "name": "parse",
+    "fqn": "MakefileExtractor.parse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/makefile.rs",
+    "chunk_type": "function",
+    "name": "parse_include",
+    "fqn": "parse_include"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/makefile.rs",
+    "chunk_type": "function",
+    "name": "parse_makefile",
+    "fqn": "parse_makefile"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/makefile.rs",
+    "chunk_type": "function",
+    "name": "relation_meta",
+    "fqn": "relation_meta"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/makefile.rs",
+    "chunk_type": "function",
+    "name": "split_rule",
+    "fqn": "split_rule"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/makefile.rs",
+    "chunk_type": "function",
+    "name": "strip_comment",
+    "fqn": "strip_comment"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/makefile.rs",
+    "chunk_type": "function",
+    "name": "strip_continuation",
+    "fqn": "strip_continuation"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/makefile.rs",
+    "chunk_type": "struct",
+    "name": "LogicalLine",
+    "fqn": "LogicalLine"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/makefile.rs",
+    "chunk_type": "struct",
+    "name": "MakefileExtractor",
+    "fqn": "MakefileExtractor"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/makefile.rs",
+    "chunk_type": "struct",
+    "name": "PhysLine",
+    "fqn": "PhysLine"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/markdown.rs",
+    "chunk_type": "constant",
+    "name": "MARKDOWN",
+    "fqn": "MARKDOWN"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/markdown.rs",
+    "chunk_type": "function",
+    "name": "emit",
+    "fqn": "emit"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/markdown.rs",
+    "chunk_type": "function",
+    "name": "extensions",
+    "fqn": "MarkdownExtractor.extensions"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/markdown.rs",
+    "chunk_type": "function",
+    "name": "name",
+    "fqn": "MarkdownExtractor.name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/markdown.rs",
+    "chunk_type": "function",
+    "name": "parse",
+    "fqn": "MarkdownExtractor.parse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/markdown.rs",
+    "chunk_type": "struct",
+    "name": "MarkdownExtractor",
+    "fqn": "MarkdownExtractor"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mod.rs",
+    "chunk_type": "module",
+    "name": "cargo_toml",
+    "fqn": "cargo_toml"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mod.rs",
+    "chunk_type": "module",
+    "name": "dockerfile",
+    "fqn": "dockerfile"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mod.rs",
+    "chunk_type": "module",
+    "name": "drupal_routing",
+    "fqn": "drupal_routing"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mod.rs",
+    "chunk_type": "module",
+    "name": "fallback",
+    "fqn": "fallback"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mod.rs",
+    "chunk_type": "module",
+    "name": "gitlab_ci",
+    "fqn": "gitlab_ci"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mod.rs",
+    "chunk_type": "module",
+    "name": "hcl",
+    "fqn": "hcl"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mod.rs",
+    "chunk_type": "module",
+    "name": "makefile",
+    "fqn": "makefile"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mod.rs",
+    "chunk_type": "module",
+    "name": "markdown",
+    "fqn": "markdown"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mod.rs",
+    "chunk_type": "module",
+    "name": "mustache",
+    "fqn": "mustache"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mod.rs",
+    "chunk_type": "module",
+    "name": "nginx",
+    "fqn": "nginx"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mod.rs",
+    "chunk_type": "module",
+    "name": "package_json",
+    "fqn": "package_json"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mod.rs",
+    "chunk_type": "module",
+    "name": "pyproject_toml",
+    "fqn": "pyproject_toml"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mod.rs",
+    "chunk_type": "module",
+    "name": "sections",
+    "fqn": "sections"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mod.rs",
+    "chunk_type": "module",
+    "name": "vue",
+    "fqn": "vue"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mustache.rs",
+    "chunk_type": "constant",
+    "name": "MUSTACHE",
+    "fqn": "MUSTACHE"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mustache.rs",
+    "chunk_type": "enum",
+    "name": "TagKind",
+    "fqn": "TagKind"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mustache.rs",
+    "chunk_type": "function",
+    "name": "classify",
+    "fqn": "classify"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mustache.rs",
+    "chunk_type": "function",
+    "name": "extensions",
+    "fqn": "MustacheExtractor.extensions"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mustache.rs",
+    "chunk_type": "function",
+    "name": "file_stem",
+    "fqn": "file_stem"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mustache.rs",
+    "chunk_type": "function",
+    "name": "find_subsequence",
+    "fqn": "find_subsequence"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mustache.rs",
+    "chunk_type": "function",
+    "name": "name",
+    "fqn": "MustacheExtractor.name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mustache.rs",
+    "chunk_type": "function",
+    "name": "parse",
+    "fqn": "MustacheExtractor.parse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mustache.rs",
+    "chunk_type": "function",
+    "name": "parse_mustache",
+    "fqn": "parse_mustache"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mustache.rs",
+    "chunk_type": "function",
+    "name": "scan_tags",
+    "fqn": "scan_tags"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mustache.rs",
+    "chunk_type": "struct",
+    "name": "MustacheExtractor",
+    "fqn": "MustacheExtractor"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mustache.rs",
+    "chunk_type": "struct",
+    "name": "OpenSection",
+    "fqn": "OpenSection"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/mustache.rs",
+    "chunk_type": "struct",
+    "name": "Tag",
+    "fqn": "Tag"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/nginx.rs",
+    "chunk_type": "constant",
+    "name": "NGINX",
+    "fqn": "NGINX"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/nginx.rs",
+    "chunk_type": "constant",
+    "name": "PASS_DIRECTIVES",
+    "fqn": "PASS_DIRECTIVES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/nginx.rs",
+    "chunk_type": "enum",
+    "name": "TokKind",
+    "fqn": "TokKind"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/nginx.rs",
+    "chunk_type": "function",
+    "name": "collect_upstreams",
+    "fqn": "collect_upstreams"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/nginx.rs",
+    "chunk_type": "function",
+    "name": "directive_meta",
+    "fqn": "directive_meta"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/nginx.rs",
+    "chunk_type": "function",
+    "name": "emit_blocks",
+    "fqn": "emit_blocks"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/nginx.rs",
+    "chunk_type": "function",
+    "name": "emit_directive_edge",
+    "fqn": "emit_directive_edge"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/nginx.rs",
+    "chunk_type": "function",
+    "name": "extensions",
+    "fqn": "NginxExtractor.extensions"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/nginx.rs",
+    "chunk_type": "function",
+    "name": "file_stem",
+    "fqn": "file_stem"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/nginx.rs",
+    "chunk_type": "function",
+    "name": "filename_matches",
+    "fqn": "NginxExtractor.filename_matches"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/nginx.rs",
+    "chunk_type": "function",
+    "name": "name",
+    "fqn": "NginxExtractor.name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/nginx.rs",
+    "chunk_type": "function",
+    "name": "parse",
+    "fqn": "NginxExtractor.parse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/nginx.rs",
+    "chunk_type": "function",
+    "name": "parse_level",
+    "fqn": "parse_level"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/nginx.rs",
+    "chunk_type": "function",
+    "name": "parse_nginx",
+    "fqn": "parse_nginx"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/nginx.rs",
+    "chunk_type": "function",
+    "name": "pass_host",
+    "fqn": "pass_host"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/nginx.rs",
+    "chunk_type": "function",
+    "name": "tokenize",
+    "fqn": "tokenize"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/nginx.rs",
+    "chunk_type": "function",
+    "name": "unquote",
+    "fqn": "unquote"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/nginx.rs",
+    "chunk_type": "struct",
+    "name": "Block",
+    "fqn": "Block"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/nginx.rs",
+    "chunk_type": "struct",
+    "name": "Directive",
+    "fqn": "Directive"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/nginx.rs",
+    "chunk_type": "struct",
+    "name": "NginxExtractor",
+    "fqn": "NginxExtractor"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/nginx.rs",
+    "chunk_type": "struct",
+    "name": "Token",
+    "fqn": "Token"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/package_json.rs",
+    "chunk_type": "constant",
+    "name": "DEP_GROUPS",
+    "fqn": "DEP_GROUPS"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/package_json.rs",
+    "chunk_type": "constant",
+    "name": "PACKAGE_JSON",
+    "fqn": "PACKAGE_JSON"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/package_json.rs",
+    "chunk_type": "function",
+    "name": "extensions",
+    "fqn": "PackageJsonExtractor.extensions"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/package_json.rs",
+    "chunk_type": "function",
+    "name": "filename_matches",
+    "fqn": "PackageJsonExtractor.filename_matches"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/package_json.rs",
+    "chunk_type": "function",
+    "name": "locate_key",
+    "fqn": "locate_key"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/package_json.rs",
+    "chunk_type": "function",
+    "name": "malformed_json_degrades_to_empty",
+    "fqn": "tests.malformed_json_degrades_to_empty"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/package_json.rs",
+    "chunk_type": "function",
+    "name": "name",
+    "fqn": "PackageJsonExtractor.name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/package_json.rs",
+    "chunk_type": "function",
+    "name": "name_falls_back_to_package_dir",
+    "fqn": "tests.name_falls_back_to_package_dir"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/package_json.rs",
+    "chunk_type": "function",
+    "name": "non_object_top_level_is_empty",
+    "fqn": "tests.non_object_top_level_is_empty"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/package_json.rs",
+    "chunk_type": "function",
+    "name": "package_dir_name",
+    "fqn": "package_dir_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/package_json.rs",
+    "chunk_type": "function",
+    "name": "parse",
+    "fqn": "PackageJsonExtractor.parse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/package_json.rs",
+    "chunk_type": "function",
+    "name": "parse_package_json",
+    "fqn": "parse_package_json"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/package_json.rs",
+    "chunk_type": "module",
+    "name": "tests",
+    "fqn": "tests"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/package_json.rs",
+    "chunk_type": "struct",
+    "name": "PackageJsonExtractor",
+    "fqn": "PackageJsonExtractor"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/pyproject_toml.rs",
+    "chunk_type": "constant",
+    "name": "PYPROJECT_TOML",
+    "fqn": "PYPROJECT_TOML"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/pyproject_toml.rs",
+    "chunk_type": "function",
+    "name": "emit_pep508_edges",
+    "fqn": "emit_pep508_edges"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/pyproject_toml.rs",
+    "chunk_type": "function",
+    "name": "extensions",
+    "fqn": "PyprojectTomlExtractor.extensions"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/pyproject_toml.rs",
+    "chunk_type": "function",
+    "name": "filename_matches",
+    "fqn": "PyprojectTomlExtractor.filename_matches"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/pyproject_toml.rs",
+    "chunk_type": "function",
+    "name": "malformed_toml_degrades_to_empty",
+    "fqn": "tests.malformed_toml_degrades_to_empty"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/pyproject_toml.rs",
+    "chunk_type": "function",
+    "name": "manifest_dir_name",
+    "fqn": "manifest_dir_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/pyproject_toml.rs",
+    "chunk_type": "function",
+    "name": "name",
+    "fqn": "PyprojectTomlExtractor.name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/pyproject_toml.rs",
+    "chunk_type": "function",
+    "name": "name_falls_back_to_manifest_dir",
+    "fqn": "tests.name_falls_back_to_manifest_dir"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/pyproject_toml.rs",
+    "chunk_type": "function",
+    "name": "parse",
+    "fqn": "PyprojectTomlExtractor.parse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/pyproject_toml.rs",
+    "chunk_type": "function",
+    "name": "parse_pyproject_toml",
+    "fqn": "parse_pyproject_toml"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/pyproject_toml.rs",
+    "chunk_type": "function",
+    "name": "pep508_name",
+    "fqn": "pep508_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/pyproject_toml.rs",
+    "chunk_type": "function",
+    "name": "pep508_name_parsing",
+    "fqn": "tests.pep508_name_parsing"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/pyproject_toml.rs",
+    "chunk_type": "function",
+    "name": "poetry_requirement",
+    "fqn": "poetry_requirement"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/pyproject_toml.rs",
+    "chunk_type": "function",
+    "name": "poetry_skips_python_and_handles_both_forms",
+    "fqn": "tests.poetry_skips_python_and_handles_both_forms"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/pyproject_toml.rs",
+    "chunk_type": "function",
+    "name": "push_import",
+    "fqn": "push_import"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/pyproject_toml.rs",
+    "chunk_type": "module",
+    "name": "tests",
+    "fqn": "tests"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/pyproject_toml.rs",
+    "chunk_type": "struct",
+    "name": "PyprojectTomlExtractor",
+    "fqn": "PyprojectTomlExtractor"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/sections.rs",
+    "chunk_type": "function",
+    "name": "build_tree",
+    "fqn": "build_tree"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/sections.rs",
+    "chunk_type": "function",
+    "name": "extract_tags",
+    "fqn": "extract_tags"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/sections.rs",
+    "chunk_type": "function",
+    "name": "parse_markdown_sections",
+    "fqn": "parse_markdown_sections"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/sections.rs",
+    "chunk_type": "struct",
+    "name": "FlatHeading",
+    "fqn": "FlatHeading"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/sections.rs",
+    "chunk_type": "struct",
+    "name": "RawSection",
+    "fqn": "RawSection"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/vue.rs",
+    "chunk_type": "constant",
+    "name": "VUE",
+    "fqn": "VUE"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/vue.rs",
+    "chunk_type": "function",
+    "name": "extensions",
+    "fqn": "VueExtractor.extensions"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/vue.rs",
+    "chunk_type": "function",
+    "name": "extract_script_block",
+    "fqn": "extract_script_block"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/vue.rs",
+    "chunk_type": "function",
+    "name": "name",
+    "fqn": "VueExtractor.name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/vue.rs",
+    "chunk_type": "function",
+    "name": "parse",
+    "fqn": "VueExtractor.parse"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/special/vue.rs",
+    "chunk_type": "struct",
+    "name": "VueExtractor",
+    "fqn": "VueExtractor"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "constant",
+    "name": "DEFAULT",
+    "fqn": "LanguageHooks.DEFAULT"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "enum",
+    "name": "ChunkCategory",
+    "fqn": "ChunkCategory"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "enum",
+    "name": "EdgeEndpoint",
+    "fqn": "EdgeEndpoint"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "enum",
+    "name": "EdgeKind",
+    "fqn": "EdgeKind"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "enum",
+    "name": "ExtractionError",
+    "fqn": "ExtractionError"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "enum",
+    "name": "ExtractorKind",
+    "fqn": "ExtractorKind"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "enum",
+    "name": "ImportSpec",
+    "fqn": "ImportSpec"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "enum",
+    "name": "MetadataValue",
+    "fqn": "MetadataValue"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "enum",
+    "name": "Provenance",
+    "fqn": "Provenance"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "enum",
+    "name": "ScopeKind",
+    "fqn": "ScopeKind"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "enum",
+    "name": "Visibility",
+    "fqn": "Visibility"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "function",
+    "name": "as_str",
+    "fqn": "ChunkCategory.as_str"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "function",
+    "name": "as_str",
+    "fqn": "Visibility.as_str"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "function",
+    "name": "filename_matches",
+    "fqn": "SpecialExtractor.filename_matches"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "function",
+    "name": "path_suffix_matches",
+    "fqn": "SpecialExtractor.path_suffix_matches"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "struct",
+    "name": "ChunkMetadata",
+    "fqn": "ChunkMetadata"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "struct",
+    "name": "EdgeMetadata",
+    "fqn": "EdgeMetadata"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "struct",
+    "name": "ExtractionOutput",
+    "fqn": "ExtractionOutput"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "struct",
+    "name": "LanguageConfig",
+    "fqn": "LanguageConfig"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "struct",
+    "name": "LanguageHooks",
+    "fqn": "LanguageHooks"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "struct",
+    "name": "LanguageQueries",
+    "fqn": "LanguageQueries"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "struct",
+    "name": "MethodReceiver",
+    "fqn": "MethodReceiver"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "struct",
+    "name": "QueryDef",
+    "fqn": "QueryDef"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "struct",
+    "name": "RawChunk",
+    "fqn": "RawChunk"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "struct",
+    "name": "RawEdge",
+    "fqn": "RawEdge"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "struct",
+    "name": "ScopeFrame",
+    "fqn": "ScopeFrame"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "trait",
+    "name": "SpecialExtractor",
+    "fqn": "SpecialExtractor"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "type",
+    "name": "BodyResolver",
+    "fqn": "BodyResolver"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "type",
+    "name": "CallNameResolver",
+    "fqn": "CallNameResolver"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "type",
+    "name": "CategoryRefiner",
+    "fqn": "CategoryRefiner"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "type",
+    "name": "FqnResolver",
+    "fqn": "FqnResolver"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "type",
+    "name": "ImportNamesResolver",
+    "fqn": "ImportNamesResolver"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "type",
+    "name": "ModulePathResolver",
+    "fqn": "ModulePathResolver"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "type",
+    "name": "NameResolver",
+    "fqn": "NameResolver"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "type",
+    "name": "NodePredicate",
+    "fqn": "NodePredicate"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "type",
+    "name": "ParamsResolver",
+    "fqn": "ParamsResolver"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "type",
+    "name": "ReceiverResolver",
+    "fqn": "ReceiverResolver"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "type",
+    "name": "RecurseGuard",
+    "fqn": "RecurseGuard"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "type",
+    "name": "ScopeResolver",
+    "fqn": "ScopeResolver"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "type",
+    "name": "ScopeStack",
+    "fqn": "ScopeStack"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "type",
+    "name": "SignatureExtractor",
+    "fqn": "SignatureExtractor"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "type",
+    "name": "SpecifierResolver",
+    "fqn": "SpecifierResolver"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "type",
+    "name": "SupertypeResolver",
+    "fqn": "SupertypeResolver"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "type",
+    "name": "TypeNameResolver",
+    "fqn": "TypeNameResolver"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "type",
+    "name": "TypeRefsResolver",
+    "fqn": "TypeRefsResolver"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/types.rs",
+    "chunk_type": "type",
+    "name": "VisibilityExtractor",
+    "fqn": "VisibilityExtractor"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "constant",
+    "name": "EMPTY_QUERIES",
+    "fqn": "tests.EMPTY_QUERIES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "constant",
+    "name": "MINIMAL_TS",
+    "fqn": "tests.MINIMAL_TS"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "constant",
+    "name": "TS_WITH_EDGES",
+    "fqn": "tests.TS_WITH_EDGES"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "call_pass",
+    "fqn": "call_pass"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "classify_chunk_kind",
+    "fqn": "classify_chunk_kind"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "container_fqn_is_not_self_referential",
+    "fqn": "tests.container_fqn_is_not_self_referential"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "default_type_name",
+    "fqn": "default_type_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "does_not_descend_into_function_body_by_default",
+    "fqn": "tests.does_not_descend_into_function_body_by_default"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extract",
+    "fqn": "extract"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extract_call_edge",
+    "fqn": "extract_call_edge"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extract_chunk",
+    "fqn": "extract_chunk"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extract_import_edge",
+    "fqn": "extract_import_edge"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extract_leading_doc",
+    "fqn": "extract_leading_doc"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extract_type_ref_edge",
+    "fqn": "extract_type_ref_edge"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extracts_axum_routes",
+    "fqn": "tests.extracts_axum_routes"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extracts_call_edge_inside_function_body",
+    "fqn": "tests.extracts_call_edge_inside_function_body"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extracts_csharp_type_refs",
+    "fqn": "tests.extracts_csharp_type_refs"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extracts_express_routes_js",
+    "fqn": "tests.extracts_express_routes_js"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extracts_express_routes_ts",
+    "fqn": "tests.extracts_express_routes_ts"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extracts_fastapi_routes_py",
+    "fqn": "tests.extracts_fastapi_routes_py"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extracts_gin_routes_go",
+    "fqn": "tests.extracts_gin_routes_go"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extracts_implements_edges",
+    "fqn": "tests.extracts_implements_edges"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extracts_import_edge",
+    "fqn": "tests.extracts_import_edge"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extracts_laravel_routes_php",
+    "fqn": "tests.extracts_laravel_routes_php"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extracts_nestjs_routes_ts",
+    "fqn": "tests.extracts_nestjs_routes_ts"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extracts_python_type_refs",
+    "fqn": "tests.extracts_python_type_refs"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extracts_rails_routes_rb",
+    "fqn": "tests.extracts_rails_routes_rb"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extracts_react_router_routes_js",
+    "fqn": "tests.extracts_react_router_routes_js"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extracts_react_router_routes_ts",
+    "fqn": "tests.extracts_react_router_routes_ts"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extracts_spring_routes_java",
+    "fqn": "tests.extracts_spring_routes_java"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extracts_top_level_class",
+    "fqn": "tests.extracts_top_level_class"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extracts_top_level_function",
+    "fqn": "tests.extracts_top_level_function"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extracts_type_reference_edges",
+    "fqn": "tests.extracts_type_reference_edges"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extracts_vue_router_routes_js",
+    "fqn": "tests.extracts_vue_router_routes_js"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "extracts_vue_router_routes_ts",
+    "fqn": "tests.extracts_vue_router_routes_ts"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "is_callable_kind",
+    "fqn": "is_callable_kind"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "is_leaf_chunk",
+    "fqn": "is_leaf_chunk"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "is_scope_container",
+    "fqn": "is_scope_container"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "maybe_push_scope",
+    "fqn": "maybe_push_scope"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "run_framework_routes",
+    "fqn": "run_framework_routes"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "supertype_pass",
+    "fqn": "supertype_pass"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "ts",
+    "fqn": "tests.ts"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "type_pass",
+    "fqn": "type_pass"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "type_pass_walk",
+    "fqn": "type_pass_walk"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "function",
+    "name": "walk",
+    "fqn": "walk"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker.rs",
+    "chunk_type": "module",
+    "name": "tests",
+    "fqn": "tests"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker_helpers.rs",
+    "chunk_type": "function",
+    "name": "current_module_of",
+    "fqn": "current_module_of"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker_helpers.rs",
+    "chunk_type": "function",
+    "name": "default_callee_name",
+    "fqn": "default_callee_name"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker_helpers.rs",
+    "chunk_type": "function",
+    "name": "default_callee_name_member_expression",
+    "fqn": "tests.default_callee_name_member_expression"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker_helpers.rs",
+    "chunk_type": "function",
+    "name": "default_callee_name_simple_identifier",
+    "fqn": "tests.default_callee_name_simple_identifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker_helpers.rs",
+    "chunk_type": "function",
+    "name": "default_fqn",
+    "fqn": "default_fqn"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker_helpers.rs",
+    "chunk_type": "function",
+    "name": "default_import_specifier",
+    "fqn": "default_import_specifier"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker_helpers.rs",
+    "chunk_type": "function",
+    "name": "default_name_from_field",
+    "fqn": "default_name_from_field"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker_helpers.rs",
+    "chunk_type": "function",
+    "name": "default_name_from_field_walks_field",
+    "fqn": "tests.default_name_from_field_walks_field"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker_helpers.rs",
+    "chunk_type": "function",
+    "name": "default_signature",
+    "fqn": "default_signature"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker_helpers.rs",
+    "chunk_type": "function",
+    "name": "default_signature_returns_first_line_trimmed",
+    "fqn": "tests.default_signature_returns_first_line_trimmed"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker_helpers.rs",
+    "chunk_type": "function",
+    "name": "parse_ts",
+    "fqn": "tests.parse_ts"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker_helpers.rs",
+    "chunk_type": "function",
+    "name": "resolve_esm_import_names",
+    "fqn": "resolve_esm_import_names"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker_helpers.rs",
+    "chunk_type": "function",
+    "name": "resolve_import_clause",
+    "fqn": "resolve_import_clause"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker_helpers.rs",
+    "chunk_type": "function",
+    "name": "resolve_reexport_clause",
+    "fqn": "resolve_reexport_clause"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker_helpers.rs",
+    "chunk_type": "function",
+    "name": "scope_path",
+    "fqn": "scope_path"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker_helpers.rs",
+    "chunk_type": "function",
+    "name": "specifier_local_and_source",
+    "fqn": "specifier_local_and_source"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker_helpers.rs",
+    "chunk_type": "function",
+    "name": "utf8_text",
+    "fqn": "utf8_text"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker_helpers.rs",
+    "chunk_type": "function",
+    "name": "utf8_text_returns_node_text",
+    "fqn": "tests.utf8_text_returns_node_text"
+  },
+  {
+    "rel_path": "src/ingestion/extraction/walker_helpers.rs",
+    "chunk_type": "module",
+    "name": "tests",
+    "fqn": "tests"
+  },
+  {
+    "rel_path": "src/ingestion/file_discovery.rs",
+    "chunk_type": "enum",
+    "name": "Priority",
+    "fqn": "Priority"
+  },
+  {
+    "rel_path": "src/ingestion/file_discovery.rs",
+    "chunk_type": "function",
+    "name": "analyze_repo",
+    "fqn": "analyze_repo"
+  },
+  {
+    "rel_path": "src/ingestion/file_discovery.rs",
+    "chunk_type": "function",
+    "name": "assign_priority",
+    "fqn": "assign_priority"
+  },
+  {
+    "rel_path": "src/ingestion/file_discovery.rs",
+    "chunk_type": "function",
+    "name": "extractor_name",
+    "fqn": "extractor_name"
+  },
+  {
+    "rel_path": "src/ingestion/file_discovery.rs",
+    "chunk_type": "struct",
+    "name": "AnalyzedFile",
+    "fqn": "AnalyzedFile"
+  },
+  {
+    "rel_path": "src/ingestion/file_routes.rs",
+    "chunk_type": "function",
+    "name": "file_based_route",
+    "fqn": "file_based_route"
+  },
+  {
+    "rel_path": "src/ingestion/file_routes.rs",
+    "chunk_type": "function",
+    "name": "non_routes_component_not_under_pages",
+    "fqn": "tests.non_routes_component_not_under_pages"
+  },
+  {
+    "rel_path": "src/ingestion/file_routes.rs",
+    "chunk_type": "function",
+    "name": "non_routes_lib_util",
+    "fqn": "tests.non_routes_lib_util"
+  },
+  {
+    "rel_path": "src/ingestion/file_routes.rs",
+    "chunk_type": "function",
+    "name": "nuxt_dynamic_segment",
+    "fqn": "tests.nuxt_dynamic_segment"
+  },
+  {
+    "rel_path": "src/ingestion/file_routes.rs",
+    "chunk_type": "function",
+    "name": "nuxt_index_root",
+    "fqn": "tests.nuxt_index_root"
+  },
+  {
+    "rel_path": "src/ingestion/file_routes.rs",
+    "chunk_type": "function",
+    "name": "nuxt_users_index_subdir",
+    "fqn": "tests.nuxt_users_index_subdir"
+  },
+  {
+    "rel_path": "src/ingestion/file_routes.rs",
+    "chunk_type": "function",
+    "name": "sveltekit_basic_about",
+    "fqn": "tests.sveltekit_basic_about"
+  },
+  {
+    "rel_path": "src/ingestion/file_routes.rs",
+    "chunk_type": "function",
+    "name": "sveltekit_dynamic_segment",
+    "fqn": "tests.sveltekit_dynamic_segment"
+  },
+  {
+    "rel_path": "src/ingestion/file_routes.rs",
+    "chunk_type": "function",
+    "name": "sveltekit_layout_none",
+    "fqn": "tests.sveltekit_layout_none"
+  },
+  {
+    "rel_path": "src/ingestion/file_routes.rs",
+    "chunk_type": "function",
+    "name": "sveltekit_root_index",
+    "fqn": "tests.sveltekit_root_index"
+  },
+  {
+    "rel_path": "src/ingestion/file_routes.rs",
+    "chunk_type": "function",
+    "name": "sveltekit_route_group_dropped",
+    "fqn": "tests.sveltekit_route_group_dropped"
+  },
+  {
+    "rel_path": "src/ingestion/file_routes.rs",
+    "chunk_type": "function",
+    "name": "sveltekit_server_endpoint_kind",
+    "fqn": "tests.sveltekit_server_endpoint_kind"
+  },
+  {
+    "rel_path": "src/ingestion/file_routes.rs",
+    "chunk_type": "module",
+    "name": "tests",
+    "fqn": "tests"
+  },
+  {
+    "rel_path": "src/ingestion/file_routes.rs",
+    "chunk_type": "struct",
+    "name": "FileRoute",
+    "fqn": "FileRoute"
+  },
+  {
+    "rel_path": "src/ingestion/flows.rs",
+    "chunk_type": "constant",
+    "name": "MAX_DEPTH",
+    "fqn": "MAX_DEPTH"
+  },
+  {
+    "rel_path": "src/ingestion/flows.rs",
+    "chunk_type": "constant",
+    "name": "MAX_NODES",
+    "fqn": "MAX_NODES"
+  },
+  {
+    "rel_path": "src/ingestion/flows.rs",
+    "chunk_type": "function",
+    "name": "build_flows",
+    "fqn": "build_flows"
+  },
+  {
+    "rel_path": "src/ingestion/flows.rs",
+    "chunk_type": "function",
+    "name": "build_single_flow",
+    "fqn": "build_single_flow"
+  },
+  {
+    "rel_path": "src/ingestion/flows.rs",
+    "chunk_type": "function",
+    "name": "dfs",
+    "fqn": "dfs"
+  },
+  {
+    "rel_path": "src/ingestion/flows.rs",
+    "chunk_type": "function",
+    "name": "load_calls_adjacency",
+    "fqn": "load_calls_adjacency"
+  },
+  {
+    "rel_path": "src/ingestion/flows.rs",
+    "chunk_type": "function",
+    "name": "make_ep",
+    "fqn": "tests.make_ep"
+  },
+  {
+    "rel_path": "src/ingestion/flows.rs",
+    "chunk_type": "function",
+    "name": "store_flows",
+    "fqn": "store_flows"
+  },
+  {
+    "rel_path": "src/ingestion/flows.rs",
+    "chunk_type": "function",
+    "name": "test_build_branching_flow",
+    "fqn": "tests.test_build_branching_flow"
+  },
+  {
+    "rel_path": "src/ingestion/flows.rs",
+    "chunk_type": "function",
+    "name": "test_build_linear_flow",
+    "fqn": "tests.test_build_linear_flow"
+  },
+  {
+    "rel_path": "src/ingestion/flows.rs",
+    "chunk_type": "function",
+    "name": "test_cycle_prevention",
+    "fqn": "tests.test_cycle_prevention"
+  },
+  {
+    "rel_path": "src/ingestion/flows.rs",
+    "chunk_type": "function",
+    "name": "test_no_callees",
+    "fqn": "tests.test_no_callees"
+  },
+  {
+    "rel_path": "src/ingestion/flows.rs",
+    "chunk_type": "function",
+    "name": "uuid",
+    "fqn": "tests.uuid"
+  },
+  {
+    "rel_path": "src/ingestion/flows.rs",
+    "chunk_type": "module",
+    "name": "tests",
+    "fqn": "tests"
+  },
+  {
+    "rel_path": "src/ingestion/flows.rs",
+    "chunk_type": "struct",
+    "name": "ExecutionFlow",
+    "fqn": "ExecutionFlow"
+  },
+  {
+    "rel_path": "src/ingestion/flows.rs",
+    "chunk_type": "struct",
+    "name": "FlowStep",
+    "fqn": "FlowStep"
+  },
+  {
+    "rel_path": "src/ingestion/go_structural.rs",
+    "chunk_type": "function",
+    "name": "go_interface_methods",
+    "fqn": "go_interface_methods"
+  },
+  {
+    "rel_path": "src/ingestion/go_structural.rs",
+    "chunk_type": "function",
+    "name": "go_method_receiver",
+    "fqn": "go_method_receiver"
+  },
+  {
+    "rel_path": "src/ingestion/go_structural.rs",
+    "chunk_type": "function",
+    "name": "go_structural_implements",
+    "fqn": "go_structural_implements"
+  },
+  {
+    "rel_path": "src/ingestion/go_structural.rs",
+    "chunk_type": "function",
+    "name": "interface_methods_empty_interface_returns_empty",
+    "fqn": "tests.interface_methods_empty_interface_returns_empty"
+  },
+  {
+    "rel_path": "src/ingestion/go_structural.rs",
+    "chunk_type": "function",
+    "name": "interface_methods_empty_interface_with_space_returns_empty",
+    "fqn": "tests.interface_methods_empty_interface_with_space_returns_empty"
+  },
+  {
+    "rel_path": "src/ingestion/go_structural.rs",
+    "chunk_type": "function",
+    "name": "interface_methods_not_an_interface_returns_empty",
+    "fqn": "tests.interface_methods_not_an_interface_returns_empty"
+  },
+  {
+    "rel_path": "src/ingestion/go_structural.rs",
+    "chunk_type": "function",
+    "name": "interface_methods_shape_two_methods",
+    "fqn": "tests.interface_methods_shape_two_methods"
+  },
+  {
+    "rel_path": "src/ingestion/go_structural.rs",
+    "chunk_type": "function",
+    "name": "interface_methods_skips_embedded_interface",
+    "fqn": "tests.interface_methods_skips_embedded_interface"
+  },
+  {
+    "rel_path": "src/ingestion/go_structural.rs",
+    "chunk_type": "function",
+    "name": "method_receiver_none_for_plain_function",
+    "fqn": "tests.method_receiver_none_for_plain_function"
+  },
+  {
+    "rel_path": "src/ingestion/go_structural.rs",
+    "chunk_type": "function",
+    "name": "method_receiver_pointer_receiver",
+    "fqn": "tests.method_receiver_pointer_receiver"
+  },
+  {
+    "rel_path": "src/ingestion/go_structural.rs",
+    "chunk_type": "function",
+    "name": "method_receiver_pointer_receiver_perimeter",
+    "fqn": "tests.method_receiver_pointer_receiver_perimeter"
+  },
+  {
+    "rel_path": "src/ingestion/go_structural.rs",
+    "chunk_type": "function",
+    "name": "method_receiver_value_receiver",
+    "fqn": "tests.method_receiver_value_receiver"
+  },
+  {
+    "rel_path": "src/ingestion/go_structural.rs",
+    "chunk_type": "function",
+    "name": "structural_implements_dedup",
+    "fqn": "tests.structural_implements_dedup"
+  },
+  {
+    "rel_path": "src/ingestion/go_structural.rs",
+    "chunk_type": "function",
+    "name": "structural_implements_empty_interface_no_pairs",
+    "fqn": "tests.structural_implements_empty_interface_no_pairs"
+  },
+  {
+    "rel_path": "src/ingestion/go_structural.rs",
+    "chunk_type": "function",
+    "name": "structural_implements_missing_method_no_pair",
+    "fqn": "tests.structural_implements_missing_method_no_pair"
+  },
+  {
+    "rel_path": "src/ingestion/go_structural.rs",
+    "chunk_type": "function",
+    "name": "structural_implements_point_satisfies_shape",
+    "fqn": "tests.structural_implements_point_satisfies_shape"
+  },
+  {
+    "rel_path": "src/ingestion/go_structural.rs",
+    "chunk_type": "function",
+    "name": "uuid",
+    "fqn": "tests.uuid"
+  },
+  {
+    "rel_path": "src/ingestion/go_structural.rs",
+    "chunk_type": "module",
+    "name": "tests",
+    "fqn": "tests"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "function",
+    "name": "bare_relative_and_external_return_none",
+    "fqn": "tests.bare_relative_and_external_return_none"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "function",
+    "name": "cargo_crate_hyphen_underscore_normalisation",
+    "fqn": "tests.cargo_crate_hyphen_underscore_normalisation"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "function",
+    "name": "cargo_crate_maps_to_member_src",
+    "fqn": "tests.cargo_crate_maps_to_member_src"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "function",
+    "name": "cargo_same_crate_paths_return_none",
+    "fqn": "tests.cargo_same_crate_paths_return_none"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "function",
+    "name": "discover",
+    "fqn": "discover"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "function",
+    "name": "discover_cargo_workspace",
+    "fqn": "discover_cargo_workspace"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "function",
+    "name": "discover_cargo_workspace",
+    "fqn": "tests.discover_cargo_workspace"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "function",
+    "name": "discover_go_mod",
+    "fqn": "discover_go_mod"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "function",
+    "name": "discover_go_mod",
+    "fqn": "tests.discover_go_mod"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "function",
+    "name": "discover_missing_files_returns_default",
+    "fqn": "tests.discover_missing_files_returns_default"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "function",
+    "name": "discover_tsconfig",
+    "fqn": "discover_tsconfig"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "function",
+    "name": "discover_tsconfig_paths",
+    "fqn": "tests.discover_tsconfig_paths"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "function",
+    "name": "go_external_package_returns_none",
+    "fqn": "tests.go_external_package_returns_none"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "function",
+    "name": "go_module_prefix_stripped",
+    "fqn": "tests.go_module_prefix_stripped"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "function",
+    "name": "normalize",
+    "fqn": "normalize"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "function",
+    "name": "remove_trailing_commas",
+    "fqn": "remove_trailing_commas"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "function",
+    "name": "strip_json_comments",
+    "fqn": "strip_json_comments"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "function",
+    "name": "ts_alias_at_slash_maps_to_src",
+    "fqn": "tests.ts_alias_at_slash_maps_to_src"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "function",
+    "name": "ts_alias_no_match_returns_none",
+    "fqn": "tests.ts_alias_no_match_returns_none"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "function",
+    "name": "ts_alias_tilde_slash_maps_to_lib",
+    "fqn": "tests.ts_alias_tilde_slash_maps_to_lib"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "module",
+    "name": "tests",
+    "fqn": "tests"
+  },
+  {
+    "rel_path": "src/ingestion/import_aliases.rs",
+    "chunk_type": "struct",
+    "name": "ImportAliases",
+    "fqn": "ImportAliases"
+  },
+  {
+    "rel_path": "src/ingestion/mod.rs",
+    "chunk_type": "module",
+    "name": "chunker",
+    "fqn": "chunker"
+  },
+  {
+    "rel_path": "src/ingestion/mod.rs",
+    "chunk_type": "module",
+    "name": "clone",
+    "fqn": "clone"
+  },
+  {
+    "rel_path": "src/ingestion/mod.rs",
+    "chunk_type": "module",
+    "name": "crawler",
+    "fqn": "crawler"
+  },
+  {
+    "rel_path": "src/ingestion/mod.rs",
+    "chunk_type": "module",
+    "name": "doc_clustering",
+    "fqn": "doc_clustering"
+  },
+  {
+    "rel_path": "src/ingestion/mod.rs",
+    "chunk_type": "module",
+    "name": "doc_store",
+    "fqn": "doc_store"
+  },
+  {
+    "rel_path": "src/ingestion/mod.rs",
+    "chunk_type": "module",
+    "name": "e2e_test",
+    "fqn": "e2e_test"
+  },
+  {
+    "rel_path": "src/ingestion/mod.rs",
+    "chunk_type": "module",
+    "name": "entry_points",
+    "fqn": "entry_points"
+  },
+  {
+    "rel_path": "src/ingestion/mod.rs",
+    "chunk_type": "module",
+    "name": "extraction",
+    "fqn": "extraction"
+  },
+  {
+    "rel_path": "src/ingestion/mod.rs",
+    "chunk_type": "module",
+    "name": "file_discovery",
+    "fqn": "file_discovery"
+  },
+  {
+    "rel_path": "src/ingestion/mod.rs",
+    "chunk_type": "module",
+    "name": "file_routes",
+    "fqn": "file_routes"
+  },
+  {
+    "rel_path": "src/ingestion/mod.rs",
+    "chunk_type": "module",
+    "name": "flows",
+    "fqn": "flows"
+  },
+  {
+    "rel_path": "src/ingestion/mod.rs",
+    "chunk_type": "module",
+    "name": "go_structural",
+    "fqn": "go_structural"
+  },
+  {
+    "rel_path": "src/ingestion/mod.rs",
+    "chunk_type": "module",
+    "name": "import_aliases",
+    "fqn": "import_aliases"
+  },
+  {
+    "rel_path": "src/ingestion/mod.rs",
+    "chunk_type": "module",
+    "name": "pipeline",
+    "fqn": "pipeline"
+  },
+  {
+    "rel_path": "src/ingestion/mod.rs",
+    "chunk_type": "module",
+    "name": "store",
+    "fqn": "store"
+  },
+  {
+    "rel_path": "src/ingestion/mod.rs",
+    "chunk_type": "module",
+    "name": "tier0",
+    "fqn": "tier0"
+  },
+  {
+    "rel_path": "src/ingestion/mod.rs",
+    "chunk_type": "module",
+    "name": "virtual_modules",
+    "fqn": "virtual_modules"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "function",
+    "name": "cargo_crate_alias_resolves_to_member_module",
+    "fqn": "resolve_import_target_tests.cargo_crate_alias_resolves_to_member_module"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "function",
+    "name": "external_crate_paths_resolve_to_nothing",
+    "fqn": "resolve_import_target_tests.external_crate_paths_resolve_to_nothing"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "function",
+    "name": "find_md_files",
+    "fqn": "find_md_files"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "function",
+    "name": "fixture",
+    "fqn": "resolve_import_target_tests.fixture"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "function",
+    "name": "imports_from_edges",
+    "fqn": "imports_from_edges"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "function",
+    "name": "new",
+    "fqn": "IngestionPipeline.new"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "function",
+    "name": "plain_file_path_targets_still_resolve",
+    "fqn": "resolve_import_target_tests.plain_file_path_targets_still_resolve"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "function",
+    "name": "resolve",
+    "fqn": "resolve_import_target_tests.resolve"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "function",
+    "name": "resolve_import_target",
+    "fqn": "resolve_import_target"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "function",
+    "name": "resolve_with_aliases",
+    "fqn": "resolve_import_target_tests.resolve_with_aliases"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "function",
+    "name": "run",
+    "fqn": "IngestionPipeline.run"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "function",
+    "name": "run_inner",
+    "fqn": "IngestionPipeline.run_inner"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "function",
+    "name": "run_with_checkpoint",
+    "fqn": "IngestionPipeline.run_with_checkpoint"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "function",
+    "name": "rust_glob_import_resolves_to_module_via_file",
+    "fqn": "resolve_import_target_tests.rust_glob_import_resolves_to_module_via_file"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "function",
+    "name": "rust_item_import_drops_item_then_resolves_file",
+    "fqn": "resolve_import_target_tests.rust_item_import_drops_item_then_resolves_file"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "function",
+    "name": "rust_module_import_matches_known_module_directly",
+    "fqn": "resolve_import_target_tests.rust_module_import_matches_known_module_directly"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "function",
+    "name": "rust_self_prefix_is_stripped_like_crate",
+    "fqn": "resolve_import_target_tests.rust_self_prefix_is_stripped_like_crate"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "function",
+    "name": "start",
+    "fqn": "IngestionPipeline.start"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "function",
+    "name": "start_resume",
+    "fqn": "IngestionPipeline.start_resume"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "function",
+    "name": "super_relative_paths_are_skipped_not_guessed",
+    "fqn": "resolve_import_target_tests.super_relative_paths_are_skipped_not_guessed"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "function",
+    "name": "ts_alias_resolves_through_to_module",
+    "fqn": "resolve_import_target_tests.ts_alias_resolves_through_to_module"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "module",
+    "name": "resolve_import_target_tests",
+    "fqn": "resolve_import_target_tests"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "struct",
+    "name": "IngestRequest",
+    "fqn": "IngestRequest"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "struct",
+    "name": "IngestionPipeline",
+    "fqn": "IngestionPipeline"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "struct",
+    "name": "ParsedFile",
+    "fqn": "ParsedFile"
+  },
+  {
+    "rel_path": "src/ingestion/pipeline.rs",
+    "chunk_type": "type",
+    "name": "Maps",
+    "fqn": "resolve_import_target_tests.Maps"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "build_contextual_embed_text",
+    "fqn": "build_contextual_embed_text"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "chunk",
+    "fqn": "embed_text_tests.chunk"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "clean_module_data",
+    "fqn": "IngestionStore.clean_module_data"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "clean_old_data",
+    "fqn": "IngestionStore.clean_old_data"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "create_call_edges",
+    "fqn": "IngestionStore.create_call_edges"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "create_implements_edges",
+    "fqn": "IngestionStore.create_implements_edges"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "create_import_edges",
+    "fqn": "IngestionStore.create_import_edges"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "create_job",
+    "fqn": "IngestionStore.create_job"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "create_reference_edges",
+    "fqn": "IngestionStore.create_reference_edges"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "create_routes_to_edges",
+    "fqn": "IngestionStore.create_routes_to_edges"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "create_symbol_import_edges",
+    "fqn": "IngestionStore.create_symbol_import_edges"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "extract_chunk_tags",
+    "fqn": "extract_chunk_tags"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "falls_back_to_content_when_no_doc_or_signature",
+    "fqn": "embed_text_tests.falls_back_to_content_when_no_doc_or_signature"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "includes_doc_and_fqn",
+    "fqn": "embed_text_tests.includes_doc_and_fqn"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "insert_large_chunk",
+    "fqn": "IngestionStore.insert_large_chunk"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "new",
+    "fqn": "IngestionStore.new"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "parent_suffix_shown_when_not_redundant",
+    "fqn": "embed_text_tests.parent_suffix_shown_when_not_redundant"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "save_checkpoint",
+    "fqn": "IngestionStore.save_checkpoint"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "set_total_files",
+    "fqn": "IngestionStore.set_total_files"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "signature_without_doc_has_no_doc_line",
+    "fqn": "embed_text_tests.signature_without_doc_has_no_doc_line"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "split_camel_case",
+    "fqn": "split_camel_case"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "store_chunks",
+    "fqn": "IngestionStore.store_chunks"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "store_large_chunks",
+    "fqn": "IngestionStore.store_large_chunks"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "update_job_status",
+    "fqn": "IngestionStore.update_job_status"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "function",
+    "name": "upsert_module",
+    "fqn": "IngestionStore.upsert_module"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "module",
+    "name": "embed_text_tests",
+    "fqn": "embed_text_tests"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "struct",
+    "name": "CheckpointData",
+    "fqn": "CheckpointData"
+  },
+  {
+    "rel_path": "src/ingestion/store.rs",
+    "chunk_type": "struct",
+    "name": "IngestionStore",
+    "fqn": "IngestionStore"
+  },
+  {
+    "rel_path": "src/ingestion/tier0.rs",
+    "chunk_type": "function",
+    "name": "cycle_in_supertype_graph_does_not_loop",
+    "fqn": "tests.cycle_in_supertype_graph_does_not_loop"
+  },
+  {
+    "rel_path": "src/ingestion/tier0.rs",
+    "chunk_type": "function",
+    "name": "direct_supertype_resolves_dropped_call",
+    "fqn": "tests.direct_supertype_resolves_dropped_call"
+  },
+  {
+    "rel_path": "src/ingestion/tier0.rs",
+    "chunk_type": "function",
+    "name": "inherited_call_targets",
+    "fqn": "inherited_call_targets"
+  },
+  {
+    "rel_path": "src/ingestion/tier0.rs",
+    "chunk_type": "function",
+    "name": "method_not_on_supertype_yields_empty",
+    "fqn": "tests.method_not_on_supertype_yields_empty"
+  },
+  {
+    "rel_path": "src/ingestion/tier0.rs",
+    "chunk_type": "function",
+    "name": "no_enclosing_type_yields_empty",
+    "fqn": "tests.no_enclosing_type_yields_empty"
+  },
+  {
+    "rel_path": "src/ingestion/tier0.rs",
+    "chunk_type": "function",
+    "name": "transitive_supertype_resolves_dropped_call",
+    "fqn": "tests.transitive_supertype_resolves_dropped_call"
+  },
+  {
+    "rel_path": "src/ingestion/tier0.rs",
+    "chunk_type": "function",
+    "name": "uid",
+    "fqn": "tests.uid"
+  },
+  {
+    "rel_path": "src/ingestion/tier0.rs",
+    "chunk_type": "module",
+    "name": "tests",
+    "fqn": "tests"
+  },
+  {
+    "rel_path": "src/ingestion/virtual_modules.rs",
+    "chunk_type": "function",
+    "name": "llm_group",
+    "fqn": "llm_group"
+  },
+  {
+    "rel_path": "src/ingestion/virtual_modules.rs",
+    "chunk_type": "function",
+    "name": "maybe_split_module",
+    "fqn": "maybe_split_module"
+  },
+  {
+    "rel_path": "src/ingestion/virtual_modules.rs",
+    "chunk_type": "function",
+    "name": "prefix_fallback",
+    "fqn": "prefix_fallback"
+  },
+  {
+    "rel_path": "src/ingestion/virtual_modules.rs",
+    "chunk_type": "struct",
+    "name": "FileEntry",
+    "fqn": "FileEntry"
+  },
+  {
+    "rel_path": "src/ingestion/virtual_modules.rs",
+    "chunk_type": "struct",
+    "name": "FileGroupingMeta",
+    "fqn": "FileGroupingMeta"
+  },
+  {
+    "rel_path": "src/ingestion/virtual_modules.rs",
+    "chunk_type": "struct",
+    "name": "Group",
+    "fqn": "Group"
+  },
+  {
+    "rel_path": "src/ingestion/virtual_modules.rs",
+    "chunk_type": "struct",
+    "name": "GroupingResponse",
+    "fqn": "GroupingResponse"
+  },
+  {
+    "rel_path": "src/ingestion/virtual_modules.rs",
+    "chunk_type": "struct",
+    "name": "SymbolEntry",
+    "fqn": "SymbolEntry"
+  },
+  {
+    "rel_path": "src/ingestion/virtual_modules.rs",
+    "chunk_type": "struct",
+    "name": "VirtualGroupResult",
+    "fqn": "VirtualGroupResult"
+  }
+]

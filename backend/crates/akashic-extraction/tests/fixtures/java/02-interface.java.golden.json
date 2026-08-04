@@ -1,0 +1,244 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "interface",
+      "name": "Shape",
+      "fqn": "Shape",
+      "parent_fqn": null,
+      "start_line": 9,
+      "end_line": 37,
+      "start_byte": 192,
+      "end_byte": 1001,
+      "signature": "public interface Shape",
+      "content": "public interface Shape {\n    /**\n     * Calculates and returns the area of this shape.\n     * Implementations must provide the geometric area formula.\n     */\n    double area();\n\n    /**\n     * Calculates and returns the perimeter of this shape.\n     * Implementations must provide the perimeter formula.\n     */\n    double perimeter();\n\n    /**\n     * Returns a human-readable description of this shape.\n     * Default implementation provides a generic description.\n     */\n    default String describe() {\n        return \"geometric shape with area=\" + area();\n    }\n\n    /**\n     * Checks whether this shape is larger than another shape.\n     * Default comparison is based on area calculation results.\n     */\n    default boolean isLargerThan(Shape other) {\n        return this.area() > other.area();\n    }\n}",
+      "doc": "/**\n * Represents a geometric shape with area and perimeter operations.\n * All concrete shapes must implement this interface contract.\n */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "area",
+      "fqn": "Shape.area",
+      "parent_fqn": "Shape",
+      "start_line": 14,
+      "end_line": 14,
+      "start_byte": 355,
+      "end_byte": 369,
+      "signature": "double area();",
+      "content": "double area();",
+      "doc": "/**\n     * Calculates and returns the area of this shape.\n     * Implementations must provide the geometric area formula.\n     */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "PackagePrivate",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "perimeter",
+      "fqn": "Shape.perimeter",
+      "parent_fqn": "Shape",
+      "start_line": 20,
+      "end_line": 20,
+      "start_byte": 509,
+      "end_byte": 528,
+      "signature": "double perimeter();",
+      "content": "double perimeter();",
+      "doc": "/**\n     * Calculates and returns the perimeter of this shape.\n     * Implementations must provide the perimeter formula.\n     */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "PackagePrivate",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "describe",
+      "fqn": "Shape.describe",
+      "parent_fqn": "Shape",
+      "start_line": 26,
+      "end_line": 28,
+      "start_byte": 671,
+      "end_byte": 758,
+      "signature": "default String describe()",
+      "content": "default String describe() {\n        return \"geometric shape with area=\" + area();\n    }",
+      "doc": "/**\n     * Returns a human-readable description of this shape.\n     * Default implementation provides a generic description.\n     */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "PackagePrivate",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "isLargerThan",
+      "fqn": "Shape.isLargerThan",
+      "parent_fqn": "Shape",
+      "start_line": 34,
+      "end_line": 36,
+      "start_byte": 907,
+      "end_byte": 999,
+      "signature": "default boolean isLargerThan(Shape other)",
+      "content": "default boolean isLargerThan(Shape other) {\n        return this.area() > other.area();\n    }",
+      "doc": "/**\n     * Checks whether this shape is larger than another shape.\n     * Default comparison is based on area calculation results.\n     */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "PackagePrivate",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 745,
+          "end": 751
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "area",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 27,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 966,
+          "end": 977
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "area",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 35,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 980,
+          "end": 992
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "area",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 35,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "java/02-interface",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "java.util.List",
+          "module_specifier": "java.util.List"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 936,
+          "end": 941
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Shape",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 34,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 679,
+          "end": 685
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 26,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

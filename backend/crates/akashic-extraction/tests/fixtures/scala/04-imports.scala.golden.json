@@ -1,0 +1,182 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "class",
+      "name": "Registry",
+      "fqn": "Registry",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 11,
+      "start_byte": 127,
+      "end_byte": 217,
+      "signature": "object Registry",
+      "content": "object Registry {\n  def create(): mutable.Map[String, Int] = {\n    mutable.Map.empty\n  }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "create",
+      "fqn": "Registry.create",
+      "parent_fqn": "Registry",
+      "start_line": 8,
+      "end_line": 10,
+      "start_byte": 147,
+      "end_byte": 215,
+      "signature": "def create(): mutable.Map[String, Int] =",
+      "content": "def create(): mutable.Map[String, Int] = {\n    mutable.Map.empty\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "scala/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "java.util.*",
+          "module_specifier": "java.util.*"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "scala/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "scala.collection.mutable",
+          "module_specifier": "scala.collection.mutable"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "scala/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "scala.collection.mutable.Map",
+          "module_specifier": "scala.collection.mutable.Map"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 181,
+          "end": 184
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 169,
+          "end": 172
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Map",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 173,
+          "end": 179
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

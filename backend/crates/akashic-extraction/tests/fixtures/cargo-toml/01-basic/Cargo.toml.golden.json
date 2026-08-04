@@ -1,0 +1,107 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "manifest",
+      "name": "basic-crate",
+      "fqn": "basic-crate",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 13,
+      "start_byte": 0,
+      "end_byte": 201,
+      "signature": "basic-crate@0.3.1",
+      "content": "[package]\nname = \"basic-crate\"\nversion = \"0.3.1\"\nedition = \"2021\"\n\n[dependencies]\nserde = \"1.0\"\ntokio = { version = \"1.35\", features = [\"full\", \"macros\"] }\nanyhow = \"1\"\n\n[features]\ndefault = [\"serde\"]\n",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "edition": {
+            "String": "2021"
+          },
+          "version": {
+            "String": "0.3.1"
+          }
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "basic-crate",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "anyhow",
+          "module_specifier": "anyhow@1"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "dependencies"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "basic-crate",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "serde",
+          "module_specifier": "serde@1.0"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "dependencies"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "basic-crate",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "tokio",
+          "module_specifier": "tokio@1.35"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "dependencies"
+          }
+        }
+      }
+    }
+  ]
+}

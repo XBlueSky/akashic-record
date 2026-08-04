@@ -1,0 +1,180 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "interface",
+      "name": "Drawable",
+      "fqn": "Drawable",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 4,
+      "start_byte": 0,
+      "end_byte": 96,
+      "signature": "@protocol Drawable <NSObject>",
+      "content": "@protocol Drawable <NSObject>\n- (void)draw;\n- (void)resizeTo:(int)width height:(int)height;\n@end",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "draw",
+      "fqn": "Drawable.draw",
+      "parent_fqn": "Drawable",
+      "start_line": 2,
+      "end_line": 2,
+      "start_byte": 30,
+      "end_byte": 43,
+      "signature": "- (void)draw;",
+      "content": "- (void)draw;",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "resizeTo:height:",
+      "fqn": "Drawable.resizeTo:height:",
+      "parent_fqn": "Drawable",
+      "start_line": 3,
+      "end_line": 3,
+      "start_byte": 44,
+      "end_byte": 91,
+      "signature": "- (void)resizeTo:(int)width height:(int)height;",
+      "content": "- (void)resizeTo:(int)width height:(int)height;",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "class",
+      "name": "Shape",
+      "fqn": "Shape",
+      "parent_fqn": null,
+      "start_line": 6,
+      "end_line": 8,
+      "start_byte": 98,
+      "end_byte": 155,
+      "signature": "@interface Shape : NSObject <Drawable>",
+      "content": "@interface Shape : NSObject <Drawable>\n- (void)draw;\n@end",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "draw",
+      "fqn": "Shape.draw",
+      "parent_fqn": "Shape",
+      "start_line": 7,
+      "end_line": 7,
+      "start_byte": 137,
+      "end_byte": 150,
+      "signature": "- (void)draw;",
+      "content": "- (void)draw;",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "class",
+      "name": "Shape",
+      "fqn": "Shape",
+      "parent_fqn": null,
+      "start_line": 10,
+      "end_line": 14,
+      "start_byte": 157,
+      "end_byte": 234,
+      "signature": "@implementation Shape",
+      "content": "@implementation Shape\n- (void)draw {\n    [self resizeTo:10 height:20];\n}\n@end",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "draw",
+      "fqn": "Shape.draw",
+      "parent_fqn": "Shape",
+      "start_line": 11,
+      "end_line": 13,
+      "start_byte": 179,
+      "end_byte": 229,
+      "signature": "- (void)draw",
+      "content": "- (void)draw {\n    [self resizeTo:10 height:20];\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 198,
+          "end": 226
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "resizeTo:height:",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 12,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

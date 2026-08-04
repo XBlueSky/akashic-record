@@ -1,0 +1,93 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "module",
+      "name": "Greetable",
+      "fqn": "Greetable",
+      "parent_fqn": null,
+      "start_line": 2,
+      "end_line": 6,
+      "start_byte": 81,
+      "end_byte": 140,
+      "signature": "module Greetable",
+      "content": "module Greetable\n  def greet\n    \"Hello, #{name}\"\n  end\nend",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "greet",
+      "fqn": "Greetable.greet",
+      "parent_fqn": "Greetable",
+      "start_line": 3,
+      "end_line": 5,
+      "start_byte": 100,
+      "end_byte": 136,
+      "signature": "def greet",
+      "content": "def greet\n    \"Hello, #{name}\"\n  end",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "class",
+      "name": "Person",
+      "fqn": "Person",
+      "parent_fqn": null,
+      "start_line": 8,
+      "end_line": 16,
+      "start_byte": 142,
+      "end_byte": 248,
+      "signature": "class Person",
+      "content": "class Person\n  include Greetable\n\n  attr_accessor :name\n\n  def initialize(name)\n    @name = name\n  end\nend",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "initialize",
+      "fqn": "Person.initialize",
+      "parent_fqn": "Person",
+      "start_line": 13,
+      "end_line": 15,
+      "start_byte": 201,
+      "end_byte": 244,
+      "signature": "def initialize(name)",
+      "content": "def initialize(name)\n    @name = name\n  end",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": []
+}

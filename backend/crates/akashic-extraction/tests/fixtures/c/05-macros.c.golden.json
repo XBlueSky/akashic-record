@@ -1,0 +1,92 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "macro",
+      "name": "MAX",
+      "fqn": "MAX",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 2,
+      "start_byte": 0,
+      "end_byte": 42,
+      "signature": "#define MAX(a, b) ((a) > (b) ? (a) : (b))",
+      "content": "#define MAX(a, b) ((a) > (b) ? (a) : (b))\n",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "constant",
+      "name": "PI",
+      "fqn": "PI",
+      "parent_fqn": null,
+      "start_line": 2,
+      "end_line": 3,
+      "start_byte": 42,
+      "end_byte": 61,
+      "signature": "#define PI 3.14159",
+      "content": "#define PI 3.14159\n",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "use_macro",
+      "fqn": "use_macro",
+      "parent_fqn": null,
+      "start_line": 4,
+      "end_line": 6,
+      "start_byte": 62,
+      "end_byte": 109,
+      "signature": "void use_macro(void)",
+      "content": "void use_macro(void) {\n    int m = MAX(1, 2);\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 97,
+          "end": 106
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "MAX",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

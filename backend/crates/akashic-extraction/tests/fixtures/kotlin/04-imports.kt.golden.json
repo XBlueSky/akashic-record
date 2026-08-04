@@ -1,0 +1,268 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "method",
+      "name": "circleArea",
+      "fqn": "circleArea",
+      "parent_fqn": null,
+      "start_line": 8,
+      "end_line": 10,
+      "start_byte": 139,
+      "end_byte": 213,
+      "signature": "fun circleArea(radius: Double): Double",
+      "content": "fun circleArea(radius: Double): Double {\n    return PI * radius * radius\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "class",
+      "name": "Greeter",
+      "fqn": "Greeter",
+      "parent_fqn": null,
+      "start_line": 12,
+      "end_line": 16,
+      "start_byte": 215,
+      "end_byte": 304,
+      "signature": "class Greeter",
+      "content": "class Greeter {\n    fun greet(name: String): String {\n        return format(name)\n    }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "greet",
+      "fqn": "Greeter.greet",
+      "parent_fqn": "Greeter",
+      "start_line": 13,
+      "end_line": 15,
+      "start_byte": 235,
+      "end_byte": 302,
+      "signature": "fun greet(name: String): String",
+      "content": "fun greet(name: String): String {\n        return format(name)\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 284,
+          "end": 296
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "format",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 14,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "kotlin/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "com.example.helpers.format",
+          "module_specifier": "com.example.helpers.format"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "kotlin/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "com.example.util.*",
+          "module_specifier": "com.example.util.*"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "kotlin/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "kotlin.collections.List",
+          "module_specifier": "kotlin.collections.List"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "kotlin/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "kotlin.math.PI",
+          "module_specifier": "kotlin.math.PI"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 162,
+          "end": 168
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Double",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 171,
+          "end": 177
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Double",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 251,
+          "end": 257
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 13,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 260,
+          "end": 266
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 13,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

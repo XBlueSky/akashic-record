@@ -1,0 +1,102 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "job",
+      "name": ".base",
+      "fqn": ".base",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 5,
+      "start_byte": 156,
+      "end_byte": 188,
+      "signature": ".base:",
+      "content": ".base:\n  script:\n    - make base",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "template": {
+            "String": "true"
+          }
+        }
+      }
+    },
+    {
+      "chunk_type": "job",
+      "name": "deploy",
+      "fqn": "deploy",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 15,
+      "start_byte": 190,
+      "end_byte": 517,
+      "signature": "deploy:",
+      "content": "deploy:\n  extends: .base            # real extends edge → .base\n  variables:\n    needs: \"not-an-edge\"    # nested variable literally named `needs`\n    extends: \"still-not\"    # nested variable literally named `extends`\n  dependencies:\n    - build                 # real dependencies edge → build\n  script:\n    - make deploy",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "deploy",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": ".base",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "extends"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "deploy",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "build",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 13,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "dependencies"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "enum",
+      "name": "Color",
+      "fqn": "Color",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 1,
+      "start_byte": 0,
+      "end_byte": 31,
+      "signature": "enum Color { RED, GREEN, BLUE }",
+      "content": "enum Color { RED, GREEN, BLUE }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "RED",
+      "fqn": "Color.RED",
+      "parent_fqn": "Color",
+      "start_line": 1,
+      "end_line": 1,
+      "start_byte": 13,
+      "end_byte": 16,
+      "signature": "RED",
+      "content": "RED",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "GREEN",
+      "fqn": "Color.GREEN",
+      "parent_fqn": "Color",
+      "start_line": 1,
+      "end_line": 1,
+      "start_byte": 18,
+      "end_byte": 23,
+      "signature": "GREEN",
+      "content": "GREEN",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "BLUE",
+      "fqn": "Color.BLUE",
+      "parent_fqn": "Color",
+      "start_line": 1,
+      "end_line": 1,
+      "start_byte": 25,
+      "end_byte": 29,
+      "signature": "BLUE",
+      "content": "BLUE",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "type",
+      "name": "Status",
+      "fqn": "Status",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 7,
+      "start_byte": 34,
+      "end_byte": 104,
+      "signature": "typedef enum",
+      "content": "typedef enum {\n    OK = 0,\n    ERR_IO = 1,\n    ERR_PARSE = 2\n} Status;",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 5,
+          "end": 10
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Color",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

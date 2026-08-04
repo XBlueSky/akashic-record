@@ -1,0 +1,16 @@
+{
+  "name": "full-deps-lib",
+  "version": "3.0.0",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.3.3"
+  }
+}

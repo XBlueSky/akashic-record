@@ -1,0 +1,234 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "struct",
+      "name": "Counter",
+      "fqn": "Counter",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 1,
+      "start_byte": 0,
+      "end_byte": 25,
+      "signature": "struct Counter { n: u32 }",
+      "content": "struct Counter { n: u32 }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "new",
+      "fqn": "Counter.new",
+      "parent_fqn": "Counter",
+      "start_line": 4,
+      "end_line": 4,
+      "start_byte": 46,
+      "end_byte": 84,
+      "signature": "pub fn new() -> Self { Self { n: 0 } }",
+      "content": "pub fn new() -> Self { Self { n: 0 } }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "increment",
+      "fqn": "Counter.increment",
+      "parent_fqn": "Counter",
+      "start_line": 5,
+      "end_line": 5,
+      "start_byte": 89,
+      "end_byte": 133,
+      "signature": "pub fn increment(&mut self) { self.n += 1; }",
+      "content": "pub fn increment(&mut self) { self.n += 1; }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "fmt",
+      "fqn": "Counter.fmt",
+      "parent_fqn": "Counter",
+      "start_line": 9,
+      "end_line": 11,
+      "start_byte": 178,
+      "end_byte": 280,
+      "signature": "fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result",
+      "content": "fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {\n        write!(f, \"{}\", self.n)\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 251,
+          "end": 274
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "write",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "Counter",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Display",
+          "module_specifier": null
+        }
+      },
+      "kind": "Implements",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {
+          "impl_kind": {
+            "String": "implements"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 210,
+          "end": 219
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Formatter",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 234,
+          "end": 240
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Result",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 62,
+          "end": 66
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Self",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 69,
+          "end": 73
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Self",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

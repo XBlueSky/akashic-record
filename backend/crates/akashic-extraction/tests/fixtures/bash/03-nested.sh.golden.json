@@ -1,0 +1,88 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "outer",
+      "fqn": "outer",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 9,
+      "start_byte": 21,
+      "end_byte": 79,
+      "signature": "outer()",
+      "content": "outer() {\n  inner() {\n    echo \"nested\"\n  }\n  inner\n  ls\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 47,
+          "end": 60
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "echo",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 67,
+          "end": 72
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "inner",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 75,
+          "end": 77
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "ls",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "section",
+      "name": "Top",
+      "fqn": "Top",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 3,
+      "start_byte": 0,
+      "end_byte": 5,
+      "signature": "Top",
+      "content": "Top\n\n",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "section",
+      "name": "Section A",
+      "fqn": "Top.Section A",
+      "parent_fqn": "Top",
+      "start_line": 3,
+      "end_line": 5,
+      "start_byte": 7,
+      "end_byte": 19,
+      "signature": "Section A",
+      "content": "Section A\n\n",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "section",
+      "name": "Sub A1",
+      "fqn": "Top.Section A.Sub A1",
+      "parent_fqn": "Top.Section A",
+      "start_line": 5,
+      "end_line": 7,
+      "start_byte": 21,
+      "end_byte": 37,
+      "signature": "Sub A1",
+      "content": "Sub A1\n\ntext",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "section",
+      "name": "Sub A2",
+      "fqn": "Top.Section A.Sub A2",
+      "parent_fqn": "Top.Section A",
+      "start_line": 9,
+      "end_line": 11,
+      "start_byte": 39,
+      "end_byte": 55,
+      "signature": "Sub A2",
+      "content": "Sub A2\n\ntext",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "section",
+      "name": "Section B",
+      "fqn": "Top.Section B",
+      "parent_fqn": "Top",
+      "start_line": 13,
+      "end_line": 15,
+      "start_byte": 57,
+      "end_byte": 75,
+      "signature": "Section B",
+      "content": "Section B\n\ntext",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": []
+}

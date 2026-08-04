@@ -1,0 +1,166 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "class",
+      "name": "Container",
+      "fqn": "Container",
+      "parent_fqn": null,
+      "start_line": 2,
+      "end_line": 11,
+      "start_byte": 22,
+      "end_byte": 163,
+      "signature": "class Container",
+      "content": "class Container {\npublic:\n    void push(T value) {\n        items_.push_back(value);\n    }\n    T pop();\n\nprivate:\n    std::vector<T> items_;\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "push",
+      "fqn": "Container.push",
+      "parent_fqn": "Container",
+      "start_line": 4,
+      "end_line": 6,
+      "start_byte": 52,
+      "end_byte": 111,
+      "signature": "void push(T value)",
+      "content": "void push(T value) {\n        items_.push_back(value);\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 81,
+          "end": 104
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "push_back",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 28,
+          "end": 37
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Container",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 116,
+          "end": 117
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "T",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 151,
+          "end": 152
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "T",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 144,
+          "end": 150
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "vector",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

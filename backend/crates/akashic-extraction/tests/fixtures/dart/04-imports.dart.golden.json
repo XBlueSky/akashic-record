@@ -1,0 +1,178 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "main",
+      "fqn": "main",
+      "parent_fqn": null,
+      "start_line": 5,
+      "end_line": 7,
+      "start_byte": 94,
+      "end_byte": 121,
+      "signature": "void main()",
+      "content": "void main() {\n  runApp();\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "compute",
+      "fqn": "compute",
+      "parent_fqn": null,
+      "start_line": 9,
+      "end_line": 11,
+      "start_byte": 123,
+      "end_byte": 161,
+      "signature": "int compute(int x)",
+      "content": "int compute(int x) {\n  return x * 2;\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 110,
+          "end": 118
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "runApp",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "dart/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "../utils/helpers.dart",
+          "module_specifier": "../utils/helpers.dart"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "dart/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "dart:async",
+          "module_specifier": "dart:async"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "dart/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "package:flutter/material.dart",
+          "module_specifier": "package:flutter/material.dart"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 123,
+          "end": 126
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 135,
+          "end": 138
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

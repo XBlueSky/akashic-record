@@ -1,0 +1,202 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "Add",
+      "fqn": "Add",
+      "parent_fqn": null,
+      "start_line": 8,
+      "end_line": 10,
+      "start_byte": 44,
+      "end_byte": 84,
+      "signature": "func Add(a, b int) int",
+      "content": "func Add(a, b int) int {\n\treturn a + b\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "greet",
+      "fqn": "greet",
+      "parent_fqn": null,
+      "start_line": 12,
+      "end_line": 14,
+      "start_byte": 86,
+      "end_byte": 149,
+      "signature": "func greet(name string)",
+      "content": "func greet(name string) {\n\tfmt.Println(strings.ToUpper(name))\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 113,
+          "end": 147
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Println",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 13,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 125,
+          "end": 146
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "ToUpper",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 13,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "go/01-functions",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "fmt",
+          "module_specifier": "fmt"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "go/01-functions",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "strings",
+          "module_specifier": "strings"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 58,
+          "end": 61
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 63,
+          "end": 66
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 102,
+          "end": 108
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "string",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 12,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

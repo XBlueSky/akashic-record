@@ -1,0 +1,149 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "manifest",
+      "name": "task-runner",
+      "fqn": "task-runner",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 17,
+      "start_byte": 0,
+      "end_byte": 286,
+      "signature": "task-runner@0.9.0",
+      "content": "{\n  \"name\": \"task-runner\",\n  \"version\": \"0.9.0\",\n  \"private\": true,\n  \"scripts\": {\n    \"build\": \"tsc -p tsconfig.json\",\n    \"test\": \"vitest run\",\n    \"lint\": \"eslint src --ext .ts\"\n  },\n  \"dependencies\": {\n    \"chalk\": \"^5.3.0\"\n  },\n  \"devDependencies\": {\n    \"eslint\": \"^8.57.0\"\n  }\n}\n",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "private": {
+            "Bool": true
+          },
+          "version": {
+            "String": "0.9.0"
+          }
+        }
+      }
+    },
+    {
+      "chunk_type": "script",
+      "name": "build",
+      "fqn": "task-runner.build",
+      "parent_fqn": "task-runner",
+      "start_line": 6,
+      "end_line": 6,
+      "start_byte": 87,
+      "end_byte": 94,
+      "signature": "build",
+      "content": "tsc -p tsconfig.json",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "script",
+      "name": "test",
+      "fqn": "task-runner.test",
+      "parent_fqn": "task-runner",
+      "start_line": 7,
+      "end_line": 7,
+      "start_byte": 124,
+      "end_byte": 130,
+      "signature": "test",
+      "content": "vitest run",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "script",
+      "name": "lint",
+      "fqn": "task-runner.lint",
+      "parent_fqn": "task-runner",
+      "start_line": 8,
+      "end_line": 8,
+      "start_byte": 150,
+      "end_byte": 156,
+      "signature": "lint",
+      "content": "eslint src --ext .ts",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "task-runner",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "chalk",
+          "module_specifier": "chalk@^5.3.0"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "dependencies"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "task-runner",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "eslint",
+          "module_specifier": "eslint@^8.57.0"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "devDependencies"
+          }
+        }
+      }
+    }
+  ]
+}

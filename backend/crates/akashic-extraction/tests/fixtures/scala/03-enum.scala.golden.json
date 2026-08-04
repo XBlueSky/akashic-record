@@ -1,0 +1,256 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "enum",
+      "name": "Planet",
+      "fqn": "Planet",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 12,
+      "start_byte": 0,
+      "end_byte": 216,
+      "signature": "enum Planet(mass: Double)",
+      "content": "enum Planet(mass: Double) {\n  case Earth extends Planet(5.976e+24)\n  case Mars extends Planet(6.421e+23)\n\n  def surfaceGravity(): Double = {\n    mass * 9.8\n  }\n\n  def describe(): Double = {\n    surfaceGravity()\n  }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "Earth",
+      "fqn": "Planet.Earth",
+      "parent_fqn": "Planet",
+      "start_line": 2,
+      "end_line": 2,
+      "start_byte": 35,
+      "end_byte": 66,
+      "signature": "Earth extends Planet(5.976e+24)",
+      "content": "Earth extends Planet(5.976e+24)",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "Mars",
+      "fqn": "Planet.Mars",
+      "parent_fqn": "Planet",
+      "start_line": 3,
+      "end_line": 3,
+      "start_byte": 74,
+      "end_byte": 104,
+      "signature": "Mars extends Planet(6.421e+23)",
+      "content": "Mars extends Planet(6.421e+23)",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "surfaceGravity",
+      "fqn": "Planet.surfaceGravity",
+      "parent_fqn": "Planet",
+      "start_line": 5,
+      "end_line": 7,
+      "start_byte": 108,
+      "end_byte": 159,
+      "signature": "def surfaceGravity(): Double =",
+      "content": "def surfaceGravity(): Double = {\n    mass * 9.8\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "describe",
+      "fqn": "Planet.describe",
+      "parent_fqn": "Planet",
+      "start_line": 9,
+      "end_line": 11,
+      "start_byte": 163,
+      "end_byte": 214,
+      "signature": "def describe(): Double =",
+      "content": "def describe(): Double = {\n    surfaceGravity()\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 194,
+          "end": 210
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "surfaceGravity",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 18,
+          "end": 24
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Double",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 130,
+          "end": 136
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Double",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 179,
+          "end": 185
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Double",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 49,
+          "end": 55
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Planet",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 87,
+          "end": 93
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Planet",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

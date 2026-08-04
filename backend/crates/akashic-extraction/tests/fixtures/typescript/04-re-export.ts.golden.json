@@ -1,0 +1,73 @@
+{
+  "chunks": [],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "typescript/04-re-export",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "./users",
+          "module_specifier": "typescript/users"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "typescript/04-re-export",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Config",
+          "module_specifier": "typescript/config"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "reexport"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "typescript/04-re-export",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Service",
+          "module_specifier": "typescript/service"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "reexport"
+          }
+        }
+      }
+    }
+  ]
+}

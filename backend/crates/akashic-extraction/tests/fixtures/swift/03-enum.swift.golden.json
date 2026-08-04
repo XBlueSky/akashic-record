@@ -1,0 +1,274 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "enum",
+      "name": "Direction",
+      "fqn": "Direction",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 23,
+      "start_byte": 0,
+      "end_byte": 419,
+      "signature": "enum Direction",
+      "content": "enum Direction {\n    case north\n    case south\n    case east\n    case west\n\n    func opposite() -> Direction {\n        switch self {\n        case .north: return .south\n        case .south: return .north\n        case .east: return .west\n        case .west: return .east\n        }\n    }\n\n    func describe() -> String {\n        return label()\n    }\n\n    private func label() -> String {\n        return \"direction\"\n    }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "north",
+      "fqn": "Direction.north",
+      "parent_fqn": "Direction",
+      "start_line": 2,
+      "end_line": 2,
+      "start_byte": 21,
+      "end_byte": 31,
+      "signature": "case north",
+      "content": "case north",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "south",
+      "fqn": "Direction.south",
+      "parent_fqn": "Direction",
+      "start_line": 3,
+      "end_line": 3,
+      "start_byte": 36,
+      "end_byte": 46,
+      "signature": "case south",
+      "content": "case south",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "east",
+      "fqn": "Direction.east",
+      "parent_fqn": "Direction",
+      "start_line": 4,
+      "end_line": 4,
+      "start_byte": 51,
+      "end_byte": 60,
+      "signature": "case east",
+      "content": "case east",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "west",
+      "fqn": "Direction.west",
+      "parent_fqn": "Direction",
+      "start_line": 5,
+      "end_line": 5,
+      "start_byte": 65,
+      "end_byte": 74,
+      "signature": "case west",
+      "content": "case west",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "opposite",
+      "fqn": "Direction.opposite",
+      "parent_fqn": "Direction",
+      "start_line": 7,
+      "end_line": 14,
+      "start_byte": 80,
+      "end_byte": 284,
+      "signature": "func opposite() -> Direction",
+      "content": "func opposite() -> Direction {\n        switch self {\n        case .north: return .south\n        case .south: return .north\n        case .east: return .west\n        case .west: return .east\n        }\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "describe",
+      "fqn": "Direction.describe",
+      "parent_fqn": "Direction",
+      "start_line": 16,
+      "end_line": 18,
+      "start_byte": 290,
+      "end_byte": 346,
+      "signature": "func describe() -> String",
+      "content": "func describe() -> String {\n        return label()\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "label",
+      "fqn": "Direction.label",
+      "parent_fqn": "Direction",
+      "start_line": 20,
+      "end_line": 22,
+      "start_byte": 352,
+      "end_byte": 417,
+      "signature": "private func label() -> String",
+      "content": "private func label() -> String {\n        return \"direction\"\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 333,
+          "end": 340
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "label",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 17,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 99,
+          "end": 108
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Direction",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 309,
+          "end": 315
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 16,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 376,
+          "end": 382
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 20,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "stage",
+      "name": "base",
+      "fqn": "base",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 2,
+      "start_byte": 0,
+      "end_byte": 63,
+      "signature": "FROM alpine:3.20 AS base",
+      "content": "FROM alpine:3.20 AS base\nRUN apk add --no-cache ca-certificates",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "stage",
+      "name": "a",
+      "fqn": "a",
+      "parent_fqn": null,
+      "start_line": 4,
+      "end_line": 5,
+      "start_byte": 65,
+      "end_byte": 98,
+      "signature": "FROM base AS a",
+      "content": "FROM base AS a\nRUN echo \"stage a\"",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "stage",
+      "name": "b",
+      "fqn": "b",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 9,
+      "start_byte": 100,
+      "end_byte": 156,
+      "signature": "FROM a AS b",
+      "content": "FROM a AS b\nRUN echo \"stage b derived from a\"\nCMD [\"sh\"]",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "b",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "a",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "instruction": {
+            "String": "FROM"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "a",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "base",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "instruction": {
+            "String": "FROM"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "base",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "alpine:3.20",
+          "module_specifier": "alpine:3.20"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "instruction": {
+            "String": "FROM"
+          }
+        }
+      }
+    }
+  ]
+}

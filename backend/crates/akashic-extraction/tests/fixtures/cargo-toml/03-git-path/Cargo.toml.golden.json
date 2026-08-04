@@ -1,0 +1,131 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "manifest",
+      "name": "sourced-crate",
+      "fqn": "sourced-crate",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 12,
+      "start_byte": 0,
+      "end_byte": 292,
+      "signature": "sourced-crate@0.1.0",
+      "content": "[package]\nname = \"sourced-crate\"\nversion = \"0.1.0\"\n\n[dependencies]\nlocal-lib = { path = \"../local-lib\" }\nremote-lib = { git = \"https://github.com/example/remote-lib.git\", branch = \"main\" }\npinned = { version = \"0.9\", default-features = false }\n\n[target.'cfg(unix)'.dependencies]\nnix = \"0.27\"\n",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "version": {
+            "String": "0.1.0"
+          }
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "sourced-crate",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "local-lib",
+          "module_specifier": "local-lib@path:../local-lib"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "dependencies"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "sourced-crate",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "nix",
+          "module_specifier": "nix@0.27"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "dependencies"
+          },
+          "target": {
+            "String": "cfg(unix)"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "sourced-crate",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "pinned",
+          "module_specifier": "pinned@0.9"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "dependencies"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "sourced-crate",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "remote-lib",
+          "module_specifier": "remote-lib@git:https://github.com/example/remote-lib.git"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "dependencies"
+          }
+        }
+      }
+    }
+  ]
+}

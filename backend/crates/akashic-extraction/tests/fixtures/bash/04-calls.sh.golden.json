@@ -1,0 +1,130 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "helper",
+      "fqn": "helper",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 5,
+      "start_byte": 21,
+      "end_byte": 50,
+      "signature": "helper()",
+      "content": "helper() {\n  echo \"helping\"\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "main",
+      "fqn": "main",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 11,
+      "start_byte": 52,
+      "end_byte": 96,
+      "signature": "main()",
+      "content": "main() {\n  echo \"start\"\n  helper\n  cd /tmp\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 87,
+          "end": 94
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "cd",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 34,
+          "end": 48
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "echo",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 63,
+          "end": 75
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "echo",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 78,
+          "end": 84
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "helper",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "provider",
+      "name": "aws",
+      "fqn": "aws",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 3,
+      "start_byte": 0,
+      "end_byte": 41,
+      "signature": "provider \"aws\" {",
+      "content": "provider \"aws\" {\n  region = \"us-east-1\"\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "resource",
+      "name": "aws_instance.web",
+      "fqn": "aws_instance.web",
+      "parent_fqn": null,
+      "start_line": 5,
+      "end_line": 12,
+      "start_byte": 43,
+      "end_byte": 188,
+      "signature": "resource \"aws_instance\" \"web\" {",
+      "content": "resource \"aws_instance\" \"web\" {\n  ami           = \"ami-123456\"\n  instance_type = \"t3.micro\"\n\n  lifecycle {\n    create_before_destroy = true\n  }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "lifecycle",
+      "name": "lifecycle",
+      "fqn": "aws_instance.web.lifecycle",
+      "parent_fqn": "aws_instance.web",
+      "start_line": 9,
+      "end_line": 11,
+      "start_byte": 138,
+      "end_byte": 186,
+      "signature": "lifecycle {",
+      "content": "lifecycle {\n    create_before_destroy = true\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "resource",
+      "name": "aws_security_group.sg",
+      "fqn": "aws_security_group.sg",
+      "parent_fqn": null,
+      "start_line": 14,
+      "end_line": 22,
+      "start_byte": 190,
+      "end_byte": 325,
+      "signature": "resource \"aws_security_group\" \"sg\" {",
+      "content": "resource \"aws_security_group\" \"sg\" {\n  name = \"web-sg\"\n\n  ingress {\n    from_port = 443\n    to_port   = 443\n    protocol  = \"tcp\"\n  }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "ingress",
+      "name": "ingress",
+      "fqn": "aws_security_group.sg.ingress",
+      "parent_fqn": "aws_security_group.sg",
+      "start_line": 17,
+      "end_line": 21,
+      "start_byte": 248,
+      "end_byte": 323,
+      "signature": "ingress {",
+      "content": "ingress {\n    from_port = 443\n    to_port   = 443\n    protocol  = \"tcp\"\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": []
+}

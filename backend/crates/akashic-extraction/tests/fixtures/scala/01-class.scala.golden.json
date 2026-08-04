@@ -1,0 +1,254 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "class",
+      "name": "Counter",
+      "fqn": "Counter",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 17,
+      "start_byte": 0,
+      "end_byte": 248,
+      "signature": "class Counter(start: Int)",
+      "content": "class Counter(start: Int) {\n  private var count: Int = start\n\n  def increment(): Int = {\n    count = count + 1\n    count\n  }\n\n  def incrementTwice(): Int = {\n    increment()\n    increment()\n  }\n\n  protected def reset(): Unit = {\n    count = 0\n  }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "increment",
+      "fqn": "Counter.increment",
+      "parent_fqn": "Counter",
+      "start_line": 4,
+      "end_line": 7,
+      "start_byte": 64,
+      "end_byte": 124,
+      "signature": "def increment(): Int =",
+      "content": "def increment(): Int = {\n    count = count + 1\n    count\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "incrementTwice",
+      "fqn": "Counter.incrementTwice",
+      "parent_fqn": "Counter",
+      "start_line": 9,
+      "end_line": 12,
+      "start_byte": 128,
+      "end_byte": 193,
+      "signature": "def incrementTwice(): Int =",
+      "content": "def incrementTwice(): Int = {\n    increment()\n    increment()\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "reset",
+      "fqn": "Counter.reset",
+      "parent_fqn": "Counter",
+      "start_line": 14,
+      "end_line": 16,
+      "start_byte": 197,
+      "end_byte": 246,
+      "signature": "protected def reset(): Unit =",
+      "content": "protected def reset(): Unit = {\n    count = 0\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Protected",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 162,
+          "end": 173
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "increment",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 178,
+          "end": 189
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "increment",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 11,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 21,
+          "end": 24
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 49,
+          "end": 52
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 81,
+          "end": 84
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 150,
+          "end": 153
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 220,
+          "end": 224
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Unit",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 14,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

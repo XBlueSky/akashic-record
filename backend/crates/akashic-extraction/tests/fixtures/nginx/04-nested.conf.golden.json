@@ -1,0 +1,143 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "http",
+      "name": "http",
+      "fqn": "http",
+      "parent_fqn": null,
+      "start_line": 2,
+      "end_line": 16,
+      "start_byte": 20,
+      "end_byte": 469,
+      "signature": "http {",
+      "content": "http {\n    # the log_format value contains literal braces and a semicolon inside quotes\n    log_format custom \"$remote_addr {nested} stuff; #notacomment more\";\n\n    server {\n        server_name a.example.com;  # inline comment after directive\n\n        location /deep {\n            location /deep/inner {\n                add_header X-Trick \"value with } brace and ; semi\";\n                proxy_pass http://upstream_x;\n            }\n        }\n    }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "server",
+      "name": "server",
+      "fqn": "http.server",
+      "parent_fqn": "http",
+      "start_line": 6,
+      "end_line": 15,
+      "start_byte": 185,
+      "end_byte": 467,
+      "signature": "server {",
+      "content": "server {\n        server_name a.example.com;  # inline comment after directive\n\n        location /deep {\n            location /deep/inner {\n                add_header X-Trick \"value with } brace and ; semi\";\n                proxy_pass http://upstream_x;\n            }\n        }\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "location",
+      "name": "location /deep",
+      "fqn": "http.server.location /deep",
+      "parent_fqn": "http.server",
+      "start_line": 9,
+      "end_line": 14,
+      "start_byte": 272,
+      "end_byte": 461,
+      "signature": "location /deep {",
+      "content": "location /deep {\n            location /deep/inner {\n                add_header X-Trick \"value with } brace and ; semi\";\n                proxy_pass http://upstream_x;\n            }\n        }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "location",
+      "name": "location /deep/inner",
+      "fqn": "http.server.location /deep.location /deep/inner",
+      "parent_fqn": "http.server.location /deep",
+      "start_line": 10,
+      "end_line": 13,
+      "start_byte": 301,
+      "end_byte": 451,
+      "signature": "location /deep/inner {",
+      "content": "location /deep/inner {\n                add_header X-Trick \"value with } brace and ; semi\";\n                proxy_pass http://upstream_x;\n            }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "upstream",
+      "name": "upstream upstream_x",
+      "fqn": "upstream upstream_x",
+      "parent_fqn": null,
+      "start_line": 18,
+      "end_line": 20,
+      "start_byte": 471,
+      "end_byte": 521,
+      "signature": "upstream upstream_x {",
+      "content": "upstream upstream_x {\n    server 127.0.0.1:9000;\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "location /deep/inner",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "upstream_x",
+          "module_specifier": null
+        }
+      },
+      "kind": "RoutesTo",
+      "provenance": "Static",
+      "line": 12,
+      "metadata": {
+        "fields": {
+          "directive": {
+            "String": "proxy_pass"
+          },
+          "target_kind": {
+            "String": "upstream"
+          }
+        }
+      }
+    }
+  ]
+}

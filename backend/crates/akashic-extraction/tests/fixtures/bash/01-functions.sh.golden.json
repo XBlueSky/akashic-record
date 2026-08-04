@@ -1,0 +1,132 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "greet",
+      "fqn": "greet",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 5,
+      "start_byte": 21,
+      "end_byte": 47,
+      "signature": "greet()",
+      "content": "greet() {\n  echo \"hello\"\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "run",
+      "fqn": "run",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 9,
+      "start_byte": 49,
+      "end_byte": 66,
+      "signature": "run()",
+      "content": "run() {\n  greet\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "bar",
+      "fqn": "bar",
+      "parent_fqn": null,
+      "start_line": 11,
+      "end_line": 13,
+      "start_byte": 68,
+      "end_byte": 97,
+      "signature": "function bar",
+      "content": "function bar {\n  echo \"bar\"\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 33,
+          "end": 45
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "echo",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 85,
+          "end": 95
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "echo",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 12,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 59,
+          "end": 64
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "greet",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

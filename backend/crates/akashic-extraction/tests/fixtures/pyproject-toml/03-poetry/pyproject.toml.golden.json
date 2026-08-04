@@ -1,0 +1,104 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "manifest",
+      "name": "poetry-app",
+      "fqn": "poetry-app",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 11,
+      "start_byte": 0,
+      "end_byte": 239,
+      "signature": "poetry-app@3.1.4",
+      "content": "[tool.poetry]\nname = \"poetry-app\"\nversion = \"3.1.4\"\ndescription = \"A Poetry-managed project\"\n\n[tool.poetry.dependencies]\npython = \"^3.11\"\nrequests = \"^2.31\"\nrich = { version = \"13.7\", optional = false }\ninternal = { path = \"../internal\" }\n",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "version": {
+            "String": "3.1.4"
+          }
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "poetry-app",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "internal",
+          "module_specifier": "internal@path:../internal"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "poetry"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "poetry-app",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "requests",
+          "module_specifier": "requests@^2.31"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "poetry"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "poetry-app",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "rich",
+          "module_specifier": "rich@13.7"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "poetry"
+          }
+        }
+      }
+    }
+  ]
+}

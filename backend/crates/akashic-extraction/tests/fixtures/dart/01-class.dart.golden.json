@@ -1,0 +1,228 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "class",
+      "name": "Counter",
+      "fqn": "Counter",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 20,
+      "start_byte": 0,
+      "end_byte": 247,
+      "signature": "class Counter",
+      "content": "class Counter {\n  int _count;\n\n  Counter(this._count);\n\n  int increment() {\n    _count = _count + 1;\n    return _count;\n  }\n\n  int incrementTwice() {\n    increment();\n    increment();\n    return _count;\n  }\n\n  void _reset() {\n    _count = 0;\n  }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "Counter",
+      "fqn": "Counter.Counter",
+      "parent_fqn": "Counter",
+      "start_line": 4,
+      "end_line": 4,
+      "start_byte": 33,
+      "end_byte": 53,
+      "signature": "Counter(this._count)",
+      "content": "Counter(this._count)",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "increment",
+      "fqn": "Counter.increment",
+      "parent_fqn": "Counter",
+      "start_line": 6,
+      "end_line": 9,
+      "start_byte": 58,
+      "end_byte": 123,
+      "signature": "int increment()",
+      "content": "int increment() {\n    _count = _count + 1;\n    return _count;\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "incrementTwice",
+      "fqn": "Counter.incrementTwice",
+      "parent_fqn": "Counter",
+      "start_line": 11,
+      "end_line": 15,
+      "start_byte": 127,
+      "end_byte": 206,
+      "signature": "int incrementTwice()",
+      "content": "int incrementTwice() {\n    increment();\n    increment();\n    return _count;\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "_reset",
+      "fqn": "Counter._reset",
+      "parent_fqn": "Counter",
+      "start_line": 17,
+      "end_line": 19,
+      "start_byte": 210,
+      "end_byte": 245,
+      "signature": "void _reset()",
+      "content": "void _reset() {\n    _count = 0;\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 154,
+          "end": 165
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "increment",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 12,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 171,
+          "end": 182
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "increment",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 13,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 18,
+          "end": 21
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 58,
+          "end": 61
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 127,
+          "end": 130
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 11,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

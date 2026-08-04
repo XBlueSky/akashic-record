@@ -1,0 +1,154 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "class",
+      "name": "Greeter",
+      "fqn": "Greeter",
+      "parent_fqn": null,
+      "start_line": 4,
+      "end_line": 6,
+      "start_byte": 53,
+      "end_byte": 105,
+      "signature": "@interface Greeter : NSObject",
+      "content": "@interface Greeter : NSObject\n- (void)sayHello;\n@end",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "sayHello",
+      "fqn": "Greeter.sayHello",
+      "parent_fqn": "Greeter",
+      "start_line": 5,
+      "end_line": 5,
+      "start_byte": 83,
+      "end_byte": 100,
+      "signature": "- (void)sayHello;",
+      "content": "- (void)sayHello;",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "class",
+      "name": "Greeter",
+      "fqn": "Greeter",
+      "parent_fqn": null,
+      "start_line": 8,
+      "end_line": 12,
+      "start_byte": 107,
+      "end_byte": 177,
+      "signature": "@implementation Greeter",
+      "content": "@implementation Greeter\n- (void)sayHello {\n    NSLog(@\"hello\");\n}\n@end",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "sayHello",
+      "fqn": "Greeter.sayHello",
+      "parent_fqn": "Greeter",
+      "start_line": 9,
+      "end_line": 11,
+      "start_byte": 131,
+      "end_byte": 172,
+      "signature": "- (void)sayHello",
+      "content": "- (void)sayHello {\n    NSLog(@\"hello\");\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 154,
+          "end": 169
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "NSLog",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "objc/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Foundation/Foundation.h",
+          "module_specifier": "objc/Foundation/Foundation"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "objc/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Local.h",
+          "module_specifier": "objc/Local"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

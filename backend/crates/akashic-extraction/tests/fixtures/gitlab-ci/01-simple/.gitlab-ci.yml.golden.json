@@ -1,0 +1,144 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "job",
+      "name": "build",
+      "fqn": "build",
+      "parent_fqn": null,
+      "start_line": 9,
+      "end_line": 12,
+      "start_byte": 71,
+      "end_byte": 119,
+      "signature": "build:",
+      "content": "build:\n  stage: build\n  script:\n    - make build",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "job",
+      "name": "test",
+      "fqn": "test",
+      "parent_fqn": null,
+      "start_line": 14,
+      "end_line": 18,
+      "start_byte": 121,
+      "end_byte": 183,
+      "signature": "test:",
+      "content": "test:\n  stage: test\n  needs: [build]\n  script:\n    - make test",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "job",
+      "name": "deploy",
+      "fqn": "deploy",
+      "parent_fqn": null,
+      "start_line": 20,
+      "end_line": 24,
+      "start_byte": 185,
+      "end_byte": 263,
+      "signature": "deploy:",
+      "content": "deploy:\n  stage: deploy\n  needs: [\"build\", \"test\"]\n  script:\n    - make deploy",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "test",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "build",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 16,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "needs"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "deploy",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "build",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 22,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "needs"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "deploy",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "test",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 22,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "needs"
+          }
+        }
+      }
+    }
+  ]
+}

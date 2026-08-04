@@ -1,0 +1,174 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "outer",
+      "fqn": "outer",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 14,
+      "start_byte": 0,
+      "end_byte": 338,
+      "signature": "def outer(items):",
+      "content": "def outer(items):\n    \"\"\"Process items via a nested helper.\"\"\"\n    factor = 2\n\n    def scale(x):\n        \"\"\"Nested: scale a value by the captured factor.\"\"\"\n        return x * factor\n\n    def total():\n        \"\"\"Nested: sum the scaled items.\"\"\"\n        return sum(scale(i) for i in items)\n\n    doubler = lambda y: y * 2\n    return total()",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "scale",
+      "fqn": "outer.scale",
+      "parent_fqn": "outer",
+      "start_line": 5,
+      "end_line": 7,
+      "start_byte": 83,
+      "end_byte": 182,
+      "signature": "def scale(x):",
+      "content": "def scale(x):\n        \"\"\"Nested: scale a value by the captured factor.\"\"\"\n        return x * factor",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "total",
+      "fqn": "outer.total",
+      "parent_fqn": "outer",
+      "start_line": 9,
+      "end_line": 11,
+      "start_byte": 188,
+      "end_byte": 288,
+      "signature": "def total():",
+      "content": "def total():\n        \"\"\"Nested: sum the scaled items.\"\"\"\n        return sum(scale(i) for i in items)",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "standalone",
+      "fqn": "standalone",
+      "parent_fqn": null,
+      "start_line": 17,
+      "end_line": 19,
+      "start_byte": 341,
+      "end_byte": 434,
+      "signature": "def standalone():",
+      "content": "def standalone():\n    \"\"\"A top-level function calling outer().\"\"\"\n    return outer([1, 2, 3])",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 418,
+          "end": 434
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "outer",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 19,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 264,
+          "end": 272
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "scale",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 11,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 260,
+          "end": 288
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "sum",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 11,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 331,
+          "end": 338
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "total",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 14,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

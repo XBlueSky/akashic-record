@@ -1,0 +1,130 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "class",
+      "name": "Logger",
+      "fqn": "Logger",
+      "parent_fqn": null,
+      "start_line": 5,
+      "end_line": 9,
+      "start_byte": 46,
+      "end_byte": 110,
+      "signature": "class Logger",
+      "content": "class Logger {\n    func log() {\n        print(\"logging\")\n    }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "log",
+      "fqn": "Logger.log",
+      "parent_fqn": "Logger",
+      "start_line": 6,
+      "end_line": 8,
+      "start_byte": 65,
+      "end_byte": 108,
+      "signature": "func log()",
+      "content": "func log() {\n        print(\"logging\")\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 86,
+          "end": 102
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "print",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "swift/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Foundation",
+          "module_specifier": "Foundation"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "swift/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "UIKit",
+          "module_specifier": "UIKit"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "swift/04-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "os.log",
+          "module_specifier": "os.log"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

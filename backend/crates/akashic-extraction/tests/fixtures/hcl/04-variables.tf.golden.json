@@ -1,0 +1,115 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "terraform",
+      "name": "terraform",
+      "fqn": "terraform",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 3,
+      "start_byte": 0,
+      "end_byte": 45,
+      "signature": "terraform {",
+      "content": "terraform {\n  required_version = \">= 1.5.0\"\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "variable",
+      "name": "region",
+      "fqn": "region",
+      "parent_fqn": null,
+      "start_line": 5,
+      "end_line": 8,
+      "start_byte": 47,
+      "end_byte": 111,
+      "signature": "variable \"region\" {",
+      "content": "variable \"region\" {\n  type    = string\n  default = \"us-east-1\"\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "output",
+      "name": "instance_ip",
+      "fqn": "instance_ip",
+      "parent_fqn": null,
+      "start_line": 10,
+      "end_line": 12,
+      "start_byte": 113,
+      "end_byte": 158,
+      "signature": "output \"instance_ip\" {",
+      "content": "output \"instance_ip\" {\n  value = \"10.0.0.5\"\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "locals",
+      "name": "locals",
+      "fqn": "locals",
+      "parent_fqn": null,
+      "start_line": 14,
+      "end_line": 16,
+      "start_byte": 160,
+      "end_byte": 209,
+      "signature": "locals {",
+      "content": "locals {\n  common_tags = \"managed-by-terraform\"\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "data",
+      "name": "aws_ami.ubuntu",
+      "fqn": "aws_ami.ubuntu",
+      "parent_fqn": null,
+      "start_line": 18,
+      "end_line": 21,
+      "start_byte": 211,
+      "end_byte": 292,
+      "signature": "data \"aws_ami\" \"ubuntu\" {",
+      "content": "data \"aws_ami\" \"ubuntu\" {\n  most_recent = true\n  owners      = [\"099720109477\"]\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": []
+}

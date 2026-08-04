@@ -1,0 +1,554 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "interface",
+      "name": "Shape",
+      "fqn": "Shape",
+      "parent_fqn": null,
+      "start_line": 6,
+      "end_line": 8,
+      "start_byte": 64,
+      "end_byte": 109,
+      "signature": "public interface Shape",
+      "content": "public interface Shape {\n    double area();\n}",
+      "doc": "/**\n * Base interface for all shapes.\n */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "area",
+      "fqn": "Shape.area",
+      "parent_fqn": "Shape",
+      "start_line": 7,
+      "end_line": 7,
+      "start_byte": 93,
+      "end_byte": 107,
+      "signature": "double area();",
+      "content": "double area();",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "PackagePrivate",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "interface",
+      "name": "Drawable",
+      "fqn": "Drawable",
+      "parent_fqn": null,
+      "start_line": 13,
+      "end_line": 15,
+      "start_byte": 165,
+      "end_byte": 211,
+      "signature": "public interface Drawable",
+      "content": "public interface Drawable {\n    void draw();\n}",
+      "doc": "/**\n * Drawable interface for renderable objects.\n */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "draw",
+      "fqn": "Drawable.draw",
+      "parent_fqn": "Drawable",
+      "start_line": 14,
+      "end_line": 14,
+      "start_byte": 197,
+      "end_byte": 209,
+      "signature": "void draw();",
+      "content": "void draw();",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "PackagePrivate",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "class",
+      "name": "Circle",
+      "fqn": "Circle",
+      "parent_fqn": null,
+      "start_line": 20,
+      "end_line": 36,
+      "start_byte": 290,
+      "end_byte": 643,
+      "signature": "public class Circle implements Shape, Drawable",
+      "content": "public class Circle implements Shape, Drawable {\n    private double radius;\n\n    public Circle(double radius) {\n        this.radius = radius;\n    }\n\n    @Override\n    public double area() {\n        return Math.PI * radius * radius;\n    }\n\n    @Override\n    public void draw() {\n        System.out.println(\"Drawing circle with radius=\" + radius);\n    }\n}",
+      "doc": "/**\n * A circle that extends no class but implements Shape and Drawable.\n */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "Circle",
+      "fqn": "Circle.Circle",
+      "parent_fqn": "Circle",
+      "start_line": 23,
+      "end_line": 25,
+      "start_byte": 371,
+      "end_byte": 437,
+      "signature": "public Circle(double radius)",
+      "content": "public Circle(double radius) {\n        this.radius = radius;\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "area",
+      "fqn": "Circle.area",
+      "parent_fqn": "Circle",
+      "start_line": 27,
+      "end_line": 30,
+      "start_byte": 443,
+      "end_byte": 527,
+      "signature": "@Override",
+      "content": "@Override\n    public double area() {\n        return Math.PI * radius * radius;\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "draw",
+      "fqn": "Circle.draw",
+      "parent_fqn": "Circle",
+      "start_line": 32,
+      "end_line": 35,
+      "start_byte": 533,
+      "end_byte": 641,
+      "signature": "@Override",
+      "content": "@Override\n    public void draw() {\n        System.out.println(\"Drawing circle with radius=\" + radius);\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "class",
+      "name": "ColoredCircle",
+      "fqn": "ColoredCircle",
+      "parent_fqn": null,
+      "start_line": 41,
+      "end_line": 48,
+      "start_byte": 694,
+      "end_byte": 879,
+      "signature": "public class ColoredCircle extends Circle",
+      "content": "public class ColoredCircle extends Circle {\n    private String color;\n\n    public ColoredCircle(double radius, String color) {\n        super(radius);\n        this.color = color;\n    }\n}",
+      "doc": "/**\n * A colored circle that extends Circle.\n */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "ColoredCircle",
+      "fqn": "ColoredCircle.ColoredCircle",
+      "parent_fqn": "ColoredCircle",
+      "start_line": 44,
+      "end_line": 47,
+      "start_byte": 769,
+      "end_byte": 877,
+      "signature": "public ColoredCircle(double radius, String color)",
+      "content": "public ColoredCircle(double radius, String color) {\n        super(radius);\n        this.color = color;\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "interface",
+      "name": "ColoredShape",
+      "fqn": "ColoredShape",
+      "parent_fqn": null,
+      "start_line": 53,
+      "end_line": 55,
+      "start_byte": 937,
+      "end_byte": 1004,
+      "signature": "public interface ColoredShape extends Shape",
+      "content": "public interface ColoredShape extends Shape {\n    String color();\n}",
+      "doc": "/**\n * An interface that extends another interface.\n */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "color",
+      "fqn": "ColoredShape.color",
+      "parent_fqn": "ColoredShape",
+      "start_line": 54,
+      "end_line": 54,
+      "start_byte": 987,
+      "end_byte": 1002,
+      "signature": "String color();",
+      "content": "String color();",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "PackagePrivate",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 576,
+          "end": 634
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "println",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 34,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "ColoredCircle",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Circle",
+          "module_specifier": null
+        }
+      },
+      "kind": "Extends",
+      "provenance": "Static",
+      "line": 41,
+      "metadata": {
+        "fields": {
+          "impl_kind": {
+            "String": "extends"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "ColoredShape",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Shape",
+          "module_specifier": null
+        }
+      },
+      "kind": "Extends",
+      "provenance": "Static",
+      "line": 53,
+      "metadata": {
+        "fields": {
+          "impl_kind": {
+            "String": "extends"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "Circle",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Drawable",
+          "module_specifier": null
+        }
+      },
+      "kind": "Implements",
+      "provenance": "Static",
+      "line": 20,
+      "metadata": {
+        "fields": {
+          "impl_kind": {
+            "String": "implements"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "Circle",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Shape",
+          "module_specifier": null
+        }
+      },
+      "kind": "Implements",
+      "provenance": "Static",
+      "line": 20,
+      "metadata": {
+        "fields": {
+          "impl_kind": {
+            "String": "implements"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 729,
+          "end": 735
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Circle",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 41,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 328,
+          "end": 336
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Drawable",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 20,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 321,
+          "end": 326
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Shape",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 20,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 975,
+          "end": 980
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Shape",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 53,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 750,
+          "end": 756
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 42,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 805,
+          "end": 811
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 44,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 987,
+          "end": 993
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 54,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

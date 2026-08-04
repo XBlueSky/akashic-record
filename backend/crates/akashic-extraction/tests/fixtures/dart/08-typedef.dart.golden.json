@@ -1,0 +1,430 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "type",
+      "name": "IntList",
+      "fqn": "IntList",
+      "parent_fqn": null,
+      "start_line": 2,
+      "end_line": 2,
+      "start_byte": 47,
+      "end_byte": 75,
+      "signature": "typedef IntList = List<int>;",
+      "content": "typedef IntList = List<int>;",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "type",
+      "name": "StringMap",
+      "fqn": "StringMap",
+      "parent_fqn": null,
+      "start_line": 6,
+      "end_line": 6,
+      "start_byte": 230,
+      "end_byte": 268,
+      "signature": "typedef StringMap<V> = Map<String, V>;",
+      "content": "typedef StringMap<V> = Map<String, V>;",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "type",
+      "name": "Comparator",
+      "fqn": "Comparator",
+      "parent_fqn": null,
+      "start_line": 10,
+      "end_line": 10,
+      "start_byte": 406,
+      "end_byte": 443,
+      "signature": "typedef int Comparator(int a, int b);",
+      "content": "typedef int Comparator(int a, int b);",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "type",
+      "name": "_Handler",
+      "fqn": "_Handler",
+      "parent_fqn": null,
+      "start_line": 13,
+      "end_line": 13,
+      "start_byte": 522,
+      "end_byte": 569,
+      "signature": "typedef _Handler = void Function(String event);",
+      "content": "typedef _Handler = void Function(String event);",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 418,
+          "end": 428
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Comparator",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 55,
+          "end": 62
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "IntList",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 65,
+          "end": 69
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "List",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 253,
+          "end": 256
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Map",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 257,
+          "end": 263
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 555,
+          "end": 561
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 13,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 238,
+          "end": 247
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "StringMap",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 248,
+          "end": 249
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "V",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 265,
+          "end": 266
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "V",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 530,
+          "end": 538
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "_Handler",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 13,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 70,
+          "end": 73
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 414,
+          "end": 417
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 429,
+          "end": 432
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 436,
+          "end": 439
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

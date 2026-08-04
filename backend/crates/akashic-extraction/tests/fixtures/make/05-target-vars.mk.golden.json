@@ -1,0 +1,164 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "target",
+      "name": "build",
+      "fqn": "build",
+      "parent_fqn": null,
+      "start_line": 4,
+      "end_line": 4,
+      "start_byte": 233,
+      "end_byte": 252,
+      "signature": "build: CFLAGS = -O2",
+      "content": "build: CFLAGS = -O2",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "target",
+      "name": "build",
+      "fqn": "build",
+      "parent_fqn": null,
+      "start_line": 5,
+      "end_line": 5,
+      "start_byte": 253,
+      "end_byte": 275,
+      "signature": "build: CFLAGS += -Wall",
+      "content": "build: CFLAGS += -Wall",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "target",
+      "name": "debug",
+      "fqn": "debug",
+      "parent_fqn": null,
+      "start_line": 6,
+      "end_line": 6,
+      "start_byte": 276,
+      "end_byte": 295,
+      "signature": "debug: CFLAGS := -g",
+      "content": "debug: CFLAGS := -g",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "target",
+      "name": "build",
+      "fqn": "build",
+      "parent_fqn": null,
+      "start_line": 8,
+      "end_line": 9,
+      "start_byte": 297,
+      "end_byte": 341,
+      "signature": "build: main.o",
+      "content": "build: main.o\n\t$(CC) $(CFLAGS) -o app main.o",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "target",
+      "name": "debug",
+      "fqn": "debug",
+      "parent_fqn": null,
+      "start_line": 11,
+      "end_line": 12,
+      "start_byte": 343,
+      "end_byte": 370,
+      "signature": "debug: build",
+      "content": "debug: build\n\t./app --debug",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "debug",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "build",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 11,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "prerequisite"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "build",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "main.o",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "prerequisite"
+          }
+        }
+      }
+    }
+  ]
+}

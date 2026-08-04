@@ -1,0 +1,74 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "constant",
+      "name": "handler",
+      "fqn": "handler",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 3,
+      "start_byte": 7,
+      "end_byte": 74,
+      "signature": "const handler = (req: Request) =>",
+      "content": "const handler = (req: Request) => {\n  return new Response(\"ok\");\n};",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "constant",
+      "name": "factory",
+      "fqn": "factory",
+      "parent_fqn": null,
+      "start_line": 5,
+      "end_line": 7,
+      "start_byte": 76,
+      "end_byte": 135,
+      "signature": "const factory = () =>",
+      "content": "const factory = () => {\n  return { create: () => ({}) };\n};",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 29,
+          "end": 36
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Request",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "enum",
+      "name": "Color",
+      "fqn": "Color",
+      "parent_fqn": null,
+      "start_line": 4,
+      "end_line": 9,
+      "start_byte": 105,
+      "end_byte": 175,
+      "signature": "public enum Color",
+      "content": "public enum Color\n    {\n        Red,\n        Green,\n        Blue\n    }",
+      "doc": "/// <summary>Represents the color primaries in the RGB model.</summary>",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "Red",
+      "fqn": "Color.Red",
+      "parent_fqn": "Color",
+      "start_line": 6,
+      "end_line": 6,
+      "start_byte": 137,
+      "end_byte": 140,
+      "signature": "Red",
+      "content": "Red",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "Green",
+      "fqn": "Color.Green",
+      "parent_fqn": "Color",
+      "start_line": 7,
+      "end_line": 7,
+      "start_byte": 150,
+      "end_byte": 155,
+      "signature": "Green",
+      "content": "Green",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "Blue",
+      "fqn": "Color.Blue",
+      "parent_fqn": "Color",
+      "start_line": 8,
+      "end_line": 8,
+      "start_byte": 165,
+      "end_byte": 169,
+      "signature": "Blue",
+      "content": "Blue",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum",
+      "name": "Status",
+      "fqn": "Status",
+      "parent_fqn": null,
+      "start_line": 12,
+      "end_line": 18,
+      "start_byte": 247,
+      "end_byte": 345,
+      "signature": "public enum Status",
+      "content": "public enum Status\n    {\n        Pending,\n        Running,\n        Completed,\n        Failed\n    }",
+      "doc": "/// <summary>Represents the status of an operation.</summary>",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "Pending",
+      "fqn": "Status.Pending",
+      "parent_fqn": "Status",
+      "start_line": 14,
+      "end_line": 14,
+      "start_byte": 280,
+      "end_byte": 287,
+      "signature": "Pending",
+      "content": "Pending",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "Running",
+      "fqn": "Status.Running",
+      "parent_fqn": "Status",
+      "start_line": 15,
+      "end_line": 15,
+      "start_byte": 297,
+      "end_byte": 304,
+      "signature": "Running",
+      "content": "Running",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "Completed",
+      "fqn": "Status.Completed",
+      "parent_fqn": "Status",
+      "start_line": 16,
+      "end_line": 16,
+      "start_byte": 314,
+      "end_byte": 323,
+      "signature": "Completed",
+      "content": "Completed",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "Failed",
+      "fqn": "Status.Failed",
+      "parent_fqn": "Status",
+      "start_line": 17,
+      "end_line": 17,
+      "start_byte": 333,
+      "end_byte": 339,
+      "signature": "Failed",
+      "content": "Failed",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": []
+}

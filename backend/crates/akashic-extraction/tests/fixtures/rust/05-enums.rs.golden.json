@@ -1,0 +1,159 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "enum",
+      "name": "Color",
+      "fqn": "Color",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 5,
+      "start_byte": 0,
+      "end_byte": 48,
+      "signature": "pub enum Color",
+      "content": "pub enum Color {\n    Red,\n    Green,\n    Blue,\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "Red",
+      "fqn": "Color.Red",
+      "parent_fqn": "Color",
+      "start_line": 2,
+      "end_line": 2,
+      "start_byte": 21,
+      "end_byte": 24,
+      "signature": "Red",
+      "content": "Red",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "Green",
+      "fqn": "Color.Green",
+      "parent_fqn": "Color",
+      "start_line": 3,
+      "end_line": 3,
+      "start_byte": 30,
+      "end_byte": 35,
+      "signature": "Green",
+      "content": "Green",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "Blue",
+      "fqn": "Color.Blue",
+      "parent_fqn": "Color",
+      "start_line": 4,
+      "end_line": 4,
+      "start_byte": 41,
+      "end_byte": 45,
+      "signature": "Blue",
+      "content": "Blue",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum",
+      "name": "Shape",
+      "fqn": "Shape",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 10,
+      "start_byte": 50,
+      "end_byte": 110,
+      "signature": "enum Shape",
+      "content": "enum Shape {\n    Circle(f64),\n    Rect { w: f64, h: f64 },\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "Circle",
+      "fqn": "Shape.Circle",
+      "parent_fqn": "Shape",
+      "start_line": 8,
+      "end_line": 8,
+      "start_byte": 67,
+      "end_byte": 78,
+      "signature": "Circle(f64)",
+      "content": "Circle(f64)",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "Rect",
+      "fqn": "Shape.Rect",
+      "parent_fqn": "Shape",
+      "start_line": 9,
+      "end_line": 9,
+      "start_byte": 84,
+      "end_byte": 107,
+      "signature": "Rect { w: f64, h: f64 }",
+      "content": "Rect { w: f64, h: f64 }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": []
+}

@@ -1,0 +1,52 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "module",
+      "name": "café",
+      "fqn": "café",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 4,
+      "start_byte": 0,
+      "end_byte": 72,
+      "signature": "module \"café\" {",
+      "content": "module \"café\" {\n  source = \"./modules/café/vpc\"\n  name   = \"réseau\"\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "café",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "./modules/café/vpc",
+          "module_specifier": "./modules/café/vpc"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "module_source"
+          }
+        }
+      }
+    }
+  ]
+}

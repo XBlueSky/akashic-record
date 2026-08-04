@@ -1,0 +1,388 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "class",
+      "name": "Calculator",
+      "fqn": "Calculator",
+      "parent_fqn": null,
+      "start_line": 10,
+      "end_line": 38,
+      "start_byte": 241,
+      "end_byte": 1020,
+      "signature": "public class Calculator",
+      "content": "public class Calculator\n    {\n        private int _state;\n\n        /// <summary>Constructs a Calculator with an initial state value.</summary>\n        public Calculator(int initial)\n        {\n            _state = initial;\n        }\n\n        /// <summary>Adds two integers and returns the result.</summary>\n        public int Add(int a, int b)\n        {\n            int result = a + b;\n            return result;\n        }\n\n        /// <summary>A private helper that delegates to the public Add method.</summary>\n        private int Helper()\n        {\n            return Add(1, 2);\n        }\n\n        /// <summary>Returns a string representation of the calculator.</summary>\n        public override string ToString()\n        {\n            return _state.ToString();\n        }\n    }",
+      "doc": "/// <summary>\n/// A simple calculator class demonstrating method extraction.\n/// This class provides basic arithmetic operations.\n/// </summary>",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "Calculator",
+      "fqn": "Calculator.Calculator",
+      "parent_fqn": "Calculator",
+      "start_line": 15,
+      "end_line": 18,
+      "start_byte": 392,
+      "end_byte": 472,
+      "signature": "public Calculator(int initial)",
+      "content": "public Calculator(int initial)\n        {\n            _state = initial;\n        }",
+      "doc": "/// <summary>Constructs a Calculator with an initial state value.</summary>",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "Add",
+      "fqn": "Calculator.Add",
+      "parent_fqn": "Calculator",
+      "start_line": 21,
+      "end_line": 25,
+      "start_byte": 555,
+      "end_byte": 662,
+      "signature": "public int Add(int a, int b)",
+      "content": "public int Add(int a, int b)\n        {\n            int result = a + b;\n            return result;\n        }",
+      "doc": "/// <summary>Adds two integers and returns the result.</summary>",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "Helper",
+      "fqn": "Calculator.Helper",
+      "parent_fqn": "Calculator",
+      "start_line": 28,
+      "end_line": 31,
+      "start_byte": 761,
+      "end_byte": 831,
+      "signature": "private int Helper()",
+      "content": "private int Helper()\n        {\n            return Add(1, 2);\n        }",
+      "doc": "/// <summary>A private helper that delegates to the public Add method.</summary>",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "ToString",
+      "fqn": "Calculator.ToString",
+      "parent_fqn": "Calculator",
+      "start_line": 34,
+      "end_line": 37,
+      "start_byte": 923,
+      "end_byte": 1014,
+      "signature": "public override string ToString()",
+      "content": "public override string ToString()\n        {\n            return _state.ToString();\n        }",
+      "doc": "/// <summary>Returns a string representation of the calculator.</summary>",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 811,
+          "end": 820
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Add",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 30,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 986,
+          "end": 1003
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "ToString",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 36,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "csharp/01-class",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "System",
+          "module_specifier": "System"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "csharp/01-class",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "System.Collections.Generic",
+          "module_specifier": "System.Collections.Generic"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 287,
+          "end": 290
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 12,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 410,
+          "end": 413
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 15,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 562,
+          "end": 565
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 21,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 570,
+          "end": 573
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 21,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 577,
+          "end": 580
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 21,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 606,
+          "end": 609
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 23,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 769,
+          "end": 772
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 28,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 939,
+          "end": 945
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "string",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 34,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "upstream",
+      "name": "upstream api_pool",
+      "fqn": "upstream api_pool",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 5,
+      "start_byte": 0,
+      "end_byte": 106,
+      "signature": "upstream api_pool {",
+      "content": "upstream api_pool {\n    server 10.0.0.1:8080;\n    server 10.0.0.2:8080;\n    server 10.0.0.3:8080 backup;\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "server",
+      "name": "server",
+      "fqn": "server",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 12,
+      "start_byte": 108,
+      "end_byte": 193,
+      "signature": "server {",
+      "content": "server {\n    listen 443;\n    location / {\n        proxy_pass http://api_pool;\n    }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "location",
+      "name": "location /",
+      "fqn": "server.location /",
+      "parent_fqn": "server",
+      "start_line": 9,
+      "end_line": 11,
+      "start_byte": 137,
+      "end_byte": 191,
+      "signature": "location / {",
+      "content": "location / {\n        proxy_pass http://api_pool;\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "location /",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "api_pool",
+          "module_specifier": null
+        }
+      },
+      "kind": "RoutesTo",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {
+          "directive": {
+            "String": "proxy_pass"
+          },
+          "target_kind": {
+            "String": "upstream"
+          }
+        }
+      }
+    }
+  ]
+}

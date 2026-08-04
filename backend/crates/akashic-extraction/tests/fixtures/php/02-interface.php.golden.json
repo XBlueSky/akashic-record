@@ -1,0 +1,180 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "namespace",
+      "name": "App.Contracts",
+      "fqn": "App.Contracts",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 23,
+      "start_byte": 7,
+      "end_byte": 368,
+      "signature": "namespace App\\Contracts",
+      "content": "namespace App\\Contracts {\n    interface Shape\n    {\n        public function area(): float;\n\n        public function name(): string;\n    }\n\n    trait Describable\n    {\n        public function describe(): string\n        {\n            return $this->name();\n        }\n\n        protected function tag(): string\n        {\n            return \"shape\";\n        }\n    }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "interface",
+      "name": "Shape",
+      "fqn": "App.Contracts.Shape",
+      "parent_fqn": "App.Contracts",
+      "start_line": 4,
+      "end_line": 9,
+      "start_byte": 37,
+      "end_byte": 144,
+      "signature": "interface Shape",
+      "content": "interface Shape\n    {\n        public function area(): float;\n\n        public function name(): string;\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "area",
+      "fqn": "App.Contracts.Shape.area",
+      "parent_fqn": "App.Contracts.Shape",
+      "start_line": 6,
+      "end_line": 6,
+      "start_byte": 67,
+      "end_byte": 97,
+      "signature": "public function area(): float;",
+      "content": "public function area(): float;",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "name",
+      "fqn": "App.Contracts.Shape.name",
+      "parent_fqn": "App.Contracts.Shape",
+      "start_line": 8,
+      "end_line": 8,
+      "start_byte": 107,
+      "end_byte": 138,
+      "signature": "public function name(): string;",
+      "content": "public function name(): string;",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "trait",
+      "name": "Describable",
+      "fqn": "App.Contracts.Describable",
+      "parent_fqn": "App.Contracts",
+      "start_line": 11,
+      "end_line": 22,
+      "start_byte": 150,
+      "end_byte": 366,
+      "signature": "trait Describable",
+      "content": "trait Describable\n    {\n        public function describe(): string\n        {\n            return $this->name();\n        }\n\n        protected function tag(): string\n        {\n            return \"shape\";\n        }\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "describe",
+      "fqn": "App.Contracts.Describable.describe",
+      "parent_fqn": "App.Contracts.Describable",
+      "start_line": 13,
+      "end_line": 16,
+      "start_byte": 182,
+      "end_byte": 270,
+      "signature": "public function describe(): string",
+      "content": "public function describe(): string\n        {\n            return $this->name();\n        }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "tag",
+      "fqn": "App.Contracts.Describable.tag",
+      "parent_fqn": "App.Contracts.Describable",
+      "start_line": 18,
+      "end_line": 21,
+      "start_byte": 280,
+      "end_byte": 360,
+      "signature": "protected function tag(): string",
+      "content": "protected function tag(): string\n        {\n            return \"shape\";\n        }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Protected",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 246,
+          "end": 259
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "name",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 15,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

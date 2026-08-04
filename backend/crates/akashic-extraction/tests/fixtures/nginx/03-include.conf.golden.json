@@ -1,0 +1,146 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "http",
+      "name": "http",
+      "fqn": "http",
+      "parent_fqn": null,
+      "start_line": 4,
+      "end_line": 11,
+      "start_byte": 55,
+      "end_byte": 171,
+      "signature": "http {",
+      "content": "http {\n    include sites-enabled/*.conf;\n\n    server {\n        listen 80;\n        include snippets/ssl.conf;\n    }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "server",
+      "name": "server",
+      "fqn": "http.server",
+      "parent_fqn": "http",
+      "start_line": 7,
+      "end_line": 10,
+      "start_byte": 101,
+      "end_byte": 169,
+      "signature": "server {",
+      "content": "server {\n        listen 80;\n        include snippets/ssl.conf;\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "03-include",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "/etc/nginx/mime.types",
+          "module_specifier": "/etc/nginx/mime.types"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "directive": {
+            "String": "include"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "03-include",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "conf.d/*.conf",
+          "module_specifier": "conf.d/*.conf"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "directive": {
+            "String": "include"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "http",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "sites-enabled/*.conf",
+          "module_specifier": "sites-enabled/*.conf"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {
+          "directive": {
+            "String": "include"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "server",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "snippets/ssl.conf",
+          "module_specifier": "snippets/ssl.conf"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {
+          "directive": {
+            "String": "include"
+          }
+        }
+      }
+    }
+  ]
+}

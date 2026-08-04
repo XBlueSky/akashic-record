@@ -1,0 +1,255 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "run",
+      "fqn": "run",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 11,
+      "start_byte": 195,
+      "end_byte": 250,
+      "signature": "function run()",
+      "content": "function run() {\n  foo();\n  baz();\n  defaultExport();\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 223,
+          "end": 228
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "baz",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 232,
+          "end": 247
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "defaultExport",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 214,
+          "end": 219
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "foo",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "javascript/03-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "./side-effect.js",
+          "module_specifier": "javascript/side-effect"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "javascript/03-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Both",
+          "module_specifier": "javascript/both"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "default"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "javascript/03-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "baz",
+          "module_specifier": "javascript/utils"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "edge.import_source": {
+            "String": "bar"
+          },
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "javascript/03-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "defaultExport",
+          "module_specifier": "some-package"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "default"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "javascript/03-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "extra",
+          "module_specifier": "javascript/both"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "javascript/03-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "foo",
+          "module_specifier": "javascript/utils"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "javascript/03-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "ns",
+          "module_specifier": "javascript/ns"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "namespace"
+          }
+        }
+      }
+    }
+  ]
+}

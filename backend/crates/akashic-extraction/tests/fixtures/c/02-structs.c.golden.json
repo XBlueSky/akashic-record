@@ -1,0 +1,116 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "struct",
+      "name": "Point",
+      "fqn": "Point",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 4,
+      "start_byte": 0,
+      "end_byte": 38,
+      "signature": "struct Point",
+      "content": "struct Point {\n    int x;\n    int y;\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "type",
+      "name": "Person",
+      "fqn": "Person",
+      "parent_fqn": null,
+      "start_line": 6,
+      "end_line": 9,
+      "start_byte": 41,
+      "end_byte": 99,
+      "signature": "typedef struct",
+      "content": "typedef struct {\n    char name[64];\n    int age;\n} Person;",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "print_point",
+      "fqn": "print_point",
+      "parent_fqn": null,
+      "start_line": 11,
+      "end_line": 13,
+      "start_byte": 101,
+      "end_byte": 168,
+      "signature": "void print_point(struct Point p)",
+      "content": "void print_point(struct Point p) {\n    printf(\"%d,%d\", p.x, p.y);\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 140,
+          "end": 165
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "printf",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 12,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 7,
+          "end": 12
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Point",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "section",
+      "name": "users",
+      "fqn": "users",
+      "parent_fqn": null,
+      "start_line": 2,
+      "end_line": 9,
+      "start_byte": 5,
+      "end_byte": 146,
+      "signature": "{{#users}}",
+      "content": "{{#users}}\n  {{#user}}\n    <li>{{name}} - {{email}}</li>\n    {{#address}}\n      <span>{{city}}</span>\n    {{/address}}\n  {{/user}}\n{{/users}}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "section",
+      "name": "user",
+      "fqn": "users.user",
+      "parent_fqn": "users",
+      "start_line": 3,
+      "end_line": 8,
+      "start_byte": 18,
+      "end_byte": 135,
+      "signature": "{{#user}}",
+      "content": "{{#user}}\n    <li>{{name}} - {{email}}</li>\n    {{#address}}\n      <span>{{city}}</span>\n    {{/address}}\n  {{/user}}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "section",
+      "name": "address",
+      "fqn": "users.user.address",
+      "parent_fqn": "users.user",
+      "start_line": 5,
+      "end_line": 7,
+      "start_byte": 66,
+      "end_byte": 123,
+      "signature": "{{#address}}",
+      "content": "{{#address}}\n      <span>{{city}}</span>\n    {{/address}}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "section",
+      "name": "footer",
+      "fqn": "footer",
+      "parent_fqn": null,
+      "start_line": 11,
+      "end_line": 13,
+      "start_byte": 153,
+      "end_byte": 199,
+      "signature": "{{#footer}}",
+      "content": "{{#footer}}\n  <p>{{copyright}}</p>\n{{/footer}}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": []
+}

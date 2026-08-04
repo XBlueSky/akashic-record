@@ -1,0 +1,170 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "class",
+      "name": "Base",
+      "fqn": "Base",
+      "parent_fqn": null,
+      "start_line": 6,
+      "end_line": 9,
+      "start_byte": 260,
+      "end_byte": 295,
+      "signature": "class Base",
+      "content": "class Base {\npublic:\n    T value;\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "class",
+      "name": "Derived",
+      "fqn": "Derived",
+      "parent_fqn": null,
+      "start_line": 11,
+      "end_line": 14,
+      "start_byte": 298,
+      "end_byte": 357,
+      "signature": "class Derived : public Base<int>",
+      "content": "class Derived : public Base<int> {\npublic:\n    int extra;\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "Derived",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Base",
+          "module_specifier": null
+        }
+      },
+      "kind": "Extends",
+      "provenance": "Static",
+      "line": 11,
+      "metadata": {
+        "fields": {
+          "impl_kind": {
+            "String": "extends"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 266,
+          "end": 270
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Base",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 321,
+          "end": 325
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Base",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 11,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 304,
+          "end": 311
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Derived",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 11,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 285,
+          "end": 286
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "T",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

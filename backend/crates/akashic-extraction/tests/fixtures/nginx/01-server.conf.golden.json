@@ -1,0 +1,170 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "upstream",
+      "name": "upstream backend",
+      "fqn": "upstream backend",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 3,
+      "start_byte": 0,
+      "end_byte": 41,
+      "signature": "upstream backend {",
+      "content": "upstream backend {\n    server 10.0.0.1;\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "http",
+      "name": "http",
+      "fqn": "http",
+      "parent_fqn": null,
+      "start_line": 5,
+      "end_line": 18,
+      "start_byte": 43,
+      "end_byte": 274,
+      "signature": "http {",
+      "content": "http {\n    server {\n        listen 80;\n        server_name example.com;\n\n        location / {\n            proxy_pass http://backend;\n        }\n\n        location /api {\n            proxy_pass http://10.0.0.99:8080;\n        }\n    }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "server",
+      "name": "server",
+      "fqn": "http.server",
+      "parent_fqn": "http",
+      "start_line": 6,
+      "end_line": 17,
+      "start_byte": 54,
+      "end_byte": 272,
+      "signature": "server {",
+      "content": "server {\n        listen 80;\n        server_name example.com;\n\n        location / {\n            proxy_pass http://backend;\n        }\n\n        location /api {\n            proxy_pass http://10.0.0.99:8080;\n        }\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "location",
+      "name": "location /",
+      "fqn": "http.server.location /",
+      "parent_fqn": "http.server",
+      "start_line": 10,
+      "end_line": 12,
+      "start_byte": 124,
+      "end_byte": 185,
+      "signature": "location / {",
+      "content": "location / {\n            proxy_pass http://backend;\n        }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "location",
+      "name": "location /api",
+      "fqn": "http.server.location /api",
+      "parent_fqn": "http.server",
+      "start_line": 14,
+      "end_line": 16,
+      "start_byte": 195,
+      "end_byte": 266,
+      "signature": "location /api {",
+      "content": "location /api {\n            proxy_pass http://10.0.0.99:8080;\n        }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "location /api",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "10.0.0.99:8080",
+          "module_specifier": null
+        }
+      },
+      "kind": "RoutesTo",
+      "provenance": "Static",
+      "line": 15,
+      "metadata": {
+        "fields": {
+          "directive": {
+            "String": "proxy_pass"
+          },
+          "target_kind": {
+            "String": "external"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "location /",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "backend",
+          "module_specifier": null
+        }
+      },
+      "kind": "RoutesTo",
+      "provenance": "Static",
+      "line": 11,
+      "metadata": {
+        "fields": {
+          "directive": {
+            "String": "proxy_pass"
+          },
+          "target_kind": {
+            "String": "upstream"
+          }
+        }
+      }
+    }
+  ]
+}

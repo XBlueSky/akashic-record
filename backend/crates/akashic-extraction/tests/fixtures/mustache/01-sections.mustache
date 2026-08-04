@@ -1,0 +1,13 @@
+<ul>
+{{#users}}
+  {{#user}}
+    <li>{{name}} - {{email}}</li>
+    {{#address}}
+      <span>{{city}}</span>
+    {{/address}}
+  {{/user}}
+{{/users}}
+</ul>
+{{#footer}}
+  <p>{{copyright}}</p>
+{{/footer}}

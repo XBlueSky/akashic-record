@@ -1,0 +1,53 @@
+{
+  "chunks": [],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "vue/02-typescript",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "User",
+          "module_specifier": "vue/types"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "typeonly"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "vue/02-typescript",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "defineComponent",
+          "module_specifier": "vue"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    }
+  ]
+}

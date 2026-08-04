@@ -1,0 +1,10 @@
+{{! a comment with a stray } brace and {{ braces inside }}
+{{#items}}
+  <li>{{label}}</li>
+{{/items}}
+{{^empty}}
+  <p>There are items.</p>
+{{/empty}}
+{{^items}}
+  <p>No items {{! inline } comment }}here.</p>
+{{/items}}

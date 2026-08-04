@@ -1,0 +1,27 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "resource",
+      "name": "aws_instance.app",
+      "fqn": "aws_instance.app",
+      "parent_fqn": null,
+      "start_line": 5,
+      "end_line": 20,
+      "start_byte": 163,
+      "end_byte": 550,
+      "signature": "resource \"aws_instance\" \"app\" {",
+      "content": "resource \"aws_instance\" \"app\" {\n  ami = \"ami-789\" # trailing hash comment\n\n  # The heredoc body contains braces that MUST stay opaque so block\n  # matching is not thrown off by the `}` inside the script.\n  user_data = <<-EOF\n    #!/bin/bash\n    if [ -d /opt ]; then\n      echo \"{ this is not a block }\"\n    fi\n    export CONFIG='{\"key\": \"value\"}'\n    EOF\n\n  tags = {\n    Name = \"app\"\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": []
+}

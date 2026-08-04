@@ -1,0 +1,180 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "module",
+      "name": "Geometry",
+      "fqn": "Geometry",
+      "parent_fqn": null,
+      "start_line": 2,
+      "end_line": 22,
+      "start_byte": 74,
+      "end_byte": 330,
+      "signature": "module Geometry",
+      "content": "module Geometry\n  def self.pi\n    3.14159\n  end\n\n  class Circle\n    def initialize(radius)\n      @radius = radius\n    end\n\n    def area\n      Geometry.pi * @radius * @radius\n    end\n  end\n\n  module Utils\n    def self.square(x)\n      x * x\n    end\n  end\nend",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "pi",
+      "fqn": "Geometry.pi",
+      "parent_fqn": "Geometry",
+      "start_line": 3,
+      "end_line": 5,
+      "start_byte": 92,
+      "end_byte": 121,
+      "signature": "def self.pi",
+      "content": "def self.pi\n    3.14159\n  end",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "class",
+      "name": "Circle",
+      "fqn": "Geometry.Circle",
+      "parent_fqn": "Geometry",
+      "start_line": 7,
+      "end_line": 15,
+      "start_byte": 125,
+      "end_byte": 261,
+      "signature": "class Circle",
+      "content": "class Circle\n    def initialize(radius)\n      @radius = radius\n    end\n\n    def area\n      Geometry.pi * @radius * @radius\n    end\n  end",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "initialize",
+      "fqn": "Geometry.Circle.initialize",
+      "parent_fqn": "Geometry.Circle",
+      "start_line": 8,
+      "end_line": 10,
+      "start_byte": 142,
+      "end_byte": 195,
+      "signature": "def initialize(radius)",
+      "content": "def initialize(radius)\n      @radius = radius\n    end",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "area",
+      "fqn": "Geometry.Circle.area",
+      "parent_fqn": "Geometry.Circle",
+      "start_line": 12,
+      "end_line": 14,
+      "start_byte": 201,
+      "end_byte": 255,
+      "signature": "def area",
+      "content": "def area\n      Geometry.pi * @radius * @radius\n    end",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "module",
+      "name": "Utils",
+      "fqn": "Geometry.Utils",
+      "parent_fqn": "Geometry",
+      "start_line": 17,
+      "end_line": 21,
+      "start_byte": 265,
+      "end_byte": 326,
+      "signature": "module Utils",
+      "content": "module Utils\n    def self.square(x)\n      x * x\n    end\n  end",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "square",
+      "fqn": "Geometry.Utils.square",
+      "parent_fqn": "Geometry.Utils",
+      "start_line": 18,
+      "end_line": 20,
+      "start_byte": 282,
+      "end_byte": 320,
+      "signature": "def self.square(x)",
+      "content": "def self.square(x)\n      x * x\n    end",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 216,
+          "end": 227
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "pi",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 13,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

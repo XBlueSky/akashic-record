@@ -1,0 +1,77 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "server",
+      "name": "server",
+      "fqn": "server",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 7,
+      "start_byte": 0,
+      "end_byte": 120,
+      "signature": "server {",
+      "content": "server {\n    server_name münchen.example.com;\n\n    location / {\n        proxy_pass http://münchen.example.com;\n    }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "location",
+      "name": "location /",
+      "fqn": "server.location /",
+      "parent_fqn": "server",
+      "start_line": 4,
+      "end_line": 6,
+      "start_byte": 52,
+      "end_byte": 118,
+      "signature": "location / {",
+      "content": "location / {\n        proxy_pass http://münchen.example.com;\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "location /",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "münchen.example.com",
+          "module_specifier": null
+        }
+      },
+      "kind": "RoutesTo",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {
+          "directive": {
+            "String": "proxy_pass"
+          },
+          "target_kind": {
+            "String": "external"
+          }
+        }
+      }
+    }
+  ]
+}

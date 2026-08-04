@@ -1,0 +1,118 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "route",
+      "name": "GET /widgets",
+      "fqn": "GET /widgets@180",
+      "parent_fqn": null,
+      "start_line": 4,
+      "end_line": 4,
+      "start_byte": 176,
+      "end_byte": 231,
+      "signature": null,
+      "content": "get '/widgets', as: 'widgets_list', to: 'widgets#index'",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "http_method": {
+            "String": "GET"
+          },
+          "http_path": {
+            "String": "/widgets"
+          }
+        }
+      }
+    },
+    {
+      "chunk_type": "route",
+      "name": "POST /widgets",
+      "fqn": "POST /widgets@239",
+      "parent_fqn": null,
+      "start_line": 5,
+      "end_line": 5,
+      "start_byte": 234,
+      "end_byte": 292,
+      "signature": null,
+      "content": "post '/widgets', to: 'widgets#create', as: 'create_widget'",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "http_method": {
+            "String": "POST"
+          },
+          "http_path": {
+            "String": "/widgets"
+          }
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 256,
+          "end": 270
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "widgets#create",
+          "module_specifier": null
+        }
+      },
+      "kind": "RoutesTo",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {
+          "http_method": {
+            "String": "POST"
+          },
+          "http_path": {
+            "String": "/widgets"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 217,
+          "end": 230
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "widgets#index",
+          "module_specifier": null
+        }
+      },
+      "kind": "RoutesTo",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "http_method": {
+            "String": "GET"
+          },
+          "http_path": {
+            "String": "/widgets"
+          }
+        }
+      }
+    }
+  ]
+}

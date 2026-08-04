@@ -1,0 +1,128 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "manifest",
+      "name": "pep621-app",
+      "fqn": "pep621-app",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 10,
+      "start_byte": 0,
+      "end_byte": 181,
+      "signature": "pep621-app@1.2.0",
+      "content": "[project]\nname = \"pep621-app\"\nversion = \"1.2.0\"\ndependencies = [\n    \"requests>=2.28\",\n    \"flask\",\n    \"sqlalchemy[asyncio]>=2.0; python_version >= '3.10'\",\n    \"numpy==1.26.0\",\n]\n",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "version": {
+            "String": "1.2.0"
+          }
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "pep621-app",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "flask",
+          "module_specifier": "flask"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "dependencies"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "pep621-app",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "numpy",
+          "module_specifier": "numpy==1.26.0"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "dependencies"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "pep621-app",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "requests",
+          "module_specifier": "requests>=2.28"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "dependencies"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "pep621-app",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "sqlalchemy",
+          "module_specifier": "sqlalchemy[asyncio]>=2.0; python_version >= '3.10'"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "dependencies"
+          }
+        }
+      }
+    }
+  ]
+}

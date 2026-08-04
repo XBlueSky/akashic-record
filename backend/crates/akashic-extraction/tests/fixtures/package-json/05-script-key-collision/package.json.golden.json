@@ -1,0 +1,124 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "manifest",
+      "name": "collide",
+      "fqn": "collide",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 13,
+      "start_byte": 0,
+      "end_byte": 185,
+      "signature": "collide@2.0.0",
+      "content": "{\n  \"name\": \"collide\",\n  \"version\": \"2.0.0\",\n  \"dependencies\": {\n    \"test\": \"^1.0.0\",\n    \"build\": \"^3.0.0\"\n  },\n  \"scripts\": {\n    \"build\": \"tsc -p .\",\n    \"test\": \"vitest run\"\n  }\n}\n",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "version": {
+            "String": "2.0.0"
+          }
+        }
+      }
+    },
+    {
+      "chunk_type": "script",
+      "name": "build",
+      "fqn": "collide.build",
+      "parent_fqn": "collide",
+      "start_line": 9,
+      "end_line": 9,
+      "start_byte": 133,
+      "end_byte": 140,
+      "signature": "build",
+      "content": "tsc -p .",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "script",
+      "name": "test",
+      "fqn": "collide.test",
+      "parent_fqn": "collide",
+      "start_line": 10,
+      "end_line": 10,
+      "start_byte": 158,
+      "end_byte": 164,
+      "signature": "test",
+      "content": "vitest run",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "collide",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "build",
+          "module_specifier": "build@^3.0.0"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "dependencies"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "collide",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "test",
+          "module_specifier": "test@^1.0.0"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "dependencies"
+          }
+        }
+      }
+    }
+  ]
+}

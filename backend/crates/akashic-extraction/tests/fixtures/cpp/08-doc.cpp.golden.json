@@ -1,0 +1,49 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "mul",
+      "fqn": "mul",
+      "parent_fqn": null,
+      "start_line": 6,
+      "end_line": 8,
+      "start_byte": 112,
+      "end_byte": 155,
+      "signature": "int mul(int a, int b)",
+      "content": "int mul(int a, int b) {\n    return a * b;\n}",
+      "doc": "/**\n * Multiplies two integers.\n * Block Doxygen style, two lines.\n */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "neg",
+      "fqn": "neg",
+      "parent_fqn": null,
+      "start_line": 11,
+      "end_line": 13,
+      "start_byte": 183,
+      "end_byte": 216,
+      "signature": "int neg(int a)",
+      "content": "int neg(int a) {\n    return -a;\n}",
+      "doc": "/// Triple-slash Doxygen.",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": []
+}

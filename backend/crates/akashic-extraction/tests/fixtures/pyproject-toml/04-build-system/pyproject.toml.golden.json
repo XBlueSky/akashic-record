@@ -1,0 +1,80 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "manifest",
+      "name": "build-system-app",
+      "fqn": "build-system-app",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 8,
+      "start_byte": 0,
+      "end_byte": 149,
+      "signature": "build-system-app@0.0.1",
+      "content": "[build-system]\nrequires = [\"setuptools>=68\", \"wheel\"]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"build-system-app\"\nversion = \"0.0.1\"\n",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "version": {
+            "String": "0.0.1"
+          }
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "build-system-app",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "setuptools",
+          "module_specifier": "setuptools>=68"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "build-system"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "build-system-app",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "wheel",
+          "module_specifier": "wheel"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "build-system"
+          }
+        }
+      }
+    }
+  ]
+}

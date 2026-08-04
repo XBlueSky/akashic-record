@@ -1,0 +1,342 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "method",
+      "name": "outer",
+      "fqn": "outer",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 6,
+      "start_byte": 0,
+      "end_byte": 145,
+      "signature": "def outer(items: List[Int]): Int =",
+      "content": "def outer(items: List[Int]): Int = {\n  val factor = 2\n  def scale(x: Int): Int = x * factor\n  def total(): Int = items.map(scale).sum\n  total()\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "scale",
+      "fqn": "outer.scale",
+      "parent_fqn": "outer",
+      "start_line": 3,
+      "end_line": 3,
+      "start_byte": 56,
+      "end_byte": 91,
+      "signature": "def scale(x: Int): Int = x * factor",
+      "content": "def scale(x: Int): Int = x * factor",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "total",
+      "fqn": "outer.total",
+      "parent_fqn": "outer",
+      "start_line": 4,
+      "end_line": 4,
+      "start_byte": 94,
+      "end_byte": 133,
+      "signature": "def total(): Int = items.map(scale).sum",
+      "content": "def total(): Int = items.map(scale).sum",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "standalone",
+      "fqn": "standalone",
+      "parent_fqn": null,
+      "start_line": 8,
+      "end_line": 8,
+      "start_byte": 147,
+      "end_byte": 191,
+      "signature": "def standalone(): Int = outer(List(1, 2, 3))",
+      "content": "def standalone(): Int = outer(List(1, 2, 3))",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 177,
+          "end": 190
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "List",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 113,
+          "end": 129
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "map",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 171,
+          "end": 191
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "outer",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 136,
+          "end": 143
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "total",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 22,
+          "end": 25
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 29,
+          "end": 32
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 69,
+          "end": 72
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 75,
+          "end": 78
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 107,
+          "end": 110
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 165,
+          "end": 168
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 17,
+          "end": 21
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "List",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "manifest",
+      "name": "04-workspace",
+      "fqn": "04-workspace",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 7,
+      "start_byte": 0,
+      "end_byte": 107,
+      "signature": "04-workspace",
+      "content": "[workspace]\nresolver = \"2\"\nmembers = [\"crates/core\", \"crates/cli\"]\n\n[workspace.dependencies]\nserde = \"1.0\"\n",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "workspace": {
+            "String": "true"
+          }
+        }
+      }
+    }
+  ],
+  "edges": []
+}

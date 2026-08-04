@@ -1,0 +1,26 @@
+# Pipeline exercising object-form needs, comments, and quoted values.
+stages:
+  - build
+  - test
+
+compile:                 # the build job
+  stage: build
+  script:
+    - make compile
+
+lint:
+  stage: build
+  script:
+    - make lint
+
+test:
+  stage: test             # run after both build jobs
+  needs:
+    - job: compile        # long-form need
+    - job: "lint"         # quoted long-form need
+    - project: group/other-repo   # cross-project need (skipped as edge)
+      ref: main
+      job: upstream
+  dependencies: [compile]
+  script:
+    - make test

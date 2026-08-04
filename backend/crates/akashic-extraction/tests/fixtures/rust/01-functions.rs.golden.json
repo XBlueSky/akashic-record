@@ -1,0 +1,204 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "add",
+      "fqn": "add",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 3,
+      "start_byte": 0,
+      "end_byte": 47,
+      "signature": "pub fn add(a: i32, b: i32) -> i32",
+      "content": "pub fn add(a: i32, b: i32) -> i32 {\n    a + b\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "fetch_data",
+      "fqn": "fetch_data",
+      "parent_fqn": null,
+      "start_line": 5,
+      "end_line": 7,
+      "start_byte": 49,
+      "end_byte": 135,
+      "signature": "async fn fetch_data() -> Result<String, std::io::Error>",
+      "content": "async fn fetch_data() -> Result<String, std::io::Error> {\n    Ok(\"data\".to_string())\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": true,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "private_helper",
+      "fqn": "private_helper",
+      "parent_fqn": null,
+      "start_line": 9,
+      "end_line": 11,
+      "start_byte": 137,
+      "end_byte": 186,
+      "signature": "fn private_helper()",
+      "content": "fn private_helper() {\n    println!(\"internal\");\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 111,
+          "end": 133
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Ok",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 163,
+          "end": 183
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "println",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 114,
+          "end": 132
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "to_string",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 98,
+          "end": 103
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Error",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 74,
+          "end": 80
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Result",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 81,
+          "end": 87
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "namespace",
+      "name": "outer",
+      "fqn": "outer",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 8,
+      "start_byte": 0,
+      "end_byte": 139,
+      "signature": "namespace outer",
+      "content": "namespace outer {\n    namespace inner {\n        void deeply_nested() {}\n    }\n    void outer_fn() {\n        inner::deeply_nested();\n    }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "namespace",
+      "name": "inner",
+      "fqn": "outer.inner",
+      "parent_fqn": "outer",
+      "start_line": 2,
+      "end_line": 4,
+      "start_byte": 22,
+      "end_byte": 77,
+      "signature": "namespace inner",
+      "content": "namespace inner {\n        void deeply_nested() {}\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "deeply_nested",
+      "fqn": "outer.inner.deeply_nested",
+      "parent_fqn": "outer.inner",
+      "start_line": 3,
+      "end_line": 3,
+      "start_byte": 48,
+      "end_byte": 71,
+      "signature": "void deeply_nested() {}",
+      "content": "void deeply_nested() {}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "outer_fn",
+      "fqn": "outer.outer_fn",
+      "parent_fqn": "outer",
+      "start_line": 5,
+      "end_line": 7,
+      "start_byte": 82,
+      "end_byte": 137,
+      "signature": "void outer_fn()",
+      "content": "void outer_fn() {\n        inner::deeply_nested();\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 108,
+          "end": 130
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "inner::deeply_nested",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

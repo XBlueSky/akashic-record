@@ -1,0 +1,244 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "namespace",
+      "name": "App.Model",
+      "fqn": "App.Model",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 26,
+      "start_byte": 7,
+      "end_byte": 508,
+      "signature": "namespace App\\Model",
+      "content": "namespace App\\Model {\n    enum Suit: string\n    {\n        case Hearts = 'H';\n        case Diamonds = 'D';\n        case Clubs = 'C';\n        case Spades = 'S';\n\n        public function color(): string\n        {\n            return $this->isRed() ? \"red\" : \"black\";\n        }\n\n        public function isRed(): bool\n        {\n            return $this === Suit::Hearts || $this === Suit::Diamonds;\n        }\n    }\n\n    function describe_suit(Suit $suit): string\n    {\n        return $suit->color();\n    }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum",
+      "name": "Suit",
+      "fqn": "App.Model.Suit",
+      "parent_fqn": "App.Model",
+      "start_line": 4,
+      "end_line": 20,
+      "start_byte": 33,
+      "end_byte": 415,
+      "signature": "enum Suit: string",
+      "content": "enum Suit: string\n    {\n        case Hearts = 'H';\n        case Diamonds = 'D';\n        case Clubs = 'C';\n        case Spades = 'S';\n\n        public function color(): string\n        {\n            return $this->isRed() ? \"red\" : \"black\";\n        }\n\n        public function isRed(): bool\n        {\n            return $this === Suit::Hearts || $this === Suit::Diamonds;\n        }\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "Hearts",
+      "fqn": "App.Model.Suit.Hearts",
+      "parent_fqn": "App.Model.Suit",
+      "start_line": 6,
+      "end_line": 6,
+      "start_byte": 65,
+      "end_byte": 83,
+      "signature": "case Hearts = 'H';",
+      "content": "case Hearts = 'H';",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "Diamonds",
+      "fqn": "App.Model.Suit.Diamonds",
+      "parent_fqn": "App.Model.Suit",
+      "start_line": 7,
+      "end_line": 7,
+      "start_byte": 92,
+      "end_byte": 112,
+      "signature": "case Diamonds = 'D';",
+      "content": "case Diamonds = 'D';",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "Clubs",
+      "fqn": "App.Model.Suit.Clubs",
+      "parent_fqn": "App.Model.Suit",
+      "start_line": 8,
+      "end_line": 8,
+      "start_byte": 121,
+      "end_byte": 138,
+      "signature": "case Clubs = 'C';",
+      "content": "case Clubs = 'C';",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "Spades",
+      "fqn": "App.Model.Suit.Spades",
+      "parent_fqn": "App.Model.Suit",
+      "start_line": 9,
+      "end_line": 9,
+      "start_byte": 147,
+      "end_byte": 165,
+      "signature": "case Spades = 'S';",
+      "content": "case Spades = 'S';",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "color",
+      "fqn": "App.Model.Suit.color",
+      "parent_fqn": "App.Model.Suit",
+      "start_line": 11,
+      "end_line": 14,
+      "start_byte": 175,
+      "end_byte": 279,
+      "signature": "public function color(): string",
+      "content": "public function color(): string\n        {\n            return $this->isRed() ? \"red\" : \"black\";\n        }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "isRed",
+      "fqn": "App.Model.Suit.isRed",
+      "parent_fqn": "App.Model.Suit",
+      "start_line": 16,
+      "end_line": 19,
+      "start_byte": 289,
+      "end_byte": 409,
+      "signature": "public function isRed(): bool",
+      "content": "public function isRed(): bool\n        {\n            return $this === Suit::Hearts || $this === Suit::Diamonds;\n        }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "describe_suit",
+      "fqn": "App.Model.describe_suit",
+      "parent_fqn": "App.Model",
+      "start_line": 22,
+      "end_line": 25,
+      "start_byte": 421,
+      "end_byte": 506,
+      "signature": "function describe_suit(Suit $suit): string",
+      "content": "function describe_suit(Suit $suit): string\n    {\n        return $suit->color();\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 485,
+          "end": 499
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "color",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 24,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 236,
+          "end": 250
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "isRed",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 13,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

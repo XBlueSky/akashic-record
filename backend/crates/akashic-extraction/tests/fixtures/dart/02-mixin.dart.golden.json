@@ -1,0 +1,204 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "trait",
+      "name": "Walker",
+      "fqn": "Walker",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 7,
+      "start_byte": 0,
+      "end_byte": 66,
+      "signature": "mixin Walker",
+      "content": "mixin Walker {\n  void walk() {\n    step();\n  }\n\n  void step() {}\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "walk",
+      "fqn": "Walker.walk",
+      "parent_fqn": "Walker",
+      "start_line": 2,
+      "end_line": 4,
+      "start_byte": 17,
+      "end_byte": 46,
+      "signature": "void walk()",
+      "content": "void walk() {\n    step();\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "step",
+      "fqn": "Walker.step",
+      "parent_fqn": "Walker",
+      "start_line": 6,
+      "end_line": 6,
+      "start_byte": 50,
+      "end_byte": 64,
+      "signature": "void step() {}",
+      "content": "void step() {}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "class",
+      "name": "Robot",
+      "fqn": "Robot",
+      "parent_fqn": null,
+      "start_line": 9,
+      "end_line": 13,
+      "start_byte": 68,
+      "end_byte": 131,
+      "signature": "class Robot with Walker",
+      "content": "class Robot with Walker {\n  void activate() {\n    walk();\n  }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "activate",
+      "fqn": "Robot.activate",
+      "parent_fqn": "Robot",
+      "start_line": 10,
+      "end_line": 12,
+      "start_byte": 96,
+      "end_byte": 129,
+      "signature": "void activate()",
+      "content": "void activate() {\n    walk();\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 35,
+          "end": 41
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "step",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 118,
+          "end": 124
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "walk",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 11,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "Robot",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Walker",
+          "module_specifier": null
+        }
+      },
+      "kind": "Implements",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {
+          "impl_kind": {
+            "String": "implements"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 85,
+          "end": 91
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Walker",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

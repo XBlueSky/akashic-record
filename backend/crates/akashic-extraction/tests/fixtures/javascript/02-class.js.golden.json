@@ -1,0 +1,114 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "class",
+      "name": "Counter",
+      "fqn": "Counter",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 14,
+      "start_byte": 7,
+      "end_byte": 184,
+      "signature": "class Counter",
+      "content": "class Counter {\n  constructor(start) {\n    this.value = start;\n  }\n\n  increment() {\n    this.value += 1;\n    return this.report();\n  }\n\n  report() {\n    return this.value;\n  }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "constructor",
+      "fqn": "Counter.constructor",
+      "parent_fqn": "Counter",
+      "start_line": 2,
+      "end_line": 4,
+      "start_byte": 25,
+      "end_byte": 73,
+      "signature": "constructor(start)",
+      "content": "constructor(start) {\n    this.value = start;\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "increment",
+      "fqn": "Counter.increment",
+      "parent_fqn": "Counter",
+      "start_line": 6,
+      "end_line": 9,
+      "start_byte": 77,
+      "end_byte": 141,
+      "signature": "increment()",
+      "content": "increment() {\n    this.value += 1;\n    return this.report();\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "report",
+      "fqn": "Counter.report",
+      "parent_fqn": "Counter",
+      "start_line": 11,
+      "end_line": 13,
+      "start_byte": 145,
+      "end_byte": 182,
+      "signature": "report()",
+      "content": "report() {\n    return this.value;\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 123,
+          "end": 136
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "report",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

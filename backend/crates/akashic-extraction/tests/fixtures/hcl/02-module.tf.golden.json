@@ -1,0 +1,98 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "module",
+      "name": "vpc",
+      "fqn": "vpc",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 4,
+      "start_byte": 0,
+      "end_byte": 76,
+      "signature": "module \"vpc\" {",
+      "content": "module \"vpc\" {\n  source     = \"./modules/vpc\"\n  cidr_block = \"10.0.0.0/16\"\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "module",
+      "name": "network",
+      "fqn": "network",
+      "parent_fqn": null,
+      "start_line": 6,
+      "end_line": 10,
+      "start_byte": 78,
+      "end_byte": 181,
+      "signature": "module \"network\" {",
+      "content": "module \"network\" {\n  source  = \"terraform-aws-modules/vpc/aws\"\n  version = \"5.0.0\"\n  name    = \"prod\"\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "vpc",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "./modules/vpc",
+          "module_specifier": "./modules/vpc"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "module_source"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "network",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "terraform-aws-modules/vpc/aws",
+          "module_specifier": "terraform-aws-modules/vpc/aws"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "module_source"
+          }
+        }
+      }
+    }
+  ]
+}

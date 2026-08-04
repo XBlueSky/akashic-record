@@ -1,0 +1,31 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "manifest",
+      "name": "x",
+      "fqn": "x",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 5,
+      "start_byte": 0,
+      "end_byte": 40,
+      "signature": "x@1.0.0",
+      "content": "{\n  \"name\": \"x\",\n  \"version\": \"1.0.0\"\n}\n",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "version": {
+            "String": "1.0.0"
+          }
+        }
+      }
+    }
+  ],
+  "edges": []
+}

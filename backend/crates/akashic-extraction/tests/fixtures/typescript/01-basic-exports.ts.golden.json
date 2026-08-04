@@ -1,0 +1,166 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "add",
+      "fqn": "add",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 3,
+      "start_byte": 7,
+      "end_byte": 69,
+      "signature": "function add(a: number, b: number): number",
+      "content": "function add(a: number, b: number): number {\n  return a + b;\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "class",
+      "name": "Counter",
+      "fqn": "Counter",
+      "parent_fqn": null,
+      "start_line": 5,
+      "end_line": 7,
+      "start_byte": 78,
+      "end_byte": 108,
+      "signature": "class Counter",
+      "content": "class Counter {\n  count = 0;\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "type",
+      "name": "Pair",
+      "fqn": "Pair",
+      "parent_fqn": null,
+      "start_line": 9,
+      "end_line": 9,
+      "start_byte": 117,
+      "end_byte": 147,
+      "signature": "type Pair<T> = { a: T; b: T };",
+      "content": "type Pair<T> = { a: T; b: T };",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "constant",
+      "name": "PI",
+      "fqn": "PI",
+      "parent_fqn": null,
+      "start_line": 11,
+      "end_line": 11,
+      "start_byte": 156,
+      "end_byte": 175,
+      "signature": "const PI = 3.14159;",
+      "content": "const PI = 3.14159;",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 127,
+          "end": 128
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "T",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 137,
+          "end": 138
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "T",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 143,
+          "end": 144
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "T",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

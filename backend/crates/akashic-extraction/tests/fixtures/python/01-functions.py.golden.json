@@ -1,0 +1,192 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "add",
+      "fqn": "add",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 2,
+      "start_byte": 0,
+      "end_byte": 48,
+      "signature": "def add(a: int, b: int) -> int:",
+      "content": "def add(a: int, b: int) -> int:\n    return a + b",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "fetch_data",
+      "fqn": "fetch_data",
+      "parent_fqn": null,
+      "start_line": 4,
+      "end_line": 5,
+      "start_byte": 50,
+      "end_byte": 106,
+      "signature": "async def fetch_data(url: str) -> str:",
+      "content": "async def fetch_data(url: str) -> str:\n    return \"data\"",
+      "doc": null,
+      "receiver": null,
+      "is_async": true,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "_private_helper",
+      "fqn": "_private_helper",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 8,
+      "start_byte": 108,
+      "end_byte": 139,
+      "signature": "def _private_helper():",
+      "content": "def _private_helper():\n    pass",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 11,
+          "end": 14
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 19,
+          "end": 22
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 27,
+          "end": 30
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 76,
+          "end": 79
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "str",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 84,
+          "end": 87
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "str",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

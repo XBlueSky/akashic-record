@@ -1,0 +1,372 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "interface",
+      "name": "Shape",
+      "fqn": "Shape",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 3,
+      "start_byte": 0,
+      "end_byte": 42,
+      "signature": "interface Shape",
+      "content": "interface Shape {\n    fun area(): Double\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "area",
+      "fqn": "Shape.area",
+      "parent_fqn": "Shape",
+      "start_line": 2,
+      "end_line": 2,
+      "start_byte": 22,
+      "end_byte": 40,
+      "signature": "fun area(): Double",
+      "content": "fun area(): Double",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "class",
+      "name": "Circle",
+      "fqn": "Circle",
+      "parent_fqn": null,
+      "start_line": 5,
+      "end_line": 9,
+      "start_byte": 44,
+      "end_byte": 169,
+      "signature": "class Circle(val radius: Double) : Shape",
+      "content": "class Circle(val radius: Double) : Shape {\n    override fun area(): Double {\n        return 3.14159 * radius * radius\n    }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "area",
+      "fqn": "Circle.area",
+      "parent_fqn": "Circle",
+      "start_line": 6,
+      "end_line": 8,
+      "start_byte": 91,
+      "end_byte": 167,
+      "signature": "override fun area(): Double",
+      "content": "override fun area(): Double {\n        return 3.14159 * radius * radius\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "class",
+      "name": "ShapeRegistry",
+      "fqn": "ShapeRegistry",
+      "parent_fqn": null,
+      "start_line": 11,
+      "end_line": 23,
+      "start_byte": 171,
+      "end_byte": 411,
+      "signature": "object ShapeRegistry",
+      "content": "object ShapeRegistry {\n    val shapes = mutableListOf<Shape>()\n\n    fun register(shape: Shape) {\n        shapes.add(shape)\n    }\n\n    companion object {\n        fun empty(): ShapeRegistry {\n            return ShapeRegistry\n        }\n    }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "register",
+      "fqn": "ShapeRegistry.register",
+      "parent_fqn": "ShapeRegistry",
+      "start_line": 14,
+      "end_line": 16,
+      "start_byte": 239,
+      "end_byte": 299,
+      "signature": "fun register(shape: Shape)",
+      "content": "fun register(shape: Shape) {\n        shapes.add(shape)\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "empty",
+      "fqn": "ShapeRegistry.empty",
+      "parent_fqn": "ShapeRegistry",
+      "start_line": 19,
+      "end_line": 21,
+      "start_byte": 332,
+      "end_byte": 403,
+      "signature": "fun empty(): ShapeRegistry",
+      "content": "fun empty(): ShapeRegistry {\n            return ShapeRegistry\n        }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 276,
+          "end": 293
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "add",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 15,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "Circle",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Shape",
+          "module_specifier": null
+        }
+      },
+      "kind": "Implements",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {
+          "impl_kind": {
+            "String": "implements"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 34,
+          "end": 40
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Double",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 69,
+          "end": 75
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Double",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 112,
+          "end": 118
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Double",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 79,
+          "end": 84
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Shape",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 225,
+          "end": 230
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Shape",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 12,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 259,
+          "end": 264
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Shape",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 14,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 345,
+          "end": 358
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "ShapeRegistry",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 19,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "stage",
+      "name": "builder",
+      "fqn": "builder",
+      "parent_fqn": null,
+      "start_line": 2,
+      "end_line": 5,
+      "start_byte": 29,
+      "end_byte": 102,
+      "signature": "FROM rust:1.80 AS builder",
+      "content": "FROM rust:1.80 AS builder\nWORKDIR /app\nCOPY . .\nRUN cargo build --release",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "stage",
+      "name": "runtime",
+      "fqn": "runtime",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 10,
+      "start_byte": 104,
+      "end_byte": 232,
+      "signature": "FROM debian:bookworm AS runtime",
+      "content": "FROM debian:bookworm AS runtime\nWORKDIR /app\nCOPY --from=builder /app/target/release/server /usr/local/bin/server\nCMD [\"server\"]",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "runtime",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "builder",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {
+          "instruction": {
+            "String": "COPY --from"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "runtime",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "debian:bookworm",
+          "module_specifier": "debian:bookworm"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "instruction": {
+            "String": "FROM"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "builder",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "rust:1.80",
+          "module_specifier": "rust:1.80"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "instruction": {
+            "String": "FROM"
+          }
+        }
+      }
+    }
+  ]
+}

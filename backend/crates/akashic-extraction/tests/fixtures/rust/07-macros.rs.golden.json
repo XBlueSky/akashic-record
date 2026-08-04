@@ -1,0 +1,90 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "macro",
+      "name": "repeat",
+      "fqn": "repeat",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 5,
+      "start_byte": 0,
+      "end_byte": 95,
+      "signature": "macro_rules! repeat",
+      "content": "macro_rules! repeat {\n    ($n:expr, $body:block) => {\n        for _ in 0..$n { $body }\n    };\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "use_macros",
+      "fqn": "use_macros",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 10,
+      "start_byte": 97,
+      "end_byte": 173,
+      "signature": "fn use_macros()",
+      "content": "fn use_macros() {\n    println!(\"hello\");\n    repeat!(3, { print!(\".\"); });\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 119,
+          "end": 136
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "println",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 142,
+          "end": 170
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "repeat",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

@@ -1,0 +1,244 @@
+{
+  "chunks": [],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "typescript/05-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "./side-effect",
+          "module_specifier": "typescript/side-effect"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "typescript/05-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Both",
+          "module_specifier": "typescript/both"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "default"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "typescript/05-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Inline",
+          "module_specifier": "typescript/mixed"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "typeonly"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "typescript/05-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Type",
+          "module_specifier": "typescript/types"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "typeonly"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "typescript/05-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "baz",
+          "module_specifier": "typescript/utils"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "edge.import_source": {
+            "String": "bar"
+          },
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "typescript/05-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "defaultExport",
+          "module_specifier": "some-package"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "default"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "typescript/05-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "extra",
+          "module_specifier": "typescript/both"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "typescript/05-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "foo",
+          "module_specifier": "typescript/utils"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "typescript/05-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "ns",
+          "module_specifier": "typescript/ns"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "namespace"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "typescript/05-imports",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "regular",
+          "module_specifier": "typescript/mixed"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    }
+  ]
+}

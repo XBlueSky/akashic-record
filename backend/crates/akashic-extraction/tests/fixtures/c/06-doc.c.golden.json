@@ -1,0 +1,49 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "add",
+      "fqn": "add",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 5,
+      "start_byte": 70,
+      "end_byte": 113,
+      "signature": "int add(int a, int b)",
+      "content": "int add(int a, int b) {\n    return a + b;\n}",
+      "doc": "/** Adds two integers. */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "sub",
+      "fqn": "sub",
+      "parent_fqn": null,
+      "start_line": 9,
+      "end_line": 11,
+      "start_byte": 164,
+      "end_byte": 207,
+      "signature": "int sub(int a, int b)",
+      "content": "int sub(int a, int b) {\n    return a - b;\n}",
+      "doc": "/// Doxygen triple-slash style.\n/// Second line.",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": []
+}

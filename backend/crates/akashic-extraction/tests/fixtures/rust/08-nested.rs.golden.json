@@ -1,0 +1,228 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "outer",
+      "fqn": "outer",
+      "parent_fqn": null,
+      "start_line": 2,
+      "end_line": 14,
+      "start_byte": 50,
+      "end_byte": 314,
+      "signature": "pub fn outer(items: &[i32]) -> i32",
+      "content": "pub fn outer(items: &[i32]) -> i32 {\n    let factor = 2;\n\n    fn scale(x: i32, factor: i32) -> i32 {\n        x * factor\n    }\n\n    fn total(items: &[i32], factor: i32) -> i32 {\n        items.iter().map(|&i| scale(i, factor)).sum()\n    }\n\n    total(items, factor)\n}",
+      "doc": "/// Outer function with two named nested helpers.",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "scale",
+      "fqn": "outer.scale",
+      "parent_fqn": "outer",
+      "start_line": 5,
+      "end_line": 7,
+      "start_byte": 112,
+      "end_byte": 175,
+      "signature": "fn scale(x: i32, factor: i32) -> i32",
+      "content": "fn scale(x: i32, factor: i32) -> i32 {\n        x * factor\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "total",
+      "fqn": "outer.total",
+      "parent_fqn": "outer",
+      "start_line": 9,
+      "end_line": 11,
+      "start_byte": 181,
+      "end_byte": 286,
+      "signature": "fn total(items: &[i32], factor: i32) -> i32",
+      "content": "fn total(items: &[i32], factor: i32) -> i32 {\n        items.iter().map(|&i| scale(i, factor)).sum()\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "standalone",
+      "fqn": "standalone",
+      "parent_fqn": null,
+      "start_line": 17,
+      "end_line": 19,
+      "start_byte": 359,
+      "end_byte": 411,
+      "signature": "pub fn standalone() -> i32",
+      "content": "pub fn standalone() -> i32 {\n    outer(&[1, 2, 3])\n}",
+      "doc": "/// Top-level function that calls outer().",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 235,
+          "end": 247
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "iter",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {
+          "edge.recv_inferred": {
+            "Bool": true
+          },
+          "edge.recv_type": {
+            "String": "[i32]"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 235,
+          "end": 274
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "map",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {
+          "edge.chain_recv_method": {
+            "String": "iter"
+          },
+          "edge.chain_recv_type": {
+            "String": "[i32]"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 392,
+          "end": 409
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "outer",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 18,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 257,
+          "end": 273
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "scale",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 235,
+          "end": 280
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "sum",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 292,
+          "end": 312
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "total",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 13,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

@@ -1,0 +1,202 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "enum",
+      "name": "Color",
+      "fqn": "Color",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 27,
+      "start_byte": 156,
+      "end_byte": 603,
+      "signature": "public enum Color",
+      "content": "public enum Color {\n    RED,\n    GREEN,\n    BLUE;\n\n    /**\n     * Returns the lowercase name of this color constant.\n     * Useful for display and serialization purposes.\n     */\n    public String lower() {\n        return name().toLowerCase();\n    }\n\n    /**\n     * Returns whether this color is a warm color tone.\n     * Only RED is considered warm in the basic RGB model.\n     */\n    public boolean isWarm() {\n        return this == RED;\n    }\n}",
+      "doc": "/**\n * Represents the color primaries in the RGB color model.\n * Each constant maps to a distinct visible light wavelength range.\n */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "RED",
+      "fqn": "Color.RED",
+      "parent_fqn": "Color",
+      "start_line": 8,
+      "end_line": 8,
+      "start_byte": 180,
+      "end_byte": 183,
+      "signature": "RED",
+      "content": "RED",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "PackagePrivate",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "GREEN",
+      "fqn": "Color.GREEN",
+      "parent_fqn": "Color",
+      "start_line": 9,
+      "end_line": 9,
+      "start_byte": 189,
+      "end_byte": 194,
+      "signature": "GREEN",
+      "content": "GREEN",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "PackagePrivate",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "BLUE",
+      "fqn": "Color.BLUE",
+      "parent_fqn": "Color",
+      "start_line": 10,
+      "end_line": 10,
+      "start_byte": 200,
+      "end_byte": 204,
+      "signature": "BLUE",
+      "content": "BLUE",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "PackagePrivate",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "lower",
+      "fqn": "Color.lower",
+      "parent_fqn": "Color",
+      "start_line": 16,
+      "end_line": 18,
+      "start_byte": 339,
+      "end_byte": 405,
+      "signature": "public String lower()",
+      "content": "public String lower() {\n        return name().toLowerCase();\n    }",
+      "doc": "/**\n     * Returns the lowercase name of this color constant.\n     * Useful for display and serialization purposes.\n     */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "isWarm",
+      "fqn": "Color.isWarm",
+      "parent_fqn": "Color",
+      "start_line": 24,
+      "end_line": 26,
+      "start_byte": 542,
+      "end_byte": 601,
+      "signature": "public boolean isWarm()",
+      "content": "public boolean isWarm() {\n        return this == RED;\n    }",
+      "doc": "/**\n     * Returns whether this color is a warm color tone.\n     * Only RED is considered warm in the basic RGB model.\n     */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 378,
+          "end": 384
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "name",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 17,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 378,
+          "end": 398
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "toLowerCase",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 17,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 346,
+          "end": 352
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 16,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

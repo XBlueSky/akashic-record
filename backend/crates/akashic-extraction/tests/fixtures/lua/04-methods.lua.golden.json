@@ -1,0 +1,71 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "create",
+      "fqn": "T.create",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 5,
+      "start_byte": 14,
+      "end_byte": 55,
+      "signature": "function T.create(name)",
+      "content": "function T.create(name)\n  return name\nend",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "render",
+      "fqn": "T.render",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 9,
+      "start_byte": 57,
+      "end_byte": 99,
+      "signature": "function T:render()",
+      "content": "function T:render()\n  return self.name\nend",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "format",
+      "fqn": "T.Util.format",
+      "parent_fqn": null,
+      "start_line": 11,
+      "end_line": 13,
+      "start_byte": 101,
+      "end_byte": 141,
+      "signature": "function T.Util.format(s)",
+      "content": "function T.Util.format(s)\n  return s\nend",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": []
+}

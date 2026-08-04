@@ -1,0 +1,192 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "target",
+      "name": "all",
+      "fqn": "all",
+      "parent_fqn": null,
+      "start_line": 2,
+      "end_line": 2,
+      "start_byte": 19,
+      "end_byte": 34,
+      "signature": "all: build test",
+      "content": "all: build test",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "target",
+      "name": "build",
+      "fqn": "build",
+      "parent_fqn": null,
+      "start_line": 4,
+      "end_line": 5,
+      "start_byte": 36,
+      "end_byte": 86,
+      "signature": "build: main.o utils.o",
+      "content": "build: main.o utils.o\n\t$(CC) -o app main.o utils.o",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "target",
+      "name": "test",
+      "fqn": "test",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 8,
+      "start_byte": 88,
+      "end_byte": 115,
+      "signature": "test: build",
+      "content": "test: build\n\t./run-tests.sh",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "all",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "build",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "prerequisite"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "test",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "build",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "prerequisite"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "build",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "main.o",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "prerequisite"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "all",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "test",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "prerequisite"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "build",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "utils.o",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "prerequisite"
+          }
+        }
+      }
+    }
+  ]
+}

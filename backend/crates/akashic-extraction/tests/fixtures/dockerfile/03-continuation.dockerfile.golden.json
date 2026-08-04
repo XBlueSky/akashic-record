@@ -1,0 +1,52 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "stage",
+      "name": "ubuntu:22.04",
+      "fqn": "ubuntu:22.04",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 9,
+      "start_byte": 0,
+      "end_byte": 256,
+      "signature": "FROM ubuntu:22.04",
+      "content": "FROM ubuntu:22.04\n# Install build dependencies in a single layer\nRUN apt-get update \\\n    && apt-get install -y --no-install-recommends \\\n        build-essential \\\n        curl \\\n    && rm -rf /var/lib/apt/lists/*\nENV PATH=/usr/local/bin:$PATH\nCMD [\"bash\"]",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "ubuntu:22.04",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "ubuntu:22.04",
+          "module_specifier": "ubuntu:22.04"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "instruction": {
+            "String": "FROM"
+          }
+        }
+      }
+    }
+  ]
+}

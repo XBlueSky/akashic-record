@@ -1,0 +1,208 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "enum",
+      "name": "Status",
+      "fqn": "Status",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 4,
+      "start_byte": 0,
+      "end_byte": 51,
+      "signature": "enum class Status : int",
+      "content": "enum class Status : int {\n    OK = 0,\n    ERR = 1\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "OK",
+      "fqn": "Status.OK",
+      "parent_fqn": "Status",
+      "start_line": 2,
+      "end_line": 2,
+      "start_byte": 30,
+      "end_byte": 36,
+      "signature": "OK = 0",
+      "content": "OK = 0",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "ERR",
+      "fqn": "Status.ERR",
+      "parent_fqn": "Status",
+      "start_line": 3,
+      "end_line": 3,
+      "start_byte": 42,
+      "end_byte": 49,
+      "signature": "ERR = 1",
+      "content": "ERR = 1",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum",
+      "name": "Color",
+      "fqn": "Color",
+      "parent_fqn": null,
+      "start_line": 6,
+      "end_line": 6,
+      "start_byte": 54,
+      "end_byte": 85,
+      "signature": "enum Color { RED, GREEN, BLUE }",
+      "content": "enum Color { RED, GREEN, BLUE }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "RED",
+      "fqn": "Color.RED",
+      "parent_fqn": "Color",
+      "start_line": 6,
+      "end_line": 6,
+      "start_byte": 67,
+      "end_byte": 70,
+      "signature": "RED",
+      "content": "RED",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "GREEN",
+      "fqn": "Color.GREEN",
+      "parent_fqn": "Color",
+      "start_line": 6,
+      "end_line": 6,
+      "start_byte": 72,
+      "end_byte": 77,
+      "signature": "GREEN",
+      "content": "GREEN",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "BLUE",
+      "fqn": "Color.BLUE",
+      "parent_fqn": "Color",
+      "start_line": 6,
+      "end_line": 6,
+      "start_byte": 79,
+      "end_byte": 83,
+      "signature": "BLUE",
+      "content": "BLUE",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 59,
+          "end": 64
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Color",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 11,
+          "end": 17
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Status",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

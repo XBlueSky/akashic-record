@@ -1,0 +1,92 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "make_counter",
+      "fqn": "make_counter",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 8,
+      "start_byte": 0,
+      "end_byte": 153,
+      "signature": "local function make_counter(start)",
+      "content": "local function make_counter(start)\n  local count = start\n  local function increment()\n    count = count + 1\n    return count\n  end\n  return increment\nend",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "increment",
+      "fqn": "make_counter.increment",
+      "parent_fqn": "make_counter",
+      "start_line": 3,
+      "end_line": 6,
+      "start_byte": 59,
+      "end_byte": 130,
+      "signature": "local function increment()",
+      "content": "local function increment()\n    count = count + 1\n    return count\n  end",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "outer",
+      "fqn": "outer",
+      "parent_fqn": null,
+      "start_line": 10,
+      "end_line": 15,
+      "start_byte": 155,
+      "end_byte": 244,
+      "signature": "function outer()",
+      "content": "function outer()\n  local inner = function()\n    return compute()\n  end\n  return inner\nend",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 210,
+          "end": 219
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "compute",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 12,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

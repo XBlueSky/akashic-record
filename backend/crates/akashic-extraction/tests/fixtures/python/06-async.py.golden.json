@@ -1,0 +1,226 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "fetch_one",
+      "fqn": "fetch_one",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 5,
+      "start_byte": 16,
+      "end_byte": 97,
+      "signature": "async def fetch_one(url: str) -> str:",
+      "content": "async def fetch_one(url: str) -> str:\n    await asyncio.sleep(0.1)\n    return url",
+      "doc": null,
+      "receiver": null,
+      "is_async": true,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "fetch_all",
+      "fqn": "fetch_all",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 8,
+      "start_byte": 99,
+      "end_byte": 202,
+      "signature": "async def fetch_all(urls: list) -> list:",
+      "content": "async def fetch_all(urls: list) -> list:\n    return await asyncio.gather(*[fetch_one(u) for u in urls])",
+      "doc": null,
+      "receiver": null,
+      "is_async": true,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 174,
+          "end": 186
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "fetch_one",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 157,
+          "end": 202
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "gather",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 64,
+          "end": 82
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "sleep",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "python/06-async",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "asyncio",
+          "module_specifier": "asyncio"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 125,
+          "end": 129
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "list",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 134,
+          "end": 138
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "list",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 41,
+          "end": 44
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "str",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 49,
+          "end": 52
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "str",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

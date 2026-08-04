@@ -1,0 +1,136 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "class",
+      "name": "Calculator",
+      "fqn": "Calculator",
+      "parent_fqn": null,
+      "start_line": 2,
+      "end_line": 18,
+      "start_byte": 61,
+      "end_byte": 237,
+      "signature": "class Calculator",
+      "content": "class Calculator\n  def initialize(initial)\n    @state = initial\n  end\n\n  def add(a, b)\n    a + b\n  end\n\n  def helper\n    add(1, 2)\n  end\n\n  def self.version\n    \"1.0\"\n  end\nend",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "initialize",
+      "fqn": "Calculator.initialize",
+      "parent_fqn": "Calculator",
+      "start_line": 3,
+      "end_line": 5,
+      "start_byte": 80,
+      "end_byte": 130,
+      "signature": "def initialize(initial)",
+      "content": "def initialize(initial)\n    @state = initial\n  end",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "add",
+      "fqn": "Calculator.add",
+      "parent_fqn": "Calculator",
+      "start_line": 7,
+      "end_line": 9,
+      "start_byte": 134,
+      "end_byte": 163,
+      "signature": "def add(a, b)",
+      "content": "def add(a, b)\n    a + b\n  end",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "helper",
+      "fqn": "Calculator.helper",
+      "parent_fqn": "Calculator",
+      "start_line": 11,
+      "end_line": 13,
+      "start_byte": 167,
+      "end_byte": 197,
+      "signature": "def helper",
+      "content": "def helper\n    add(1, 2)\n  end",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "version",
+      "fqn": "Calculator.version",
+      "parent_fqn": "Calculator",
+      "start_line": 15,
+      "end_line": 17,
+      "start_byte": 201,
+      "end_byte": 233,
+      "signature": "def self.version",
+      "content": "def self.version\n    \"1.0\"\n  end",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 182,
+          "end": 191
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "add",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 12,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

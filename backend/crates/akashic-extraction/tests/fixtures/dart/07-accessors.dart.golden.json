@@ -1,0 +1,234 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "class",
+      "name": "Temperature",
+      "fqn": "Temperature",
+      "parent_fqn": null,
+      "start_line": 4,
+      "end_line": 16,
+      "start_byte": 226,
+      "end_byte": 503,
+      "signature": "class Temperature",
+      "content": "class Temperature {\n  double _celsius = 0;\n\n  double get fahrenheit => _celsius * 9 / 5 + 32;\n\n  set fahrenheit(double f) {\n    _celsius = (f - 32) * 5 / 9;\n  }\n\n  Temperature operator +(Temperature other) {\n    return Temperature().._celsius = _celsius + other._celsius;\n  }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "fahrenheit",
+      "fqn": "Temperature.fahrenheit",
+      "parent_fqn": "Temperature",
+      "start_line": 7,
+      "end_line": 7,
+      "start_byte": 272,
+      "end_byte": 319,
+      "signature": "double get fahrenheit => _celsius * 9 / 5 + 32;",
+      "content": "double get fahrenheit => _celsius * 9 / 5 + 32;",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "fahrenheit",
+      "fqn": "Temperature.fahrenheit",
+      "parent_fqn": "Temperature",
+      "start_line": 9,
+      "end_line": 11,
+      "start_byte": 323,
+      "end_byte": 386,
+      "signature": "set fahrenheit(double f)",
+      "content": "set fahrenheit(double f) {\n    _celsius = (f - 32) * 5 / 9;\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "operator+",
+      "fqn": "Temperature.operator+",
+      "parent_fqn": "Temperature",
+      "start_line": 13,
+      "end_line": 15,
+      "start_byte": 390,
+      "end_byte": 501,
+      "signature": "Temperature operator +(Temperature other)",
+      "content": "Temperature operator +(Temperature other) {\n    return Temperature().._celsius = _celsius + other._celsius;\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 445,
+          "end": 458
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Temperature",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 14,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 390,
+          "end": 401
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Temperature",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 13,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 413,
+          "end": 424
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Temperature",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 13,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 248,
+          "end": 254
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "double",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 272,
+          "end": 278
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "double",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 338,
+          "end": 344
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "double",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

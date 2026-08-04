@@ -1,0 +1,134 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "enum",
+      "name": "TaskState",
+      "fqn": "TaskState",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 12,
+      "start_byte": 138,
+      "end_byte": 223,
+      "signature": "public enum TaskState",
+      "content": "public enum TaskState\n    {\n        Pending,\n        Running,\n        Completed\n    }",
+      "doc": "/// <summary>Lifecycle states for a task.</summary>",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "Pending",
+      "fqn": "TaskState.Pending",
+      "parent_fqn": "TaskState",
+      "start_line": 9,
+      "end_line": 9,
+      "start_byte": 174,
+      "end_byte": 181,
+      "signature": "Pending",
+      "content": "Pending",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "Running",
+      "fqn": "TaskState.Running",
+      "parent_fqn": "TaskState",
+      "start_line": 10,
+      "end_line": 10,
+      "start_byte": 191,
+      "end_byte": 198,
+      "signature": "Running",
+      "content": "Running",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "Completed",
+      "fqn": "TaskState.Completed",
+      "parent_fqn": "TaskState",
+      "start_line": 11,
+      "end_line": 11,
+      "start_byte": 208,
+      "end_byte": 217,
+      "signature": "Completed",
+      "content": "Completed",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "csharp/06-enum-members-and-alias",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "System",
+          "module_specifier": "System"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "csharp/06-enum-members-and-alias",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "System.Text.StringBuilder",
+          "module_specifier": "System.Text.StringBuilder"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

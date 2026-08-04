@@ -1,0 +1,152 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "manifest",
+      "name": "pep621-optional",
+      "fqn": "pep621-optional",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 9,
+      "start_byte": 0,
+      "end_byte": 184,
+      "signature": "pep621-optional@0.5.0",
+      "content": "[project]\nname = \"pep621-optional\"\nversion = \"0.5.0\"\ndependencies = [\"httpx>=0.27\"]\n\n[project.optional-dependencies]\ndev = [\"black>=24.0\", \"ruff\"]\ntest = [\"pytest>=8.0\", \"pytest-cov\"]\n",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "version": {
+            "String": "0.5.0"
+          }
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "pep621-optional",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "black",
+          "module_specifier": "black>=24.0"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "dev"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "pep621-optional",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "httpx",
+          "module_specifier": "httpx>=0.27"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "dependencies"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "pep621-optional",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "pytest",
+          "module_specifier": "pytest>=8.0"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "test"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "pep621-optional",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "pytest-cov",
+          "module_specifier": "pytest-cov"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "test"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "pep621-optional",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "ruff",
+          "module_specifier": "ruff"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "dev"
+          }
+        }
+      }
+    }
+  ]
+}

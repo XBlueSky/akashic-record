@@ -1,0 +1,112 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "foo",
+      "fqn": "foo",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 3,
+      "start_byte": 0,
+      "end_byte": 34,
+      "signature": "function foo()",
+      "content": "function foo() {\n  return bar();\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "bar",
+      "fqn": "bar",
+      "parent_fqn": null,
+      "start_line": 5,
+      "end_line": 7,
+      "start_byte": 43,
+      "end_byte": 74,
+      "signature": "function bar()",
+      "content": "function bar() {\n  return 42;\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "constant",
+      "name": "baz",
+      "fqn": "baz",
+      "parent_fqn": null,
+      "start_line": 9,
+      "end_line": 11,
+      "start_byte": 76,
+      "end_byte": 114,
+      "signature": "const baz = () =>",
+      "content": "const baz = () => {\n  return foo();\n};",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 26,
+          "end": 31
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "bar",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 105,
+          "end": 110
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "foo",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

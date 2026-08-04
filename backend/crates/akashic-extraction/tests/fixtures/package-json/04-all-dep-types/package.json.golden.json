@@ -1,0 +1,128 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "manifest",
+      "name": "full-deps-lib",
+      "fqn": "full-deps-lib",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 17,
+      "start_byte": 0,
+      "end_byte": 263,
+      "signature": "full-deps-lib@3.0.0",
+      "content": "{\n  \"name\": \"full-deps-lib\",\n  \"version\": \"3.0.0\",\n  \"dependencies\": {\n    \"lodash\": \"^4.17.21\"\n  },\n  \"devDependencies\": {\n    \"jest\": \"^29.7.0\"\n  },\n  \"peerDependencies\": {\n    \"react\": \">=17.0.0\"\n  },\n  \"optionalDependencies\": {\n    \"fsevents\": \"^2.3.3\"\n  }\n}\n",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "version": {
+            "String": "3.0.0"
+          }
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "full-deps-lib",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "fsevents",
+          "module_specifier": "fsevents@^2.3.3"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "optionalDependencies"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "full-deps-lib",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "jest",
+          "module_specifier": "jest@^29.7.0"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "devDependencies"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "full-deps-lib",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "lodash",
+          "module_specifier": "lodash@^4.17.21"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "dependencies"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "full-deps-lib",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "react",
+          "module_specifier": "react@>=17.0.0"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": null,
+      "metadata": {
+        "fields": {
+          "dep_type": {
+            "String": "peerDependencies"
+          }
+        }
+      }
+    }
+  ]
+}

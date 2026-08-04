@@ -1,0 +1,114 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "type",
+      "name": "Id",
+      "fqn": "Id",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 1,
+      "start_byte": 0,
+      "end_byte": 16,
+      "signature": "type Id = string",
+      "content": "type Id = string",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "type",
+      "name": "Point",
+      "fqn": "Point",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 6,
+      "start_byte": 18,
+      "end_byte": 60,
+      "signature": "type Point =",
+      "content": "type Point = {\n  x: number,\n  y: number,\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "make",
+      "fqn": "V.make",
+      "parent_fqn": null,
+      "start_line": 10,
+      "end_line": 12,
+      "start_byte": 76,
+      "end_byte": 129,
+      "signature": "function V.make(id: Id): Point",
+      "content": "function V.make(id: Id): Point\n  return build(id)\nend",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "translate",
+      "fqn": "V.translate",
+      "parent_fqn": null,
+      "start_line": 14,
+      "end_line": 16,
+      "start_byte": 131,
+      "end_byte": 195,
+      "signature": "function V:translate(p: Point, dx: number): Point",
+      "content": "function V:translate(p: Point, dx: number): Point\n  return p\nend",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 116,
+          "end": 125
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "build",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 11,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

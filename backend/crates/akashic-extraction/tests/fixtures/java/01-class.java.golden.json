@@ -1,0 +1,224 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "class",
+      "name": "Calculator",
+      "fqn": "Calculator",
+      "parent_fqn": null,
+      "start_line": 10,
+      "end_line": 47,
+      "start_byte": 196,
+      "end_byte": 1151,
+      "signature": "public class Calculator",
+      "content": "public class Calculator {\n    private int state;\n    private String label;\n\n    /**\n     * Constructs a Calculator with an initial state value.\n     * Sets up the internal state for subsequent operations.\n     */\n    public Calculator(int initial) {\n        this.state = initial;\n        this.label = \"calculator-\" + initial;\n    }\n\n    /**\n     * Adds two integers and returns the result.\n     * This is the primary arithmetic operation of this class.\n     */\n    public int add(int a, int b) {\n        int result = a + b;\n        return result;\n    }\n\n    /**\n     * A private helper that delegates to the public add method.\n     * Demonstrates intra-class method calls for graph extraction.\n     */\n    private int helper() {\n        return add(1, 2);\n    }\n\n    /**\n     * Returns a string representation of the calculator.\n     * Uses the internal label field for display purposes.\n     */\n    public String toString() {\n        return label;\n    }\n}",
+      "doc": "/**\n * A simple calculator class demonstrating method extraction.\n * This class provides basic arithmetic operations.\n */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "Calculator",
+      "fqn": "Calculator.Calculator",
+      "parent_fqn": "Calculator",
+      "start_line": 18,
+      "end_line": 21,
+      "start_byte": 413,
+      "end_byte": 527,
+      "signature": "public Calculator(int initial)",
+      "content": "public Calculator(int initial) {\n        this.state = initial;\n        this.label = \"calculator-\" + initial;\n    }",
+      "doc": "/**\n     * Constructs a Calculator with an initial state value.\n     * Sets up the internal state for subsequent operations.\n     */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "add",
+      "fqn": "Calculator.add",
+      "parent_fqn": "Calculator",
+      "start_line": 27,
+      "end_line": 30,
+      "start_byte": 661,
+      "end_byte": 748,
+      "signature": "public int add(int a, int b)",
+      "content": "public int add(int a, int b) {\n        int result = a + b;\n        return result;\n    }",
+      "doc": "/**\n     * Adds two integers and returns the result.\n     * This is the primary arithmetic operation of this class.\n     */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "helper",
+      "fqn": "Calculator.helper",
+      "parent_fqn": "Calculator",
+      "start_line": 36,
+      "end_line": 38,
+      "start_byte": 902,
+      "end_byte": 956,
+      "signature": "private int helper()",
+      "content": "private int helper() {\n        return add(1, 2);\n    }",
+      "doc": "/**\n     * A private helper that delegates to the public add method.\n     * Demonstrates intra-class method calls for graph extraction.\n     */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "toString",
+      "fqn": "Calculator.toString",
+      "parent_fqn": "Calculator",
+      "start_line": 44,
+      "end_line": 46,
+      "start_byte": 1095,
+      "end_byte": 1149,
+      "signature": "public String toString()",
+      "content": "public String toString() {\n        return label;\n    }",
+      "doc": "/**\n     * Returns a string representation of the calculator.\n     * Uses the internal label field for display purposes.\n     */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 940,
+          "end": 949
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "add",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 37,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "java/01-class",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "java.util.ArrayList",
+          "module_specifier": "java.util.ArrayList"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "java/01-class",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "java.util.List",
+          "module_specifier": "java.util.List"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 257,
+          "end": 263
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 12,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 1102,
+          "end": 1108
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 44,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

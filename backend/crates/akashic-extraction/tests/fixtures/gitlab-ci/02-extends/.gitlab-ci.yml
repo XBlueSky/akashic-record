@@ -1,0 +1,23 @@
+.base:
+  image: alpine:3.19
+  before_script:
+    - echo "setup"
+
+.rust-base:
+  extends: .base
+  variables:
+    CARGO_HOME: .cargo
+
+build:
+  extends: .rust-base
+  stage: build
+  script:
+    - cargo build
+
+test:
+  extends: .rust-base
+  stage: test
+  needs:
+    - build
+  script:
+    - cargo test

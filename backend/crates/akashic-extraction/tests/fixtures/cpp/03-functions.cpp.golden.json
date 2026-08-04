@@ -1,0 +1,70 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "compute",
+      "fqn": "compute",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 5,
+      "start_byte": 19,
+      "end_byte": 59,
+      "signature": "int compute(int x)",
+      "content": "int compute(int x) {\n    return x * 2;\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "scale",
+      "fqn": "scale",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 9,
+      "start_byte": 61,
+      "end_byte": 129,
+      "signature": "inline static double scale(double v, double f)",
+      "content": "inline static double scale(double v, double f) {\n    return v * f;\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": true,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "cpp/03-functions",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "util.h",
+          "module_specifier": "cpp/util"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

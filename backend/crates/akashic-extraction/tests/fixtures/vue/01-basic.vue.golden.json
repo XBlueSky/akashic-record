@@ -1,0 +1,29 @@
+{
+  "chunks": [],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "vue/01-basic",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "foo",
+          "module_specifier": "vue/utils"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    }
+  ]
+}

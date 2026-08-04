@@ -1,0 +1,172 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "add",
+      "fqn": "add",
+      "parent_fqn": null,
+      "start_line": 4,
+      "end_line": 6,
+      "start_byte": 39,
+      "end_byte": 82,
+      "signature": "int add(int a, int b)",
+      "content": "int add(int a, int b) {\n    return a + b;\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "helper",
+      "fqn": "helper",
+      "parent_fqn": null,
+      "start_line": 8,
+      "end_line": 11,
+      "start_byte": 84,
+      "end_byte": 148,
+      "signature": "static void helper(void)",
+      "content": "static void helper(void) {\n    printf(\"hello\");\n    add(1, 2);\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": true,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "main",
+      "fqn": "main",
+      "parent_fqn": null,
+      "start_line": 13,
+      "end_line": 16,
+      "start_byte": 150,
+      "end_byte": 196,
+      "signature": "int main(void)",
+      "content": "int main(void) {\n    helper();\n    return 0;\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 136,
+          "end": 145
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "add",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 171,
+          "end": 179
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "helper",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 14,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 115,
+          "end": 130
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "printf",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "c/01-basic-functions",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "local.h",
+          "module_specifier": "c/local"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "c/01-basic-functions",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "stdio.h",
+          "module_specifier": "c/stdio"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

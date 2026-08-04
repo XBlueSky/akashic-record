@@ -1,0 +1,234 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "resource",
+      "name": "aws_subnet.main",
+      "fqn": "aws_subnet.main",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 5,
+      "start_byte": 74,
+      "end_byte": 135,
+      "signature": "resource \"aws_subnet\" \"main\" {",
+      "content": "resource \"aws_subnet\" \"main\" {\n  cidr_block = \"10.0.1.0/24\"\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "data",
+      "name": "aws_ami.ubuntu",
+      "fqn": "aws_ami.ubuntu",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 9,
+      "start_byte": 137,
+      "end_byte": 185,
+      "signature": "data \"aws_ami\" \"ubuntu\" {",
+      "content": "data \"aws_ami\" \"ubuntu\" {\n  most_recent = true\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "module",
+      "name": "network",
+      "fqn": "network",
+      "parent_fqn": null,
+      "start_line": 11,
+      "end_line": 13,
+      "start_byte": 187,
+      "end_byte": 238,
+      "signature": "module \"network\" {",
+      "content": "module \"network\" {\n  source = \"./modules/network\"\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "variable",
+      "name": "env",
+      "fqn": "env",
+      "parent_fqn": null,
+      "start_line": 15,
+      "end_line": 18,
+      "start_byte": 240,
+      "end_byte": 296,
+      "signature": "variable \"env\" {",
+      "content": "variable \"env\" {\n  type    = string\n  default = \"prod\"\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "locals",
+      "name": "locals",
+      "fqn": "locals",
+      "parent_fqn": null,
+      "start_line": 20,
+      "end_line": 22,
+      "start_byte": 298,
+      "end_byte": 325,
+      "signature": "locals {",
+      "content": "locals {\n  prefix = \"app\"\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "resource",
+      "name": "aws_instance.web",
+      "fqn": "aws_instance.web",
+      "parent_fqn": null,
+      "start_line": 24,
+      "end_line": 45,
+      "start_byte": 327,
+      "end_byte": 1076,
+      "signature": "resource \"aws_instance\" \"web\" {",
+      "content": "resource \"aws_instance\" \"web\" {\n  # Resource reference → Call edge to aws_subnet.main (ref_kind=resource).\n  subnet_id = aws_subnet.main.id\n\n  # Data reference → Call edge to aws_ami.ubuntu (ref_kind=data).\n  ami = data.aws_ami.ubuntu.id\n\n  # Module reference → Call edge to network (ref_kind=module).\n  vpc_id = module.network.vpc_id\n\n  # Reserved scopes + function call → NO edges.\n  instance_type = var.env\n  name_prefix   = local.prefix\n  root_path     = path.module\n  count         = each.key\n  user_data     = jsonencode({ key = \"value\" })\n\n  # Interpolated reference inside a string → still a resource ref (dedup: the\n  # second aws_subnet.main mention does NOT add another edge).\n  tags = {\n    Subnet = \"${aws_subnet.main.id}\"\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "aws_instance.web",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "aws_ami.ubuntu",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 29,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "data"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "aws_instance.web",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "aws_subnet.main",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 26,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "resource"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "aws_instance.web",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "network",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 32,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "module"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "network",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "./modules/network",
+          "module_specifier": "./modules/network"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 12,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "module_source"
+          }
+        }
+      }
+    }
+  ]
+}

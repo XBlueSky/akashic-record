@@ -1,0 +1,71 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "add",
+      "fqn": "add",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 5,
+      "start_byte": 74,
+      "end_byte": 136,
+      "signature": "function add(a: number, b: number): number",
+      "content": "function add(a: number, b: number): number {\n  return a + b;\n}",
+      "doc": "/** Adds two integers. */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "class",
+      "name": "Widget",
+      "fqn": "Widget",
+      "parent_fqn": null,
+      "start_line": 11,
+      "end_line": 16,
+      "start_byte": 206,
+      "end_byte": 333,
+      "signature": "class Widget",
+      "content": "class Widget {\n  // render has no doc of its own; it must NOT inherit the class doc.\n  render(): string {\n    return \"x\";\n  }\n}",
+      "doc": "/**\n * A small widget component.\n * Doc spans two lines.\n */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "render",
+      "fqn": "Widget.render",
+      "parent_fqn": "Widget",
+      "start_line": 13,
+      "end_line": 15,
+      "start_byte": 293,
+      "end_byte": 331,
+      "signature": "render(): string",
+      "content": "render(): string {\n    return \"x\";\n  }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": []
+}

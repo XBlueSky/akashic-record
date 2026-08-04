@@ -1,0 +1,85 @@
+{
+  "chunks": [],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "c/04-includes",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "../headers/util.h",
+          "module_specifier": "headers/util"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "c/04-includes",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "internal.h",
+          "module_specifier": "c/internal"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "c/04-includes",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "stdlib.h",
+          "module_specifier": "c/stdlib"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "c/04-includes",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "string.h",
+          "module_specifier": "c/string"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

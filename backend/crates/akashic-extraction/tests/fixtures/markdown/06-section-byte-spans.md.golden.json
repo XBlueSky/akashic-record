@@ -1,0 +1,93 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "section",
+      "name": "Heading One",
+      "fqn": "Heading One",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 5,
+      "start_byte": 0,
+      "end_byte": 97,
+      "signature": "Heading One",
+      "content": "Heading One\n\nFirst section body after two blank lines.\n\nSecond paragraph of the first section.",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "section",
+      "name": "Empty Body",
+      "fqn": "Heading One.Empty Body",
+      "parent_fqn": "Heading One",
+      "start_line": 9,
+      "end_line": 11,
+      "start_byte": 100,
+      "end_byte": 113,
+      "signature": "Empty Body",
+      "content": "Empty Body\n\n",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "section",
+      "name": "Trailing Blanks",
+      "fqn": "Heading One.Trailing Blanks",
+      "parent_fqn": "Heading One",
+      "start_line": 11,
+      "end_line": 13,
+      "start_byte": 115,
+      "end_byte": 172,
+      "signature": "Trailing Blanks",
+      "content": "Trailing Blanks\n\nBody with trailing blank lines below.",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "section",
+      "name": "Last",
+      "fqn": "Last",
+      "parent_fqn": null,
+      "start_line": 17,
+      "end_line": 19,
+      "start_byte": 176,
+      "end_byte": 209,
+      "signature": "Last",
+      "content": "Last\n\nNo trailing newline here.",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": []
+}

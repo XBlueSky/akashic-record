@@ -1,0 +1,92 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "foo",
+      "fqn": "M.foo",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 5,
+      "start_byte": 14,
+      "end_byte": 54,
+      "signature": "function M.foo(x)",
+      "content": "function M.foo(x)\n  return helper(x)\nend",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "bar",
+      "fqn": "M.bar",
+      "parent_fqn": null,
+      "start_line": 7,
+      "end_line": 9,
+      "start_byte": 56,
+      "end_byte": 101,
+      "signature": "function M:bar(y)",
+      "content": "function M:bar(y)\n  return self.value + y\nend",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "helper",
+      "fqn": "helper",
+      "parent_fqn": null,
+      "start_line": 11,
+      "end_line": 13,
+      "start_byte": 103,
+      "end_byte": 146,
+      "signature": "local function helper(n)",
+      "content": "local function helper(n)\n  return n * 2\nend",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 41,
+          "end": 50
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "helper",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

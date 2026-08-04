@@ -1,0 +1,15 @@
+# Regression: same-named keys nested under another mapping must NOT become
+# false DAG edges. Only the job's direct-child needs/extends/dependencies count.
+.base:
+  script:
+    - make base
+
+deploy:
+  extends: .base            # real extends edge → .base
+  variables:
+    needs: "not-an-edge"    # nested variable literally named `needs`
+    extends: "still-not"    # nested variable literally named `extends`
+  dependencies:
+    - build                 # real dependencies edge → build
+  script:
+    - make deploy

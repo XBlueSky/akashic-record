@@ -1,0 +1,240 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "fetch_widget",
+      "fqn": "fetch_widget",
+      "parent_fqn": null,
+      "start_line": 2,
+      "end_line": 11,
+      "start_byte": 76,
+      "end_byte": 604,
+      "signature": "async fn fetch_widget()",
+      "content": "async fn fetch_widget() {\n    // method-style call, bare path literal → http_call \"GET /api/widget\".\n    let _ = client.get(\"/api/widget\").await;\n    // free-function call, full URL → reduced to \"POST /api/things\".\n    let _ = reqwest::post(\"https://svc.example/api/things\").await;\n    // interpolated path (not a string literal) → NOT captured.\n    let _ = client.get(format!(\"/api/thing/{}\", id)).await;\n    // map-style get with a non-URL literal → NOT captured (URL-shape guard).\n    let _ = cache.get(\"some_key\");\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": true,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "http_call",
+      "name": "GET /api/widget",
+      "fqn": "GET /api/widget@191",
+      "parent_fqn": null,
+      "start_line": 4,
+      "end_line": 4,
+      "start_byte": 191,
+      "end_byte": 216,
+      "signature": null,
+      "content": "client.get(\"/api/widget\")",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {
+          "http_method": {
+            "String": "GET"
+          },
+          "http_path": {
+            "String": "/api/widget"
+          }
+        }
+      }
+    },
+    {
+      "chunk_type": "http_call",
+      "name": "POST /api/things",
+      "fqn": "POST /api/things@307",
+      "parent_fqn": null,
+      "start_line": 6,
+      "end_line": 6,
+      "start_byte": 307,
+      "end_byte": 354,
+      "signature": null,
+      "content": "reqwest::post(\"https://svc.example/api/things\")",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {
+          "http_method": {
+            "String": "POST"
+          },
+          "http_path": {
+            "String": "/api/things"
+          }
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 451,
+          "end": 479
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "format",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 191,
+          "end": 216
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "get",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 440,
+          "end": 480
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "get",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 580,
+          "end": 601
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "get",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 307,
+          "end": 354
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "post",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 191,
+          "end": 216
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "GET /api/widget",
+          "module_specifier": null
+        }
+      },
+      "kind": "MakesHttpCall",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "http_method": {
+            "String": "GET"
+          },
+          "http_path": {
+            "String": "/api/widget"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 307,
+          "end": 354
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "POST /api/things",
+          "module_specifier": null
+        }
+      },
+      "kind": "MakesHttpCall",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {
+          "http_method": {
+            "String": "POST"
+          },
+          "http_path": {
+            "String": "/api/things"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "section",
+      "name": "Akashic Record",
+      "fqn": "Akashic Record",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 3,
+      "start_byte": 0,
+      "end_byte": 39,
+      "signature": "Akashic Record",
+      "content": "Akashic Record\n\nA knowledge platform.",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "section",
+      "name": "Quick Start",
+      "fqn": "Akashic Record.Quick Start",
+      "parent_fqn": "Akashic Record",
+      "start_line": 5,
+      "end_line": 7,
+      "start_byte": 41,
+      "end_byte": 79,
+      "signature": "Quick Start",
+      "content": "Quick Start\n\nRun docker compose up.",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "section",
+      "name": "Architecture",
+      "fqn": "Akashic Record.Architecture",
+      "parent_fqn": "Akashic Record",
+      "start_line": 9,
+      "end_line": 11,
+      "start_byte": 81,
+      "end_byte": 107,
+      "signature": "Architecture",
+      "content": "Architecture\n\nSee docs.",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": []
+}

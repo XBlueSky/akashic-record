@@ -1,0 +1,218 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "type",
+      "name": "User",
+      "fqn": "User",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 7,
+      "start_byte": 15,
+      "end_byte": 77,
+      "signature": "type User struct",
+      "content": "type User struct {\n\tID    uint64\n\tName  string\n\tEmail string\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "type",
+      "name": "Admin",
+      "fqn": "Admin",
+      "parent_fqn": null,
+      "start_line": 9,
+      "end_line": 12,
+      "start_byte": 79,
+      "end_byte": 117,
+      "signature": "type Admin struct",
+      "content": "type Admin struct {\n\tUser\n\tLevel int\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 84,
+          "end": 89
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Admin",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 20,
+          "end": 24
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "User",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 100,
+          "end": 104
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "User",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 112,
+          "end": 115
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 11,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 55,
+          "end": 61
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "string",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 69,
+          "end": 75
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "string",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 6,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 41,
+          "end": 47
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "uint64",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

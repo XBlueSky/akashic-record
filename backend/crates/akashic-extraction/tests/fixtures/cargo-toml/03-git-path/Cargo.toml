@@ -1,0 +1,11 @@
+[package]
+name = "sourced-crate"
+version = "0.1.0"
+
+[dependencies]
+local-lib = { path = "../local-lib" }
+remote-lib = { git = "https://github.com/example/remote-lib.git", branch = "main" }
+pinned = { version = "0.9", default-features = false }
+
+[target.'cfg(unix)'.dependencies]
+nix = "0.27"

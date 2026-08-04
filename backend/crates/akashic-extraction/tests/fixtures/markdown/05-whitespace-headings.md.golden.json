@@ -1,0 +1,71 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "section",
+      "name": "Tabbed Title",
+      "fqn": "Tabbed Title",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 3,
+      "start_byte": 0,
+      "end_byte": 53,
+      "signature": "Tabbed Title",
+      "content": "Tabbed Title\n\nBody of the tab-separated H1 heading.",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "section",
+      "name": "Spaced Sub",
+      "fqn": "Tabbed Title.Spaced Sub",
+      "parent_fqn": "Tabbed Title",
+      "start_line": 5,
+      "end_line": 7,
+      "start_byte": 55,
+      "end_byte": 118,
+      "signature": "Spaced Sub",
+      "content": "Spaced Sub\n\nThis H2 uses multiple spaces after the marker.",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "section",
+      "name": "Normal Deep",
+      "fqn": "Tabbed Title.Spaced Sub.Normal Deep",
+      "parent_fqn": "Tabbed Title.Spaced Sub",
+      "start_line": 9,
+      "end_line": 11,
+      "start_byte": 120,
+      "end_byte": 185,
+      "signature": "Normal Deep",
+      "content": "Normal Deep\n\nA normally-spaced H3 nested under the spaced H2.",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": []
+}

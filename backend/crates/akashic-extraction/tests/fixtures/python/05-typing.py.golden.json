@@ -1,0 +1,260 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "class",
+      "name": "Container",
+      "fqn": "Container",
+      "parent_fqn": null,
+      "start_line": 5,
+      "end_line": 10,
+      "start_byte": 61,
+      "end_byte": 216,
+      "signature": "class Container(Generic[T]):",
+      "content": "class Container(Generic[T]):\n    def __init__(self):\n        self.items: List[T] = []\n\n    def push(self, item: T) -> None:\n        self.items.append(item)",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "__init__",
+      "fqn": "Container.__init__",
+      "parent_fqn": "Container",
+      "start_line": 6,
+      "end_line": 7,
+      "start_byte": 94,
+      "end_byte": 146,
+      "signature": "def __init__(self):",
+      "content": "def __init__(self):\n        self.items: List[T] = []",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "push",
+      "fqn": "Container.push",
+      "parent_fqn": "Container",
+      "start_line": 9,
+      "end_line": 10,
+      "start_byte": 152,
+      "end_byte": 216,
+      "signature": "def push(self, item: T) -> None:",
+      "content": "def push(self, item: T) -> None:\n        self.items.append(item)",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 193,
+          "end": 216
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "append",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 10,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "python/05-typing",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Generic",
+          "module_specifier": "typing"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "python/05-typing",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "List",
+          "module_specifier": "typing"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "python/05-typing",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "TypeVar",
+          "module_specifier": "typing"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "named"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 134,
+          "end": 141
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "List",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 179,
+          "end": 183
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "None",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 139,
+          "end": 140
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "T",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 173,
+          "end": 174
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "T",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

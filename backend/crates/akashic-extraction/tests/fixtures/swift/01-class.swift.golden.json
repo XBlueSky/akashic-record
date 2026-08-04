@@ -1,0 +1,186 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "class",
+      "name": "Counter",
+      "fqn": "Counter",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 17,
+      "start_byte": 0,
+      "end_byte": 253,
+      "signature": "class Counter",
+      "content": "class Counter {\n    var count: Int\n    private var step: Int\n\n    init(start: Int) {\n        self.count = start\n        self.step = 1\n    }\n\n    public func increment() {\n        self.bump()\n    }\n\n    private func bump() {\n        count += step\n    }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "init",
+      "fqn": "Counter.init",
+      "parent_fqn": "Counter",
+      "start_line": 5,
+      "end_line": 8,
+      "start_byte": 66,
+      "end_byte": 139,
+      "signature": "init(start: Int)",
+      "content": "init(start: Int) {\n        self.count = start\n        self.step = 1\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Internal",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "increment",
+      "fqn": "Counter.increment",
+      "parent_fqn": "Counter",
+      "start_line": 10,
+      "end_line": 12,
+      "start_byte": 145,
+      "end_byte": 196,
+      "signature": "public func increment()",
+      "content": "public func increment() {\n        self.bump()\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "bump",
+      "fqn": "Counter.bump",
+      "parent_fqn": "Counter",
+      "start_line": 14,
+      "end_line": 16,
+      "start_byte": 202,
+      "end_byte": 251,
+      "signature": "private func bump()",
+      "content": "private func bump() {\n        count += step\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 179,
+          "end": 190
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "bump",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 11,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 31,
+          "end": 34
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 57,
+          "end": 60
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 78,
+          "end": 81
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

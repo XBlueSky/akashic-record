@@ -1,0 +1,100 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "job",
+      "name": "build",
+      "fqn": "build",
+      "parent_fqn": null,
+      "start_line": 9,
+      "end_line": 12,
+      "start_byte": 153,
+      "end_byte": 195,
+      "signature": "build:",
+      "content": "build:\n  stage: build\n  script:\n    - make",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": ".gitlab-ci",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "/templates/build.yml",
+          "module_specifier": "/templates/build.yml"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "include"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": ".gitlab-ci",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Security/SAST.gitlab-ci.yml",
+          "module_specifier": "Security/SAST.gitlab-ci.yml"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "include"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": ".gitlab-ci",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "https://example.com/ci/shared.yml",
+          "module_specifier": "https://example.com/ci/shared.yml"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {
+          "relation": {
+            "String": "include"
+          }
+        }
+      }
+    }
+  ]
+}

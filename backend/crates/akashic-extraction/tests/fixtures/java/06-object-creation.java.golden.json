@@ -1,0 +1,458 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "class",
+      "name": "Factory",
+      "fqn": "Factory",
+      "parent_fqn": null,
+      "start_line": 11,
+      "end_line": 24,
+      "start_byte": 323,
+      "end_byte": 927,
+      "signature": "public class Factory",
+      "content": "public class Factory {\n\n    /**\n     * Builds three things via constructors plus one method_invocation, so the\n     * golden must show Call edges to Widget, ArrayList, Shape, and configure.\n     */\n    public Widget build() {\n        Widget w = new Widget();                 // type_identifier        -> \"Widget\"\n        ArrayList<String> names = new ArrayList<String>(); // generic_type -> \"ArrayList\"\n        Shape s = new com.example.shapes.Shape();// scoped_type_identifier -> \"Shape\"\n        w.configure(s, names);                   // method_invocation      -> \"configure\"\n        return w;\n    }\n}",
+      "doc": "/**\n * Exercises object_creation_expression (`new Foo()`) call-name resolution.\n * Before the fix, every constructor call here dropped its Call edge because\n * the resolver read a non-existent `name` field instead of the `type` field.\n */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "build",
+      "fqn": "Factory.build",
+      "parent_fqn": "Factory",
+      "start_line": 17,
+      "end_line": 23,
+      "start_byte": 525,
+      "end_byte": 925,
+      "signature": "public Widget build()",
+      "content": "public Widget build() {\n        Widget w = new Widget();                 // type_identifier        -> \"Widget\"\n        ArrayList<String> names = new ArrayList<String>(); // generic_type -> \"ArrayList\"\n        Shape s = new com.example.shapes.Shape();// scoped_type_identifier -> \"Shape\"\n        w.configure(s, names);                   // method_invocation      -> \"configure\"\n        return w;\n    }",
+      "doc": "/**\n     * Builds three things via constructors plus one method_invocation, so the\n     * golden must show Call edges to Widget, ArrayList, Shape, and configure.\n     */",
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 670,
+          "end": 693
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "ArrayList",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 19,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 744,
+          "end": 774
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Shape",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 20,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 568,
+          "end": 580
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Widget",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 18,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 820,
+          "end": 841
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "configure",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 21,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "java/06-object-creation",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "com.example.shapes.Shape",
+          "module_specifier": "com.example.shapes.Shape"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "java/06-object-creation",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "java.util.ArrayList",
+          "module_specifier": "java.util.ArrayList"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 3,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 644,
+          "end": 653
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "ArrayList",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 19,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 674,
+          "end": 683
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "ArrayList",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 19,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 734,
+          "end": 739
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Shape",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 20,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 767,
+          "end": 772
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Shape",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 20,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 654,
+          "end": 660
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 19,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 684,
+          "end": 690
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 19,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 532,
+          "end": 538
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Widget",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 17,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 557,
+          "end": 563
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Widget",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 18,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 572,
+          "end": 578
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Widget",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 18,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 748,
+          "end": 751
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "com",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 20,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 752,
+          "end": 759
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "example",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 20,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 760,
+          "end": 766
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "shapes",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 20,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

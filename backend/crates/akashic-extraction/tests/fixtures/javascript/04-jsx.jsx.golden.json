@@ -1,0 +1,134 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "Badge",
+      "fqn": "Badge",
+      "parent_fqn": null,
+      "start_line": 3,
+      "end_line": 6,
+      "start_byte": 35,
+      "end_byte": 142,
+      "signature": "function Badge({ label })",
+      "content": "function Badge({ label }) {\n  const text = format(label);\n  return <span className=\"badge\">{text}</span>;\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": true,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "function",
+      "name": "format",
+      "fqn": "format",
+      "parent_fqn": null,
+      "start_line": 8,
+      "end_line": 10,
+      "start_byte": 144,
+      "end_byte": 208,
+      "signature": "function format(value)",
+      "content": "function format(value) {\n  return String(value).toUpperCase();\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 178,
+          "end": 191
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 78,
+          "end": 91
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "format",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 4,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 178,
+          "end": 205
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "toUpperCase",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 9,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "javascript/04-jsx",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "React",
+          "module_specifier": "react"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "edge.import_spec": {
+            "String": "default"
+          }
+        }
+      }
+    }
+  ]
+}

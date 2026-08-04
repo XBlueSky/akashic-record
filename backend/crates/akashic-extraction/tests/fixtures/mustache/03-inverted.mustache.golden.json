@@ -1,0 +1,79 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "section",
+      "name": "items",
+      "fqn": "items",
+      "parent_fqn": null,
+      "start_line": 2,
+      "end_line": 4,
+      "start_byte": 59,
+      "end_byte": 101,
+      "signature": "{{#items}}",
+      "content": "{{#items}}\n  <li>{{label}}</li>\n{{/items}}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "section",
+      "name": "empty",
+      "fqn": "empty",
+      "parent_fqn": null,
+      "start_line": 5,
+      "end_line": 7,
+      "start_byte": 102,
+      "end_byte": 149,
+      "signature": "{{^empty}}",
+      "content": "{{^empty}}\n  <p>There are items.</p>\n{{/empty}}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "inverted": {
+            "String": "true"
+          }
+        }
+      }
+    },
+    {
+      "chunk_type": "section",
+      "name": "items",
+      "fqn": "items",
+      "parent_fqn": null,
+      "start_line": 8,
+      "end_line": 10,
+      "start_byte": 150,
+      "end_byte": 218,
+      "signature": "{{^items}}",
+      "content": "{{^items}}\n  <p>No items {{! inline } comment }}here.</p>\n{{/items}}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {
+          "inverted": {
+            "String": "true"
+          }
+        }
+      }
+    }
+  ],
+  "edges": []
+}

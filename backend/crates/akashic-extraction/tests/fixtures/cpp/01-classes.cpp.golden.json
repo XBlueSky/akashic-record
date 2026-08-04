@@ -1,0 +1,210 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "namespace",
+      "name": "geom",
+      "fqn": "geom",
+      "parent_fqn": null,
+      "start_line": 4,
+      "end_line": 13,
+      "start_byte": 40,
+      "end_byte": 217,
+      "signature": "namespace geom",
+      "content": "namespace geom {\n    class Polygon {\n    public:\n        Polygon(std::vector<Point> pts);\n        double area() const;\n\n    private:\n        std::vector<Point> points_;\n    };\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "class",
+      "name": "Polygon",
+      "fqn": "geom.Polygon",
+      "parent_fqn": "geom",
+      "start_line": 5,
+      "end_line": 12,
+      "start_byte": 61,
+      "end_byte": 214,
+      "signature": "class Polygon",
+      "content": "class Polygon {\n    public:\n        Polygon(std::vector<Point> pts);\n        double area() const;\n\n    private:\n        std::vector<Point> points_;\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "Name": {
+          "name": "cpp/01-classes",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Point.hpp",
+          "module_specifier": "cpp/Point"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "cpp/01-classes",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "vector",
+          "module_specifier": "cpp/vector"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 117,
+          "end": 122
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Point",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 193,
+          "end": 198
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Point",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 11,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 67,
+          "end": 74
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Polygon",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 110,
+          "end": 116
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "vector",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 186,
+          "end": 192
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "vector",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 11,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}

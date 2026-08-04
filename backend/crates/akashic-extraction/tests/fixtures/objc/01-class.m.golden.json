@@ -1,0 +1,158 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "class",
+      "name": "Counter",
+      "fqn": "Counter",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 4,
+      "start_byte": 0,
+      "end_byte": 101,
+      "signature": "@interface Counter : NSObject",
+      "content": "@interface Counter : NSObject\n- (void)increment;\n- (void)setValue:(int)v andLabel:(NSString *)l;\n@end",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "increment",
+      "fqn": "Counter.increment",
+      "parent_fqn": "Counter",
+      "start_line": 2,
+      "end_line": 2,
+      "start_byte": 30,
+      "end_byte": 48,
+      "signature": "- (void)increment;",
+      "content": "- (void)increment;",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "setValue:andLabel:",
+      "fqn": "Counter.setValue:andLabel:",
+      "parent_fqn": "Counter",
+      "start_line": 3,
+      "end_line": 3,
+      "start_byte": 49,
+      "end_byte": 96,
+      "signature": "- (void)setValue:(int)v andLabel:(NSString *)l;",
+      "content": "- (void)setValue:(int)v andLabel:(NSString *)l;",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "class",
+      "name": "Counter",
+      "fqn": "Counter",
+      "parent_fqn": null,
+      "start_line": 6,
+      "end_line": 16,
+      "start_byte": 103,
+      "end_byte": 288,
+      "signature": "@implementation Counter",
+      "content": "@implementation Counter\n- (void)increment {\n    self.count += 1;\n}\n\n- (void)setValue:(int)v andLabel:(NSString *)l {\n    [self increment];\n    self.value = v;\n    self.label = l;\n}\n@end",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "increment",
+      "fqn": "Counter.increment",
+      "parent_fqn": "Counter",
+      "start_line": 7,
+      "end_line": 9,
+      "start_byte": 127,
+      "end_byte": 169,
+      "signature": "- (void)increment",
+      "content": "- (void)increment {\n    self.count += 1;\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "setValue:andLabel:",
+      "fqn": "Counter.setValue:andLabel:",
+      "parent_fqn": "Counter",
+      "start_line": 11,
+      "end_line": 15,
+      "start_byte": 171,
+      "end_byte": 283,
+      "signature": "- (void)setValue:(int)v andLabel:(NSString *)l",
+      "content": "- (void)setValue:(int)v andLabel:(NSString *)l {\n    [self increment];\n    self.value = v;\n    self.label = l;\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Unknown",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 224,
+          "end": 240
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "increment",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 12,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

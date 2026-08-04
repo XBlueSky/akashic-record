@@ -1,0 +1,88 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "function",
+      "name": "setup",
+      "fqn": "setup",
+      "parent_fqn": null,
+      "start_line": 4,
+      "end_line": 7,
+      "start_byte": 41,
+      "end_byte": 109,
+      "signature": "local function setup()",
+      "content": "local function setup()\n  local data = decode(json)\n  return data\nend",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 79,
+          "end": 91
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "decode",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 5,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "lua/03-require",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "a.b",
+          "module_specifier": "a.b"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "Name": {
+          "name": "lua/03-require",
+          "module_specifier": null
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "c",
+          "module_specifier": "c"
+        }
+      },
+      "kind": "Import",
+      "provenance": "Static",
+      "line": 2,
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ]
+}

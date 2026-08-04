@@ -1,0 +1,252 @@
+{
+  "chunks": [
+    {
+      "chunk_type": "enum",
+      "name": "Direction",
+      "fqn": "Direction",
+      "parent_fqn": null,
+      "start_line": 1,
+      "end_line": 14,
+      "start_byte": 0,
+      "end_byte": 222,
+      "signature": "enum class Direction(val degrees: Int)",
+      "content": "enum class Direction(val degrees: Int) {\n    NORTH(0),\n    EAST(90),\n    SOUTH(180),\n    WEST(270);\n\n    fun describe(): String {\n        return label()\n    }\n\n    private fun label(): String {\n        return \"dir\"\n    }\n}",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "NORTH",
+      "fqn": "Direction.NORTH",
+      "parent_fqn": "Direction",
+      "start_line": 2,
+      "end_line": 2,
+      "start_byte": 45,
+      "end_byte": 53,
+      "signature": "NORTH(0)",
+      "content": "NORTH(0)",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "EAST",
+      "fqn": "Direction.EAST",
+      "parent_fqn": "Direction",
+      "start_line": 3,
+      "end_line": 3,
+      "start_byte": 59,
+      "end_byte": 67,
+      "signature": "EAST(90)",
+      "content": "EAST(90)",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "SOUTH",
+      "fqn": "Direction.SOUTH",
+      "parent_fqn": "Direction",
+      "start_line": 4,
+      "end_line": 4,
+      "start_byte": 73,
+      "end_byte": 83,
+      "signature": "SOUTH(180)",
+      "content": "SOUTH(180)",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "enum_member",
+      "name": "WEST",
+      "fqn": "Direction.WEST",
+      "parent_fqn": "Direction",
+      "start_line": 5,
+      "end_line": 5,
+      "start_byte": 89,
+      "end_byte": 98,
+      "signature": "WEST(270)",
+      "content": "WEST(270)",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "describe",
+      "fqn": "Direction.describe",
+      "parent_fqn": "Direction",
+      "start_line": 7,
+      "end_line": 9,
+      "start_byte": 105,
+      "end_byte": 158,
+      "signature": "fun describe(): String",
+      "content": "fun describe(): String {\n        return label()\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Public",
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "chunk_type": "method",
+      "name": "label",
+      "fqn": "Direction.label",
+      "parent_fqn": "Direction",
+      "start_line": 11,
+      "end_line": 13,
+      "start_byte": 164,
+      "end_byte": 220,
+      "signature": "private fun label(): String",
+      "content": "private fun label(): String {\n        return \"dir\"\n    }",
+      "doc": null,
+      "receiver": null,
+      "is_async": false,
+      "is_static": false,
+      "is_const": false,
+      "is_exported": false,
+      "visibility": "Private",
+      "metadata": {
+        "fields": {}
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": {
+        "ByteRange": {
+          "start": 145,
+          "end": 152
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "label",
+          "module_specifier": null
+        }
+      },
+      "kind": "Call",
+      "provenance": "Static",
+      "line": 8,
+      "metadata": {
+        "fields": {}
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 34,
+          "end": 37
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "Int",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 1,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 121,
+          "end": 127
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 7,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    },
+    {
+      "source": {
+        "ByteRange": {
+          "start": 185,
+          "end": 191
+        }
+      },
+      "target": {
+        "Name": {
+          "name": "String",
+          "module_specifier": null
+        }
+      },
+      "kind": "References",
+      "provenance": "Static",
+      "line": 11,
+      "metadata": {
+        "fields": {
+          "ref_kind": {
+            "String": "type"
+          }
+        }
+      }
+    }
+  ]
+}
