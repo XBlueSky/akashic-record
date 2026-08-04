@@ -1,0 +1,22 @@
+[package]
+name = "akashic-curation"
+version.workspace = true
+edition.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+akashic-config.workspace = true
+akashic-domain.workspace = true
+sqlx.workspace = true
+pgvector.workspace = true
+uuid.workspace = true
+serde = { workspace = true }
+serde_json.workspace = true
+regex.workspace = true
+chrono.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+async-trait.workspace = true
