@@ -1,0 +1,44 @@
+[package]
+name = "akashic-extraction"
+version.workspace = true
+edition.workspace = true
+description.workspace = true
+
+[lints]
+workspace = true
+
+[features]
+test-fixtures = []
+
+[dependencies]
+tree-sitter.workspace = true
+tree-sitter-typescript.workspace = true
+tree-sitter-c.workspace = true
+tree-sitter-cpp.workspace = true
+tree-sitter-rust.workspace = true
+tree-sitter-go.workspace = true
+tree-sitter-python.workspace = true
+tree-sitter-java.workspace = true
+tree-sitter-c-sharp.workspace = true
+tree-sitter-ruby.workspace = true
+tree-sitter-php.workspace = true
+tree-sitter-swift.workspace = true
+tree-sitter-kotlin-ng.workspace = true
+tree-sitter-dart.workspace = true
+tree-sitter-scala.workspace = true
+tree-sitter-objc.workspace = true
+tree-sitter-lua.workspace = true
+tree-sitter-luau.workspace = true
+tree-sitter-javascript.workspace = true
+tree-sitter-bash.workspace = true
+serde = { workspace = true }
+serde_json.workspace = true
+toml.workspace = true
+uuid.workspace = true
+regex.workspace = true
+tracing.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
