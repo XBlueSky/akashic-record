@@ -1,0 +1,64 @@
+[package]
+name = "akashic-ingestion"
+version.workspace = true
+edition.workspace = true
+
+[lints]
+workspace = true
+
+[features]
+test-fixtures = []
+
+[dependencies]
+akashic-kernel.workspace = true
+akashic-config.workspace = true
+akashic-domain.workspace = true
+akashic-quota.workspace = true
+akashic-store-pg.workspace = true
+akashic-store-neo4j.workspace = true
+akashic-embed.workspace = true
+akashic-llm.workspace = true
+akashic-extraction.workspace = true
+akashic-retrieval.workspace = true
+akashic-curation.workspace = true
+sqlx.workspace = true
+pgvector.workspace = true
+neo4rs.workspace = true
+git2.workspace = true
+reqwest.workspace = true
+tree-sitter.workspace = true
+ignore.workspace = true
+regex.workspace = true
+tempfile.workspace = true
+scraper.workspace = true
+fa-leiden-cd.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+toml.workspace = true
+futures.workspace = true
+serde = { workspace = true }
+serde_json.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+tokio.workspace = true
+tokio-util.workspace = true
+async-trait.workspace = true
+secrecy.workspace = true
+urlencoding.workspace = true
+clap = { workspace = true }
+tracing-subscriber.workspace = true
+tar.workspace = true
+flate2.workspace = true
+globset.workspace = true
+bytes.workspace = true
+zstd.workspace = true
+
+[dev-dependencies]
+serial_test.workspace = true
+akashic-config.workspace = true
+akashic-test-support.workspace = true
+
+[[bin]]
+name = "akashic-ingest"
+path = "src/bin/akashic-ingest.rs"

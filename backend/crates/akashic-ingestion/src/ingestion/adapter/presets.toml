@@ -1,0 +1,21 @@
+# Embedded adapter preset table — maps doc-site hosts to their extraction
+# adapter, consulted by AdapterResolver before auto-sniffing (see registry.rs).
+#
+# This checked-in copy ships EMPTY on purpose: which sites to pin is a
+# deployment concern. Point AKASHIC_PRESETS_PATH at a runtime presets file
+# using the same schema; its entries merge over this table (same host_pattern
+# replaces, new patterns append).
+#
+# Schema — one [[preset]] block per site:
+#
+#   [[preset]]
+#   host_pattern   = "wiki.example.com"   # exact host, or "*.suffix" glob
+#   adapter_id     = "mediawiki"          # e.g. mediawiki, vitepress-llms,
+#                                         # gitbook-static, gitbook-shelf,
+#                                         # ssr-hydration, codimd
+#   adapter_config = { shape = "next" }   # optional, adapter-specific
+#   auto_ingest    = true                 # false = exclude from bulk/auto crawl
+#   crawl_limits   = { depth = 3, max_pages = 500, delay_ms = 200 }  # optional
+#
+# An adapter_id that names an unregistered adapter is tolerated: the resolver
+# warns and falls back to sniff/generic until that adapter ships.
