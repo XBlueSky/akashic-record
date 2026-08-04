@@ -1,0 +1,49 @@
+# Rust
+backend/target/
+backend/audit-rs.json
+**/*.rs.bk
+
+# ML model weights
+backend/models/
+
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/test-results/
+frontend/playwright-report/
+
+# Internal planning docs (Superpowers workflow — specs/plans/verifications)
+docs/superpowers/
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+id_rsa*
+**/secrets/
+
+# OS
+.DS_Store
+*.swp
+
+# IDE
+.vscode/
+.idea/
+
+# Playwright MCP
+.playwright-mcp/
+
+# Screenshots (verification artifacts)
+*.png
+
+# user
+.claude
+.serena
+.entire
+.visual-companion
+.superpowers/
+/docs/superpowers/
+# Impeccable live-edit tool cache (the .impeccable.md design doc IS tracked; the dir is not)
+**/.impeccable/

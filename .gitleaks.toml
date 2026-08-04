@@ -1,0 +1,36 @@
+# Akashic Record — gitleaks configuration
+# Extends the default ruleset; declares targeted allowlists.
+
+title = "Akashic Record gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+# Allowlist scoped to documentation that legitimately contains:
+#   - placeholder strings ("changeme", "akashic_secret" in audit prose)
+#   - revocation `curl` examples (e.g., "Authorization: Bearer <OLD_KEY>")
+#   - synthetic test/fixture tokens used to demonstrate the gate
+# Reviewers MUST spot-check diffs to these paths and confirm that no real
+# secret is pasted into them. The allowlist exists to prevent gitleaks
+# false positives on prose; it does not exempt these files from human
+# review.
+#
+# Conditions inside one [allowlist] block compose with OR. We intentionally
+# use ONLY `paths` here so a finding is suppressed only when the file
+# matches — never globally based on its content. A previous version of this
+# file also listed `regexes = ['''changeme''']`, which (because of the OR
+# semantics) would have suppressed any finding repo-wide whose matched text
+# contained "changeme" — including a real credential accidentally named
+# `changeme_<token>`. Do not re-introduce a global content regex here; if
+# the placeholder needs to appear in a new file, add that file to `paths`.
+description = "Path-scoped allowlist for documentation containing placeholders and revocation examples"
+paths = [
+    '''(^|/)\.env\.example$''',
+    '''(^|/)\.gitleaks\.toml$''',
+    '''(^|/)docs/superpowers/specs/.*\.md$''',
+    '''(^|/)docs/superpowers/plans/.*\.md$''',
+    '''(^|/)docs/superpowers/evidence/.*\.md$''',
+    '''(^|/)docs/operations/rotation-sop\.md$''',
+    '''(^|/)finding\.md$''',
+]

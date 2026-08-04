@@ -1,0 +1,35 @@
+# Akashic Record — Docker build context exclusions
+
+# Secrets — never include in any image build context
+.env
+.env.*
+**/.env
+**/.env.local
+**/.env.*.local
+*.pem
+*.key
+id_rsa*
+**/secrets/
+
+# VCS metadata
+.git/
+.gitignore
+.gitleaks.toml
+
+# Build artifacts
+backend/target/
+frontend/node_modules/
+frontend/dist/
+
+# Editor / OS junk
+.DS_Store
+*.swp
+.vscode/
+.idea/
+
+# Heavy / planning-only docs that no image needs at build time.
+# Note: we deliberately do NOT exclude all of docs/ — a future track may
+# build an image that bundles, e.g., docs/operations/rotation-sop.md for
+# a --print-runbook flag, or a small doc-server image. Exclude only the
+# planning trees that have no runtime value.
+docs/superpowers/
