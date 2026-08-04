@@ -1,0 +1,322 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "back": "Back",
+    "cancel": "CANCEL",
+    "noResults": "No results found."
+  },
+  "noteEditor": {
+    "editNote": "Edit Note",
+    "title": "Title",
+    "titlePlaceholder": "Note title",
+    "category": "Category",
+    "summary": "Summary",
+    "summaryPlaceholder": "Brief summary",
+    "write": "Write",
+    "preview": "Preview",
+    "contentPlaceholder": "Write your note in Markdown...",
+    "nothingToPreview": "Nothing to preview",
+    "tags": "Tags",
+    "tagPlaceholder": "Add tag + Enter",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save",
+    "saving": "Saving...",
+    "deleteConfirm": "Delete this note? This cannot be undone.",
+    "saveFailed": "Failed to save note",
+    "deleteFailed": "Failed to delete note"
+  },
+  "sidebar": {
+    "gitlabRepos": "GITLAB REPOS",
+    "webCrawler": "WEB CRAWLER",
+    "loading": "Loading...",
+    "noRepos": "No repositories synced",
+    "addSource": "Add Source",
+    "searchPlaceholder": "Search...",
+    "signOut": "Sign out",
+    "manageTokens": "Manage MCP tokens"
+  },
+  "account": {
+    "title": "Account",
+    "tabs": {
+      "myTokens": "My Tokens",
+      "revokePassthrough": "Revoke PAT",
+      "recentActivity": "Recent Activity"
+    },
+    "tokens": {
+      "label": "Label",
+      "issued": "Issued",
+      "lastUsed": "Last Used",
+      "expires": "Expires",
+      "status": "Status",
+      "active": "Active",
+      "revoked": "Revoked {ts}",
+      "revoke": "Revoke",
+      "confirmRevoke": "Revoke this token? It will stop authenticating immediately.",
+      "empty": "No tokens issued yet. Run the device flow to create one.",
+      "loadFailed": "Failed to load tokens"
+    },
+    "passthrough": {
+      "heading": "Revoke a GitLab Personal Access Token",
+      "instruction": "Paste a GitLab PAT (starts with `glpat-`) or its 16-char hex prefix from the audit log. The tombstone takes effect on the next request.",
+      "input": "glpat-... or 16-hex prefix",
+      "revoke": "Revoke",
+      "success": "Tombstone written for prefix {prefix}",
+      "errInvalid": "Expected `glpat-...` or 16 hex chars",
+      "errSubmit": "Revoke failed: {message}"
+    },
+    "activity": {
+      "loadFailed": "Failed to load activity",
+      "empty": "No write activity recorded.",
+      "via": "via",
+      "from": "from"
+    }
+  },
+  "landing": {
+    "sysLabel": "SYS.INIT.OK",
+    "version": "v3.0.0",
+    "title": "AKASHIC RECORD",
+    "subtitle": "// SELECT TARGET REPOSITORY",
+    "scanning": "Scanning nodes...",
+    "noRepos": "No repositories found.",
+    "footer": "KNOWLEDGE GRAPH INTERFACE"
+  },
+  "sources": {
+    "title": "Sources",
+    "addSource": "+ Add Source",
+    "total": "{count} total",
+    "healthy": "{count} healthy",
+    "stale": "{count} stale",
+    "failed": "{count} failed",
+    "active": "{count} active",
+    "colSource": "source",
+    "colStatus": "status",
+    "colBranch": "branch",
+    "colChunks": "chunks",
+    "colNotes": "notes",
+    "colSynced": "synced",
+    "statusHealthy": "healthy",
+    "statusStale": "stale",
+    "statusFailed": "failed",
+    "statusIngesting": "ingesting",
+    "actionSync": "Sync",
+    "actionRetry": "Retry from scratch",
+    "actionResume": "Resume from checkpoint",
+    "actionDelete": "Delete",
+    "emptyTitle": "Connect repositories and documentation sites to build your knowledge graph.",
+    "emptyGitlab": "GitLab Repository",
+    "emptyWebsite": "Website / Docs",
+    "emptyAdd": "+ Add your first source",
+    "deleteTitle": "Delete Source",
+    "deleteDesc": "This will permanently delete {name} and all its data ({chunks} chunks, {notes} notes).",
+    "deleteConfirmLabel": "Type the source name to confirm",
+    "deleteConfirm": "Delete permanently",
+    "addTitle": "Add Source",
+    "authHint": "Sign in to add and manage sources.",
+    "authButton": "Sign in with GitLab"
+  },
+  "ingest": {
+    "auth": {
+      "label": "SYS.AUTH.REQUIRED",
+      "title": "SIGN IN TO ADD SOURCES",
+      "subtitle": "// GITLAB AUTHENTICATION",
+      "button": "Sign in with GitLab",
+      "hint": "Connect your GitLab account to add and index repositories you have access to.",
+      "checking": "Checking authentication..."
+    },
+    "source": {
+      "label": "SYS.SOURCE.SELECT",
+      "title": "ADD KNOWLEDGE SOURCE",
+      "subtitle": "// SELECT SOURCE TYPE",
+      "gitlab": "GitLab",
+      "gitlabDesc": "Clone and index a git repository",
+      "website": "Website",
+      "websiteDesc": "Crawl and index web pages",
+      "recentSources": "RECENT SOURCES",
+      "chunks": "{count} chunks"
+    },
+    "gitlab": {
+      "label": "SOURCE.GITLAB",
+      "title": "GITLAB REPOSITORY",
+      "urlLabel": "Repository URL",
+      "urlPlaceholder": "https://gitlab.com/team/project",
+      "detected": "Detected:",
+      "branchLabel": "Branch",
+      "branchLoading": "Loading branches...",
+      "branchFilter": "Filter branches...",
+      "branchEmpty": "No matching branches",
+      "default": "default",
+      "urlRequired": "URL is required",
+      "urlInvalid": "Enter a valid URL",
+      "branchError": "Could not load branches",
+      "submit": "START INGESTION"
+    },
+    "website": {
+      "label": "SOURCE.WEBSITE",
+      "title": "WEBSITE",
+      "urlLabel": "Website URL",
+      "urlPlaceholder": "https://docs.example.com",
+      "crawlScope": "Crawl scope:",
+      "crawlScopeHint": "The crawler will be restricted to this path and its sub-pages.",
+      "depthLabel": "Crawl Depth",
+      "depth1": "1 level",
+      "depth2": "2 levels",
+      "depth3": "3 levels",
+      "patternLabel": "URL Pattern Filter (optional)",
+      "patternPlaceholder": "*/docs/*",
+      "urlRequired": "URL is required",
+      "urlInvalid": "Enter a valid URL",
+      "submit": "START CRAWLING"
+    },
+    "submitted": {
+      "reviewLabel": "SYS.SOURCE.QUEUED",
+      "reviewTitle": "SUBMITTED FOR REVIEW",
+      "reviewBody": "This source is queued for admin approval. It will be crawled and indexed once approved.",
+      "unsupportedLabel": "SYS.SOURCE.UNSUPPORTED",
+      "unsupportedTitle": "SITE NOT SUPPORTED",
+      "unsupportedBody": "This site can't be automatically indexed yet. It's been logged so support can be added.",
+      "addAnother": "ADD ANOTHER SOURCE"
+    },
+    "progress": {
+      "label": "SYS.INGEST.ACTIVE",
+      "title": "INDEXING: {repoName}",
+      "stageCloning": "CLONING",
+      "stageCrawling": "CRAWLING PAGES",
+      "stageAnalyzing": "ANALYZING FILES",
+      "stageParsing": "PARSING CODE",
+      "stageStoring": "EMBEDDING & STORING",
+      "stageComplete": "COMPLETE",
+      "files": "{processed}/{total} files",
+      "complete": "Ingestion complete: {chunks} chunks indexed",
+      "failed": "Ingestion failed.",
+      "connecting": "Connecting...",
+      "viewGraph": "VIEW IN GRAPH"
+    }
+  },
+  "command": {
+    "placeholder": "Search repos & knowledge...",
+    "noRepos": "No repositories found.",
+    "repos": "Repositories",
+    "searching": "Searching knowledge base...",
+    "knowledge": "Knowledge",
+    "navigate": "navigate",
+    "select": "select",
+    "close": "close"
+  },
+  "modules": {
+    "title": "Modules",
+    "loading": "Loading modules...",
+    "noModules": "No modules found. Run ingestion first.",
+    "selectPrompt": "Select a module to view its chunks",
+    "loadingChunks": "Loading chunks...",
+    "chunkCount": "{count} chunk | {count} chunks",
+    "noChunks": "No chunks found for this module.",
+    "files": "{count} files"
+  },
+  "timeline": {
+    "loading": "Loading notes...",
+    "noNotes": "No notes found.",
+    "noteCount": "{count, plural, one {# note} other {# notes}}",
+    "page": "Page {page} / {total}",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "graph": {
+    "loading": "Loading graph...",
+    "error": "Error",
+    "nodeTypes": "Node Types",
+    "edgeTypes": "Edge Types",
+    "other": "Other",
+    "connections": "Connections",
+    "edges": "{count} edges",
+    "modules": "{count} modules",
+    "backToModules": "Module Graph",
+    "chunks": "{count} chunks",
+    "calls": "{count} calls",
+    "external": "{count} external",
+    "noChunks": "No code chunks in this module",
+    "noCalls": "No call edges found",
+    "drillLoading": "Loading call graph...",
+    "drillError": "Failed to load call graph"
+  },
+  "repo": {
+    "website": "WEBSITE",
+    "branchFilter": "Filter branches...",
+    "noBranches": "No branches found",
+    "reingest": "RE-INGEST",
+    "purgeTitle": "PURGE REPOSITORY",
+    "purgeDesc": "This will permanently delete {name} and all its data ({chunks} chunks, {modules} modules).",
+    "purgeConfirmLabel": "Type the repository name to confirm",
+    "purgeConfirm": "CONFIRM PURGE",
+    "chunks": "{count} chunks",
+    "modules": "{count} modules",
+    "notes": "{count} notes",
+    "lastIndexed": "Last indexed: {time}",
+    "complete": "Ingestion complete: {chunks} chunks indexed",
+    "codeMap": "Code Map",
+    "notesMode": "Notes",
+    "graphTab": "Graph",
+    "modulesTab": "Modules",
+    "all": "All",
+    "files": "Files:",
+    "symbols": "Symbols:",
+    "never": "never",
+    "justNow": "just now",
+    "minsAgo": "{mins}m ago",
+    "hoursAgo": "{hours}h ago",
+    "daysAgo": "{days}d ago"
+  },
+  "docs": {
+    "title": "Documentation",
+    "backToApp": "Back to Akashic Record",
+    "search": "Search docs",
+    "copyStamp": "Copy version stamp",
+    "stampCopied": "Stamp copied",
+    "hub": {
+      "empty": {
+        "title": "No documentation published yet",
+        "body": "Publish the first corpus from a source repo:",
+        "step1": "Add .akashic/docs.toml and a docs/ tree to the repo",
+        "step2": "Install the akashic-docs plugin and run /docs-init",
+        "step3": "CI publishes on the next push — it appears here"
+      },
+      "pages": "{count} pages",
+      "updated": "updated {date}",
+      "loadFailed": "Could not load the docs catalog."
+    },
+    "badge": {
+      "indexing": "indexing",
+      "failed": "index failed"
+    },
+    "nav": { "menu": "Pages", "open": "Open navigation" },
+    "toc": "On this page",
+    "languages": "Language",
+    "staleness": {
+      "indexing": "Search and related code are still being indexed for this version.",
+      "failed": "Index-backed features (search, related code) are unavailable for this version."
+    },
+    "notFound": {
+      "title": "Page not found",
+      "body": "This page does not exist in {repo} @ {version}.",
+      "search": "Search the docs",
+      "backToIndex": "Back to index"
+    },
+    "footer": {
+      "prev": "Previous",
+      "next": "Next",
+      "report": "Report an issue",
+      "reportCopied": "Page reference copied — paste it to the doc maintainers"
+    },
+    "related": { "title": "Related code" },
+    "codeCopy": "Copy",
+    "codeCopied": "Copied",
+    "anchorCopied": "Link copied",
+    "imageFailed": "image failed to load",
+    "mermaidFailed": "Diagram failed to render — showing source"
+  },
+  "locale": {
+    "en": "EN",
+    "zhTW": "中文"
+  }
+}

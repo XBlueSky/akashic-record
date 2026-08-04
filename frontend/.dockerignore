@@ -1,0 +1,27 @@
+# Host artifacts that must not shadow the clean `npm ci`
+node_modules/
+.svelte-kit/
+build/
+dist/
+
+# Legacy app — reference only, never part of the image
+.legacy/
+
+# Test artifacts / tooling
+tests/
+playwright-report/
+test-results/
+.cache/
+.audit-output.json
+
+# Editor / OS junk
+.DS_Store
+*.swp
+.vscode/
+.idea/
+
+# Secrets (defense in depth)
+.env
+.env.*
+*.pem
+*.key
