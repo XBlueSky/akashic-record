@@ -1,0 +1,40 @@
+[package]
+name = "akashic-identity"
+version.workspace = true
+edition.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+akashic-kernel.workspace = true
+akashic-config.workspace = true
+akashic-domain.workspace = true
+akashic-store-pg.workspace = true
+sqlx.workspace = true
+axum.workspace = true
+sha2.workspace = true
+rand.workspace = true
+lru.workspace = true
+parking_lot.workspace = true
+dashmap.workspace = true
+secrecy.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+serde = { workspace = true }
+serde_json.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+tokio.workspace = true
+async-trait.workspace = true
+url.workspace = true
+urlencoding.workspace = true
+tokio-util = { workspace = true }
+
+[dev-dependencies]
+akashic-gitlab.workspace = true
+reqwest.workspace = true
+serial_test.workspace = true
+wiremock.workspace = true
+sqlx.workspace = true
