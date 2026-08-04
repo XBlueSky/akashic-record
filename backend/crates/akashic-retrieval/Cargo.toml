@@ -1,0 +1,23 @@
+[package]
+name = "akashic-retrieval"
+version.workspace = true
+edition.workspace = true
+description.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+akashic-domain.workspace = true
+akashic-store-neo4j.workspace = true
+tokio.workspace = true
+akashic-embed.workspace = true
+akashic-llm.workspace = true
+uuid.workspace = true
+serde = { workspace = true }
+serde_json.workspace = true
+regex.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+async-trait.workspace = true
