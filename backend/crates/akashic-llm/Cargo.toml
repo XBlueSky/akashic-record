@@ -1,0 +1,20 @@
+[package]
+name = "akashic-llm"
+version.workspace = true
+edition.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+akashic-config.workspace = true
+akashic-domain.workspace = true
+reqwest.workspace = true
+async-trait.workspace = true
+anyhow.workspace = true
+tracing.workspace = true
+tokio.workspace = true
+tokio-util.workspace = true
+secrecy.workspace = true
+serde = { workspace = true }
+serde_json.workspace = true
