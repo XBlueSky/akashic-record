@@ -1,0 +1,21 @@
+[package]
+name = "akashic-quota"
+version.workspace = true
+edition.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+akashic-domain.workspace = true
+akashic-kernel.workspace = true
+metrics.workspace = true
+async-trait.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+
+[dev-dependencies]
+akashic-store-pg.workspace = true
+sqlx.workspace = true
