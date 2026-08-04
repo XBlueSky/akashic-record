@@ -1,0 +1,46 @@
+[package]
+name = "akashic-mcp"
+version.workspace = true
+edition.workspace = true
+description.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+akashic-context.workspace = true
+akashic-domain.workspace = true
+akashic-identity.workspace = true
+akashic-quota.workspace = true
+akashic-embed.workspace = true
+akashic-kernel.workspace = true
+akashic-store-pg.workspace = true
+akashic-store-neo4j.workspace = true
+akashic-retrieval.workspace = true
+akashic-curation.workspace = true
+akashic-platform = { path = "../akashic-platform" }
+axum.workspace = true
+tower.workspace = true
+tower-http.workspace = true
+rmcp.workspace = true
+schemars.workspace = true
+sqlx.workspace = true
+neo4rs.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+tokio-util.workspace = true
+futures.workspace = true
+reqwest.workspace = true
+anyhow.workspace = true
+async-trait.workspace = true
+tracing.workspace = true
+metrics.workspace = true
+uuid.workspace = true
+sha2.workspace = true
+
+[dev-dependencies]
+akashic-test-support.workspace = true
+wiremock.workspace = true
+async-stream.workspace = true
+serial_test.workspace = true
