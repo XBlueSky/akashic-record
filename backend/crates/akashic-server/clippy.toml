@@ -1,0 +1,9 @@
+# Backend Clippy configuration.
+#
+# `type-complexity-threshold` is raised because several sqlx::fetch_all sites
+# use multi-tuple result types that exceed clippy's default complexity
+# heuristic. Extracting per-site type aliases (`type RowX = (...)`) adds
+# boilerplate without semantic benefit; we instead document the higher
+# threshold here so the CI `-D warnings` gate stays meaningful for everything
+# else.
+type-complexity-threshold = 1000

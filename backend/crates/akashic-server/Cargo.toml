@@ -1,0 +1,124 @@
+[package]
+name = "akashic-server"
+version.workspace = true
+edition.workspace = true
+description.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+axum.workspace = true
+tower-http.workspace = true
+tokio.workspace = true
+tokio-stream.workspace = true
+tokio-util.workspace = true
+futures.workspace = true
+tower.workspace = true
+tower_governor.workspace = true
+governor.workspace = true
+rmcp.workspace = true
+schemars.workspace = true
+neo4rs.workspace = true
+sqlx.workspace = true
+pgvector.workspace = true
+git2.workspace = true
+tree-sitter.workspace = true
+tree-sitter-typescript.workspace = true
+tree-sitter-c.workspace = true
+tree-sitter-cpp.workspace = true
+tree-sitter-rust.workspace = true
+tree-sitter-go.workspace = true
+tree-sitter-python.workspace = true
+tree-sitter-java.workspace = true
+tree-sitter-c-sharp.workspace = true
+tree-sitter-ruby.workspace = true
+tree-sitter-php.workspace = true
+tree-sitter-swift.workspace = true
+tree-sitter-kotlin-ng.workspace = true
+tree-sitter-dart.workspace = true
+tree-sitter-scala.workspace = true
+tree-sitter-objc.workspace = true
+tree-sitter-lua.workspace = true
+tree-sitter-luau.workspace = true
+tree-sitter-javascript.workspace = true
+tree-sitter-bash.workspace = true
+ignore.workspace = true
+regex.workspace = true
+tempfile.workspace = true
+scraper.workspace = true
+candle-core.workspace = true
+candle-nn.workspace = true
+candle-transformers.workspace = true
+tokenizers.workspace = true
+hf-hub.workspace = true
+reqwest.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+toml.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+async-trait.workspace = true
+akashic-kernel.workspace = true
+akashic-config.workspace = true
+akashic-extraction.workspace = true
+akashic-domain.workspace = true
+akashic-gitlab.workspace = true
+akashic-quota.workspace = true
+akashic-store-pg.workspace = true
+akashic-store-neo4j.workspace = true
+akashic-embed.workspace = true
+akashic-llm.workspace = true
+akashic-curation.workspace = true
+akashic-retrieval.workspace = true
+akashic-ingestion.workspace = true
+akashic-identity.workspace = true
+akashic-context.workspace = true
+akashic-test-support.workspace = true
+akashic-platform = { path = "../akashic-platform" }
+akashic-mcp = { path = "../akashic-mcp" }
+akashic-http = { path = "../akashic-http" }
+rand.workspace = true
+sha2.workspace = true
+lru.workspace = true
+parking_lot.workspace = true
+dashmap.workspace = true
+fa-leiden-cd.workspace = true
+secrecy.workspace = true
+url.workspace = true
+ipnet.workspace = true
+urlencoding.workspace = true
+dotenvy.workspace = true
+clap.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+metrics.workspace = true
+metrics-exporter-prometheus.workspace = true
+
+[lib]
+name = "akashic_record"
+path = "src/lib.rs"
+
+[[bin]]
+name = "akashic-server"
+path = "src/main.rs"
+
+[features]
+default = []
+test-fixtures = ["akashic-extraction/test-fixtures", "akashic-ingestion/test-fixtures", "akashic-http/test-fixtures"]
+
+[dev-dependencies]
+async-stream.workspace = true
+libc.workspace = true
+metrics-util.workspace = true
+serial_test.workspace = true
+wiremock.workspace = true
+mockito.workspace = true
+testcontainers.workspace = true
+testcontainers-modules.workspace = true
+blake3.workspace = true
+tar.workspace = true
+flate2.workspace = true
+bytes.workspace = true

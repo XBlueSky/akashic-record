@@ -1,0 +1,59 @@
+{
+  "$defs": {
+    "DocsTomlCorpusSection": {
+      "description": "The `[corpus]` table of a [`DocsToml`] contract.",
+      "properties": {
+        "exclude": {
+          "default": [],
+          "description": "Globs, relative to `docs_root` (not to the repo root), excluded from\nthe collected file set. Empty = exclude nothing.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "`.akashic/docs.toml` — the pull-bootstrap docs contract (Task 9, B4),\ndetected in a repo checkout that has no CI docs-packer of its own. The\ncanonical shape lives here (not in `akashic-ingestion::corpus_pull`,\nwhich only consumes it) so both the platform's own parser\n(`corpus_pull::load_contract`) and the docs-kit kit's `akashic` plugin —\nvia the `get_docs_schema(\"docs-toml\")` MCP tool (E5) — validate against\nthe SAME schema.\n\nDeliberately NOT `deny_unknown_fields`, unlike [`CorpusManifest`]: this\ncontract has sections this task doesn't model at all (`[snippets]`,\n`[check]`), and both this Rust deserializer and the kit packer's own ajv\nschema must tolerate them rather than reject the file outright. No\n`deny_unknown_fields` also means [`docs_toml_json_schema`] must NOT\ndeclare `additionalProperties: false` — an artifact-schema author\ntightening that later would silently break real `.akashic/docs.toml`\nfiles that use those sections (see `corpus_pull`'s own\n`docs_contract_tolerates_unconsumed_snippets_and_check_sections` test).",
+  "properties": {
+    "corpus": {
+      "$ref": "#/$defs/DocsTomlCorpusSection"
+    },
+    "docs_root": {
+      "description": "Repo-root-relative directory containing the docs tree to ingest.",
+      "type": "string"
+    },
+    "index": {
+      "description": "`manifest.index` — repo-root-relative, e.g. `docs/README.md`.",
+      "type": "string"
+    },
+    "languages": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "name": {
+      "default": null,
+      "description": "Optional platform slug override; defaults to the ingest request's\nown repo name when absent.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "version_header": {
+      "description": "Path (repo-root-relative) to the C/C++ header carrying\n`#define X_VERSION_{MAJOR,MINOR,PATCH}` lines, parsed via\n`algos::corpus_contract::parse_version_header`.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "version_header",
+    "docs_root",
+    "index"
+  ],
+  "title": "DocsToml",
+  "type": "object"
+}

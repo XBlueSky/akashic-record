@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "The canonical corpus manifest artifact produced by the CI packer.\n\n`deny_unknown_fields` is load-bearing: an artifact with extra keys must be\nrejected rather than silently accepted, since it means the packer and the\nschema have drifted.",
+  "properties": {
+    "index": {
+      "type": "string"
+    },
+    "languages": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "repo": {
+      "type": "string"
+    },
+    "sha": {
+      "type": "string"
+    },
+    "tool_version": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "repo",
+    "version",
+    "sha",
+    "index",
+    "languages",
+    "tool_version"
+  ],
+  "title": "CorpusManifest",
+  "type": "object"
+}
