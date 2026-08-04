@@ -1,0 +1,185 @@
+[workspace]
+resolver = "2"
+members = ["crates/*"]
+# `.impeccable/` is a stray tool-hook cache directory (no Cargo.toml) that a
+# misconfigured hook keeps recreating under `crates/` with cwd set to this
+# workspace; without this exclude, `members = ["crates/*"]` matches it as a
+# member and every cargo invocation fails at manifest-load before reaching
+# any real crate. Not a real crate — never delete/add a Cargo.toml for it.
+exclude = ["crates/.impeccable"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+description = "Self-hosted RAG server bridging GitLab metadata with AI-generated context"
+
+[workspace.lints.clippy]
+type_complexity = "allow"
+
+# clippy::pedantic enabled workspace-wide (priority -1 so the per-lint allows
+# below override it). The allow-set is the conventional "noisy/opinionated"
+# pedantic lints plus a few that protect deliberate patterns in this codebase
+# (wildcard_imports → the `use super::*` module-split idiom; missing_fields_in_debug
+# → the redacting manual Debug impls; the cast_* family → intentional DB
+# i32/usize/i64 conversions).
+pedantic = { level = "warn", priority = -1 }
+cast_possible_truncation = "allow"
+cast_possible_wrap = "allow"
+cast_precision_loss = "allow"
+cast_sign_loss = "allow"
+cast_lossless = "allow"
+doc_markdown = "allow"
+must_use_candidate = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+module_name_repetitions = "allow"
+similar_names = "allow"
+too_many_lines = "allow"
+wildcard_imports = "allow"
+implicit_hasher = "allow"
+struct_excessive_bools = "allow"
+missing_fields_in_debug = "allow"
+ref_option = "allow"
+if_not_else = "allow"
+single_match_else = "allow"
+items_after_statements = "allow"
+match_wildcard_for_single_variants = "allow"
+# Second tier: lints `cargo clippy --fix` declined to auto-apply (MaybeIncorrect)
+# or whose rewrite is debatable / ripples through signatures. Two --fix passes
+# captured every machine-safe suggestion; hand-applying these across DB/security
+# code is not worth the risk for the style gain, so they are allowed explicitly.
+format_push_string = "allow"            # write! needs `std::fmt::Write` in scope; push_str is clearer
+manual_let_else = "allow"               # let-else desugaring can shift else-branch semantics
+unnecessary_wraps = "allow"             # unwrapping Result/Option in a sig ripples to all callers
+map_unwrap_or = "allow"                 # remaining instances flagged MaybeIncorrect by --fix
+match_same_arms = "allow"               # remaining instances flagged MaybeIncorrect by --fix
+redundant_closure_for_method_calls = "allow"
+format_collect = "allow"
+case_sensitive_file_extension_comparisons = "allow"  # the eq_ignore_ascii_case rewrite changes behavior
+needless_continue = "allow"
+needless_pass_by_value = "allow"        # by-value→by-ref is a signature change
+unnecessary_debug_formatting = "allow"
+assigning_clones = "allow"
+naive_bytecount = "allow"               # the rewrite would pull in the bytecount crate
+return_self_not_must_use = "allow"
+doc_link_with_quotes = "allow"
+# Third tier: test-code noise (surfaced by --all-targets in #[cfg(test)] / tests/).
+# Deterministic tests legitimately compare exact floats, embed literal fixtures,
+# and panic-assert; enforcing pedantic on test bodies is high-noise/low-value.
+float_cmp = "allow"
+unreadable_literal = "allow"
+manual_assert = "allow"
+needless_raw_string_hashes = "allow"
+semicolon_if_nothing_returned = "allow"
+used_underscore_binding = "allow"
+elidable_lifetime_names = "allow"
+explicit_iter_loop = "allow"
+explicit_into_iter_loop = "allow"
+manual_string_new = "allow"
+inefficient_to_string = "allow"
+bool_to_int_with_if = "allow"
+range_plus_one = "allow"
+unnecessary_literal_bound = "allow"   # its `&'static str` suggestion breaks trait-impl signature match
+
+[workspace.dependencies]
+axum = { version = "0.8", features = ["macros"] }
+tower-http = { version = "0.6", features = ["cors", "trace"] }
+tokio = { version = "1", features = ["full"] }
+tokio-stream = { version = "0.1", features = ["sync"] }
+tokio-util = { version = "0.7", features = ["rt"] }
+futures = "0.3"
+tower = "0.5"
+tower_governor = "0.8"
+governor = "0.10"
+rmcp = { version = "1", features = ["server", "transport-streamable-http-server", "client", "transport-streamable-http-client", "transport-streamable-http-client-reqwest", "macros"] }
+schemars = "1"
+neo4rs = "0.8"
+sqlx = { version = "0.8", features = ["runtime-tokio", "tls-rustls-aws-lc-rs", "postgres", "uuid", "chrono", "json"] }
+pgvector = { version = "0.4", features = ["sqlx"] }
+git2 = "0.19"
+tree-sitter = "0.25"
+tree-sitter-typescript = "0.23"
+tree-sitter-c = "0.23"
+tree-sitter-cpp = "0.23"
+tree-sitter-rust = "0.23"
+tree-sitter-go = "0.23"
+tree-sitter-python = "0.23"
+tree-sitter-java = "0.23"
+tree-sitter-c-sharp = "0.23"
+tree-sitter-ruby = "0.23"
+tree-sitter-php = "0.24"
+tree-sitter-swift = "0.7.2"
+tree-sitter-kotlin-ng = "1.1.0"
+tree-sitter-dart = "0.2.0"
+tree-sitter-scala = "0.26.0"
+tree-sitter-objc = "3.0.2"
+tree-sitter-lua = "0.5.0"
+tree-sitter-luau = "1.2.0"
+tree-sitter-javascript = "0.25.0"
+tree-sitter-bash = "0.25.1"
+ignore = "0.4"
+regex = "1"
+tempfile = "3"
+scraper = "0.22"
+candle-core = "0.8"
+candle-nn = "0.8"
+candle-transformers = "0.8"
+tokenizers = "0.21"
+hf-hub = "0.3"
+reqwest = { version = "0.13", features = ["json", "stream", "query", "form"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tar = "0.4"
+flate2 = "1"
+globset = "0.4"
+bytes = "1"
+zstd = "0.13"
+toml = "1.1.2"
+uuid = { version = "1", features = ["v4", "v7", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+anyhow = "1"
+thiserror = "2"
+async-trait = "0.1"
+rand = "0.8"
+sha2 = "0.10"
+lru = "0.12"
+parking_lot = "0.12"
+dashmap = "6"
+fa-leiden-cd = "0.1"
+secrecy = { version = "0.10", features = ["serde"] }
+url = "2"
+ipnet = "2"
+urlencoding = "2.1.3"
+dotenvy = "0.15"
+clap = { version = "4", features = ["derive"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+metrics = "0.23"
+metrics-exporter-prometheus = { version = "0.15", default-features = false }
+async-stream = "0.3.6"
+libc = "0.2"
+metrics-util = "0.17"
+serial_test = "3"
+wiremock = "0.6"
+mockito = "1"
+testcontainers = "0.23"
+testcontainers-modules = { version = "0.11", features = ["postgres", "neo4j"] }
+blake3 = "1"
+# Internal crates (uncommented as each is created in later tasks)
+akashic-kernel = { path = "crates/akashic-kernel" }
+akashic-config = { path = "crates/akashic-config" }
+akashic-extraction = { path = "crates/akashic-extraction" }
+akashic-domain = { path = "crates/akashic-domain" }
+akashic-gitlab = { path = "crates/akashic-gitlab" }
+akashic-quota = { path = "crates/akashic-quota" }
+akashic-store-pg = { path = "crates/akashic-store-pg" }
+akashic-store-neo4j = { path = "crates/akashic-store-neo4j" }
+akashic-embed = { path = "crates/akashic-embed" }
+akashic-llm = { path = "crates/akashic-llm" }
+akashic-curation = { path = "crates/akashic-curation" }
+akashic-retrieval = { path = "crates/akashic-retrieval" }
+akashic-ingestion = { path = "crates/akashic-ingestion" }
+akashic-identity = { path = "crates/akashic-identity" }
+akashic-context = { path = "crates/akashic-context" }
+akashic-test-support = { path = "crates/akashic-test-support" }
