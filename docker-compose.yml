@@ -1,0 +1,102 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Akashic Record — DEVELOPMENT compose file
+#
+# This file is for local development. It publishes database and backend
+# ports for native `cargo run` / `npm run dev` workflows and falls back to
+# `changeme` placeholder credentials when no .env is present, so a fresh
+# clone runs out of the box.
+#
+# Production deployments MUST use docker-compose.prod.yml, which:
+#   - publishes only frontend on 127.0.0.1:3000 (loopback)
+#   - leaves Neo4j, PostgreSQL, and backend ports unpublished
+#   - sources every secret from /etc/akashic/akashic.env (mode 0600,
+#     root:root) — see docs/operations/rotation-sop.md
+#
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+  neo4j:
+    image: neo4j:5-community
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      NEO4J_AUTH: "${NEO4J_USER:-neo4j}/${NEO4J_PASSWORD:-changeme}"
+      NEO4J_PLUGINS: '["apoc"]'
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:7474 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+
+  postgres:
+    image: pgvector/pgvector:pg16
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "${PG_USER:-akashic}"
+      POSTGRES_PASSWORD: "${PG_PASSWORD:-changeme}"
+      POSTGRES_DB: "${PG_DB:-akashic}"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PG_USER:-akashic}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      args:
+        # C4: thread the git short-hash into build.rs at compile time.
+        # Operators set AKASHIC_BUILD_COMMIT=$(git rev-parse --short=12 HEAD)
+        # before `docker compose build`. Falls back to 'unknown' if unset.
+        AKASHIC_BUILD_COMMIT: ${AKASHIC_BUILD_COMMIT:-unknown}
+    ports:
+      - "${MCP_SSE_PORT:-8080}:8080"
+      - "${API_PORT:-8081}:8081"
+    env_file:
+      - .env
+    depends_on:
+      neo4j:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8081/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+    # C2: dev/prod parity for graceful shutdown.
+    stop_grace_period: 65s
+    stop_signal: SIGTERM
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:80/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+volumes:
+  neo4j_data:
+  neo4j_logs:
+  pg_data:

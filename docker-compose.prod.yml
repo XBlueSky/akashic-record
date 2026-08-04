@@ -1,0 +1,129 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Akashic Record — PRODUCTION compose file
+#
+# Invocation:
+#   docker compose -f docker-compose.prod.yml up -d
+#
+# Required:
+#   /etc/akashic/akashic.env  — mode 0600, root:root
+#   See docs/operations/rotation-sop.md §5.1 step 2 for the full contract.
+#
+# Posture:
+#   - Database (PostgreSQL, Neo4j) and backend (MCP SSE 8080, REST 8081)
+#     ports are NOT published. They are reachable only inside the compose
+#     network.
+#   - Frontend nginx is published on 127.0.0.1:3000 (loopback only). A
+#     host-level reverse proxy or smoke test can reach it; the public
+#     internet cannot. Track C7 will replace this binding with a
+#     caddy/Let's Encrypt service.
+#   - No inline ${VAR:-default} fallbacks. Every required value is sourced
+#     from /etc/akashic/akashic.env. Missing required vars cause this file
+#     to fail before any container starts.
+#   - Service names and named volumes are identical to docker-compose.yml
+#     so frontend/nginx.conf works in both files unchanged.
+#
+# Out of scope here (other tracks):
+#   - Reverse proxy + TLS  →  C7
+#   - Non-root user        →  C4
+#   - Backend config validation that rejects placeholder values  →  A3
+#   - MCP exposure decisions  →  A7 + B1
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+  neo4j:
+    image: neo4j:5-community
+    # No ports: published. Reachable only inside the compose network.
+    environment:
+      NEO4J_AUTH: "${NEO4J_USER}/${NEO4J_PASSWORD}"
+      NEO4J_PLUGINS: '["apoc"]'
+    env_file:
+      - /etc/akashic/akashic.env
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:7474 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+
+  postgres:
+    image: pgvector/pgvector:pg16
+    # No ports: published. Reachable only inside the compose network.
+    environment:
+      POSTGRES_USER: "${PG_USER}"
+      POSTGRES_PASSWORD: "${PG_PASSWORD}"
+      POSTGRES_DB: "${PG_DB}"
+    env_file:
+      - /etc/akashic/akashic.env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PG_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      args:
+        # C4: thread the git short-hash into build.rs at compile time.
+        # Production: CI / deploy script sets AKASHIC_BUILD_COMMIT
+        # before `docker compose build` (or persists in deploy .env).
+        # Falls back to 'unknown' if unset.
+        AKASHIC_BUILD_COMMIT: ${AKASHIC_BUILD_COMMIT:-unknown}
+    # No ports: published. MCP SSE (8080) and REST (8081) are reached only
+    # via the frontend nginx reverse proxy and the compose network. MCP
+    # exposure for external clients is gated by A7 + B1.
+    #
+    # D6 alerting (optional, sourced from akashic.env via env_file below):
+    #   ALERTS_WEBHOOK_URL — incoming-webhook URL for the alert sink.
+    #     POST target for 5xx / quota / probe / audit / drain alerts.
+    #     Unset = LogSink fallback (alerts emit at tracing::warn! instead
+    #     of pushing). See .env.example for the URL form.
+    env_file:
+      - /etc/akashic/akashic.env
+    depends_on:
+      neo4j:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8081/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+    # C2: graceful shutdown — app-level drain cap is 60s (see
+    # backend/src/main.rs); compose waits 65s after SIGTERM before SIGKILL,
+    # leaving 5s for the final shutdown_done log line to flush.
+    stop_grace_period: 65s
+    stop_signal: SIGTERM
+
+  frontend:
+    build:
+      context: ./frontend
+    # Loopback-only publish. C7 will add a caddy/Let's Encrypt service in
+    # front of this and remove the host-port binding.
+    ports:
+      - "127.0.0.1:3000:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:80/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+volumes:
+  neo4j_data:
+  neo4j_logs:
+  pg_data:
