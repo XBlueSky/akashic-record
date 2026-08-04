@@ -1,0 +1,226 @@
+# backend/security/risk-acceptance.yml
+#
+# Risk-acceptance ledger for cargo audit advisories that cannot be cleared
+# by upgrade. See backend/security/README.md.
+#
+# Schema (every entry MUST have all 13 base fields; the last 2 fields are
+# REQUIRED IFF the entry is intended to override a rule-2 block under
+# rule 3-bis):
+#
+#   rustsec: RUSTSEC-YYYY-NNNN
+#   package: <crate-name>
+#   via: <direct dep that pulls it transitively, or null if direct>
+#   severity: low | medium | high | critical | null  (null for unmaintained/unsound/notice)
+#   categories: [crypto-failure, code-execution, ...]   # RustSec vocabulary; [] if unclassified
+#   kind: vulnerability | unmaintained | unsound | notice | yanked
+#   category_label: <human label, e.g. tls-validation, compiled-but-unreachable>
+#   rationale: |
+#     Why the advisory is non-applicable or accepted.
+#   mitigation: |
+#     Operational compensating control, if any.
+#   accepted_by: <person>
+#   accepted_on: YYYY-MM-DD
+#   expires: YYYY-MM-DD                # hard expiry; gate fails the day AFTER
+#   review_action: |
+#     What to do on expiry (re-evaluate, replace, upgrade).
+#
+# Conditional fields (REQUIRED IFF this entry overrides a rule-2 block):
+#   unreachable_justification: |
+#     Why the advisory is unreachable in this codebase despite the
+#     blocking category.
+#   verified_unreachable_by: |
+#     The exact runnable command + its captured zero-match output.
+#
+# Rule 1 (high/critical) is NEVER overridable by an entry — the gate rejects
+# any such entry with `unreachable_justification` set.
+
+- rustsec: RUSTSEC-2023-0071
+  package: rsa
+  via: sqlx-mysql
+  severity: medium
+  categories:
+    - crypto-failure
+  kind: vulnerability
+  category_label: compiled-but-unreachable
+  rationale: |
+    rsa 0.9.x is affected by the Marvin timing side-channel attack against
+    PKCS#1 v1.5 decryption (RUSTSEC-2023-0071). No upstream fix is available.
+
+    The crate reaches the Akashic Record dependency tree exclusively through
+    sqlx-mysql 0.8.6, which sqlx-macros-core pulls in transitively to support
+    compile-time query checking across all driver families. The Akashic
+    Record backend uses Postgres exclusively; sqlx is configured with
+    feature flags `runtime-tokio`, `tls-native-tls`, `postgres`, `uuid`, and
+    `chrono`, with no `mysql` feature enabled. The MySQL driver code is
+    compiled into the binary but never instantiated at runtime: opening a
+    MySqlConnection or MySqlPool requires explicit construction in user
+    code, and the backend source contains no such construction.
+
+    The Marvin attack requires an attacker to (1) trigger RSA PKCS#1 v1.5
+    decryption with attacker-controlled ciphertext, and (2) measure timing
+    over many trials. Neither precondition is reachable: the only RSA code
+    path in our binary is sqlx-mysql's `caching_sha2_password` /
+    `mysql_native_password` auth, and that path is never executed because
+    the backend never opens a MySql connection.
+  mitigation: |
+    Compensating control: the unused MySQL driver code is dead code at
+    runtime. The compile-time presence of rsa is unavoidable until either
+    sqlx restructures driver compilation (via sqlx-macros driver-feature
+    gating, which is an open upstream issue) OR upstream rsa ships a fix.
+  accepted_by: tonyhu
+  accepted_on: "2026-04-28"
+  expires: "2026-10-28"
+  review_action: |
+    On expiry: re-run cargo audit. If RUSTSEC-2023-0071 has a fixed-version
+    range (`Solution: Upgrade to >= X`), drop this entry and run
+    `cargo update -p rsa`. If sqlx 0.9.x or later allows opting out of
+    sqlx-mysql at the macro level, drop this entry and adjust sqlx feature
+    flags. If neither, re-verify the unreachability claim by re-running
+    the verified_unreachable_by command and renew this entry with a fresh
+    accepted_on, fresh expires (+6 months), and any updated rationale.
+  unreachable_justification: |
+    sqlx-macros-core pulls in all driver crates for compile-time query
+    checking; the backend never opens a MySql connection at runtime, so
+    the rsa code path is unreachable. The proof is a code-search:
+    backend/src contains zero references to sqlx::mysql, MySqlConnection,
+    MySqlPool, MySqlRow, or any mysql:// connection URL.
+  verified_unreachable_by: |
+    Command (run from repo root the repo checkout):
+
+      rg -i 'sqlx::mysql|MySqlConnection|MySqlPool|MySqlRow|mysql://' backend/src
+
+    Expected: 0 matches, exit code 1 (ripgrep "no match").
+
+    Captured on 2026-04-29T08:17:02Z (Task 2 step 2.2):
+
+      (exit=1)
+
+- rustsec: RUSTSEC-2025-0111
+  package: tokio-tar
+  via: testcontainers
+  severity: medium
+  categories:
+    - format-injection
+  kind: vulnerability
+  category_label: dev-dependency-only
+  rationale: |
+    tokio-tar 0.3.1 is affected by a PAX-header file-smuggling parsing bug
+    (RUSTSEC-2025-0111, CVE-2025-62518, "tarmageddon"). The crate is archived
+    upstream; the suggested replacement is `astral-tokio-tar`.
+
+    tokio-tar reaches the Akashic Record dependency tree exclusively as a
+    transitive dependency of `testcontainers` 0.23.3 (via `bollard`'s Docker
+    image-load tar handling), which is a `[dev-dependencies]` entry added in
+    D2 to run integration tests against ephemeral Postgres + Neo4j
+    containers. Verified by `cargo tree -i tokio-tar`:
+
+      tokio-tar v0.3.1
+      └── testcontainers v0.23.3
+          └── testcontainers-modules v0.11.6
+              [dev-dependencies]
+              └── akashic-record v0.1.0
+          [dev-dependencies]
+          └── akashic-record v0.1.0
+
+    The release-mode production binary (`cargo build --release` of the
+    `akashic-record` bin) does not link dev-dependencies, so tokio-tar is
+    not present in the shipped artifact. The advisory is therefore not
+    reachable in the production attack surface — the crate is only loaded
+    during `cargo test` invocations against developer-controlled local
+    Docker daemons reading developer-controlled container images.
+
+    The advisory's RustSec category is `format-injection` (not one of the
+    four blocking categories crypto-failure / code-execution /
+    memory-corruption / privilege-escalation), so this entry is a standard
+    rule-4 ledger entry and does not need the rule-3-bis unreachable
+    override hatch.
+  mitigation: |
+    Compensating control: tokio-tar is not in the production binary. Test
+    runs use trusted images pulled from the standard Docker Hub registry
+    (postgres:16, neo4j:5). Should testcontainers upstream cut a release
+    that adopts `astral-tokio-tar` (the suggested replacement), bump the
+    testcontainers pin and drop this entry.
+  accepted_by: tonyhu
+  accepted_on: "2026-05-11"
+  expires: "2026-08-11"
+  review_action: |
+    On expiry: re-run `cargo audit`. If testcontainers has shipped a
+    release that switches to `astral-tokio-tar` or another maintained tar
+    crate, bump testcontainers / testcontainers-modules and drop this
+    entry. If tokio-tar itself has been republished with a fix, the
+    advisory's `patched` versions list will be non-empty and a simple
+    `cargo update -p tokio-tar` will clear the gate. Otherwise, re-verify
+    the dev-only reachability claim with `cargo tree -i tokio-tar` and
+    renew this entry with a fresh accepted_on and expires (+3 months).
+
+- rustsec: RUSTSEC-2026-0185
+  package: quinn-proto
+  via: reqwest
+  severity: medium
+  categories:
+    - denial-of-service
+  kind: vulnerability
+  category_label: unactivated-optional-feature
+  rationale: |
+    quinn-proto 0.11.14 is affected by a remote memory-exhaustion DoS via
+    unbounded out-of-order QUIC stream reassembly (RUSTSEC-2026-0185,
+    GHSA-4w2j-m93h-cj5j, published 2026-06-22). No non-breaking patched
+    version was available as of 2026-07-04.
+
+    `quinn`/`quinn-proto`/`quinn-udp` reach this workspace's `Cargo.lock`
+    exclusively as `reqwest` 0.13.4's HTTP/3 transport stack. Verified
+    directly against reqwest's own manifest
+    (`~/.cargo/registry/src/*/reqwest-0.13.4/Cargo.toml`): `quinn` is
+    `optional = true`, gated under a `target.'cfg(not(wasm32/unknown))'`
+    section, and is only pulled in by reqwest's `http3` feature (`http3 =
+    ["rustls", "dep:h3", "dep:h3-quinn", "dep:quinn", "tokio/macros"]`).
+    This workspace's root `Cargo.toml` requests
+    `reqwest = { version = "0.13", features = ["json", "stream", "query",
+    "form"] }` — `http3` is not among them, and `http3` is not requested
+    anywhere else in the workspace (`grep -rn http3 Cargo.toml
+    crates/*/Cargo.toml` → 0 matches).
+
+    This is a stronger position than the existing `RUSTSEC-2023-0071`
+    entry's "compiled but never instantiated at runtime" case: with
+    `http3` never requested and feature unification confirmed to leave it
+    off across every crate in the workspace, `quinn`/`quinn-proto` are
+    optional dependencies that are never activated for any build target —
+    `cargo tree --target all -e features -i quinn` and `cargo tree
+    --target all -i quinn-proto` both report "nothing to print" (zero
+    edges in the resolved dependency graph for any target), meaning the
+    vulnerable code is not even compiled into any binary this workspace
+    produces, let alone reachable at runtime. `cargo audit` still flags it
+    because it scans `Cargo.lock`'s full package list rather than the
+    per-feature activation graph, so an inactive optional dependency's
+    locked version still surfaces as an advisory.
+
+    The advisory's RustSec category is `denial-of-service` (not one of the
+    four blocking categories crypto-failure / code-execution /
+    memory-corruption / privilege-escalation), so this is a standard
+    rule-4 ledger entry and does not need the rule-3-bis unreachable
+    override hatch — the reachability analysis above is recorded for
+    completeness and audit-trail strength, not because the gate requires
+    it here.
+  mitigation: |
+    Compensating control: quinn is not compiled into any target this
+    workspace builds (feature-inactive optional dependency), so there is
+    no runtime QUIC/HTTP3 attack surface to exploit. Should any future
+    crate change ever request reqwest's `http3` feature (directly or
+    transitively), this entry must be re-evaluated before merging that
+    change, since the reachability argument above would no longer hold.
+  accepted_by: tonyhu
+  accepted_on: "2026-07-04"
+  expires: "2027-01-04"
+  review_action: |
+    On expiry: re-run `cargo audit`. If quinn-proto has a fixed-version
+    range (`Solution: Upgrade to >= X`), a plain `cargo update -p
+    quinn-proto` (or bumping `reqwest` if the fix requires a newer
+    reqwest) will clear the gate with no need to renew this entry. If not,
+    re-verify the feature-inactivity claim with `cargo tree --target all
+    -e features -p reqwest | grep -i 'quinn\|http3'` (expect 0 matches)
+    and `grep -rn http3 Cargo.toml crates/*/Cargo.toml` (expect 0
+    matches), then renew with a fresh accepted_on and expires (+6
+    months). If a workspace change has since requested reqwest's `http3`
+    feature, this entry no longer applies — perform a full reachability
+    re-assessment (this may now need the rule-3-bis override hatch, or an
+    upgrade/removal of the HTTP/3 usage) rather than a routine renewal.

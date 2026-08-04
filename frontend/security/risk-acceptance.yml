@@ -1,0 +1,56 @@
+# frontend/security/risk-acceptance.yml
+#
+# Risk-acceptance ledger for npm audit advisories that cannot be cleared by
+# upgrade. See frontend/security/README.md.
+#
+# Schema (every entry must have ALL fields):
+#   ghsa: GHSA-xxxx-xxxx-xxxx
+#   package: <npm-pkg-name>
+#   via: <direct-dep that pulls it transitively, or null if direct>
+#   severity: low | moderate | high | critical
+#   cwe: [CWE-N, ...]
+#   category: <human label, e.g. dev-server, prototype-pollution>
+#   rationale: |
+#     Why this advisory is non-applicable or accepted.
+#   mitigation: |
+#     Operational compensating control.
+#   accepted_by: <person>
+#   accepted_on: YYYY-MM-DD
+#   expires: YYYY-MM-DD     # hard expiry; gate fails after this date
+#   review_action: |
+#     What to do on expiry (re-evaluate, replace, upgrade).
+
+- ghsa: GHSA-67mh-4wv8-2f99
+  package: esbuild
+  via: svelte-i18n
+  severity: moderate
+  cwe:
+    - CWE-346
+  category: dev-server
+  rationale: |
+    The advisory affects esbuild's local dev server: any website opened in the
+    same browser can issue cross-origin requests to the dev server and read the
+    response. It applies only when `npm run dev` is running.
+
+    The Akashic Record application's own build chain uses vite@5.4.x, which
+    pulls in esbuild@0.21.x (already patched). The vulnerable esbuild@0.19.12
+    reaches the tree exclusively as a dependency of svelte-i18n@4.0.1, which is
+    upstream-frozen and has no known upgrade path. svelte-i18n's vendored
+    esbuild is used only at svelte-i18n's own build time — it does not run
+    during `npm run dev` for the application.
+
+    The production bundle (`npm run build`) does not include esbuild. The
+    production reverse-proxy (`frontend/nginx.conf`) does not proxy to any
+    dev server. There is no production exposure path.
+  mitigation: |
+    Operators run `npm run dev` only on trusted local hosts. The dev server
+    is bound to localhost by default and is not reachable from the public
+    internet. Public deployments serve the built bundle through nginx.
+  accepted_by: tonyhu
+  accepted_on: "2026-04-28"
+  expires: "2026-10-28"
+  review_action: |
+    On expiry: re-run `npm audit --omit=dev`. If svelte-i18n@4.0.1 still has no
+    upgrade and the advisory still applies, evaluate replacement candidates
+    (paraglide-js, @inlang/paraglide). Replacement touches every `t(...)`
+    callsite under frontend/src/components/ (~18 files); plan accordingly.

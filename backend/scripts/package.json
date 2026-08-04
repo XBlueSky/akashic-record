@@ -1,0 +1,14 @@
+{
+  "name": "akashic-backend-audit-gate",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Audit gate for backend cargo audit output. Not part of the Rust crate.",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "js-yaml": "^4.1.0",
+    "vitest": "^3.0.0"
+  }
+}
