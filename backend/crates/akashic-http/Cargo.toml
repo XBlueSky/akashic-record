@@ -1,0 +1,53 @@
+[package]
+name = "akashic-http"
+version.workspace = true
+edition.workspace = true
+description.workspace = true
+
+[lints]
+workspace = true
+
+[features]
+default = []
+# Gates the test-fixtures route module (api::routes::test_fixtures) and the
+# build_router nest. Propagated from akashic-server's own test-fixtures feature.
+test-fixtures = []
+
+[dependencies]
+akashic-context.workspace = true
+akashic-domain.workspace = true
+akashic-identity.workspace = true
+akashic-ingestion.workspace = true
+akashic-quota.workspace = true
+akashic-kernel.workspace = true
+akashic-embed.workspace = true
+akashic-store-pg.workspace = true
+akashic-store-neo4j.workspace = true
+akashic-platform = { path = "../akashic-platform" }
+axum.workspace = true
+bytes.workspace = true
+tower-http.workspace = true
+reqwest.workspace = true
+sqlx.workspace = true
+neo4rs.workspace = true
+pgvector.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+tokio-stream.workspace = true
+futures.workspace = true
+metrics.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+rand.workspace = true
+sha2.workspace = true
+urlencoding.workspace = true
+url.workspace = true
+secrecy.workspace = true
+anyhow.workspace = true
+tracing.workspace = true
+
+[dev-dependencies]
+akashic-test-support.workspace = true
+tower.workspace = true
+wiremock.workspace = true
