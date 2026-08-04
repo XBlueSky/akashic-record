@@ -1,0 +1,22 @@
+[package]
+name = "akashic-store-neo4j"
+version.workspace = true
+edition.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+akashic-domain.workspace = true
+akashic-kernel.workspace = true
+akashic-config.workspace = true
+neo4rs.workspace = true
+anyhow.workspace = true
+async-trait.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+uuid.workspace = true
+secrecy.workspace = true
+
+[dev-dependencies]
+tokio.workspace = true
