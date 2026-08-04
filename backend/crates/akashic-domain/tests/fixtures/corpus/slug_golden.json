@@ -1,0 +1,18 @@
+{
+  "single": [
+    { "input": "Hello World", "expected": "hello-world" },
+    { "input": "OpenAPI `x-acme-*` Extensions", "expected": "openapi-x-acme--extensions" },
+    { "input": "Café Déjà Vu", "expected": "café-déjà-vu" },
+    { "input": "a — b", "expected": "a--b" },
+    { "input": "設定:「快速」開始", "expected": "設定快速開始" },
+    { "input": "multi -- hyphen", "expected": "multi----hyphen" },
+    { "input": "  leading and trailing  ", "expected": "--leading-and-trailing--" },
+    { "input": "Under_score kept", "expected": "under_score-kept" },
+    { "input": "100% coverage!", "expected": "100-coverage" },
+    { "input": "C++20 Coroutines", "expected": "c20-coroutines" }
+  ],
+  "sequence": [
+    { "inputs": ["Setup", "Setup", "Setup"], "expected": ["setup", "setup-1", "setup-2"] },
+    { "inputs": ["API", "api", "API"], "expected": ["api", "api-1", "api-2"] }
+  ]
+}

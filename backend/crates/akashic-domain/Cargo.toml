@@ -1,0 +1,21 @@
+[package]
+name = "akashic-domain"
+version.workspace = true
+edition.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+akashic-kernel.workspace = true
+anyhow.workspace = true
+thiserror.workspace = true
+async-trait.workspace = true
+serde = { workspace = true }
+serde_json.workspace = true
+schemars.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+regex.workspace = true
+fa-leiden-cd.workspace = true
+tracing.workspace = true
