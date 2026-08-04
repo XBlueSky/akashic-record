@@ -1,0 +1,28 @@
+[package]
+name = "akashic-store-pg"
+version.workspace = true
+edition.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+akashic-domain.workspace = true
+akashic-kernel.workspace = true
+akashic-config.workspace = true
+sqlx.workspace = true
+pgvector.workspace = true
+anyhow.workspace = true
+async-trait.workspace = true
+serde_json.workspace = true
+chrono.workspace = true
+sha2.workspace = true
+thiserror.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+metrics.workspace = true
+uuid.workspace = true
+secrecy.workspace = true
+
+[dev-dependencies]
+akashic-test-support.workspace = true
