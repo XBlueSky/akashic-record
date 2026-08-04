@@ -1,0 +1,13 @@
+[
+  {
+    "id": 999000,
+    "path_with_namespace": "akashic-record",
+    "permissions": {
+      "project_access": {
+        "access_level": 40,
+        "notification_level": 3
+      },
+      "group_access": null
+    }
+  }
+]

@@ -1,0 +1,26 @@
+[package]
+name = "akashic-gitlab"
+version.workspace = true
+edition.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+akashic-domain.workspace = true
+akashic-config.workspace = true
+reqwest.workspace = true
+serde = { workspace = true }
+serde_json.workspace = true
+secrecy.workspace = true
+anyhow.workspace = true
+async-trait.workspace = true
+tracing.workspace = true
+chrono.workspace = true
+urlencoding.workspace = true
+tokio.workspace = true
+
+[dev-dependencies]
+akashic-test-support.workspace = true
+wiremock.workspace = true
+serial_test.workspace = true
