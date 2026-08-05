@@ -6,9 +6,10 @@
  *     in the Playwright context (so the SPA boots with auth already valid).
  *  2. Seed a fresh note via /test/fixtures/note (unique title per run so
  *     concurrent or repeated runs don't collide).
- *  3. Navigate to the repo detail view, switch to Notes mode, locate the
- *     seeded note by its stable DOM id (`#note-{uuid}`), click the
- *     "Edit note" pencil button (only visible when `canEdit=true` from
+ *  3. Navigate to the repo detail view — which now redirects straight to
+ *     the Timeline tab (the Notes-mode equivalent) — locate the seeded
+ *     note by its stable DOM id (`#note-{uuid}`), click the "Edit note"
+ *     pencil button (only visible when `canEdit=true` from
  *     /repos/{name}/permissions — proves gitlab-mock issued access_level
  *     >= 30).
  *  4. NoteEditor mounts; rewrite `#note-title` and pick a different
@@ -16,10 +17,28 @@
  *  5. Assert the PUT request to /api/v1/repos/{name}/notes/{uuid} returns
  *     204 (the backend's success status — *not* 200; the handler returns
  *     `StatusCode::NO_CONTENT`).
- *  6. Reload the page (state is lost on full reload), re-navigate into
- *     the same note, and assert the title input + category select reflect
- *     the edited values — proving the write was persisted, not just
+ *  6. Reload the page (state is lost on full reload); re-open the same
+ *     note and assert the title input + category select reflect the
+ *     edited values — proving the write was persisted, not just
  *     reflected in transient client state.
+ *
+ * Task 2b amendment: this spec originally drove an older UI where entering
+ * a repo landed on a Code Map / Notes mode toggle (`[data-slot=
+ * toggle-group-item]`) that had to be clicked to reach the note list, and
+ * a full page reload dropped the client back to `/` (an SPA-style flow
+ * requiring re-clicking the repo card + toggle after reload). The shipped
+ * UI now routes `/r/[repo]` → `/r/[repo]/timeline` by default (Timeline
+ * IS the note list — no toggle click needed to reach it), and edit/close
+ * actions manage state via the `?edit=<uuid>` query param on that same
+ * route, so a full reload lands back on `/r/[repo]/timeline` directly
+ * (verified live: reload preserves the URL, not just `/`). The mode-toggle
+ * click is dropped from both the initial and reload flows below because
+ * it has no current-UI equivalent to click — Timeline being the default
+ * tab *is* the direct replacement for "switch to Notes mode". Every
+ * other behavioral assertion (session cookie honored, canEdit-gated edit
+ * button, editor round trip, 204 on save, persistence across reload) is
+ * unchanged. See task-2b-report.md for the full old→new assertion
+ * mapping.
  *
  * Auth surface assertion: throughout the journey the only allowed 401 is
  * /api/v1/auth/me (which can fire BEFORE the cookie takes effect on the
@@ -86,11 +105,14 @@ test.describe('Path B — authenticated edit journey', () => {
     await expect(repoCard).toBeVisible({ timeout: 10_000 });
     await repoCard.click();
 
-    // ── 5. Switch to Notes mode ────────────────────────────────────
-    await expect(
-      page.locator('[data-slot=toggle-group-item]', { hasText: 'Code Map' }),
-    ).toBeVisible({ timeout: 10_000 });
-    await page.locator('[data-slot=toggle-group-item]', { hasText: 'Notes' }).click();
+    // ── 5. Repo detail mounts on Timeline (Notes-mode equivalent) ──
+    // `/r/[repo]` redirects to `/r/[repo]/timeline` by default — no
+    // manual mode-toggle click is needed to reach the note list. The
+    // 3-tab nav mounting is the current-UI signal that the repo detail
+    // view (incl. permissions-gated note list) is ready.
+    const repoNav = page.getByRole('navigation', { name: 'Repository views' });
+    await expect(repoNav).toBeVisible({ timeout: 10_000 });
+    await expect(page).toHaveURL(/\/r\/akashic-record\/timeline/);
 
     // ── 6. Locate the seeded note + open the editor ────────────────
     // NoteCard renders the Card.Root with `id="note-{uuid}"`, which
@@ -137,15 +159,16 @@ test.describe('Path B — authenticated edit journey', () => {
     expect(putResp.status(), 'PUT to notes endpoint must succeed').toBe(204);
 
     // ── 9. Reload + verify persistence ─────────────────────────────
-    // Full reload — discards all client state. We then re-navigate to
-    // the same note and assert the editor reloads with the new values
-    // (proving the write actually hit the database, not just client
-    // memory).
+    // Full reload — discards all client state. onsaved (Save's success
+    // callback) already closed the editor and removed `?edit=` from the
+    // URL, so we're back on `/r/akashic-record/timeline` before reload.
+    // Unlike the old SPA-style flow, this route reload does NOT bounce
+    // back to `/` — SvelteKit re-runs the layout + Timeline page loads
+    // directly against `/r/akashic-record/timeline`, so no re-navigation
+    // through the landing page or a mode toggle is needed to get back to
+    // the note list.
     await page.reload({ waitUntil: 'domcontentloaded' });
-
-    // Re-enter the repo + Notes mode.
-    await page.locator('.repo-card', { hasText: 'akashic-record' }).first().click();
-    await page.locator('[data-slot=toggle-group-item]', { hasText: 'Notes' }).click();
+    await expect(page).toHaveURL(/\/r\/akashic-record\/timeline/);
 
     const reloadedCard = page.locator(`#note-${note.uuid}`);
     await expect(reloadedCard).toBeVisible({ timeout: 10_000 });
