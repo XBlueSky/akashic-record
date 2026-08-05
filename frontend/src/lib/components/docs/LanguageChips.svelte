@@ -20,7 +20,7 @@
 
 <div class="mb-4 flex items-center gap-1.5" data-testid="language-chip">
   <span class="mr-1 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{$t("docs.languages")}</span>
-  {#each resolved as c}
+  {#each resolved as c (c.label)}
     {#if c.href}
       <a
         href={c.href}

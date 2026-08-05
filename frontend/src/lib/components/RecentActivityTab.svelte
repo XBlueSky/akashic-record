@@ -28,7 +28,7 @@
 
 {#if loading}
   <div class="flex flex-col gap-2">
-    {#each [0, 1, 2, 3, 4] as _i}
+    {#each [0, 1, 2, 3, 4] as _i (_i)}
       <Skeleton class="h-12 w-full" />
     {/each}
   </div>
@@ -38,7 +38,7 @@
   <p class="text-sm text-muted-foreground">{$t("account.activity.empty")}</p>
 {:else}
   <ul class="flex flex-col gap-2">
-    {#each entries as e}
+    {#each entries as e, i (i)}
       <li class="rounded border p-2 text-sm">
         <div class="flex items-baseline justify-between">
           <span class="font-mono">{e.action}</span>
@@ -50,6 +50,7 @@
         <div class="mt-1 text-xs text-muted-foreground">
           {$t("account.activity.via")} <span class="font-mono">{e.actor_token_id}</span>
           {#if e.ip}
+            <!-- eslint-disable-next-line svelte/no-useless-mustaches -- literal-space mustache guards against Svelte trimming the {#if} block's leading whitespace text node -->
             {" "}{$t("account.activity.from")} <span class="font-mono">{e.ip}</span>
           {/if}
         </div>

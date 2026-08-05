@@ -103,15 +103,15 @@ export function createForceSimulation(
 
   return d3
     .forceSimulation(nodes)
-    .force('link', d3.forceLink(links)
-      .id((d: any) => d.id)
+    .force('link', d3.forceLink<MicroNode, MicroLink>(links)
+      .id((d) => d.id)
       .distance(linkDist)
       .strength(0.7))
     .force('charge', d3.forceManyBody()
       .strength(chargeStrength)
       .distanceMax(200))
-    .force('collide', d3.forceCollide()
-      .radius((d: any) => collisionRadius(d) * 0.7) // tighter collision
+    .force('collide', d3.forceCollide<MicroNode>()
+      .radius((d) => collisionRadius(d) * 0.7) // tighter collision
       .strength(0.6))
     .force('x', d3.forceX(cx).strength(0.15))
     .force('y', d3.forceY(cy).strength(0.15))
@@ -204,15 +204,15 @@ export function createSectionSimulation(
 
   return d3
     .forceSimulation(nodes)
-    .force('link', d3.forceLink(edges)
-      .id((d: any) => d.id)
+    .force('link', d3.forceLink<SectionLayoutNode, SectionLayoutEdge>(edges)
+      .id((d) => d.id)
       .distance(linkDist)
       .strength(0.7))
     .force('charge', d3.forceManyBody()
       .strength(chargeStrength)
       .distanceMax(200))
-    .force('collide', d3.forceCollide()
-      .radius((d: any) => pillWidth(d.heading) / 2 * 0.7 + 4)
+    .force('collide', d3.forceCollide<SectionLayoutNode>()
+      .radius((d) => pillWidth(d.heading) / 2 * 0.7 + 4)
       .strength(0.6))
     .force('x', d3.forceX(cx).strength(0.15))
     .force('y', d3.forceY(cy).strength(0.15))

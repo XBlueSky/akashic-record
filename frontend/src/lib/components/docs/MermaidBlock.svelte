@@ -29,6 +29,7 @@
 
   let svg = $state<string | null>(null);
   let failed = $state(false);
+  // eslint-disable-next-line no-useless-assignment -- module-scoped counter; the write is read on the next MermaidBlock instantiation via ++seq
   const id = `docs-mermaid-${++seq}`;
 
   $effect(() => {
@@ -49,6 +50,7 @@
 </script>
 
 {#if svg}
+  <!-- eslint-disable-next-line svelte/no-at-html-tags -- mermaid.initialize({ securityLevel: 'strict' }) sanitizes rendered SVG output -->
   <div class="docs-mermaid-svg my-4">{@html svg}</div>
 {:else if failed}
   <div class="my-4">

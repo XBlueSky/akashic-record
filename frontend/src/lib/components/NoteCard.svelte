@@ -161,7 +161,7 @@
       {/if}
 
       <Card.Content class="px-3 py-1.5 ml-5 text-sm leading-normal text-slate-400 note-prose">
-        <!-- Content passed through DOMPurify.sanitize() before rendering -->
+        <!-- eslint-disable-next-line svelte/no-at-html-tags -- renderContent() always runs content through DOMPurify.sanitize() before rendering -->
         {@html renderContent(note.content)}
       </Card.Content>
 

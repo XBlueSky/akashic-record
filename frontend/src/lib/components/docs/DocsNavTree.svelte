@@ -40,11 +40,11 @@
   onkeydown={handleKey}
 >
   <ul role="tree" class="space-y-5">
-    {#each nav.groups as g}
+    {#each nav.groups as g (g.title)}
       <li role="group" aria-label={g.title}>
         <div class="mb-1 px-2 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">{g.title}</div>
         <ul class="space-y-0.5">
-          {#each g.pages as p}
+          {#each g.pages as p (p.fullKey)}
             <li role="treeitem" aria-selected={p.fullKey === currentFullKey}>
               <a
                 data-nav-item

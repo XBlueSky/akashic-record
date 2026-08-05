@@ -61,5 +61,6 @@
   onclick={onClick}
   onerrorcapture={onImgError}
 >
+  <!-- eslint-disable-next-line svelte/no-at-html-tags -- html prop is produced by $lib/docs/markdown.ts, which always runs it through DOMPurify.sanitize() -->
   {@html html}
 </div>

@@ -1,6 +1,5 @@
 <script lang="ts">
   import { docsHeader } from "$lib/state/docs-header.svelte.js";
-  import { encodeUrlPath } from "$lib/docs/paths.js";
   import { page } from "$app/state";
   import type { LayoutData } from "./$types.js";
   import DocsNavTree from "$lib/components/docs/DocsNavTree.svelte";

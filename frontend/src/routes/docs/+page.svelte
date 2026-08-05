@@ -26,7 +26,7 @@
     <p class="text-sm text-muted-foreground">{$t("docs.hub.loadFailed")}</p>
   {:else if repos === null}
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {#each Array.from({ length: 6 }) as _}
+      {#each Array.from({ length: 6 }) as _, i (i)}
         <Skeleton class="h-28 rounded-lg" />
       {/each}
     </div>

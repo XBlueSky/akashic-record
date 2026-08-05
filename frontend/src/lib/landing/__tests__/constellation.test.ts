@@ -16,7 +16,6 @@ import {
   DEFAULT_PARTICLE_COUNT,
   DEFAULT_SPHERE_RADIUS,
   DEFAULT_CONNECTION_DIST,
-  DEFAULT_MAX_CONNECTIONS,
   type Vec3,
   type EdgeCandidate,
 } from "../constellation.js";
@@ -298,7 +297,7 @@ describe("buildConstellation", () => {
 
   it("all connection indices are valid particle indices", () => {
     const count = 30;
-    const { particles, connections } = buildConstellation({ particleCount: count });
+    const { connections } = buildConstellation({ particleCount: count });
     for (const c of connections) {
       expect(c.a).toBeGreaterThanOrEqual(0);
       expect(c.a).toBeLessThan(count);

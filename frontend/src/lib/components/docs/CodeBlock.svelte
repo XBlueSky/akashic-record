@@ -37,6 +37,7 @@
     onclick={copy}
   >{copied ? $t("docs.codeCopied") : $t("docs.codeCopy")}</button>
   {#if html}
+    <!-- eslint-disable-next-line svelte/no-at-html-tags -- html is Shiki-generated markup (highlightCode); source text is escaped by the tokenizer, not raw user HTML -->
     {@html html}
   {:else}
     <pre class="docs-code"><code>{code}</code></pre>

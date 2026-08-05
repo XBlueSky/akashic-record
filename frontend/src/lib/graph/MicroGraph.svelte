@@ -70,7 +70,9 @@
   let simulation: d3.Simulation<MicroNode, MicroLink> | null = null;
 
   // ── Selection state ──
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- computed by computeSelection() on every selection change but not yet consulted for node/edge styling (pre-existing gap, out of scope for this lint pass)
   let upstreamIds: Set<string> = $state(new Set());
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- see upstreamIds above
   let downstreamIds: Set<string> = $state(new Set());
 
   // ── Hover state (debounced to prevent flicker) ──
@@ -406,25 +408,6 @@
     return hotspotIds.has(sid) || hotspotIds.has(tid);
   }
 
-  function edgeStrokeWidth(link: MicroLink): number {
-    return isHotspotEdge(link) ? 2 : 1;
-  }
-
-  function edgeOpacity(link: MicroLink): number {
-    const sid = linkSourceId(link), tid = linkTargetId(link);
-    // Hover: brighten connected edges, dim everything else
-    if (hoveredNodeId && !selectedChunkId) {
-      const isHoveredEdge = sid === hoveredNodeId || tid === hoveredNodeId;
-      if (isHoveredEdge) return isHotspotEdge(link) ? 0.7 : 0.55;
-      return 0.04; // nearly invisible
-    }
-    // Default: very dim — progressive disclosure, modulated by confidence
-    const confMod = link.confidence > 0 ? 0.6 + link.confidence * 0.4 : 1;
-    if (link.isExternal) return 0.08 * confMod;
-    if (isHotspotEdge(link)) return 0.18 * confMod;
-    return 0.1 * confMod;
-  }
-
   function edgeDashArray(link: MicroLink): string {
     const sourceNode = nodeById.get(linkSourceId(link));
     const targetNode = nodeById.get(linkTargetId(link));
@@ -451,28 +434,6 @@
     }
     upstreamIds = up;
     downstreamIds = down;
-  }
-
-  function selectedEdgeOpacity(link: MicroLink): number {
-    if (!selectedChunkId) return edgeOpacity(link);
-    const sid = linkSourceId(link), tid = linkTargetId(link);
-    const isConnected = sid === selectedChunkId || tid === selectedChunkId;
-    return isConnected ? 0.85 : 0.06;
-  }
-
-  function selectedEdgeColor(link: MicroLink): string {
-    if (!selectedChunkId) return edgeStrokeColor(link);
-    const sid = linkSourceId(link), tid = linkTargetId(link);
-    if (tid === selectedChunkId) return '#F59E0B';
-    if (sid === selectedChunkId) return edgeStrokeColor(link);
-    return edgeStrokeColor(link);
-  }
-
-  function selectedEdgeWidth(link: MicroLink): number {
-    if (!selectedChunkId) return edgeStrokeWidth(link);
-    const sid = linkSourceId(link), tid = linkTargetId(link);
-    const isConnected = sid === selectedChunkId || tid === selectedChunkId;
-    return isConnected ? 2 : edgeStrokeWidth(link);
   }
 
   // ── Initialize layout + force simulation ──
@@ -857,7 +818,6 @@
             {@const explainsCount = node.section.explains?.length ?? 0}
             {@const isRoot = node.depth === 0}
             {@const glowFilter = hasExplains ? 'url(#glow-amber-section)' : isRoot ? 'url(#glow-rose-section)' : 'none'}
-            <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
             <!-- svelte-ignore a11y_click_events_have_key_events -->
             <g
               class="section-node outline-none"
@@ -1089,7 +1049,6 @@
             {@const glowFilter = isHot
               ? (isClassType(node.chunk_type) ? 'url(#glow-rose)' : isEnumType(node.chunk_type) ? 'url(#glow-amber)' : 'url(#glow-teal)')
               : 'none'}
-            <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
             <!-- svelte-ignore a11y_click_events_have_key_events -->
             <g
               class="micro-node outline-none"

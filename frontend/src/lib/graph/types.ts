@@ -1,5 +1,4 @@
 // frontend/src/lib/graph/types.ts
-import type { ChunkNode, CallEdge, GhostNode } from '../types';
 
 // ── Node interfaces (SVG-based, no force simulation fields) ──
 

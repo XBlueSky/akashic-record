@@ -5,7 +5,6 @@
   import { X } from "@lucide/svelte";
   import { fetchModuleDetail, isAuthError } from "$lib/api";
   import type { ChunkItem, ModuleDetailData, DocumentSectionItem, Category, ExplainsTarget } from "$lib/types";
-  import { t } from "svelte-i18n";
   import { goto } from "$app/navigation";
 
   interface Props {

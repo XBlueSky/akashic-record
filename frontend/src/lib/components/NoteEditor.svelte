@@ -244,7 +244,7 @@
           {:else}
             <div class="flex-1 border border-border rounded-md px-3 py-2 text-sm text-foreground overflow-y-auto note-prose">
               {#if content.trim()}
-                <!-- XSS boundary: renderMarkdown() always DOMPurify.sanitizes before {@html} -->
+                <!-- eslint-disable-next-line svelte/no-at-html-tags -- XSS boundary: renderMarkdown() always DOMPurify.sanitizes before {@html} -->
                 {@html renderMarkdown(content)}
               {:else}
                 <p class="text-muted-foreground italic">{$t("noteEditor.nothingToPreview") || "Nothing to preview."}</p>

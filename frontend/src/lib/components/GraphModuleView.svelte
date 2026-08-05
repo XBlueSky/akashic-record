@@ -56,6 +56,7 @@
     onselectsection,
     drillToModulePath,
     highlightChunkId,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- wired from parent (r/[repo]/graph +page.svelte) for repo-hop navigation; not yet invoked from a click handler here (pre-existing gap, out of scope for this lint pass)
     onnavigaterepo,
   }: Props = $props();
 
@@ -78,6 +79,7 @@
   let drillModule: ModuleNode | null = $state(null);
   let drillData: ChunkCallGraph | null = $state(null);
   let drillLoading = $state(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- captured on fetch failure but not yet surfaced in the drill-down overlay UI (pre-existing gap, out of scope for this lint pass)
   let drillError = $state('');
 
   let loading = $state(true);
@@ -96,6 +98,7 @@
   let containerEl: HTMLDivElement;
   let simulation: d3.Simulation<SimNode, SimLink> | null = null;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- ranked on drill-down but not yet consulted for node styling (pre-existing gap, out of scope for this lint pass)
   let hotspotIds: Set<string> = $state(new Set());
   let disconnectedCount = $state(0);
   let sagaGroups: SagaGroup[] = $state([]);
@@ -653,7 +656,7 @@
       <g class="graph-root">
         <!-- Saga convex hulls (behind everything) -->
         <g class="saga-hulls">
-          {#each sagaGroups as group, idx}
+          {#each sagaGroups as group, idx (group.saga_id)}
             {@const hull = computeSagaHull(group)}
             {#if hull}
               <polygon
@@ -676,7 +679,7 @@
           {/each}
         </g>
         <g class="edges">
-          {#each links as link}
+          {#each links as link, idx (idx)}
             <path stroke={edgeColor(link)} stroke-width="1.8" fill="none"
               opacity={0.3 + link.confidence * 0.35}
               stroke-dasharray={link.confidence >= 0.9 ? 'none' : link.confidence >= 0.5 ? '6 4' : '2 3'}
@@ -685,7 +688,6 @@
         </g>
         <g class="nodes">
           {#each nodes as node (node.id)}
-            <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
             <g class="node-group outline-none" transform="translate({node.x},{node.y})" role="button" tabindex="0"
               onclick={() => handleNodeClick(node)} ondblclick={() => handleNodeDblClick(node)}
               onkeydown={(e) => e.key === 'Enter' && handleNodeClick(node)}
