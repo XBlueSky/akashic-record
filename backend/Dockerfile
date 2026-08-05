@@ -1,8 +1,20 @@
-FROM rust:1.88 AS builder
+# syntax=docker/dockerfile:1
+# Builder uses cargo-chef so the 22-crate workspace's dependency graph
+# can be compiled as a cached layer without hand-maintained stub mains.
+# Image tag matches rust-toolchain.toml (1.95.0) so rustup does not
+# re-download a second toolchain inside the build.
+FROM lukemathwalker/cargo-chef:latest-rust-1.95.0 AS chef
+WORKDIR /app
 
-# C5 side-fix: AKASHIC_BUILD_COMMIT is consumed by build.rs at compile
-# time. Default 'unknown' so docker build still succeeds without the
-# arg; compose / CI passes the real short hash via --build-arg.
+FROM chef AS planner
+COPY . .
+RUN cargo chef prepare --recipe-path recipe.json
+
+FROM chef AS builder
+# C5 side-fix: AKASHIC_BUILD_COMMIT is consumed by
+# crates/akashic-server/build.rs at compile time. Default 'unknown' so
+# docker build still succeeds without the arg; compose / CI passes the
+# real short hash via --build-arg.
 ARG AKASHIC_BUILD_COMMIT=unknown
 ENV AKASHIC_BUILD_COMMIT=$AKASHIC_BUILD_COMMIT
 
@@ -11,28 +23,31 @@ ENV AKASHIC_BUILD_COMMIT=$AKASHIC_BUILD_COMMIT
 # stack exposes the fixture-seed HTTP surface.
 ARG CARGO_FEATURES=""
 
-WORKDIR /app
-# Pre-fetch dependencies via the stub-main trick for layer cache reuse.
-# build.rs is included so a build-script change invalidates the dep
-# cache correctly.
-COPY Cargo.toml Cargo.lock build.rs ./
-RUN mkdir src && echo 'fn main() {}' > src/main.rs \
-    && if [ -n "$CARGO_FEATURES" ]; then \
-           cargo build --release --features "$CARGO_FEATURES"; \
-       else \
-           cargo build --release; \
-       fi \
-    && rm -rf src
+COPY --from=planner /app/recipe.json recipe.json
+RUN if [ -n "$CARGO_FEATURES" ]; then \
+        cargo chef cook --release --recipe-path recipe.json \
+            -p akashic-server --features "$CARGO_FEATURES"; \
+    else \
+        cargo chef cook --release --recipe-path recipe.json \
+            -p akashic-server; \
+    fi
 
-COPY src ./src
-RUN touch src/main.rs \
-    && if [ -n "$CARGO_FEATURES" ]; then \
-           cargo build --release --features "$CARGO_FEATURES"; \
-       else \
-           cargo build --release; \
-       fi
+COPY . .
+RUN if [ -n "$CARGO_FEATURES" ]; then \
+        cargo build --release -p akashic-server --features "$CARGO_FEATURES"; \
+    else \
+        cargo build --release -p akashic-server; \
+    fi
 
-FROM debian:bookworm-slim
+# Deviation from task-2-brief.md (recorded per task instructions): the
+# brief specified `debian:bookworm-slim` here, but
+# lukemathwalker/cargo-chef:latest-rust-1.95.0 is currently built on
+# Debian trixie (glibc 2.41). A bookworm-slim runtime (glibc 2.36) fails
+# at container start with `GLIBC_2.39' not found — verified via the C4
+# drill / test-stack boot during Task 2. Runtime bumped to
+# debian:trixie-slim to match the builder's glibc; revisit if the chef
+# image's base ever moves back to bookworm.
+FROM debian:trixie-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         ca-certificates curl \
@@ -45,7 +60,10 @@ RUN groupadd --system --gid 10001 akashic \
         --home-dir /home/akashic --create-home \
         --shell /usr/sbin/nologin akashic
 
-COPY --from=builder /app/target/release/akashic-record /usr/local/bin/akashic-record
+# Cargo bin target is `akashic-server` (workspace carve-out); the
+# operational name everywhere (compose CMD, runbooks, drills) remains
+# `akashic-record` — rename at install time.
+COPY --from=builder /app/target/release/akashic-server /usr/local/bin/akashic-record
 
 # Pre-create ingest scratch dir with correct ownership. Default
 # INGEST_CLONE_DIR is /tmp/akashic-ingest; transient between restarts.
