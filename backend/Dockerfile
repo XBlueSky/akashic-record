@@ -11,13 +11,6 @@ COPY . .
 RUN cargo chef prepare --recipe-path recipe.json
 
 FROM chef AS builder
-# C5 side-fix: AKASHIC_BUILD_COMMIT is consumed by
-# crates/akashic-server/build.rs at compile time. Default 'unknown' so
-# docker build still succeeds without the arg; compose / CI passes the
-# real short hash via --build-arg.
-ARG AKASHIC_BUILD_COMMIT=unknown
-ENV AKASHIC_BUILD_COMMIT=$AKASHIC_BUILD_COMMIT
-
 # Optional cargo features. Default empty preserves the production
 # build. docker-compose.test.yml passes "test-fixtures" so the test
 # stack exposes the fixture-seed HTTP surface.
@@ -31,6 +24,17 @@ RUN if [ -n "$CARGO_FEATURES" ]; then \
         cargo chef cook --release --recipe-path recipe.json \
             -p akashic-server; \
     fi
+
+# C5 side-fix: AKASHIC_BUILD_COMMIT is consumed by
+# crates/akashic-server/build.rs at compile time. Default 'unknown' so
+# docker build still succeeds without the arg; compose / CI passes the
+# real short hash via --build-arg. Declared here (after chef cook, not
+# before) so BuildKit's ENV-folded cache key doesn't invalidate the
+# expensive dependency-cook layer on every per-commit build — this ARG
+# has no effect on `cargo chef cook` (which never reads it) and is only
+# consumed by build.rs in the `cargo build` step below.
+ARG AKASHIC_BUILD_COMMIT=unknown
+ENV AKASHIC_BUILD_COMMIT=$AKASHIC_BUILD_COMMIT
 
 COPY . .
 RUN if [ -n "$CARGO_FEATURES" ]; then \
