@@ -1,5 +1,5 @@
 <script lang="ts">
-  import IngestView from "$lib/components/IngestView.svelte";
+	import IngestView from "$lib/components/IngestView.svelte";
 </script>
 
 <IngestView />

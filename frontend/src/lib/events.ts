@@ -16,40 +16,39 @@ let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
 
 /** Open the SSE connection (idempotent). */
 export function connectEvents() {
-  if (source) return;
-  // A fresh connect attempt supersedes any pending hint-driven reconnect.
-  if (reconnectTimer !== null) {
-    clearTimeout(reconnectTimer);
-    reconnectTimer = null;
-  }
-  source = new EventSource("/api/v1/events");
+	if (source) return;
+	// A fresh connect attempt supersedes any pending hint-driven reconnect.
+	if (reconnectTimer !== null) {
+		clearTimeout(reconnectTimer);
+		reconnectTimer = null;
+	}
+	source = new EventSource("/api/v1/events");
 
-  source.addEventListener("job_update", (e) => {
-    dispatch("job_update", JSON.parse((e as MessageEvent).data));
-  });
+	source.addEventListener("job_update", (e) => {
+		dispatch("job_update", JSON.parse((e as MessageEvent).data));
+	});
 
-  source.addEventListener("repos_changed", (e) => {
-    dispatch("repos_changed", JSON.parse((e as MessageEvent).data));
-  });
+	source.addEventListener("repos_changed", (e) => {
+		dispatch("repos_changed", JSON.parse((e as MessageEvent).data));
+	});
 
-  // C2 graceful shutdown: the backend emits `server_shutting_down` with a
-  // top-level `reconnect_hint_secs` (see backend/src/api/events.rs) as its
-  // final event before closing the stream. Surface it to subscribers, then
-  // proactively close the source so EventSource's built-in fast retry does
-  // not hammer a server that is intentionally going down, and reconnect once
-  // after the hinted back-off instead.
-  source.addEventListener("server_shutting_down", (e) => {
-    const data = JSON.parse((e as MessageEvent).data) as Record<string, unknown>;
-    dispatch("server_shutting_down", data);
+	// C2 graceful shutdown: the backend emits `server_shutting_down` with a
+	// top-level `reconnect_hint_secs` (see backend/src/api/events.rs) as its
+	// final event before closing the stream. Surface it to subscribers, then
+	// proactively close the source so EventSource's built-in fast retry does
+	// not hammer a server that is intentionally going down, and reconnect once
+	// after the hinted back-off instead.
+	source.addEventListener("server_shutting_down", (e) => {
+		const data = JSON.parse((e as MessageEvent).data) as Record<string, unknown>;
+		dispatch("server_shutting_down", data);
 
-    const hintSecs =
-      typeof data.reconnect_hint_secs === "number" ? data.reconnect_hint_secs : 30;
-    scheduleReconnect(hintSecs);
-  });
+		const hintSecs = typeof data.reconnect_hint_secs === "number" ? data.reconnect_hint_secs : 30;
+		scheduleReconnect(hintSecs);
+	});
 
-  source.onerror = () => {
-    // EventSource auto-reconnects on transport errors; nothing extra needed.
-  };
+	source.onerror = () => {
+		// EventSource auto-reconnects on transport errors; nothing extra needed.
+	};
 }
 
 /**
@@ -59,14 +58,14 @@ export function connectEvents() {
  * `connectEvents()` resumes delivery to them.
  */
 export function disconnectEvents() {
-  if (reconnectTimer !== null) {
-    clearTimeout(reconnectTimer);
-    reconnectTimer = null;
-  }
-  if (source) {
-    source.close();
-    source = null;
-  }
+	if (reconnectTimer !== null) {
+		clearTimeout(reconnectTimer);
+		reconnectTimer = null;
+	}
+	if (source) {
+		source.close();
+		source = null;
+	}
 }
 
 /**
@@ -75,26 +74,26 @@ export function disconnectEvents() {
  * replaced so a burst of shutdown events cannot stack reconnects.
  */
 function scheduleReconnect(hintSecs: number) {
-  if (source) {
-    source.close();
-    source = null;
-  }
-  if (reconnectTimer !== null) clearTimeout(reconnectTimer);
-  reconnectTimer = setTimeout(() => {
-    reconnectTimer = null;
-    connectEvents();
-  }, hintSecs * 1000);
+	if (source) {
+		source.close();
+		source = null;
+	}
+	if (reconnectTimer !== null) clearTimeout(reconnectTimer);
+	reconnectTimer = setTimeout(() => {
+		reconnectTimer = null;
+		connectEvents();
+	}, hintSecs * 1000);
 }
 
 /** Subscribe to an event type. Returns an unsubscribe function. */
 export function onEvent(type: string, cb: EventCallback): () => void {
-  if (!listeners.has(type)) listeners.set(type, new Set());
-  listeners.get(type)!.add(cb);
-  return () => {
-    listeners.get(type)?.delete(cb);
-  };
+	if (!listeners.has(type)) listeners.set(type, new Set());
+	listeners.get(type)!.add(cb);
+	return () => {
+		listeners.get(type)?.delete(cb);
+	};
 }
 
 function dispatch(type: string, data: Record<string, unknown>) {
-  listeners.get(type)?.forEach((cb) => cb(data));
+	listeners.get(type)?.forEach((cb) => cb(data));
 }

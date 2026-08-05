@@ -37,10 +37,7 @@
 	bind:ref
 	bind:value
 	data-slot="toggle-group"
-	class={cn(
-		"group/toggle-group flex w-fit items-center gap-1",
-		className
-	)}
+	class={cn("group/toggle-group flex w-fit items-center gap-1", className)}
 	{...restProps as any}
 />
 <!-- eslint-enable @typescript-eslint/no-explicit-any -->

@@ -14,10 +14,7 @@
 	// Range-correct fill: account for a non-zero `min` and clamp to [0, 100].
 	// aria-value* attributes stay delegated to the bits-ui primitive below.
 	const pct = $derived(
-		Math.min(
-			100,
-			Math.max(0, (((value ?? 0) - (min ?? 0)) / ((max ?? 100) - (min ?? 0))) * 100)
-		)
+		Math.min(100, Math.max(0, (((value ?? 0) - (min ?? 0)) / ((max ?? 100) - (min ?? 0))) * 100)),
 	);
 </script>
 

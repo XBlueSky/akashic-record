@@ -18,7 +18,7 @@ export default ts.config(
 	...svelte.configs.prettier,
 	{
 		languageOptions: {
-			globals: { ...globals.browser, ...globals.node }
+			globals: { ...globals.browser, ...globals.node },
 		},
 		rules: {
 			// Repo convention: a leading underscore marks a binding that is
@@ -32,10 +32,10 @@ export default ts.config(
 					argsIgnorePattern: "^_",
 					varsIgnorePattern: "^_",
 					caughtErrorsIgnorePattern: "^_",
-					destructuredArrayIgnorePattern: "^_"
-				}
-			]
-		}
+					destructuredArrayIgnorePattern: "^_",
+				},
+			],
+		},
 	},
 	{
 		files: ["**/*.svelte", "**/*.svelte.ts", "**/*.svelte.js"],
@@ -43,8 +43,8 @@ export default ts.config(
 			parserOptions: {
 				extraFileExtensions: [".svelte"],
 				parser: ts.parser,
-				svelteConfig
-			}
+				svelteConfig,
+			},
 		},
 		rules: {
 			// Svelte 5 runes idiom: referencing a value as a bare expression
@@ -62,7 +62,7 @@ export default ts.config(
 			// (populated once, then returned/reassigned wholesale) rather than a
 			// live $state container mutated in place — the one case SvelteMap /
 			// SvelteSet actually matters for. The rule can't tell the difference.
-			"svelte/prefer-svelte-reactivity": "off"
-		}
-	}
+			"svelte/prefer-svelte-reactivity": "off",
+		},
+	},
 );

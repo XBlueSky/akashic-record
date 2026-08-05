@@ -2,4 +2,4 @@
 // client-only; auth is a client token. adapter-static emits a fallback page.
 export const ssr = false;
 export const prerender = false;
-export const trailingSlash = 'never';
+export const trailingSlash = "never";

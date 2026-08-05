@@ -1,9 +1,18 @@
 // frontend/src/lib/graph/geometry.ts
 
-export interface FitTransform { tx: number; ty: number; scale: number; }
+export interface FitTransform {
+	tx: number;
+	ty: number;
+	scale: number;
+}
 
 /** A node's center plus the half-extents of its rendered rectangle. */
-export interface FitRect { x: number; y: number; halfW: number; halfH: number; }
+export interface FitRect {
+	x: number;
+	y: number;
+	halfW: number;
+	halfH: number;
+}
 
 /**
  * Compute a zoom transform that fits the nodes' rendered rectangles into a
@@ -31,29 +40,32 @@ export interface FitRect { x: number; y: number; halfW: number; halfH: number; }
  * nodeWidth/nodeHeight did — keeping geometry type-agnostic.
  */
 export function computeFitTransform(
-  rects: FitRect[],
-  width: number,
-  height: number,
-  padding = 40,
-  maxScale = 1.5,
+	rects: FitRect[],
+	width: number,
+	height: number,
+	padding = 40,
+	maxScale = 1.5,
 ): FitTransform {
-  if (rects.length === 0 || width <= 0 || height <= 0) {
-    return { tx: 0, ty: 0, scale: 1 };
-  }
-  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-  for (const r of rects) {
-    if (r.x - r.halfW < minX) minX = r.x - r.halfW;
-    if (r.y - r.halfH < minY) minY = r.y - r.halfH;
-    if (r.x + r.halfW > maxX) maxX = r.x + r.halfW;
-    if (r.y + r.halfH > maxY) maxY = r.y + r.halfH;
-  }
-  // Legacy adds `padding` on each side → padded span = extent + 2*padding.
-  const bw = Math.max(maxX - minX + padding * 2, 1);
-  const bh = Math.max(maxY - minY + padding * 2, 1);
-  const scale = Math.max(Math.min(width / bw, height / bh, maxScale) * 0.85, 0.45);
-  const cx = (minX + maxX) / 2;
-  const cy = (minY + maxY) / 2;
-  const tx = width / 2 - cx * scale;
-  const ty = height / 2 - cy * scale;
-  return { tx, ty, scale };
+	if (rects.length === 0 || width <= 0 || height <= 0) {
+		return { tx: 0, ty: 0, scale: 1 };
+	}
+	let minX = Infinity,
+		minY = Infinity,
+		maxX = -Infinity,
+		maxY = -Infinity;
+	for (const r of rects) {
+		if (r.x - r.halfW < minX) minX = r.x - r.halfW;
+		if (r.y - r.halfH < minY) minY = r.y - r.halfH;
+		if (r.x + r.halfW > maxX) maxX = r.x + r.halfW;
+		if (r.y + r.halfH > maxY) maxY = r.y + r.halfH;
+	}
+	// Legacy adds `padding` on each side → padded span = extent + 2*padding.
+	const bw = Math.max(maxX - minX + padding * 2, 1);
+	const bh = Math.max(maxY - minY + padding * 2, 1);
+	const scale = Math.max(Math.min(width / bw, height / bh, maxScale) * 0.85, 0.45);
+	const cx = (minX + maxX) / 2;
+	const cy = (minY + maxY) / 2;
+	const tx = width / 2 - cx * scale;
+	const ty = height / 2 - cy * scale;
+	return { tx, ty, scale };
 }

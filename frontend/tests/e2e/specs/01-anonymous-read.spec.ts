@@ -49,57 +49,57 @@
  * read journey through the data-loading boundary (notes list endpoint,
  * NoteCard render).
  */
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test.describe('Path A — anonymous read journey', () => {
-  test('landing → repo → tab nav mounts → notes visible → graph mounts', async ({ page }) => {
-    // Track unexpected auth failures. `/api/v1/auth/me` is allowed to 401
-    // — that's how the frontend detects "no session" for anonymous users.
-    const authFailures: string[] = [];
-    page.on('response', (resp) => {
-      if (resp.status() !== 401 && resp.status() !== 403) return;
-      if (resp.url().endsWith('/api/v1/auth/me')) return;
-      authFailures.push(`${resp.status()} ${resp.url()}`);
-    });
+test.describe("Path A — anonymous read journey", () => {
+	test("landing → repo → tab nav mounts → notes visible → graph mounts", async ({ page }) => {
+		// Track unexpected auth failures. `/api/v1/auth/me` is allowed to 401
+		// — that's how the frontend detects "no session" for anonymous users.
+		const authFailures: string[] = [];
+		page.on("response", (resp) => {
+			if (resp.status() !== 401 && resp.status() !== 403) return;
+			if (resp.url().endsWith("/api/v1/auth/me")) return;
+			authFailures.push(`${resp.status()} ${resp.url()}`);
+		});
 
-    // 1. Landing renders. Use `domcontentloaded` instead of `networkidle`
-    //    because the landing's WebGL canvas keeps the network non-idle.
-    await page.goto('/', { waitUntil: 'domcontentloaded' });
+		// 1. Landing renders. Use `domcontentloaded` instead of `networkidle`
+		//    because the landing's WebGL canvas keeps the network non-idle.
+		await page.goto("/", { waitUntil: "domcontentloaded" });
 
-    // 2. Repo card visible + clickable.
-    const repoCard = page.locator('.repo-card', { hasText: 'akashic-record' }).first();
-    await expect(repoCard).toBeVisible({ timeout: 10_000 });
-    await repoCard.click();
+		// 2. Repo card visible + clickable.
+		const repoCard = page.locator(".repo-card", { hasText: "akashic-record" }).first();
+		await expect(repoCard).toBeVisible({ timeout: 10_000 });
+		await repoCard.click();
 
-    // 3. Repo detail mounts: the 3-tab nav (Timeline / Graph / Modules)
-    //    replaces the old Code Map/Notes mode toggle. `/r/[repo]`
-    //    redirects to `/r/[repo]/timeline` by default, so Timeline is the
-    //    active tab immediately (aria-current="page").
-    const repoNav = page.getByRole('navigation', { name: 'Repository views' });
-    await expect(repoNav).toBeVisible({ timeout: 10_000 });
-    await expect(repoNav.locator('a[href*="/timeline"]')).toHaveAttribute('aria-current', 'page');
-    await expect(repoNav.getByRole('link', { name: 'Graph' })).toBeVisible();
-    await expect(repoNav.getByRole('link', { name: 'Modules' })).toBeVisible();
+		// 3. Repo detail mounts: the 3-tab nav (Timeline / Graph / Modules)
+		//    replaces the old Code Map/Notes mode toggle. `/r/[repo]`
+		//    redirects to `/r/[repo]/timeline` by default, so Timeline is the
+		//    active tab immediately (aria-current="page").
+		const repoNav = page.getByRole("navigation", { name: "Repository views" });
+		await expect(repoNav).toBeVisible({ timeout: 10_000 });
+		await expect(repoNav.locator('a[href*="/timeline"]')).toHaveAttribute("aria-current", "page");
+		await expect(repoNav.getByRole("link", { name: "Graph" })).toBeVisible();
+		await expect(repoNav.getByRole("link", { name: "Modules" })).toBeVisible();
 
-    // 4. Timeline (the Notes-mode equivalent) is the default landing tab
-    //    — assert at least one seeded NoteCard renders. NoteCard's
-    //    Card.Root carries a stable `id="note-{uuid}"` anchor (used for
-    //    scroll-to-highlight), so matching the id prefix identifies a
-    //    rendered note without depending on internal UI-library markup.
-    await expect(page.locator('[id^="note-"]').first()).toBeVisible({ timeout: 10_000 });
+		// 4. Timeline (the Notes-mode equivalent) is the default landing tab
+		//    — assert at least one seeded NoteCard renders. NoteCard's
+		//    Card.Root carries a stable `id="note-{uuid}"` anchor (used for
+		//    scroll-to-highlight), so matching the id prefix identifies a
+		//    rendered note without depending on internal UI-library markup.
+		await expect(page.locator('[id^="note-"]').first()).toBeVisible({ timeout: 10_000 });
 
-    // 5. Switch to the Graph tab → macro graph SVG mounts with at least
-    //    the repo center node. The seed has zero modules, so the macro
-    //    layer renders just the repo node — that's enough to prove the
-    //    graph endpoint resolved.
-    await repoNav.getByRole('link', { name: 'Graph' }).click();
-    await expect(page).toHaveURL(/\/r\/akashic-record\/graph/);
-    await expect(page.locator('svg .node-group').first()).toBeVisible({ timeout: 10_000 });
+		// 5. Switch to the Graph tab → macro graph SVG mounts with at least
+		//    the repo center node. The seed has zero modules, so the macro
+		//    layer renders just the repo node — that's enough to prove the
+		//    graph endpoint resolved.
+		await repoNav.getByRole("link", { name: "Graph" }).click();
+		await expect(page).toHaveURL(/\/r\/akashic-record\/graph/);
+		await expect(page.locator("svg .node-group").first()).toBeVisible({ timeout: 10_000 });
 
-    // 6. Zero unexpected auth failures throughout the journey.
-    expect(
-      authFailures,
-      `unexpected auth failures during anonymous read: ${authFailures.join(', ')}`,
-    ).toEqual([]);
-  });
+		// 6. Zero unexpected auth failures throughout the journey.
+		expect(
+			authFailures,
+			`unexpected auth failures during anonymous read: ${authFailures.join(", ")}`,
+		).toEqual([]);
+	});
 });
