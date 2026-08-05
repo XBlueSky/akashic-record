@@ -435,6 +435,7 @@ dependencies = [
  "reqwest",
  "serde",
  "serde_json",
+ "serial_test",
  "sqlx",
  "tokio",
  "tokio-util",
