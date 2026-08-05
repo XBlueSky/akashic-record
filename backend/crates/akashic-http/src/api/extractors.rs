@@ -329,6 +329,7 @@ mod idempotency_tests {
     /// concurrent same-key requests proceed; the other is turned away. (The old
     /// check-then-record let both pass and each spawn a full ingest.)
     #[tokio::test]
+    #[serial_test::serial]
     async fn concurrent_same_key_reserves_exactly_once() {
         let pg = test_pool().await;
         let repo = PgSagaExecutorRepo::new(pg.clone());
@@ -373,6 +374,7 @@ mod idempotency_tests {
     /// A spawn failure releases the reservation so the key is immediately
     /// retryable, rather than being stuck `running` or cached as a false success.
     #[tokio::test]
+    #[serial_test::serial]
     async fn release_frees_key_for_retry() {
         let pg = test_pool().await;
         let repo = PgSagaExecutorRepo::new(pg.clone());

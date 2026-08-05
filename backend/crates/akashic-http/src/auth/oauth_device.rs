@@ -438,6 +438,7 @@ mod tests {
     use tower::ServiceExt;
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn device_authorization_inserts_pending_row_and_returns_codes() {
         let state = akashic_test_support::build_app_state("http://unused".into()).await;
         let pg = akashic_test_support::test_pg_pool().await;
@@ -476,6 +477,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn device_authorization_rejects_unknown_client_id() {
         let state = akashic_test_support::build_app_state("http://unused".into()).await;
         let app = public_router().with_state(state);
@@ -493,6 +495,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn device_token_unsupported_grant_type() {
         let state = akashic_test_support::build_app_state("http://unused".into()).await;
         let app = public_router().with_state(state);
@@ -511,6 +514,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn device_token_unknown_device_code() {
         let state = akashic_test_support::build_app_state("http://unused".into()).await;
         let app = public_router().with_state(state);
@@ -531,6 +535,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn device_token_authorization_pending_then_approved_then_token() {
         let state = akashic_test_support::build_app_state("http://unused".into()).await;
         let pg = akashic_test_support::test_pg_pool().await;
@@ -620,6 +625,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn device_token_expired_token() {
         let state = akashic_test_support::build_app_state("http://unused".into()).await;
         let pg = akashic_test_support::test_pg_pool().await;
@@ -663,6 +669,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn device_token_access_denied() {
         let state = akashic_test_support::build_app_state("http://unused".into()).await;
         let pg = akashic_test_support::test_pg_pool().await;
@@ -706,6 +713,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn device_token_slow_down_on_too_fast_poll() {
         let state = akashic_test_support::build_app_state("http://unused".into()).await;
         let pg = akashic_test_support::test_pg_pool().await;
@@ -775,6 +783,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn device_page_renders_form_with_prefill() {
         let state = akashic_test_support::build_app_state("http://unused".into()).await;
         let app = public_router().with_state(state);
@@ -813,6 +822,7 @@ mod tests {
     /// (`invalid_request`) — so a 400/`invalid_grant` here can only mean
     /// dispatch reached the right handler.
     #[tokio::test]
+    #[serial_test::serial]
     async fn oauth_token_dispatch_routes_form_body_to_authorization_code_grant() {
         let state = akashic_test_support::build_app_state("http://unused".into()).await;
         let app = public_router().with_state(state);
@@ -842,6 +852,7 @@ mod tests {
     /// JSON branch, where `Json::from_request` itself rejects the missing
     /// content-type).
     #[tokio::test]
+    #[serial_test::serial]
     async fn oauth_token_dispatch_missing_content_type_is_400_not_panic() {
         let state = akashic_test_support::build_app_state("http://unused".into()).await;
         let app = public_router().with_state(state);
@@ -866,6 +877,7 @@ mod tests {
     /// rejects the content-type mismatch rather than attempting to parse an
     /// arbitrary body as JSON.
     #[tokio::test]
+    #[serial_test::serial]
     async fn oauth_token_dispatch_malformed_content_type_is_400_not_panic() {
         let state = akashic_test_support::build_app_state("http://unused".into()).await;
         let app = public_router().with_state(state);

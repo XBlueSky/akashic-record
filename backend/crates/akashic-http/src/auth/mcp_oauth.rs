@@ -673,6 +673,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn token_exchange_happy_path_mints_and_validates_ak_token() {
         let state = akashic_test_support::build_app_state("http://unused".into()).await;
         let (client_id, redirect_uri) = register_test_client(&state, "t4_happy").await;
@@ -725,6 +726,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn token_exchange_replay_is_invalid_grant() {
         let state = akashic_test_support::build_app_state("http://unused".into()).await;
         let (client_id, redirect_uri) = register_test_client(&state, "t4_replay").await;
@@ -771,6 +773,7 @@ mod tests {
     /// the "guess the verifier / client / redirect_uri and retry" attack the
     /// one-time-use guarantee exists to close.
     #[tokio::test]
+    #[serial_test::serial]
     async fn token_exchange_burns_code_even_on_client_id_mismatch() {
         let state = akashic_test_support::build_app_state("http://unused".into()).await;
         let (client_id, redirect_uri) = register_test_client(&state, "t4_burn_client").await;
@@ -830,6 +833,7 @@ mod tests {
     /// client_id mismatch — the two checks are independent `if` statements
     /// in `token_exchange` and both must burn the code on failure.
     #[tokio::test]
+    #[serial_test::serial]
     async fn token_exchange_burns_code_even_on_pkce_mismatch() {
         let state = akashic_test_support::build_app_state("http://unused".into()).await;
         let (client_id, redirect_uri) = register_test_client(&state, "t4_burn_pkce").await;
@@ -881,6 +885,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn token_exchange_rejects_unsupported_grant_type_without_touching_db() {
         let state = akashic_test_support::build_app_state("http://unused".into()).await;
         let resp = token_exchange(
