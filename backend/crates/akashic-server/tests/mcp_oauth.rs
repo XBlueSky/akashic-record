@@ -223,7 +223,11 @@ async fn authorize_with_session(
         .send()
         .await
         .expect("GET /oauth/authorize");
-    assert_eq!(resp.status(), 302, "authorize should redirect");
+    // axum's `Redirect::to()` deliberately emits 303 See Other (never 302);
+    // for these GET-initiated OAuth redirects 303 is spec-compliant and this
+    // preserves current production behavior — the tests were written against
+    // an assumed 302 that never shipped.
+    assert_eq!(resp.status(), 303, "authorize should redirect");
     let location = resp
         .headers()
         .get("location")
@@ -348,7 +352,7 @@ async fn authorize_without_session_redirects_to_login_with_next() {
         .send()
         .await
         .expect("GET /oauth/authorize");
-    assert_eq!(resp.status(), 302);
+    assert_eq!(resp.status(), 303);
     let location = resp
         .headers()
         .get("location")
