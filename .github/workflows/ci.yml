@@ -327,9 +327,11 @@ jobs:
       - name: npm ci
         id: npm_ci
         run: npm ci --no-audit --no-fund
+        working-directory: frontend
         continue-on-error: true
       - name: Dump npm debug log (npm ci failed)
         if: steps.npm_ci.outcome == 'failure'
+        working-directory: frontend
         run: |
           log="$(ls -t "$HOME/.npm/_logs"/*-debug-*.log 2>/dev/null | head -1)"
           echo "npm debug log: ${log:-none found}"
