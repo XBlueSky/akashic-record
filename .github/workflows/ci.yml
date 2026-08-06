@@ -105,7 +105,20 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: frontend/package-lock.json
-      - run: npm ci
+      # npm ci hits npm's known "Exit handler never called!" bug (npm/cli#4028)
+      # on a cold cache with this lockfile's native-binary optionalDependencies
+      # (tailwindcss oxide, esbuild, rollup) — reproduced twice in a row here.
+      # Retry after clearing the half-written cache/node_modules.
+      - name: npm ci (retry on npm's Exit-handler flake)
+        run: |
+          for attempt in 1 2 3; do
+            npm ci && exit 0
+            echo "npm ci failed (attempt $attempt/3) — retrying" >&2
+            rm -rf node_modules
+            npm cache clean --force
+            sleep 5
+          done
+          exit 1
       - run: npm run lint
       - run: npm run format:check
       - run: npm test
@@ -201,7 +214,20 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: frontend/package-lock.json
-      - run: npm ci
+      # npm ci hits npm's known "Exit handler never called!" bug (npm/cli#4028)
+      # on a cold cache with this lockfile's native-binary optionalDependencies
+      # (tailwindcss oxide, esbuild, rollup) — reproduced twice in a row here.
+      # Retry after clearing the half-written cache/node_modules.
+      - name: npm ci (retry on npm's Exit-handler flake)
+        run: |
+          for attempt in 1 2 3; do
+            npm ci && exit 0
+            echo "npm ci failed (attempt $attempt/3) — retrying" >&2
+            rm -rf node_modules
+            npm cache clean --force
+            sleep 5
+          done
+          exit 1
       - run: npm run audit
       - uses: actions/upload-artifact@v7
         if: failure()
@@ -254,7 +280,20 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: frontend/package-lock.json
-      - run: npm ci
+      # npm ci hits npm's known "Exit handler never called!" bug (npm/cli#4028)
+      # on a cold cache with this lockfile's native-binary optionalDependencies
+      # (tailwindcss oxide, esbuild, rollup) — reproduced twice in a row here.
+      # Retry after clearing the half-written cache/node_modules.
+      - name: npm ci (retry on npm's Exit-handler flake)
+        run: |
+          for attempt in 1 2 3; do
+            npm ci && exit 0
+            echo "npm ci failed (attempt $attempt/3) — retrying" >&2
+            rm -rf node_modules
+            npm cache clean --force
+            sleep 5
+          done
+          exit 1
         working-directory: frontend
       - run: npm run e2e
         working-directory: frontend
