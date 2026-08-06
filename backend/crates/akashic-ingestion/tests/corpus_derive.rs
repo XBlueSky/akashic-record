@@ -189,7 +189,6 @@ fn deps(pg: PgPool, neo4j: Neo4jPool, embedder: Arc<dyn EmbeddingProvider>) -> D
 // ── happy path ────────────────────────────────────────────────────────────
 
 #[tokio::test]
-#[ignore = "requires live Postgres + Neo4j with the full schema; run with --ignored"]
 async fn derive_creates_one_corpus_document_per_md_page_with_sections() {
     let pg = test_pg_pool().await;
     let neo4j = neo4j_pool().await;
@@ -249,7 +248,6 @@ async fn derive_creates_one_corpus_document_per_md_page_with_sections() {
 }
 
 #[tokio::test]
-#[ignore = "requires live Postgres + Neo4j with the full schema; run with --ignored"]
 async fn second_derive_run_does_not_leave_stale_sections() {
     let pg = test_pg_pool().await;
     let neo4j = neo4j_pool().await;
@@ -288,7 +286,6 @@ async fn second_derive_run_does_not_leave_stale_sections() {
 }
 
 #[tokio::test]
-#[ignore = "requires live Postgres + Neo4j with the full schema; run with --ignored"]
 async fn corpus_scoped_clean_does_not_touch_website_doc_for_same_repo() {
     let pg = test_pg_pool().await;
     let neo4j = neo4j_pool().await;
@@ -371,7 +368,6 @@ async fn corpus_scoped_clean_does_not_touch_website_doc_for_same_repo() {
 }
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
-#[ignore = "requires live Postgres + Neo4j with the full schema; run with --ignored"]
 async fn concurrent_derive_runs_for_same_version_do_not_corrupt_the_doc_space() {
     let pg = test_pg_pool().await;
     let neo4j = neo4j_pool().await;
@@ -460,7 +456,6 @@ async fn concurrent_derive_runs_for_same_version_do_not_corrupt_the_doc_space() 
 }
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
-#[ignore = "requires live Postgres + Neo4j with the full schema; run with --ignored"]
 async fn concurrent_derive_runs_for_different_versions_of_same_repo_do_not_corrupt_the_doc_space() {
     let pg = test_pg_pool().await;
     let neo4j = neo4j_pool().await;
@@ -559,7 +554,6 @@ async fn concurrent_derive_runs_for_different_versions_of_same_repo_do_not_corru
 // ── failure path ──────────────────────────────────────────────────────────
 
 #[tokio::test]
-#[ignore = "requires live Postgres + Neo4j with the full schema; run with --ignored"]
 async fn derive_failure_sets_failed_status_and_preserves_raw_layer() {
     let pg = test_pg_pool().await;
     let neo4j = neo4j_pool().await;
@@ -635,7 +629,6 @@ async fn derive_failure_sets_failed_status_and_preserves_raw_layer() {
 // ── EXPLAINS anchoring (B5: code_sha staleness signal) ───────────────────
 
 #[tokio::test]
-#[ignore = "requires live Postgres + Neo4j with the full schema; run with --ignored"]
 async fn derive_annotates_explains_edges_with_code_sha_when_code_previously_ingested() {
     let pg = test_pg_pool().await;
     let neo4j = neo4j_pool().await;
@@ -707,7 +700,6 @@ async fn derive_annotates_explains_edges_with_code_sha_when_code_previously_inge
 }
 
 #[tokio::test]
-#[ignore = "requires live Postgres + Neo4j with the full schema; run with --ignored"]
 async fn derive_skips_explains_when_repo_never_code_ingested() {
     let pg = test_pg_pool().await;
     let neo4j = neo4j_pool().await;
