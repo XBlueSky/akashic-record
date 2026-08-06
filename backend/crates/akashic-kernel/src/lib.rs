@@ -13,3 +13,6 @@ pub mod events;
 pub use actor::{AuthMethod, Authenticated, parse_actor_id};
 pub use audit::AuditPort;
 pub use events::AppEvent;
+
+
+fn  badly_formatted        () {}
