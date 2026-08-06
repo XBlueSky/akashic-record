@@ -17,11 +17,11 @@
 		"test": "vitest run",
 		"test:watch": "vitest",
 		"audit": "npm audit --omit=dev --json > .audit-output.json ; node scripts/audit-gate.mjs < .audit-output.json",
-		"e2e": "docker run --rm --network host -v \"${PWD}\":/work -w /work mcr.microsoft.com/playwright:v1.60.0-jammy npm run e2e:inner",
+		"e2e": "docker run --rm --network host -v \"${PWD}\":/work -w /work mcr.microsoft.com/playwright:v1.62.1-jammy npm run e2e:inner",
 		"e2e:inner": "playwright test",
-		"e2e:headed": "docker run --rm --network host -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v \"${PWD}\":/work -w /work mcr.microsoft.com/playwright:v1.60.0-jammy npm run e2e:headed:inner",
+		"e2e:headed": "docker run --rm --network host -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v \"${PWD}\":/work -w /work mcr.microsoft.com/playwright:v1.62.1-jammy npm run e2e:headed:inner",
 		"e2e:headed:inner": "playwright test --headed",
-		"e2e:debug": "PWDEBUG=1 docker run --rm --network host -e PWDEBUG -v \"${PWD}\":/work -w /work mcr.microsoft.com/playwright:v1.60.0-jammy npm run e2e:inner",
+		"e2e:debug": "PWDEBUG=1 docker run --rm --network host -e PWDEBUG -v \"${PWD}\":/work -w /work mcr.microsoft.com/playwright:v1.62.1-jammy npm run e2e:inner",
 		"e2e:install": "playwright install --with-deps chromium"
 	},
 	"engines": {
@@ -33,7 +33,7 @@
 		"@fontsource-variable/inter": "^5.2.8",
 		"@internationalized/date": "^3.12.2",
 		"@lucide/svelte": "^1.17.0",
-		"@playwright/test": "^1.60.0",
+		"@playwright/test": "1.62.1",
 		"@sveltejs/adapter-static": "^3.0.10",
 		"@sveltejs/kit": "^2.63.1",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",

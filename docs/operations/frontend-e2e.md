@@ -33,10 +33,20 @@ coexist with `docker-compose.yml`:
 
 ## Running locally
 
-The npm scripts wrap Playwright in the official `mcr.microsoft.com/playwright:v1.60.0-jammy`
+The npm scripts wrap Playwright in the official `mcr.microsoft.com/playwright:v1.62.1-jammy`
 Docker image. This makes the harness work on hosts where Playwright
 itself doesn't (e.g., Ubuntu 18.04 hosts that Playwright 1.60 no
 longer supports).
+
+**Keep the pairing in sync.** The `@playwright/test` version in
+`frontend/package.json` and this Docker image's tag must move
+together — the image ships a matching `chromium_headless_shell` build,
+and `playwright test` refuses to launch against a mismatched one
+("Please update docker image as well"). `@playwright/test` is pinned
+exact (no `^`) for this reason: a caret range lets `npm install`
+silently drift the installed version ahead of whatever tag is
+hardcoded in the `e2e`/`e2e:headed`/`e2e:debug` scripts below. When
+bumping one, bump the other in the same commit.
 
 ```bash
 # Default — all three golden paths, headless:
@@ -78,7 +88,7 @@ until curl -m 2 -sf http://localhost:13001/health >/dev/null; do sleep 2; done
 cd frontend
 docker run --rm --network host -e E2E_EXPECTED_SECURE=true \
   -v "$(pwd)":/work -w /work \
-  mcr.microsoft.com/playwright:v1.60.0-jammy \
+  mcr.microsoft.com/playwright:v1.62.1-jammy \
   bash -c 'PLAYWRIGHT_BASE_URL=http://localhost:18080 \
     npx playwright test 03-logout-cookie-parity.spec.ts'
 
