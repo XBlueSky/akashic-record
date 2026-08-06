@@ -105,20 +105,31 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: frontend/package-lock.json
-      # npm ci hits npm's known "Exit handler never called!" bug (npm/cli#4028)
-      # on a cold cache with this lockfile's native-binary optionalDependencies
-      # (tailwindcss oxide, esbuild, rollup) — reproduced twice in a row here.
-      # Retry after clearing the half-written cache/node_modules.
-      - name: npm ci (retry on npm's Exit-handler flake)
+      # npm ci previously failed deterministically with npm's "Exit handler
+      # never called!" (npm/cli#4028) — root cause was package-lock.json
+      # "resolved" URLs pointing at an internal registry unreachable from
+      # this runner (fixed: public registry pinned + lockfile regenerated,
+      # see frontend/.npmrc). --no-audit --no-fund removes two more network
+      # round-trips npm ci doesn't need. One retry remains as a safety net
+      # for genuine transient registry.npmjs.org flakes; on failure the
+      # actual npm debug log is dumped so a real recurrence is diagnosable
+      # instead of guessed at.
+      - name: npm ci
+        id: npm_ci
+        run: npm ci --no-audit --no-fund
+        continue-on-error: true
+      - name: Dump npm debug log (npm ci failed)
+        if: steps.npm_ci.outcome == 'failure'
         run: |
-          for attempt in 1 2 3; do
-            npm ci && exit 0
-            echo "npm ci failed (attempt $attempt/3) — retrying" >&2
-            rm -rf node_modules
-            npm cache clean --force
-            sleep 5
-          done
-          exit 1
+          log="$(ls -t "$HOME/.npm/_logs"/*-debug-*.log 2>/dev/null | head -1)"
+          echo "npm debug log: ${log:-none found}"
+          [ -n "$log" ] && tail -n 300 "$log" || true
+      - name: npm ci (retry once)
+        if: steps.npm_ci.outcome == 'failure'
+        run: |
+          rm -rf node_modules
+          npm cache clean --force
+          npm ci --no-audit --no-fund
       - run: npm run lint
       - run: npm run format:check
       - run: npm test
@@ -214,20 +225,31 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: frontend/package-lock.json
-      # npm ci hits npm's known "Exit handler never called!" bug (npm/cli#4028)
-      # on a cold cache with this lockfile's native-binary optionalDependencies
-      # (tailwindcss oxide, esbuild, rollup) — reproduced twice in a row here.
-      # Retry after clearing the half-written cache/node_modules.
-      - name: npm ci (retry on npm's Exit-handler flake)
+      # npm ci previously failed deterministically with npm's "Exit handler
+      # never called!" (npm/cli#4028) — root cause was package-lock.json
+      # "resolved" URLs pointing at an internal registry unreachable from
+      # this runner (fixed: public registry pinned + lockfile regenerated,
+      # see frontend/.npmrc). --no-audit --no-fund removes two more network
+      # round-trips npm ci doesn't need. One retry remains as a safety net
+      # for genuine transient registry.npmjs.org flakes; on failure the
+      # actual npm debug log is dumped so a real recurrence is diagnosable
+      # instead of guessed at.
+      - name: npm ci
+        id: npm_ci
+        run: npm ci --no-audit --no-fund
+        continue-on-error: true
+      - name: Dump npm debug log (npm ci failed)
+        if: steps.npm_ci.outcome == 'failure'
         run: |
-          for attempt in 1 2 3; do
-            npm ci && exit 0
-            echo "npm ci failed (attempt $attempt/3) — retrying" >&2
-            rm -rf node_modules
-            npm cache clean --force
-            sleep 5
-          done
-          exit 1
+          log="$(ls -t "$HOME/.npm/_logs"/*-debug-*.log 2>/dev/null | head -1)"
+          echo "npm debug log: ${log:-none found}"
+          [ -n "$log" ] && tail -n 300 "$log" || true
+      - name: npm ci (retry once)
+        if: steps.npm_ci.outcome == 'failure'
+        run: |
+          rm -rf node_modules
+          npm cache clean --force
+          npm ci --no-audit --no-fund
       - run: npm run audit
       - uses: actions/upload-artifact@v7
         if: failure()
@@ -280,20 +302,31 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: frontend/package-lock.json
-      # npm ci hits npm's known "Exit handler never called!" bug (npm/cli#4028)
-      # on a cold cache with this lockfile's native-binary optionalDependencies
-      # (tailwindcss oxide, esbuild, rollup) — reproduced twice in a row here.
-      # Retry after clearing the half-written cache/node_modules.
-      - name: npm ci (retry on npm's Exit-handler flake)
+      # npm ci previously failed deterministically with npm's "Exit handler
+      # never called!" (npm/cli#4028) — root cause was package-lock.json
+      # "resolved" URLs pointing at an internal registry unreachable from
+      # this runner (fixed: public registry pinned + lockfile regenerated,
+      # see frontend/.npmrc). --no-audit --no-fund removes two more network
+      # round-trips npm ci doesn't need. One retry remains as a safety net
+      # for genuine transient registry.npmjs.org flakes; on failure the
+      # actual npm debug log is dumped so a real recurrence is diagnosable
+      # instead of guessed at.
+      - name: npm ci
+        id: npm_ci
+        run: npm ci --no-audit --no-fund
+        continue-on-error: true
+      - name: Dump npm debug log (npm ci failed)
+        if: steps.npm_ci.outcome == 'failure'
         run: |
-          for attempt in 1 2 3; do
-            npm ci && exit 0
-            echo "npm ci failed (attempt $attempt/3) — retrying" >&2
-            rm -rf node_modules
-            npm cache clean --force
-            sleep 5
-          done
-          exit 1
+          log="$(ls -t "$HOME/.npm/_logs"/*-debug-*.log 2>/dev/null | head -1)"
+          echo "npm debug log: ${log:-none found}"
+          [ -n "$log" ] && tail -n 300 "$log" || true
+      - name: npm ci (retry once)
+        if: steps.npm_ci.outcome == 'failure'
+        run: |
+          rm -rf node_modules
+          npm cache clean --force
+          npm ci --no-audit --no-fund
         working-directory: frontend
       - run: npm run e2e
         working-directory: frontend
