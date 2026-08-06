@@ -51,3 +51,4 @@ tracing.workspace = true
 akashic-test-support.workspace = true
 tower.workspace = true
 wiremock.workspace = true
+serial_test.workspace = true

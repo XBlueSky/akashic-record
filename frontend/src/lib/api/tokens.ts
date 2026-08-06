@@ -12,17 +12,17 @@ import type { McpTokenSummary, PassthroughRevokeRequest, AuditEntry } from "../t
 
 /** List MCP tokens for the authenticated user. GET /api/v1/auth/tokens */
 export async function listMcpTokens(): Promise<McpTokenSummary[]> {
-  return get<McpTokenSummary[]>("/auth/tokens");
+	return get<McpTokenSummary[]>("/auth/tokens");
 }
 
 /** Revoke a single MCP token by id. POST /api/v1/auth/tokens/:id/revoke */
 export async function revokeMcpToken(id: string): Promise<void> {
-  // Raw fetch (not the shared post()): this endpoint returns an empty body, and
-  // post() unconditionally res.json()s the response.
-  const res = await fetch(`/api/v1/auth/tokens/${encodeURIComponent(id)}/revoke`, {
-    method: "POST",
-  });
-  if (!res.ok) handleError(res);
+	// Raw fetch (not the shared post()): this endpoint returns an empty body, and
+	// post() unconditionally res.json()s the response.
+	const res = await fetch(`/api/v1/auth/tokens/${encodeURIComponent(id)}/revoke`, {
+		method: "POST",
+	});
+	if (!res.ok) handleError(res);
 }
 
 /**
@@ -33,25 +33,28 @@ export async function revokeMcpToken(id: string): Promise<void> {
  * other non-ok statuses → surface backend's JSON `error` message.
  */
 export async function revokePassthrough(
-  body: PassthroughRevokeRequest,
+	body: PassthroughRevokeRequest,
 ): Promise<{ prefix: string }> {
-  const res = await fetch("/api/v1/auth/passthrough/revoke", {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) {
-    // 401 → handleError clears the user store and raises the global Sign-in
-    // toast (consistent with every other endpoint); it throws and never returns.
-    if (res.status === 401) handleError(res);
-    // For other statuses, keep surfacing the backend's JSON `error` message.
-    const err = await res.json().catch(() => ({}));
-    throw new ApiError(res.status, (err as { error?: string }).error ?? `revokePassthrough: ${res.status}`);
-  }
-  return res.json();
+	const res = await fetch("/api/v1/auth/passthrough/revoke", {
+		method: "POST",
+		headers: { "content-type": "application/json" },
+		body: JSON.stringify(body),
+	});
+	if (!res.ok) {
+		// 401 → handleError clears the user store and raises the global Sign-in
+		// toast (consistent with every other endpoint); it throws and never returns.
+		if (res.status === 401) handleError(res);
+		// For other statuses, keep surfacing the backend's JSON `error` message.
+		const err = await res.json().catch(() => ({}));
+		throw new ApiError(
+			res.status,
+			(err as { error?: string }).error ?? `revokePassthrough: ${res.status}`,
+		);
+	}
+	return res.json();
 }
 
 /** List audit log entries for the authenticated user. GET /api/v1/auth/audit?limit=N */
 export async function listMyAudit(limit = 50): Promise<AuditEntry[]> {
-  return get<AuditEntry[]>(`/auth/audit?limit=${limit}`);
+	return get<AuditEntry[]>(`/auth/audit?limit=${limit}`);
 }

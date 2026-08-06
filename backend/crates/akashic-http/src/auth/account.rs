@@ -292,6 +292,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn list_tokens_returns_only_callers_tokens() {
         let user_a: i64 = 9_500_001;
         let user_b: i64 = 9_500_002;
@@ -347,6 +348,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn revoke_my_token_404s_on_another_users_token() {
         let user_a: i64 = 9_500_011;
         let user_b: i64 = 9_500_012;
@@ -397,6 +399,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn revoke_my_token_breaks_subsequent_validate() {
         let user: i64 = 9_500_013;
         let (state, app) =
@@ -484,6 +487,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn passthrough_revoke_from_full_token_owner_match() {
         use wiremock::matchers::{method, path};
         use wiremock::{Mock, MockServer, ResponseTemplate};
@@ -546,6 +550,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn passthrough_revoke_from_full_token_owner_mismatch_404s() {
         // FIX core regression guard (Medium: revoke_passthrough missing
         // ownership check): a token that GitLab resolves to a DIFFERENT user
@@ -640,6 +645,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn passthrough_revoke_from_prefix_is_forbidden() {
         // FIX regression guard (Medium: revoke_passthrough missing ownership
         // check): a bare prefix carries no ownership proof, so the prefix-only
@@ -689,6 +695,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn list_audit_returns_only_callers_rows_newest_first() {
         let user_a: i64 = 9_500_031;
         let user_b: i64 = 9_500_032;

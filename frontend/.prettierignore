@@ -1,0 +1,5 @@
+package-lock.json
+playwright-report/
+test-results/
+.svelte-kit/
+build/

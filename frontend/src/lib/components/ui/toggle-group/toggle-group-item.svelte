@@ -18,7 +18,7 @@
 	// Inherit variant/size from the parent ToggleGroup context (canonical
 	// shadcn-svelte behaviour); per-item props override when explicitly set.
 	const ctx = getContext<{ variant: () => ToggleVariant; size: () => ToggleSize } | undefined>(
-		"toggle-group"
+		"toggle-group",
 	);
 	const resolvedVariant = $derived(variant ?? ctx?.variant() ?? "default");
 	const resolvedSize = $derived(size ?? ctx?.size() ?? "default");
@@ -32,7 +32,7 @@
 	class={cn(
 		toggleVariants({ variant: resolvedVariant, size: resolvedSize }),
 		"min-w-0 flex-1 shrink-0 rounded-md shadow-none",
-		className
+		className,
 	)}
 	{...restProps}
 />

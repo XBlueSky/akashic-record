@@ -19,28 +19,28 @@
  * exercises the cookie_secure=true branch via a temporary backend
  * restart.
  */
-import { test, expect } from '@playwright/test';
-import { seedSession } from '../fixtures/seed';
-import { assertCookieAttributeParity } from '../fixtures/parity';
+import { test, expect } from "@playwright/test";
+import { seedSession } from "../fixtures/seed";
+import { assertCookieAttributeParity } from "../fixtures/parity";
 
-const BACKEND = process.env.PLAYWRIGHT_BACKEND_URL ?? 'http://localhost:13001';
-const EXPECTED_SECURE = (process.env.E2E_EXPECTED_SECURE ?? 'false') === 'true';
+const BACKEND = process.env.PLAYWRIGHT_BACKEND_URL ?? "http://localhost:13001";
+const EXPECTED_SECURE = (process.env.E2E_EXPECTED_SECURE ?? "false") === "true";
 
 test.describe(`Path C — login → logout cookie parity (expectedSecure=${EXPECTED_SECURE})`, () => {
-  test('logout Set-Cookie attributes match login Set-Cookie', async ({ request }) => {
-    // 1. Seed a session — capture login Set-Cookie verbatim.
-    const { apiKey, setCookieHeader: loginSetCookie } = await seedSession(request);
+	test("logout Set-Cookie attributes match login Set-Cookie", async ({ request }) => {
+		// 1. Seed a session — capture login Set-Cookie verbatim.
+		const { apiKey, setCookieHeader: loginSetCookie } = await seedSession(request);
 
-    // 2. Call the REAL logout handler with the cookie attached.
-    const logoutResp = await request.post(`${BACKEND}/api/v1/auth/logout`, {
-      headers: { Cookie: `ak_session=${apiKey}` },
-    });
-    expect(logoutResp.status()).toBeLessThan(400);
+		// 2. Call the REAL logout handler with the cookie attached.
+		const logoutResp = await request.post(`${BACKEND}/api/v1/auth/logout`, {
+			headers: { Cookie: `ak_session=${apiKey}` },
+		});
+		expect(logoutResp.status()).toBeLessThan(400);
 
-    const logoutSetCookie = logoutResp.headers()['set-cookie'];
-    expect(logoutSetCookie, 'logout response must include Set-Cookie').toBeTruthy();
+		const logoutSetCookie = logoutResp.headers()["set-cookie"];
+		expect(logoutSetCookie, "logout response must include Set-Cookie").toBeTruthy();
 
-    // 3. Parity check.
-    assertCookieAttributeParity(loginSetCookie, logoutSetCookie!, EXPECTED_SECURE);
-  });
+		// 3. Parity check.
+		assertCookieAttributeParity(loginSetCookie, logoutSetCookie!, EXPECTED_SECURE);
+	});
 });

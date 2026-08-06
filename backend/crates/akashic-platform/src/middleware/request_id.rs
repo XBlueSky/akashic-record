@@ -107,6 +107,16 @@ where
     }
 }
 
+// All four tests below exercise the same `tracing::info_span!("http_request",
+// ..)` callsite (via `app()`). `request_id_is_recorded_on_the_span` installs
+// a scoped `tracing::subscriber::with_default` capturing layer to inspect
+// that span's fields; tracing's per-callsite interest cache is process-global,
+// so running these tests concurrently races the cache (verified: each test
+// passes reliably alone, but `request_id_is_recorded_on_the_span` fails
+// intermittently — sometimes deterministically — when run alongside its
+// siblings under default parallelism). `#[serial_test::serial]` forces this
+// module's tests to run one at a time, matching the pattern used elsewhere in
+// this workspace for tests that touch process-wide shared state.
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -127,6 +137,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn generates_v7_when_no_incoming_header() {
         let resp = app()
             .oneshot(
@@ -152,6 +163,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn honors_valid_incoming_header() {
         let resp = app()
             .oneshot(
@@ -168,6 +180,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn replaces_invalid_incoming_with_v7() {
         let too_long = "a".repeat(MAX_LEN + 1);
         let resp = app()
@@ -241,6 +254,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn request_id_is_recorded_on_the_span() {
         let sink: Captured = Arc::new(Mutex::new(HashMap::new()));
         let subscriber = tracing_subscriber::registry().with(CaptureLayer { sink: sink.clone() });

@@ -2,7 +2,7 @@
  * cleared on leave. URL-derived state everywhere else — this exists only
  * because the top bar lives one layout above the version segment. */
 class DocsHeaderState {
-  stamp = $state<string | null>(null);
+	stamp = $state<string | null>(null);
 }
 
 export const docsHeader = new DocsHeaderState();

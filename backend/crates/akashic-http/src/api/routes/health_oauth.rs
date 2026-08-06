@@ -129,6 +129,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn health_oauth_returns_503_when_fail() {
         let server = MockServer::start().await;
         Mock::given(wm_method("GET"))
@@ -155,6 +156,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn health_oauth_requires_session() {
         let server = MockServer::start().await;
         let state = build_state_with_gitlab_mock(server.uri()).await;
@@ -170,6 +172,7 @@ mod tests {
     }
 
     #[tokio::test]
+    #[serial_test::serial]
     async fn health_oauth_caches_for_60_seconds() {
         let server = MockServer::start().await;
         Mock::given(wm_method("GET"))

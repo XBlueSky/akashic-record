@@ -32,13 +32,12 @@
  produces svelte-check's "union type too complex to represent" error. The
  binding itself stays fully type-safe at the call site.
 -->
+<!-- eslint-disable @typescript-eslint/no-explicit-any -- vendored shadcn-svelte/bits-ui pattern, see comment above -->
 <ToggleGroupPrimitive.Root
 	bind:ref
 	bind:value
 	data-slot="toggle-group"
-	class={cn(
-		"group/toggle-group flex w-fit items-center gap-1",
-		className
-	)}
+	class={cn("group/toggle-group flex w-fit items-center gap-1", className)}
 	{...restProps as any}
 />
+<!-- eslint-enable @typescript-eslint/no-explicit-any -->

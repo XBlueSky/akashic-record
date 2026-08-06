@@ -1,0 +1,405 @@
+# CI pipeline — implements docs/operations/ci-gates.md (GitHub Actions
+# edition). 10 required-to-merge jobs in 4 conceptual stages:
+#   secrets → check → audit → test
+# expressed with `needs:`. Every job runs on every PR — no path
+# filters, because each job is a required branch-protection context
+# and a skipped required check blocks the merge forever.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  GITLEAKS_VERSION: "8.30.1"
+
+jobs:
+  secrets-scan:
+    name: secrets-scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # scan full committed history
+      - name: Install gitleaks
+        run: |
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" -o /tmp/gitleaks.tgz
+          tar -xzf /tmp/gitleaks.tgz -C /tmp gitleaks
+          sudo install /tmp/gitleaks /usr/local/bin/gitleaks
+      - name: Scan committed history
+        run: gitleaks git --config .gitleaks.toml --no-banner --redact --exit-code 1 .
+
+  backend-check:
+    name: backend-check
+    needs: secrets-scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    defaults:
+      run:
+        working-directory: backend
+    # auth::{account,mcp_oauth,oauth_device}, api::routes::health_oauth, and
+    # api::extractors idempotency tests connect to a live Postgres + Neo4j
+    # (akashic_test_support::{test_pg_pool,build_app_state} — the same
+    # defaults the dev compose stack exposes) rather than testcontainers.
+    # akashic-ingestion's community/summarize.rs + tests/corpus_derive.rs
+    # need the FULL schema (documents/chunks/sections/communities/...) —
+    # provisioned below via `akashic-server migrate up`, same as the
+    # persistent dev stack these tests were written against.
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: akashic
+          POSTGRES_PASSWORD: akashic_secret
+          POSTGRES_DB: akashic
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd="pg_isready -U akashic"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+      neo4j:
+        image: neo4j:5-community
+        env:
+          NEO4J_AUTH: neo4j/akashic_secret
+        ports:
+          - 7687:7687
+        options: >-
+          --health-cmd="wget --no-verbose --tries=1 --spider http://localhost:7474 || exit 1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    env:
+      DATABASE_URL: postgres://akashic:akashic_secret@localhost:5433/akashic
+      NEO4J_URI: bolt://localhost:7687
+      NEO4J_USER: neo4j
+      NEO4J_PASSWORD: akashic_secret
+      # `migrate up` only needs EmbeddingProvider::dimensions() (a static
+      # lookup), never embed() — the "openai" provider computes it
+      # synchronously from the model name with no HTTP call, unlike
+      # "local" (default), which would download MiniLM from HF Hub.
+      # Matches docker-compose.test.yml's same workaround for backend-test.
+      EMBEDDING_PROVIDER: openai
+      EMBEDDING_API_KEY: ci-unused-embedding-key
+    steps:
+      - uses: actions/checkout@v7
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: backend
+          shared-key: backend
+      - run: cargo fmt --all --check
+      - run: cargo clippy --workspace --all-targets -- -D warnings
+      - name: Apply full schema (Postgres + Neo4j) to the service containers
+        run: cargo run -p akashic-server --bin akashic-server -- migrate up
+      - run: cargo test --workspace
+
+  frontend-check:
+    name: frontend-check
+    needs: secrets-scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      # npm ci previously failed deterministically with npm's "Exit handler
+      # never called!" (npm/cli#4028) — root cause was package-lock.json
+      # "resolved" URLs pointing at an internal registry unreachable from
+      # this runner (fixed: public registry pinned + lockfile regenerated,
+      # see frontend/.npmrc). --no-audit --no-fund removes two more network
+      # round-trips npm ci doesn't need. One retry remains as a safety net
+      # for genuine transient registry.npmjs.org flakes; on failure the
+      # actual npm debug log is dumped so a real recurrence is diagnosable
+      # instead of guessed at.
+      - name: npm ci
+        id: npm_ci
+        run: npm ci --no-audit --no-fund
+        continue-on-error: true
+      - name: Dump npm debug log (npm ci failed)
+        if: steps.npm_ci.outcome == 'failure'
+        run: |
+          log="$(ls -t "$HOME/.npm/_logs"/*-debug-*.log 2>/dev/null | head -1)"
+          echo "npm debug log: ${log:-none found}"
+          [ -n "$log" ] && tail -n 300 "$log" || true
+      - name: npm ci (retry once)
+        if: steps.npm_ci.outcome == 'failure'
+        run: |
+          rm -rf node_modules
+          npm cache clean --force
+          npm ci --no-audit --no-fund
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm test
+      - run: npm run check
+      - run: npm run build
+
+  prod-compose-config:
+    name: prod-compose-config
+    needs: secrets-scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - run: ./scripts/prod-compose-config-check.sh
+
+  backend-rate-limit-smoke:
+    name: backend-rate-limit-smoke
+    needs: secrets-scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v7
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: backend
+          shared-key: backend
+      - run: cargo test -p akashic-platform rate_limit
+
+  backend-mcp-auth-smoke:
+    name: backend-mcp-auth-smoke
+    needs: secrets-scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: backend
+    # mcp_oauth's token_exchange tests are DB-backed (see backend-check
+    # comment above) — same service containers, same reasoning.
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: akashic
+          POSTGRES_PASSWORD: akashic_secret
+          POSTGRES_DB: akashic
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd="pg_isready -U akashic"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+      neo4j:
+        image: neo4j:5-community
+        env:
+          NEO4J_AUTH: neo4j/akashic_secret
+        ports:
+          - 7687:7687
+        options: >-
+          --health-cmd="wget --no-verbose --tries=1 --spider http://localhost:7474 || exit 1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    env:
+      DATABASE_URL: postgres://akashic:akashic_secret@localhost:5433/akashic
+      NEO4J_URI: bolt://localhost:7687
+      NEO4J_USER: neo4j
+      NEO4J_PASSWORD: akashic_secret
+    steps:
+      - uses: actions/checkout@v7
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: backend
+          shared-key: backend
+      - run: cargo test -p akashic-mcp mcp_middleware
+      - run: cargo test -p akashic-http --lib mcp_oauth
+
+  frontend-audit:
+    name: frontend-audit
+    needs: secrets-scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      # npm ci previously failed deterministically with npm's "Exit handler
+      # never called!" (npm/cli#4028) — root cause was package-lock.json
+      # "resolved" URLs pointing at an internal registry unreachable from
+      # this runner (fixed: public registry pinned + lockfile regenerated,
+      # see frontend/.npmrc). --no-audit --no-fund removes two more network
+      # round-trips npm ci doesn't need. One retry remains as a safety net
+      # for genuine transient registry.npmjs.org flakes; on failure the
+      # actual npm debug log is dumped so a real recurrence is diagnosable
+      # instead of guessed at.
+      - name: npm ci
+        id: npm_ci
+        run: npm ci --no-audit --no-fund
+        continue-on-error: true
+      - name: Dump npm debug log (npm ci failed)
+        if: steps.npm_ci.outcome == 'failure'
+        run: |
+          log="$(ls -t "$HOME/.npm/_logs"/*-debug-*.log 2>/dev/null | head -1)"
+          echo "npm debug log: ${log:-none found}"
+          [ -n "$log" ] && tail -n 300 "$log" || true
+      - name: npm ci (retry once)
+        if: steps.npm_ci.outcome == 'failure'
+        run: |
+          rm -rf node_modules
+          npm cache clean --force
+          npm ci --no-audit --no-fund
+      - run: npm run audit
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: frontend-audit-report
+          path: frontend/.audit-output.json
+
+  backend-audit:
+    name: backend-audit
+    needs: secrets-scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: backend
+          shared-key: backend
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-audit
+      - name: Audit-gate unit tests
+        run: npm ci --prefix backend/scripts && npm test --prefix backend/scripts
+      - name: Run cargo audit through the gate
+        working-directory: backend
+        run: cargo audit --json | node scripts/audit-gate-rs.mjs
+
+  frontend-e2e:
+    name: frontend-e2e
+    needs:
+      [
+        backend-check,
+        frontend-check,
+        prod-compose-config,
+        backend-rate-limit-smoke,
+        backend-mcp-auth-smoke,
+        frontend-audit,
+        backend-audit,
+      ]
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+      - name: Free disk space
+        run: sudo rm -rf /usr/local/lib/android /opt/hostedtoolcache/CodeQL /usr/share/dotnet || true
+      - name: Build and start test stack
+        run: docker compose -f docker-compose.test.yml up -d --wait --build
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      # npm ci previously failed deterministically with npm's "Exit handler
+      # never called!" (npm/cli#4028) — root cause was package-lock.json
+      # "resolved" URLs pointing at an internal registry unreachable from
+      # this runner (fixed: public registry pinned + lockfile regenerated,
+      # see frontend/.npmrc). --no-audit --no-fund removes two more network
+      # round-trips npm ci doesn't need. One retry remains as a safety net
+      # for genuine transient registry.npmjs.org flakes; on failure the
+      # actual npm debug log is dumped so a real recurrence is diagnosable
+      # instead of guessed at.
+      - name: npm ci
+        id: npm_ci
+        run: npm ci --no-audit --no-fund
+        working-directory: frontend
+        continue-on-error: true
+      - name: Dump npm debug log (npm ci failed)
+        if: steps.npm_ci.outcome == 'failure'
+        working-directory: frontend
+        run: |
+          log="$(ls -t "$HOME/.npm/_logs"/*-debug-*.log 2>/dev/null | head -1)"
+          echo "npm debug log: ${log:-none found}"
+          [ -n "$log" ] && tail -n 300 "$log" || true
+      - name: npm ci (retry once)
+        if: steps.npm_ci.outcome == 'failure'
+        run: |
+          rm -rf node_modules
+          npm cache clean --force
+          npm ci --no-audit --no-fund
+        working-directory: frontend
+      - run: npm run e2e
+        working-directory: frontend
+      - name: Collect compose logs
+        if: failure()
+        run: docker compose -f docker-compose.test.yml logs --no-color > compose-logs.txt
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: frontend-e2e-artifacts
+          path: |
+            frontend/playwright-report/
+            compose-logs.txt
+      - name: Tear down test stack
+        if: always()
+        run: docker compose -f docker-compose.test.yml down -v
+
+  mcp-contract:
+    name: mcp-contract
+    needs:
+      [
+        backend-check,
+        frontend-check,
+        prod-compose-config,
+        backend-rate-limit-smoke,
+        backend-mcp-auth-smoke,
+        frontend-audit,
+        backend-audit,
+      ]
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+      - name: Free disk space
+        run: sudo rm -rf /usr/local/lib/android /opt/hostedtoolcache/CodeQL /usr/share/dotnet || true
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: backend
+          shared-key: backend
+      - name: Build and start test stack
+        run: docker compose -f docker-compose.test.yml up -d --wait --build
+      - name: Run MCP contract tests
+        working-directory: backend
+        env:
+          TEST_DATABASE_URL: postgres://akashic:akashic@localhost:55432/akashic
+          TEST_NEO4J_URI: bolt://localhost:57687
+          TEST_NEO4J_USER: neo4j
+          TEST_NEO4J_PASSWORD: akashic-test
+          TEST_MCP_URL: http://localhost:13002
+        run: cargo test -p akashic-server --features test-fixtures --test mcp_contract --release
+      - name: Collect compose logs
+        if: failure()
+        run: docker compose -f docker-compose.test.yml logs --no-color > compose-logs.txt
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: mcp-contract-compose-logs
+          path: compose-logs.txt
+      - name: Tear down test stack
+        if: always()
+        run: docker compose -f docker-compose.test.yml down -v

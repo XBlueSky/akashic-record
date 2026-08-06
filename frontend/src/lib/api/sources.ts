@@ -8,7 +8,7 @@ import { get } from "./http.js";
 import type { Source, SourceOverview, SourcesOverviewResponse } from "../types/index.js";
 
 export function fetchSourcesOverview(): Promise<SourcesOverviewResponse> {
-  return get<SourcesOverviewResponse>("/sources/overview");
+	return get<SourcesOverviewResponse>("/sources/overview");
 }
 
 /**
@@ -22,14 +22,14 @@ export function fetchSourcesOverview(): Promise<SourcesOverviewResponse> {
  * to "".
  */
 export function sourceFromOverview(s: SourceOverview): Source {
-  return {
-    name: s.name,
-    url: "",
-    source_type: s.source_type,
-    status: s.status,
-    chunk_count: s.chunk_count,
-    last_ingested_at: s.last_synced_at,
-  };
+	return {
+		name: s.name,
+		url: "",
+		source_type: s.source_type,
+		status: s.status,
+		chunk_count: s.chunk_count,
+		last_ingested_at: s.last_synced_at,
+	};
 }
 
 /**
@@ -40,6 +40,6 @@ export function sourceFromOverview(s: SourceOverview): Source {
  * and adapt its `{ sources: SourceOverview[] }` payload to `Source[]`.
  */
 export async function fetchAllSources(): Promise<Source[]> {
-  const res = await get<SourcesOverviewResponse>("/sources/overview");
-  return res.sources.map(sourceFromOverview);
+	const res = await get<SourcesOverviewResponse>("/sources/overview");
+	return res.sources.map(sourceFromOverview);
 }

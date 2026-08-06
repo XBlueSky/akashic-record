@@ -23,51 +23,51 @@ export const DEFAULT_MAX_CONNECTIONS = 50;
 // ---------------------------------------------------------------------------
 
 export interface Vec3 {
-  x: number;
-  y: number;
-  z: number;
+	x: number;
+	y: number;
+	z: number;
 }
 
 export interface ParticleData {
-  x: number;
-  y: number;
-  z: number;
-  vx: number;
-  vy: number;
-  vz: number;
-  /** Visual radius (world units). */
-  radius: number;
-  colorIdx: number;
-  /** Phase offset for pulsing animation (radians). */
-  phase: number;
+	x: number;
+	y: number;
+	z: number;
+	vx: number;
+	vy: number;
+	vz: number;
+	/** Visual radius (world units). */
+	radius: number;
+	colorIdx: number;
+	/** Phase offset for pulsing animation (radians). */
+	phase: number;
 }
 
 export interface EdgeCandidate {
-  a: number;
-  b: number;
-  dist: number;
+	a: number;
+	b: number;
+	dist: number;
 }
 
 export interface Connection {
-  a: number;
-  b: number;
-  phase: number;
-  age: number;
-  lifespan: number;
+	a: number;
+	b: number;
+	phase: number;
+	age: number;
+	lifespan: number;
 }
 
 export interface ConstellationOpts {
-  particleCount?: number;
-  sphereRadius?: number;
-  driftSpeed?: number;
-  connectionDist?: number;
-  maxConnections?: number;
-  colorCount?: number;
+	particleCount?: number;
+	sphereRadius?: number;
+	driftSpeed?: number;
+	connectionDist?: number;
+	maxConnections?: number;
+	colorCount?: number;
 }
 
 export interface Constellation {
-  particles: ParticleData[];
-  connections: Connection[];
+	particles: ParticleData[];
+	connections: Connection[];
 }
 
 // ---------------------------------------------------------------------------
@@ -79,47 +79,47 @@ export interface Constellation {
  * `sphereRadius`.  Position and velocity logic ported verbatim from legacy.
  */
 export function buildParticles(
-  count: number = DEFAULT_PARTICLE_COUNT,
-  sphereRadius: number = DEFAULT_SPHERE_RADIUS,
-  driftSpeed: number = DEFAULT_DRIFT_SPEED,
-  colorCount: number = 5,
+	count: number = DEFAULT_PARTICLE_COUNT,
+	sphereRadius: number = DEFAULT_SPHERE_RADIUS,
+	driftSpeed: number = DEFAULT_DRIFT_SPEED,
+	colorCount: number = 5,
 ): ParticleData[] {
-  const particles: ParticleData[] = [];
+	const particles: ParticleData[] = [];
 
-  for (let i = 0; i < count; i++) {
-    // Rejection-sample a point inside the unit sphere, then scale.
-    let x: number, y: number, z: number;
-    do {
-      x = (Math.random() - 0.5) * 2;
-      y = (Math.random() - 0.5) * 2;
-      z = (Math.random() - 0.5) * 2;
-    } while (x * x + y * y + z * z > 1);
+	for (let i = 0; i < count; i++) {
+		// Rejection-sample a point inside the unit sphere, then scale.
+		let x: number, y: number, z: number;
+		do {
+			x = (Math.random() - 0.5) * 2;
+			y = (Math.random() - 0.5) * 2;
+			z = (Math.random() - 0.5) * 2;
+		} while (x * x + y * y + z * z > 1);
 
-    // Size distribution: mostly small, some medium, a few large — verbatim.
-    const sizeRoll = Math.random();
-    let radius: number;
-    if (sizeRoll < 0.6) {
-      radius = 0.06 + Math.random() * 0.06;       // small
-    } else if (sizeRoll < 0.9) {
-      radius = 0.12 + Math.random() * 0.1;        // medium
-    } else {
-      radius = 0.22 + Math.random() * 0.12;       // large "stars"
-    }
+		// Size distribution: mostly small, some medium, a few large — verbatim.
+		const sizeRoll = Math.random();
+		let radius: number;
+		if (sizeRoll < 0.6) {
+			radius = 0.06 + Math.random() * 0.06; // small
+		} else if (sizeRoll < 0.9) {
+			radius = 0.12 + Math.random() * 0.1; // medium
+		} else {
+			radius = 0.22 + Math.random() * 0.12; // large "stars"
+		}
 
-    particles.push({
-      x: x * sphereRadius,
-      y: y * sphereRadius,
-      z: z * sphereRadius,
-      vx: (Math.random() - 0.5) * driftSpeed * 2,
-      vy: (Math.random() - 0.5) * driftSpeed * 2,
-      vz: (Math.random() - 0.5) * driftSpeed * 2,
-      radius,
-      colorIdx: Math.floor(Math.random() * colorCount),
-      phase: Math.random() * Math.PI * 2,
-    });
-  }
+		particles.push({
+			x: x * sphereRadius,
+			y: y * sphereRadius,
+			z: z * sphereRadius,
+			vx: (Math.random() - 0.5) * driftSpeed * 2,
+			vy: (Math.random() - 0.5) * driftSpeed * 2,
+			vz: (Math.random() - 0.5) * driftSpeed * 2,
+			radius,
+			colorIdx: Math.floor(Math.random() * colorCount),
+			phase: Math.random() * Math.PI * 2,
+		});
+	}
 
-  return particles;
+	return particles;
 }
 
 // ---------------------------------------------------------------------------
@@ -130,10 +130,10 @@ export function buildParticles(
  * Returns Euclidean distance between two Vec3 points.
  */
 export function euclideanDist(a: Vec3, b: Vec3): number {
-  const dx = a.x - b.x;
-  const dy = a.y - b.y;
-  const dz = a.z - b.z;
-  return Math.sqrt(dx * dx + dy * dy + dz * dz);
+	const dx = a.x - b.x;
+	const dy = a.y - b.y;
+	const dz = a.z - b.z;
+	return Math.sqrt(dx * dx + dy * dy + dz * dz);
 }
 
 /**
@@ -155,26 +155,26 @@ export function euclideanDist(a: Vec3, b: Vec3): number {
  * @param existingPairs  Set of "a-b" strings (a < b) to skip.
  */
 export function computeEdges(
-  positions: Vec3[],
-  connectionDist: number = DEFAULT_CONNECTION_DIST,
-  maxSlots: number = DEFAULT_MAX_CONNECTIONS,
-  existingPairs: Set<string> = new Set(),
+	positions: Vec3[],
+	connectionDist: number = DEFAULT_CONNECTION_DIST,
+	maxSlots: number = DEFAULT_MAX_CONNECTIONS,
+	existingPairs: Set<string> = new Set(),
 ): EdgeCandidate[] {
-  const n = positions.length;
-  const candidates: EdgeCandidate[] = [];
+	const n = positions.length;
+	const candidates: EdgeCandidate[] = [];
 
-  for (let i = 0; i < n; i++) {
-    for (let j = i + 1; j < n; j++) {
-      if (existingPairs.has(`${i}-${j}`)) continue;
-      const dist = euclideanDist(positions[i], positions[j]);
-      if (dist < connectionDist) {
-        candidates.push({ a: i, b: j, dist });
-      }
-    }
-  }
+	for (let i = 0; i < n; i++) {
+		for (let j = i + 1; j < n; j++) {
+			if (existingPairs.has(`${i}-${j}`)) continue;
+			const dist = euclideanDist(positions[i], positions[j]);
+			if (dist < connectionDist) {
+				candidates.push({ a: i, b: j, dist });
+			}
+		}
+	}
 
-  candidates.sort((a, b) => a.dist - b.dist);
-  return candidates.slice(0, maxSlots);
+	candidates.sort((a, b) => a.dist - b.dist);
+	return candidates.slice(0, maxSlots);
 }
 
 /**
@@ -183,13 +183,13 @@ export function computeEdges(
  * The random fields are intentionally non-deterministic (animation flavour).
  */
 export function edgesToConnections(candidates: EdgeCandidate[]): Connection[] {
-  return candidates.map((c) => ({
-    a: c.a,
-    b: c.b,
-    phase: Math.random() * Math.PI * 2,
-    age: 0,
-    lifespan: 3 + Math.random() * 5,
-  }));
+	return candidates.map((c) => ({
+		a: c.a,
+		b: c.b,
+		phase: Math.random() * Math.PI * 2,
+		age: 0,
+		lifespan: 3 + Math.random() * 5,
+	}));
 }
 
 // ---------------------------------------------------------------------------
@@ -202,18 +202,18 @@ export function edgesToConnections(candidates: EdgeCandidate[]): Connection[] {
  * injected positions.
  */
 export function buildConstellation(opts: ConstellationOpts = {}): Constellation {
-  const {
-    particleCount = DEFAULT_PARTICLE_COUNT,
-    sphereRadius = DEFAULT_SPHERE_RADIUS,
-    driftSpeed = DEFAULT_DRIFT_SPEED,
-    connectionDist = DEFAULT_CONNECTION_DIST,
-    maxConnections = DEFAULT_MAX_CONNECTIONS,
-    colorCount = 5,
-  } = opts;
+	const {
+		particleCount = DEFAULT_PARTICLE_COUNT,
+		sphereRadius = DEFAULT_SPHERE_RADIUS,
+		driftSpeed = DEFAULT_DRIFT_SPEED,
+		connectionDist = DEFAULT_CONNECTION_DIST,
+		maxConnections = DEFAULT_MAX_CONNECTIONS,
+		colorCount = 5,
+	} = opts;
 
-  const particles = buildParticles(particleCount, sphereRadius, driftSpeed, colorCount);
-  const candidates = computeEdges(particles, connectionDist, maxConnections);
-  const connections = edgesToConnections(candidates);
+	const particles = buildParticles(particleCount, sphereRadius, driftSpeed, colorCount);
+	const candidates = computeEdges(particles, connectionDist, maxConnections);
+	const connections = edgesToConnections(candidates);
 
-  return { particles, connections };
+	return { particles, connections };
 }
