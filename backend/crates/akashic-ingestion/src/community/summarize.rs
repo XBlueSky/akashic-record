@@ -203,13 +203,7 @@ mod tests {
     /// the same level must each resolve to their OWN PG row by member identity,
     /// not collapse onto the same `member_count` row (the old bug swapped one
     /// community's summary/embedding onto the other).
-    ///
-    /// Needs the FULL schema (`communities`/`community_members`/`modules`),
-    /// not just the narrow auth+corpus tables `akashic_test_support` bootstraps
-    /// (see that crate's comment on why it deliberately skips `init_schema`).
-    /// Same tier as every other live-DB test in this crate — run with `--ignored`.
     #[tokio::test]
-    #[ignore = "requires live Postgres with the full schema; run with --ignored"]
     async fn resolve_community_id_disambiguates_same_size_communities() {
         let pool = test_pool().await;
         let community: Arc<dyn CommunityRepo> = Arc::new(PgCommunityRepo::new(pool.clone()));
