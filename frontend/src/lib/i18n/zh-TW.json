@@ -256,6 +256,7 @@
 		"complete": "索引完成：已索引 {chunks} 個區塊",
 		"codeMap": "程式碼地圖",
 		"notesMode": "筆記",
+		"timeline": "時間軸",
 		"graphTab": "圖譜",
 		"modulesTab": "模組",
 		"all": "全部",

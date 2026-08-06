@@ -256,6 +256,7 @@
 		"complete": "Ingestion complete: {chunks} chunks indexed",
 		"codeMap": "Code Map",
 		"notesMode": "Notes",
+		"timeline": "Timeline",
 		"graphTab": "Graph",
 		"modulesTab": "Modules",
 		"all": "All",
