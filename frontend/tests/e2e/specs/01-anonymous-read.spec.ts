@@ -2,7 +2,7 @@
  * Path A — anonymous read journey.
  *
  * Drives the unauthenticated user flow: landing page → click the seeded
- * `akashic-record` repository card → repo detail view mounts with the
+ * `akashic-RECORD-typo` repository card → repo detail view mounts with the
  * 3-tab navigation (Timeline / Graph / Modules) → the default route lands
  * on Timeline (the notes list) where the seeded note card is visible →
  * switch to the Graph tab → macro graph SVG renders with the repository's
@@ -67,7 +67,7 @@ test.describe("Path A — anonymous read journey", () => {
 		await page.goto("/", { waitUntil: "domcontentloaded" });
 
 		// 2. Repo card visible + clickable.
-		const repoCard = page.locator(".repo-card", { hasText: "akashic-record" }).first();
+		const repoCard = page.locator(".repo-card", { hasText: "akashic-RECORD-typo" }).first();
 		await expect(repoCard).toBeVisible({ timeout: 10_000 });
 		await repoCard.click();
 
@@ -93,7 +93,7 @@ test.describe("Path A — anonymous read journey", () => {
 		//    layer renders just the repo node — that's enough to prove the
 		//    graph endpoint resolved.
 		await repoNav.getByRole("link", { name: "Graph" }).click();
-		await expect(page).toHaveURL(/\/r\/akashic-record\/graph/);
+		await expect(page).toHaveURL(/\/r\/akashic-RECORD-typo\/graph/);
 		await expect(page.locator("svg .node-group").first()).toBeVisible({ timeout: 10_000 });
 
 		// 6. Zero unexpected auth failures throughout the journey.
