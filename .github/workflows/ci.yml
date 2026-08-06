@@ -46,6 +46,40 @@ jobs:
     defaults:
       run:
         working-directory: backend
+    # auth::{account,mcp_oauth,oauth_device}, api::routes::health_oauth, and
+    # api::extractors idempotency tests connect to a live Postgres + Neo4j
+    # (akashic_test_support::{test_pg_pool,build_app_state} — the same
+    # defaults the dev compose stack exposes) rather than testcontainers.
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: akashic
+          POSTGRES_PASSWORD: akashic_secret
+          POSTGRES_DB: akashic
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd="pg_isready -U akashic"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+      neo4j:
+        image: neo4j:5-community
+        env:
+          NEO4J_AUTH: neo4j/akashic_secret
+        ports:
+          - 7687:7687
+        options: >-
+          --health-cmd="wget --no-verbose --tries=1 --spider http://localhost:7474 || exit 1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    env:
+      DATABASE_URL: postgres://akashic:akashic_secret@localhost:5433/akashic
+      NEO4J_URI: bolt://localhost:7687
+      NEO4J_USER: neo4j
+      NEO4J_PASSWORD: akashic_secret
     steps:
       - uses: actions/checkout@v7
       - uses: Swatinem/rust-cache@v2
@@ -111,6 +145,38 @@ jobs:
     defaults:
       run:
         working-directory: backend
+    # mcp_oauth's token_exchange tests are DB-backed (see backend-check
+    # comment above) — same service containers, same reasoning.
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: akashic
+          POSTGRES_PASSWORD: akashic_secret
+          POSTGRES_DB: akashic
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd="pg_isready -U akashic"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+      neo4j:
+        image: neo4j:5-community
+        env:
+          NEO4J_AUTH: neo4j/akashic_secret
+        ports:
+          - 7687:7687
+        options: >-
+          --health-cmd="wget --no-verbose --tries=1 --spider http://localhost:7474 || exit 1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    env:
+      DATABASE_URL: postgres://akashic:akashic_secret@localhost:5433/akashic
+      NEO4J_URI: bolt://localhost:7687
+      NEO4J_USER: neo4j
+      NEO4J_PASSWORD: akashic_secret
     steps:
       - uses: actions/checkout@v7
       - uses: Swatinem/rust-cache@v2
