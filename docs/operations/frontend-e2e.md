@@ -1,6 +1,6 @@
 # Frontend e2e — Operator Runbook
 
-D3's Playwright harness exercises three golden paths against an
+D3's Playwright harness exercises four golden paths against an
 isolated test stack defined by `docker-compose.test.yml`. This
 document covers the local + CI workflows and the threat model behind
 the `test-fixtures` cargo feature.
@@ -49,7 +49,7 @@ hardcoded in the `e2e`/`e2e:headed`/`e2e:debug` scripts below. When
 bumping one, bump the other in the same commit.
 
 ```bash
-# Default — all three golden paths, headless:
+# Default — all four golden paths, headless:
 npm run e2e
 
 # Single spec:
@@ -112,11 +112,12 @@ After a failing run:
 
 ## CI failure triage
 
-The GitLab `frontend-e2e` job uploads `playwright-report/`,
+The GitHub Actions `frontend-e2e` job uploads `playwright-report/`,
 `test-results/`, and `compose-logs.txt` as artifacts on failure. To
 reproduce locally:
 
-1. Fetch the failing pipeline's artifact bundle.
+1. Fetch the failing run's artifact bundle from the Actions run page
+   ("Artifacts" section).
 2. Open `playwright-report/index.html` in a browser.
 3. For backend-side context, scan `compose-logs.txt` —
    `backend-test` logs include the live `resolve_gitlab_access` calls
@@ -134,6 +135,10 @@ Common failure modes and fixes:
   with `grep -n build_session_cookie backend/src/auth/web.rs`.
 - **Rate-limit 429 in combined runs** → ensure `RATE_LIMIT_ENABLED=false`
   is set on `backend-test` (it is by default in `docker-compose.test.yml`).
+- **macOS Docker Desktop: `neo4j-test` healthy but unreachable** → the
+  container can report a healthy status while its network attachment
+  is broken (no IP assigned). `docker restart <neo4j-test container>`
+  fixes it. Linux CI runners have not shown this failure mode.
 
 ## `test-fixtures` feature gate — threat model
 

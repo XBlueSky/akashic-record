@@ -80,7 +80,7 @@ on failure (Actions run page, "Artifacts" section):
 - `frontend-e2e`: `frontend-e2e-artifacts` = `frontend/playwright-report/`
   (HTML report) + `compose-logs.txt`
 - `mcp-contract`: `mcp-contract-compose-logs` = `compose-logs.txt`
-- `frontend-audit`: `frontend-audit-report` = `.audit-output.json`
+- `frontend-audit`: `frontend-audit-report` = `frontend/.audit-output.json`
 
 ### 2. Reproduce locally
 
