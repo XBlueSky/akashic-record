@@ -132,7 +132,13 @@ services:
     ports:
       - "18080:80"
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost/"]
+      # 127.0.0.1, not localhost — same reasoning as gitlab-mock above.
+      # frontend/nginx.conf's server block is `listen 80;` (no
+      # `default_server`), which doesn't match the exact pattern the stock
+      # nginx:alpine entrypoint script (10-listen-on-ipv6-by-default.sh)
+      # looks for before adding `listen [::]:80` to conf.d/default.conf, so
+      # this container is IPv4-only too.
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1/"]
       interval: 3s
       timeout: 3s
       retries: 30
