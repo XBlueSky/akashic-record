@@ -74,8 +74,9 @@ async fn run_check_oauth() -> anyhow::Result<()> {
 }
 
 async fn run_migrate_subcommand(sub: MigrateSub) -> anyhow::Result<()> {
-    // Subscriber must be installed before any tracing emit.
-    observability::install_subscriber();
+    // `main()` already installs the global subscriber unconditionally
+    // before CLI dispatch (below) — installing it again here panics
+    // (`tracing_subscriber::fmt()...init()` cannot be called twice).
     let cfg = match Config::from_env() {
         Ok(c) => c,
         Err(e) => {
