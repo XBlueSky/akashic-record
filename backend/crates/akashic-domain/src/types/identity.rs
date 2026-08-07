@@ -135,19 +135,6 @@ pub struct AuditEntryRow {
     pub response_summary: Option<String>,
 }
 
-/// A registered MCP OAuth client (RFC 7591 dynamic client registration,
-/// Task 3 — "MCP OAuth (一)").
-///
-/// Registered clients are always public clients: no secret is issued or
-/// stored, and `redirect_uris` is persisted as JSONB in `mcp_oauth_clients`.
-/// Returned by `OauthClientRepo::register_client` and `::get_client`.
-#[derive(Debug, Clone)]
-pub struct ClientRegistration {
-    pub client_id: uuid::Uuid,
-    pub client_name: Option<String>,
-    pub redirect_uris: Vec<String>,
-}
-
 /// Result of successfully redeeming an MCP OAuth authorization code
 /// (RFC 6749 §4.1.3, Task 4 — "MCP OAuth (二)").
 ///
@@ -158,13 +145,53 @@ pub struct ClientRegistration {
 /// token — a successful `consume_code` only proves the code was valid,
 /// unused, and unexpired, not that this specific token request is the one
 /// authorized to redeem it.
+///
+/// `client_id` is a CIMD `client_id` URL (spec §4, MCP refactor 2026-08-07),
+/// not a database identifier — the `/oauth/token` handler compares it against
+/// the request's `client_id` with plain string equality (`==`), byte-for-byte.
 #[derive(Debug, Clone)]
 pub struct ConsumedOauthCode {
-    pub client_id: uuid::Uuid,
+    pub client_id: String,
     pub user_id: i64,
     pub user_login: String,
     pub code_challenge: String,
     pub redirect_uri: String,
+}
+
+/// Input to `OauthConsentRepo::issue_pending` (spec §4, MCP refactor
+/// 2026-08-07): the CIMD-validated client + PKCE/state metadata carried from
+/// `GET /oauth/authorize` into the pending-consent row.
+///
+/// `client_id` is the CIMD URL the client presented (not the document's
+/// self-reported `client_id`, though CIMD validation already requires the two
+/// to match modulo trailing slash — see `cimd::CimdFetcher::fetch_and_validate`)
+/// so it round-trips byte-for-byte into `OauthCodeRepo::issue_code` and, from
+/// there, into the `/oauth/token` handler's string comparison.
+#[derive(Debug, Clone)]
+pub struct PendingConsentInput {
+    pub client_id: String,
+    pub client_name: Option<String>,
+    pub redirect_uri: String,
+    pub oauth_state: String,
+    pub code_challenge: String,
+}
+
+/// Result of successfully redeeming a pending consent
+/// (`OauthConsentRepo::redeem_pending`, spec §4, MCP refactor 2026-08-07).
+///
+/// Same fields as [`PendingConsentInput`] plus the session identity
+/// (`user_id`/`user_login`) the row was bound to at `issue_pending` time —
+/// the `/oauth/authorize/consent` handler needs these to call
+/// `OauthCodeRepo::issue_code` on approval.
+#[derive(Debug, Clone)]
+pub struct PendingConsent {
+    pub client_id: String,
+    pub client_name: Option<String>,
+    pub redirect_uri: String,
+    pub oauth_state: String,
+    pub code_challenge: String,
+    pub user_id: i64,
+    pub user_login: String,
 }
 
 /// Result from `DeviceFlowRepo::poll_device_token`.

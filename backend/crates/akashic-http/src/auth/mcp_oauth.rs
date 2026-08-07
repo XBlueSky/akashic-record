@@ -1,36 +1,49 @@
-//! MCP OAuth discovery + dynamic client registration — Task 3
-//! ("MCP OAuth (一)").
+//! MCP OAuth discovery + authorize/consent + token exchange.
 //!
-//! Implements the metadata half of MCP OAuth so a fresh MCP client (e.g.
-//! Claude Code) can discover this server's OAuth configuration and register
-//! itself with zero pre-shared secret — the kit's `.mcp.json` needs no token
-//! env var, Claude Code drives OAuth automatically once these endpoints are
-//! present. Task 4 adds the actual `/oauth/authorize` and `/oauth/token`
-//! handlers this metadata advertises; this task only advertises them.
+//! Task 3 shipped the metadata + dynamic client registration (RFC 7591)
+//! half; Task 4 added `/oauth/authorize` (no consent step) + `/oauth/token`.
+//! Task 5 (spec §4, MCP refactor 2026-08-07) replaces dynamic client
+//! registration with **Client ID Metadata Documents (CIMD, SEP-991)**: the
+//! `client_id` a client presents IS an `https://` URL, fetched and validated
+//! by `crate::auth::cimd::CimdFetcher` (Task 4's module — wired in here for
+//! the first time). `/oauth/authorize` no longer mints a code directly; it
+//! renders a consent screen (`GET`) that `POST /oauth/authorize/consent`
+//! redeems on approval, atomically and bound to the requesting user's
+//! session (CSRF defense — see `OauthConsentRepo`'s domain doc comment).
 //!
 //! - `GET /.well-known/oauth-protected-resource` — RFC 9728.
-//! - `GET /.well-known/oauth-authorization-server` — RFC 8414.
-//! - `POST /oauth/register` — RFC 7591 dynamic client registration (public
-//!   client only: no secret is ever issued, `token_endpoint_auth_method:
-//!   "none"`).
+//! - `GET /.well-known/oauth-authorization-server` — RFC 8414 (now
+//!   advertises `client_id_metadata_document_supported: true` instead of a
+//!   `registration_endpoint` — there is no more `/oauth/register`).
+//! - `GET /oauth/authorize` — RFC 6749 §4.1.1 + CIMD validation + PKCE
+//!   (RFC 7636); renders the consent screen.
+//! - `POST /oauth/authorize/consent` — redeems the consent, mints the
+//!   authorization code on approval.
+//! - `POST /oauth/token` — the paired `authorization_code` grant (mounted by
+//!   `oauth_device`'s dispatcher — see that module for why).
 //!
-//! All three routes are PUBLIC (no `require_auth`) and mounted via
-//! `auth::router()`, so they inherit the auth rate-limit class applied in
-//! `akashic_http::build_router`.
+//! All routes are PUBLIC (no `require_auth`) and mounted via `auth::router()`,
+//! so they inherit the auth rate-limit class applied in
+//! `akashic_http::build_router`. `/oauth/authorize` and
+//! `/oauth/authorize/consent` additionally require a WEB SESSION (cookie) —
+//! checked inside the handler, not via the `require_auth` middleware, since
+//! an unauthenticated `GET /oauth/authorize` must redirect to login rather
+//! than 401.
 
 use axum::{
     Json, Router,
-    extract::{Query, State},
+    extract::{Form, Query, State},
     http::{HeaderMap, StatusCode, Uri},
-    response::{IntoResponse, Redirect, Response},
+    response::{Html, IntoResponse, Redirect, Response},
     routing::{get, post},
 };
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 use sha2::{Digest, Sha256};
 
 use akashic_context::AppState;
+use akashic_domain::types::PendingConsentInput;
 
-/// Build the public MCP OAuth discovery + registration router.
+/// Build the public MCP OAuth discovery + authorize/consent router.
 pub fn public_router() -> Router<AppState> {
     Router::new()
         .route(
@@ -41,8 +54,8 @@ pub fn public_router() -> Router<AppState> {
             "/.well-known/oauth-authorization-server",
             get(authorization_server_metadata),
         )
-        .route("/oauth/register", post(register_client))
         .route("/oauth/authorize", get(authorize))
+        .route("/oauth/authorize/consent", post(consent))
 }
 
 /// Resolve this server's public base URL with no trailing slash, so every
@@ -65,20 +78,20 @@ fn protected_resource_body(base: &str) -> serde_json::Value {
     })
 }
 
-/// RFC 8414 authorization-server metadata body. `authorization_endpoint` and
-/// `token_endpoint` are advertised here even though Task 4 implements the
-/// handlers behind them — a discovering client is expected to read metadata
-/// before ever calling them.
+/// RFC 8414 authorization-server metadata body. `client_id_metadata_document_supported`
+/// (SEP-991) tells a discovering client it may present any `https://` URL as
+/// its `client_id` directly — there is no `registration_endpoint` to call
+/// first (Task 5 removed `/oauth/register`; CIMD replaces DCR).
 fn authorization_server_body(base: &str) -> serde_json::Value {
     serde_json::json!({
         "issuer": base,
         "authorization_endpoint": format!("{base}/oauth/authorize"),
         "token_endpoint": format!("{base}/oauth/token"),
-        "registration_endpoint": format!("{base}/oauth/register"),
         "response_types_supported": ["code"],
         "grant_types_supported": ["authorization_code"],
         "code_challenge_methods_supported": ["S256"],
         "token_endpoint_auth_methods_supported": ["none"],
+        "client_id_metadata_document_supported": true,
     })
 }
 
@@ -90,111 +103,34 @@ async fn authorization_server_metadata(State(state): State<AppState>) -> impl In
     Json(authorization_server_body(&base_url(&state)))
 }
 
-// ── dynamic client registration (RFC 7591) ───────────────────────────────────
+// ── CIMD fetcher holding (Task 4's module, wired in here — Task 5) ──────────
 
-/// `POST /oauth/register` request body (RFC 7591 §3.1, subset — only the
-/// two fields this server needs).
-#[derive(Debug, Deserialize)]
-struct RegisterRequest {
-    redirect_uris: Vec<String>,
-    client_name: Option<String>,
-}
-
-/// `POST /oauth/register` success response (RFC 7591 §3.2.1, subset — a
-/// public client, so no `client_secret`/`client_secret_expires_at`).
-#[derive(Debug, Serialize)]
-struct RegisterResponse {
-    client_id: String,
-    redirect_uris: Vec<String>,
-    client_name: Option<String>,
-    token_endpoint_auth_method: &'static str,
-}
-
-/// A redirect_uri is accepted ONLY if it is a loopback `http://` URI
-/// (`127.0.0.1`, `localhost`, or `::1`, any port/path) — the native/public
-/// client shape RFC 8252 §7.3 permits without a pre-registered exact host.
-/// Every other scheme, including arbitrary `https://<host>`, is rejected:
-/// this server's only MCP client is Claude Code, which always redirects to
-/// loopback, so an arbitrary-`https://` allowance has no legitimate use case
-/// and — because `/oauth/register` is public and unauthenticated while
-/// `/oauth/authorize` mints a code with no user consent step — it let an
-/// attacker register their own `https://` redirect_uri and steal a victim's
-/// authorization code (see
-/// `is_allowed_redirect_uri_rejects_arbitrary_https_token_theft_vector`).
-/// Restricting to loopback downgrades the residual risk to the standard,
-/// accepted native-app case: an attacker must already run code on the
-/// victim's own loopback.
+/// Process-lifetime `CimdFetcher`, lazily constructed from the FIRST
+/// `AppState` it sees. `CimdFetcher` cannot live on `AppState` itself:
+/// `AppState` is defined in `akashic-context`, and `cimd` lives in
+/// `akashic-http` — `akashic-context` does not (and should not) depend on
+/// `akashic-http`, so holding it there would create a reverse dependency
+/// (cycle). A module-static `OnceLock` gives the same "one instance, reused
+/// across requests" behavior without that cycle.
 ///
-/// Parses with `url::Url` rather than hand-rolled string splitting: a
-/// manual "everything before the first `/`, then split on the last `:`"
-/// approach cannot distinguish userinfo from host in an authority like
-/// `user:pass@host` (RFC 3986 §3.2) and was exploitable — see the
-/// `is_allowed_redirect_uri_rejects_userinfo_authority_bypass` regression
-/// test. `Url::host_str()` resolves the authority grammar correctly instead
-/// of guessing from string positions.
-fn is_allowed_redirect_uri(uri: &str) -> bool {
-    let Ok(parsed) = url::Url::parse(uri) else {
-        return false;
-    };
-    match parsed.scheme() {
-        "http" => matches!(parsed.host_str(), Some("127.0.0.1" | "localhost" | "[::1]")),
-        _ => false,
-    }
+/// Safety of the "first `AppState` wins" init: every `AppState` constructed
+/// within one process shares the same `Config` (or, in tests, a
+/// process-consistent test config — see `akashic-server/tests/common/mod.rs`'s
+/// `build_test_config`), so which specific `AppState` happens to win the
+/// race is immaterial — `mcp_cimd_allow_loopback` is identical either way.
+/// Unit/store tests below never go through this `OnceLock` — they either
+/// test pure functions directly or construct a `CimdFetcher` themselves
+/// (see `cimd.rs`'s own `#[cfg(test)]`).
+static CIMD: std::sync::OnceLock<crate::auth::cimd::CimdFetcher> = std::sync::OnceLock::new();
+
+fn cimd(state: &AppState) -> &'static crate::auth::cimd::CimdFetcher {
+    CIMD.get_or_init(|| crate::auth::cimd::CimdFetcher::new(state.config.mcp_cimd_allow_loopback))
 }
 
-/// `POST /oauth/register` — RFC 7591 dynamic client registration. Always
-/// registers a public client (`token_endpoint_auth_method: "none"`); no
-/// secret is issued or stored.
-async fn register_client(
-    State(state): State<AppState>,
-    Json(req): Json<RegisterRequest>,
-) -> impl IntoResponse {
-    if req.redirect_uris.is_empty()
-        || req
-            .redirect_uris
-            .iter()
-            .any(|u| !is_allowed_redirect_uri(u))
-    {
-        return (
-            StatusCode::BAD_REQUEST,
-            Json(serde_json::json!({
-                "error": "invalid_redirect_uri",
-                "error_description":
-                    "redirect_uris must be non-empty and each must be a loopback http://127.0.0.1|localhost|[::1] URI",
-            })),
-        )
-            .into_response();
-    }
-
-    match state
-        .auth_store
-        .register_oauth_client(req.redirect_uris, req.client_name)
-        .await
-    {
-        Ok(reg) => (
-            StatusCode::CREATED,
-            Json(RegisterResponse {
-                client_id: reg.client_id.to_string(),
-                redirect_uris: reg.redirect_uris,
-                client_name: reg.client_name,
-                token_endpoint_auth_method: "none",
-            }),
-        )
-            .into_response(),
-        Err(e) => {
-            tracing::warn!(event = "mcp_oauth_register_failed", error = %e);
-            (
-                StatusCode::INTERNAL_SERVER_ERROR,
-                Json(serde_json::json!({"error": "server_error"})),
-            )
-                .into_response()
-        }
-    }
-}
-
-// ── authorize + token exchange (RFC 6749 §4.1 + PKCE RFC 7636) — Task 4 ──────
+// ── authorize + consent + token exchange (RFC 6749 §4.1 + PKCE RFC 7636 + CIMD SEP-991) ──
 
 /// `GET /oauth/authorize` query parameters (RFC 6749 §4.1.1 + PKCE RFC 7636).
+/// `client_id` is a CIMD `https://` URL (spec §4), not an opaque identifier.
 #[derive(Debug, Deserialize)]
 struct AuthorizeQuery {
     response_type: String,
@@ -205,52 +141,62 @@ struct AuthorizeQuery {
     code_challenge_method: String,
 }
 
-/// `GET /oauth/authorize` — RFC 6749 §4.1.1 authorization request + PKCE
-/// (RFC 7636). Paired with [`token_exchange`] (mounted by `oauth_device`'s
-/// `/oauth/token` dispatcher — see that module for why) to complete the
-/// authorization-code flow a fresh MCP client (Claude Code) drives after
-/// discovering this server via Task 3's metadata endpoints.
+/// `GET /oauth/authorize` — RFC 6749 §4.1.1 authorization request + CIMD
+/// client validation (SEP-991) + PKCE (RFC 7636). On success this renders a
+/// consent screen instead of minting a code directly — [`consent`] (the
+/// paired `POST` handler below) does that, on approval.
 ///
-/// Error handling follows RFC 6749 §4.1.2.1 precisely: an unrecognized
-/// `client_id`, or a `redirect_uri` that is not EXACTLY one of that client's
-/// registered URIs, is NEVER redirected — those two checks are what make it
-/// safe to send the user anywhere at all, so failing either returns a 400
-/// directly instead of bouncing the browser to an unvalidated location.
-/// Every failure AFTER that point (bad `response_type`, bad/missing
-/// `code_challenge`/`code_challenge_method`) redirects back to the
-/// now-trusted `redirect_uri` with `?error=...&state=...`, per spec.
+/// Error handling follows RFC 6749 §4.1.2.1's spirit, extended for CIMD:
+/// EVERY check up to and including "does `redirect_uri` exactly match one of
+/// the CIMD document's `redirect_uris`" returns 400 directly, never a
+/// redirect — until the document is fetched and its `redirect_uris` list is
+/// checked, there is no trustworthy location to send the browser to. This is
+/// why `response_type`/`code_challenge_method`/`code_challenge` are checked
+/// BEFORE the CIMD fetch (Task 4 checked them after `client_id`/`redirect_uri`
+/// validation, when a redirect was already safe — that early-redirect target
+/// no longer exists pre-CIMD, so these structural checks moved ahead of it).
+/// Once CIMD + `redirect_uri` validation both pass, the trust boundary is
+/// fully established and failures downstream of it (server errors persisting
+/// the pending consent) fall back to `redirect_with_error`, matching the
+/// pre-CIMD precedent.
 async fn authorize(
     State(state): State<AppState>,
     Query(q): Query<AuthorizeQuery>,
     uri: Uri,
     headers: HeaderMap,
 ) -> Response {
-    let Ok(client_id) = uuid::Uuid::parse_str(&q.client_id) else {
-        return invalid_client_response();
-    };
-    let client = match state.auth_store.get_oauth_client(client_id).await {
-        Ok(Some(c)) => c,
-        Ok(None) => return invalid_client_response(),
-        Err(e) => {
-            tracing::warn!(event = "mcp_oauth_authorize_lookup_failed", error = %e);
-            return invalid_client_response();
-        }
-    };
-    if !client.redirect_uris.iter().any(|u| u == &q.redirect_uri) {
-        return invalid_client_response();
-    }
-
-    // From here on `redirect_uri` is validated — every further failure
-    // redirects back to it with `?error=...&state=...` instead of a bare 400.
+    // Structural checks — BEFORE `redirect_uri` is trusted, so 400, never a
+    // redirect (spec §4 failure-response principle).
     if q.response_type != "code" {
-        return redirect_with_error(&q.redirect_uri, "unsupported_response_type", &q.state);
+        return oauth_authorize_400(
+            "unsupported_response_type",
+            "response_type must be \"code\"",
+        );
     }
     if q.code_challenge_method != "S256" {
-        return redirect_with_error(&q.redirect_uri, "invalid_request", &q.state);
+        return oauth_authorize_400("invalid_request", "code_challenge_method must be \"S256\"");
     }
     if q.code_challenge.is_empty() {
-        return redirect_with_error(&q.redirect_uri, "invalid_request", &q.state);
+        return oauth_authorize_400("invalid_request", "code_challenge is required");
     }
+
+    // CIMD (SEP-991): `client_id` IS the document URL — fetch, validate, and
+    // cache it (`crate::auth::cimd::CimdFetcher`, Task 4). Any failure —
+    // unreachable, wrong shape, `client_id` mismatch, SSRF-blocked host,
+    // etc. — collapses to the same 400 `invalid_client`, body carrying the
+    // specific `CimdError`'s `Display` for operator/client debuggability.
+    let doc = match cimd(&state).fetch_and_validate(&q.client_id).await {
+        Ok(doc) => doc,
+        Err(e) => return invalid_client_response(e),
+    };
+    if !doc.redirect_uris.iter().any(|u| u == &q.redirect_uri) {
+        return invalid_client_response(
+            "redirect_uri is not one of the client's registered redirect_uris",
+        );
+    }
+
+    // From here on `redirect_uri` is CIMD-validated — every further failure
+    // is safe to redirect to it with `?error=...&state=...`.
 
     let Some(session) = crate::auth::oauth_device::extract_session_user(&state, &headers).await
     else {
@@ -268,37 +214,171 @@ async fn authorize(
         return Redirect::to(&login_url).into_response();
     };
 
+    let meta = PendingConsentInput {
+        client_id: q.client_id.clone(),
+        client_name: doc.client_name.clone(),
+        redirect_uri: q.redirect_uri.clone(),
+        oauth_state: q.state.clone(),
+        code_challenge: q.code_challenge.clone(),
+    };
     match state
         .auth_store
-        .issue_oauth_code(
-            client_id,
-            session.user_id,
-            &session.user_login,
-            &q.code_challenge,
-            &q.redirect_uri,
-        )
+        .issue_pending_consent(session.user_id, &session.user_login, &meta)
         .await
     {
-        Ok(code) => redirect_with_code(&q.redirect_uri, &code, &q.state),
+        Ok(consent_id) => {
+            Html(consent_page_html(consent_id, &doc, &q.redirect_uri)).into_response()
+        }
         Err(e) => {
-            tracing::warn!(event = "mcp_oauth_issue_code_failed", error = %e);
+            tracing::warn!(event = "mcp_oauth_issue_pending_consent_failed", error = %e);
             redirect_with_error(&q.redirect_uri, "server_error", &q.state)
         }
     }
 }
 
-/// 400 response for the two checks that must never redirect (unknown
-/// client_id / redirect_uri mismatch) — there is no validated URI to send
-/// the browser to yet.
-fn invalid_client_response() -> Response {
+/// 400 response for the CIMD/`redirect_uri` validation that must never
+/// redirect — there is no CIMD-trusted URI to send the browser to yet.
+/// `description` carries the specific reason (a `CimdError`'s `Display`, or
+/// a fixed string for the `redirect_uri`-mismatch case).
+fn invalid_client_response(description: impl std::fmt::Display) -> Response {
+    oauth_authorize_400("invalid_client", description)
+}
+
+/// 400 RFC 6749 §5.2-shaped error body shared by every `/oauth/authorize`
+/// and `/oauth/authorize/consent` failure that must not redirect.
+fn oauth_authorize_400(error: &'static str, description: impl std::fmt::Display) -> Response {
     (
         StatusCode::BAD_REQUEST,
         Json(serde_json::json!({
-            "error": "invalid_client",
-            "error_description": "unknown client_id, or redirect_uri does not exactly match a registered redirect_uri",
+            "error": error,
+            "error_description": description.to_string(),
         })),
     )
         .into_response()
+}
+
+/// Render the CIMD-validated client's confirmation page. `consent_id` is
+/// embedded as a hidden form field the browser round-trips to
+/// `POST /oauth/authorize/consent` — it is the ONLY thing the form submits
+/// besides the `approve`/`deny` decision, so the actual client/redirect/PKCE
+/// metadata is never re-derived from (attacker-controllable) form input,
+/// only read from the server-side pending-consent row `consent_id` points
+/// at.
+///
+/// All three untrusted strings interpolated below (`client_name`,
+/// `client_id`, `redirect_uri` — each is either CIMD-document content or a
+/// caller-supplied query param) are HTML-escaped first — see
+/// `consent_page_html_escapes_client_name_and_redirect_uri` for the XSS
+/// regression this guards.
+fn consent_page_html(
+    consent_id: uuid::Uuid,
+    doc: &crate::auth::cimd::ClientMetadata,
+    redirect_uri: &str,
+) -> String {
+    let esc = |s: &str| {
+        s.replace('&', "&amp;")
+            .replace('<', "&lt;")
+            .replace('>', "&gt;")
+            .replace('"', "&quot;")
+    };
+    let name = esc(doc.client_name.as_deref().unwrap_or("(unnamed client)"));
+    let cid = esc(&doc.client_id);
+    let ruri = esc(redirect_uri);
+    format!(
+        r#"<!doctype html><html><head><meta charset="utf-8"><title>Authorize MCP client — Akashic Record</title></head>
+<body style="font-family:system-ui;max-width:32rem;margin:4rem auto;padding:0 1rem">
+<h1>Authorize MCP client?</h1>
+<p><strong>{name}</strong></p>
+<p>Client ID: <code>{cid}</code></p>
+<p>Redirects to: <code>{ruri}</code></p>
+<p>This grants the client a 90-day MCP access token for your account.</p>
+<form method="post" action="/oauth/authorize/consent">
+<input type="hidden" name="consent_id" value="{consent_id}">
+<button type="submit" name="decision" value="approve">Approve</button>
+<button type="submit" name="decision" value="deny">Deny</button>
+</form></body></html>"#
+    )
+}
+
+/// `POST /oauth/authorize/consent` form body.
+#[derive(Debug, Deserialize)]
+struct ConsentForm {
+    consent_id: String,
+    decision: String,
+}
+
+/// `POST /oauth/authorize/consent` — redeems a pending consent created by
+/// [`authorize`] and, on approval, mints the authorization code.
+///
+/// CSRF defense (see `OauthConsentRepo`'s domain doc comment for the full
+/// rationale): redeeming a consent requires the SAME session `user_id` that
+/// created the row, so a forged cross-site POST — even one carrying a valid,
+/// unexpired `consent_id` — fails unless it also rides the victim's own
+/// session cookie, at which point it's no longer distinguishable from the
+/// user's own action (the standard limit of any session-bound CSRF defense).
+/// `consent_id` itself is an unguessable `UUID` and single-use (atomic CAS
+/// in the repo layer), closing the two other legs of the CSRF triangle
+/// (guessing / replaying).
+async fn consent(
+    State(state): State<AppState>,
+    headers: HeaderMap,
+    Form(form): Form<ConsentForm>,
+) -> Response {
+    let Some(session) = crate::auth::oauth_device::extract_session_user(&state, &headers).await
+    else {
+        return (
+            StatusCode::UNAUTHORIZED,
+            Json(serde_json::json!({"error": "unauthorized"})),
+        )
+            .into_response();
+    };
+
+    // A malformed consent_id is folded into the same "unknown" 400 as a
+    // well-formed-but-missing one below — no oracle distinguishing
+    // "malformed" from "unknown/expired/used/not-yours".
+    let Ok(consent_id) = uuid::Uuid::parse_str(&form.consent_id) else {
+        return oauth_authorize_400("invalid_request", "unknown consent_id");
+    };
+
+    let row = match state
+        .auth_store
+        .redeem_pending_consent(consent_id, session.user_id)
+        .await
+    {
+        Ok(Some(row)) => row,
+        Ok(None) => {
+            return oauth_authorize_400(
+                "invalid_request",
+                "consent_id is unknown, expired, already used, or does not belong to this session",
+            );
+        }
+        Err(e) => {
+            tracing::warn!(event = "mcp_oauth_redeem_pending_consent_failed", error = %e);
+            return oauth_authorize_400("server_error", "failed to redeem consent");
+        }
+    };
+
+    if form.decision != "approve" {
+        return redirect_with_error(&row.redirect_uri, "access_denied", &row.oauth_state);
+    }
+
+    match state
+        .auth_store
+        .issue_oauth_code(
+            &row.client_id,
+            row.user_id,
+            &row.user_login,
+            &row.code_challenge,
+            &row.redirect_uri,
+        )
+        .await
+    {
+        Ok(code) => redirect_with_code(&row.redirect_uri, &code, &row.oauth_state),
+        Err(e) => {
+            tracing::warn!(event = "mcp_oauth_issue_code_failed", error = %e);
+            redirect_with_error(&row.redirect_uri, "server_error", &row.oauth_state)
+        }
+    }
 }
 
 /// 302 to `redirect_uri` carrying `?error=<error>&state=<state>` (RFC 6749
@@ -355,6 +435,10 @@ fn oauth_token_error(status: StatusCode, error: &'static str) -> Response {
 /// `client_id`/`redirect_uri`/PKCE validation after being consumed is still
 /// burned, matching RFC 6749's one-time-use guarantee: a client that gets any
 /// of these wrong must restart at `/oauth/authorize`, not retry the same code.
+///
+/// `client_id` is a CIMD URL (spec §4) — compared with plain string equality
+/// (`!=`), byte-for-byte (Task 4's shape was a UUID parse-then-compare;
+/// there is no UUID anymore, so there is nothing left to parse).
 pub(crate) async fn token_exchange(state: &AppState, req: AuthCodeTokenRequest) -> Response {
     if req.grant_type != "authorization_code" {
         return oauth_token_error(StatusCode::BAD_REQUEST, "unsupported_grant_type");
@@ -369,10 +453,7 @@ pub(crate) async fn token_exchange(state: &AppState, req: AuthCodeTokenRequest) 
         }
     };
 
-    let client_id_matches = uuid::Uuid::parse_str(&req.client_id)
-        .map(|id| id == consumed.client_id)
-        .unwrap_or(false);
-    if !client_id_matches || consumed.redirect_uri != req.redirect_uri {
+    if consumed.client_id != req.client_id || consumed.redirect_uri != req.redirect_uri {
         return oauth_token_error(StatusCode::BAD_REQUEST, "invalid_grant");
     }
     if !pkce_verifier_matches(&req.code_verifier, &consumed.code_challenge) {
@@ -466,10 +547,6 @@ mod tests {
             v["token_endpoint"],
             "https://akashic.example.com/oauth/token"
         );
-        assert_eq!(
-            v["registration_endpoint"],
-            "https://akashic.example.com/oauth/register"
-        );
         assert_eq!(v["response_types_supported"], serde_json::json!(["code"]));
         assert_eq!(
             v["grant_types_supported"],
@@ -482,6 +559,12 @@ mod tests {
         assert_eq!(
             v["token_endpoint_auth_methods_supported"],
             serde_json::json!(["none"])
+        );
+        // Task 5 (spec §4): CIMD replaces DCR.
+        assert_eq!(v["client_id_metadata_document_supported"], true);
+        assert!(
+            v.get("registration_endpoint").is_none(),
+            "registration_endpoint must be gone — there is no more /oauth/register"
         );
     }
 
@@ -498,75 +581,65 @@ mod tests {
         );
     }
 
-    // ── redirect_uri validation (RFC 8252 §7.3) ─────────────────────────────
+    // ── consent_page_html (Task 5) ───────────────────────────────────────────
 
+    fn sample_doc(client_name: Option<&str>) -> crate::auth::cimd::ClientMetadata {
+        crate::auth::cimd::ClientMetadata {
+            client_id: "https://client.example/metadata.json".to_string(),
+            redirect_uris: vec!["http://127.0.0.1:33418/callback".to_string()],
+            client_name: client_name.map(str::to_string),
+            logo_uri: None,
+        }
+    }
+
+    /// XSS regression: `client_name` is CIMD-document content — served by
+    /// whatever host the untrusted `client_id` URL names — so it MUST be
+    /// HTML-escaped before landing in the consent page. Also covers
+    /// `redirect_uri`, which is caller-supplied via the query string.
     #[test]
-    fn is_allowed_redirect_uri_accepts_loopback_http_only() {
-        assert!(is_allowed_redirect_uri("http://127.0.0.1/cb"));
-        assert!(is_allowed_redirect_uri("http://127.0.0.1:8080/cb"));
-        assert!(is_allowed_redirect_uri("http://127.0.0.1:33418/cb"));
-        assert!(is_allowed_redirect_uri("http://localhost/cb"));
-        assert!(is_allowed_redirect_uri("http://localhost:8080/cb"));
-        assert!(is_allowed_redirect_uri("http://[::1]:9000/cb"));
+    fn consent_page_html_escapes_client_name_and_redirect_uri() {
+        let doc = crate::auth::cimd::ClientMetadata {
+            client_id: "https://client.example/metadata.json".to_string(),
+            redirect_uris: vec!["http://127.0.0.1:33418/callback".to_string()],
+            client_name: Some("<script>alert(1)</script>".to_string()),
+            logo_uri: None,
+        };
+        let html = consent_page_html(
+            uuid::Uuid::nil(),
+            &doc,
+            "http://127.0.0.1:33418/callback?x=<img src=x onerror=alert(2)>",
+        );
+        assert!(
+            !html.contains("<script>") && !html.contains("<img"),
+            "unescaped markup leaked into consent page HTML: {html}"
+        );
+        assert!(
+            html.contains("&lt;script&gt;alert(1)&lt;/script&gt;"),
+            "escaped client_name should be present: {html}"
+        );
+        assert!(
+            html.contains("&lt;img src=x onerror=alert(2)&gt;"),
+            "escaped redirect_uri should be present: {html}"
+        );
     }
 
     #[test]
-    fn is_allowed_redirect_uri_rejects_non_loopback_http_and_other_schemes() {
-        assert!(!is_allowed_redirect_uri("http://evil.com/cb"));
-        assert!(!is_allowed_redirect_uri("http://127.0.0.1.evil.com/cb"));
-        assert!(!is_allowed_redirect_uri("ftp://127.0.0.1/cb"));
-        assert!(!is_allowed_redirect_uri("javascript:alert(1)"));
-        assert!(!is_allowed_redirect_uri("https://"));
-        assert!(!is_allowed_redirect_uri(""));
+    fn consent_page_html_falls_back_to_unnamed_client_when_name_absent() {
+        let doc = sample_doc(None);
+        let html = consent_page_html(uuid::Uuid::nil(), &doc, "http://127.0.0.1:33418/callback");
+        assert!(html.contains("(unnamed client)"));
     }
 
-    /// Regression for the cross-task token-theft chain found in the final
-    /// whole-branch review: this function used to accept ANY `https://<host>`
-    /// redirect_uri. Combined with public `/oauth/register` and a
-    /// consent-less `/oauth/authorize` that mints a code as soon as a web
-    /// session exists, an attacker could register
-    /// `redirect_uri=https://attacker.example.com/cb` with their own PKCE
-    /// challenge, lure a logged-in victim to a top-level GET
-    /// `/oauth/authorize?client_id=<attacker>&redirect_uri=https://attacker.example.com/cb&code_challenge=<attacker>`,
-    /// and have the victim's `SameSite=Lax` session silently mint a
-    /// victim-bound code that gets redirected straight to the attacker's
-    /// server — PKCE/state don't help because the attacker IS the registered
-    /// client. Restricting `is_allowed_redirect_uri` to loopback-only closes
-    /// this: the only redirect target left is the requesting user's own
-    /// machine, downgrading the attack to the standard, accepted native-app
-    /// residual (attacker must already run code on the victim's loopback).
     #[test]
-    fn is_allowed_redirect_uri_rejects_arbitrary_https_token_theft_vector() {
-        assert!(!is_allowed_redirect_uri("https://attacker.example.com/cb"));
-        assert!(!is_allowed_redirect_uri("https://app.example.com/cb"));
-        assert!(!is_allowed_redirect_uri("https://example.com/cb"));
-        assert!(!is_allowed_redirect_uri("https://example.com:443/cb?x=1"));
-    }
-
-    /// Regression for a Critical finding (code review, Task 3): a hand-rolled
-    /// authority parser that finds the host by taking everything before the
-    /// first `/` and then splitting on the LAST `:` mis-parses a URL with
-    /// userinfo in the authority (`user:pass@host` — RFC 3986 §3.2). For
-    /// `http://localhost:1@evil.com/cb`, the old code read `localhost:1` as
-    /// `host:port` and returned the loopback host `localhost` — but the real
-    /// host per the authority grammar is `evil.com` (everything after `@`).
-    /// Since `/oauth/register` is public and unauthenticated, this let an
-    /// attacker register a "loopback" redirect_uri that actually points at an
-    /// attacker-controlled host, stealing the authorization code Task 4's
-    /// `/oauth/authorize` would send there. Fixed by parsing with `url::Url`
-    /// and reading `.host_str()`, which correctly resolves the authority
-    /// grammar instead of guessing from string positions.
-    #[test]
-    fn is_allowed_redirect_uri_rejects_userinfo_authority_bypass() {
-        assert!(!is_allowed_redirect_uri("http://localhost:1@evil.com/cb"));
-        assert!(!is_allowed_redirect_uri("http://127.0.0.1:1@evil.com/cb"));
-        // Spelled out as a separate binding: written inline, the literal trips
-        // the push-time "password in URL" secret scanner.
-        let userinfo_authority = "user:pass@evil.com";
-        assert!(!is_allowed_redirect_uri(&format!(
-            "http://{userinfo_authority}/cb"
-        )));
-        assert!(!is_allowed_redirect_uri("http://localhost@evil.com/cb"));
+    fn consent_page_html_embeds_consent_id_in_hidden_field() {
+        let doc = sample_doc(Some("Test Client"));
+        let id = uuid::Uuid::new_v4();
+        let html = consent_page_html(id, &doc, "http://127.0.0.1:33418/callback");
+        assert!(
+            html.contains(&format!(r#"name="consent_id" value="{id}""#)),
+            "hidden consent_id field missing or wrong value: {html}"
+        );
+        assert!(html.contains(r#"action="/oauth/authorize/consent""#));
     }
 
     // ── PKCE (RFC 7636) — Task 4 ─────────────────────────────────────────────
@@ -639,7 +712,8 @@ mod tests {
         assert_eq!(base64url_nopad(&[0, 0, 0, 0, 0, 0]).len(), 8); // 2 chunks
     }
 
-    // ── token_exchange (Task 4): direct DB-backed tests ──────────────────────
+    // ── token_exchange (Task 4, client_id shape updated Task 5): direct
+    // DB-backed tests ────────────────────────────────────────────────────────
     //
     // Uses `akashic_test_support::build_app_state` — a direct connect against
     // the already-configured PG (+ Neo4j, unused by this code path) with NO
@@ -647,25 +721,23 @@ mod tests {
     // device-flow tests already use against this session's persistent stack.
     // Deliberately NOT `akashic-server`'s `common::TestEnv` (which DOES
     // TRUNCATE via `reset_state` — out of policy this session).
+    //
+    // `client_id` is now a CIMD URL string (spec §4), not a DB-registered
+    // UUID — these tests exercise `token_exchange` directly (never
+    // `authorize`), so no CIMD document ever needs to be fetched over HTTP;
+    // the string just needs to be URL-shaped and unique per test to avoid
+    // `mcp_oauth_codes` collisions.
 
-    async fn register_test_client(state: &AppState, name: &str) -> (uuid::Uuid, String) {
-        let redirect_uri = "http://127.0.0.1:33418/callback".to_string();
-        let reg = state
-            .auth_store
-            .register_oauth_client(vec![redirect_uri.clone()], Some(name.to_string()))
-            .await
-            .expect("register_oauth_client");
-        (reg.client_id, redirect_uri)
+    fn test_client(name: &str) -> (String, String) {
+        (
+            format!("https://client.example/{name}.json"),
+            "http://127.0.0.1:33418/callback".to_string(),
+        )
     }
 
-    async fn cleanup_client(client_id: uuid::Uuid) {
+    async fn cleanup_client_codes(client_id: &str) {
         let pool = akashic_test_support::test_pg_pool().await;
         sqlx::query("DELETE FROM mcp_oauth_codes WHERE client_id = $1")
-            .bind(client_id)
-            .execute(&pool)
-            .await
-            .ok();
-        sqlx::query("DELETE FROM mcp_oauth_clients WHERE client_id = $1")
             .bind(client_id)
             .execute(&pool)
             .await
@@ -676,14 +748,14 @@ mod tests {
     #[serial_test::serial]
     async fn token_exchange_happy_path_mints_and_validates_ak_token() {
         let state = akashic_test_support::build_app_state("http://unused".into()).await;
-        let (client_id, redirect_uri) = register_test_client(&state, "t4_happy").await;
+        let (client_id, redirect_uri) = test_client("t5_happy");
         let verifier = "dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk";
         let challenge = base64url_nopad(&Sha256::digest(verifier.as_bytes()));
 
         let code = state
             .auth_store
             .issue_oauth_code(
-                client_id,
+                &client_id,
                 999_001,
                 "t4_happy_user",
                 &challenge,
@@ -698,7 +770,7 @@ mod tests {
                 grant_type: "authorization_code".to_string(),
                 code: code.clone(),
                 redirect_uri: redirect_uri.clone(),
-                client_id: client_id.to_string(),
+                client_id: client_id.clone(),
                 code_verifier: verifier.to_string(),
             },
         )
@@ -716,26 +788,26 @@ mod tests {
 
         // This test (uniquely among the token_exchange tests) actually mints
         // a real mcp_tokens row via issue_mcp_token — clean that up too, not
-        // just the oauth client/code.
+        // just the oauth code.
         let pool = akashic_test_support::test_pg_pool().await;
         sqlx::query("DELETE FROM mcp_tokens WHERE user_login = 't4_happy_user'")
             .execute(&pool)
             .await
             .ok();
-        cleanup_client(client_id).await;
+        cleanup_client_codes(&client_id).await;
     }
 
     #[tokio::test]
     #[serial_test::serial]
     async fn token_exchange_replay_is_invalid_grant() {
         let state = akashic_test_support::build_app_state("http://unused".into()).await;
-        let (client_id, redirect_uri) = register_test_client(&state, "t4_replay").await;
+        let (client_id, redirect_uri) = test_client("t5_replay");
         let verifier = "some-other-verifier-string-abc123";
         let challenge = base64url_nopad(&Sha256::digest(verifier.as_bytes()));
         let code = state
             .auth_store
             .issue_oauth_code(
-                client_id,
+                &client_id,
                 999_002,
                 "t4_replay_user",
                 &challenge,
@@ -748,7 +820,7 @@ mod tests {
             grant_type: "authorization_code".to_string(),
             code: c.to_string(),
             redirect_uri: redirect_uri.clone(),
-            client_id: client_id.to_string(),
+            client_id: client_id.clone(),
             code_verifier: verifier.to_string(),
         };
 
@@ -763,7 +835,7 @@ mod tests {
         let v: serde_json::Value = serde_json::from_slice(&body).unwrap();
         assert_eq!(v["error"], "invalid_grant");
 
-        cleanup_client(client_id).await;
+        cleanup_client_codes(&client_id).await;
     }
 
     /// Confirms the code is burned by the FIRST attempt even when that
@@ -776,13 +848,13 @@ mod tests {
     #[serial_test::serial]
     async fn token_exchange_burns_code_even_on_client_id_mismatch() {
         let state = akashic_test_support::build_app_state("http://unused".into()).await;
-        let (client_id, redirect_uri) = register_test_client(&state, "t4_burn_client").await;
+        let (client_id, redirect_uri) = test_client("t5_burn_client");
         let verifier = "verifier-for-client-mismatch-test";
         let challenge = base64url_nopad(&Sha256::digest(verifier.as_bytes()));
         let code = state
             .auth_store
             .issue_oauth_code(
-                client_id,
+                &client_id,
                 999_003,
                 "t4_burn_client_user",
                 &challenge,
@@ -791,14 +863,14 @@ mod tests {
             .await
             .expect("issue_oauth_code");
 
-        let wrong_client_id = uuid::Uuid::new_v4();
+        let wrong_client_id = "https://attacker.example/mismatch.json".to_string();
         let first = token_exchange(
             &state,
             AuthCodeTokenRequest {
                 grant_type: "authorization_code".to_string(),
                 code: code.clone(),
                 redirect_uri: redirect_uri.clone(),
-                client_id: wrong_client_id.to_string(),
+                client_id: wrong_client_id,
                 code_verifier: verifier.to_string(),
             },
         )
@@ -812,7 +884,7 @@ mod tests {
                 grant_type: "authorization_code".to_string(),
                 code,
                 redirect_uri,
-                client_id: client_id.to_string(),
+                client_id: client_id.clone(),
                 code_verifier: verifier.to_string(),
             },
         )
@@ -826,7 +898,7 @@ mod tests {
         let v: serde_json::Value = serde_json::from_slice(&body).unwrap();
         assert_eq!(v["error"], "invalid_grant");
 
-        cleanup_client(client_id).await;
+        cleanup_client_codes(&client_id).await;
     }
 
     /// Same guarantee as above, for a PKCE verifier mismatch instead of a
@@ -836,13 +908,13 @@ mod tests {
     #[serial_test::serial]
     async fn token_exchange_burns_code_even_on_pkce_mismatch() {
         let state = akashic_test_support::build_app_state("http://unused".into()).await;
-        let (client_id, redirect_uri) = register_test_client(&state, "t4_burn_pkce").await;
+        let (client_id, redirect_uri) = test_client("t5_burn_pkce");
         let correct_verifier = "the-correct-verifier-value-here";
         let challenge = base64url_nopad(&Sha256::digest(correct_verifier.as_bytes()));
         let code = state
             .auth_store
             .issue_oauth_code(
-                client_id,
+                &client_id,
                 999_004,
                 "t4_burn_pkce_user",
                 &challenge,
@@ -857,7 +929,7 @@ mod tests {
                 grant_type: "authorization_code".to_string(),
                 code: code.clone(),
                 redirect_uri: redirect_uri.clone(),
-                client_id: client_id.to_string(),
+                client_id: client_id.clone(),
                 code_verifier: "wrong-verifier".to_string(),
             },
         )
@@ -870,7 +942,7 @@ mod tests {
                 grant_type: "authorization_code".to_string(),
                 code,
                 redirect_uri,
-                client_id: client_id.to_string(),
+                client_id: client_id.clone(),
                 code_verifier: correct_verifier.to_string(),
             },
         )
@@ -881,7 +953,7 @@ mod tests {
             "code must be burned by the first (wrong-verifier) attempt"
         );
 
-        cleanup_client(client_id).await;
+        cleanup_client_codes(&client_id).await;
     }
 
     #[tokio::test]
@@ -894,7 +966,7 @@ mod tests {
                 grant_type: "password".to_string(),
                 code: "irrelevant".to_string(),
                 redirect_uri: "http://x".to_string(),
-                client_id: uuid::Uuid::new_v4().to_string(),
+                client_id: "https://client.example/irrelevant.json".to_string(),
                 code_verifier: "irrelevant".to_string(),
             },
         )

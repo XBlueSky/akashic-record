@@ -957,21 +957,23 @@ pub async fn init_auth_schema(pool: &PgPool) -> Result<()> {
     .await
     .context("Failed to create publish_tokens_repo_name_idx")?;
 
-    // Task 3 (MCP OAuth, docs-kit kit enablers): dynamic client registration
-    // (RFC 7591) + authorization-code storage (RFC 6749 §4.1). `mcp_oauth_codes`
-    // is created here but only populated starting Task 4's `/oauth/authorize`
-    // + `/oauth/token` handlers.
+    // Spec §4 (MCP refactor, 2026-08-07): CIMD replaces DCR. The registration
+    // table is gone; codes reference the client by its CIMD URL (TEXT). The
+    // DO block converges pre-refactor dev DBs: both dropped tables hold only
+    // ephemeral 10-minute rows, so destruction is safe pre-release.
     sqlx::raw_sql(
         r"
-        CREATE TABLE IF NOT EXISTS mcp_oauth_clients (
-            client_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-            client_name TEXT,
-            redirect_uris JSONB NOT NULL,
-            created_at TIMESTAMPTZ NOT NULL DEFAULT now()
-        );
+        DO $$ BEGIN
+          IF EXISTS (SELECT 1 FROM information_schema.columns
+                     WHERE table_name = 'mcp_oauth_codes'
+                       AND column_name = 'client_id' AND data_type = 'uuid') THEN
+            DROP TABLE mcp_oauth_codes;
+          END IF;
+        END $$;
+        DROP TABLE IF EXISTS mcp_oauth_clients;
         CREATE TABLE IF NOT EXISTS mcp_oauth_codes (
             code_hash BYTEA PRIMARY KEY,
-            client_id UUID NOT NULL REFERENCES mcp_oauth_clients(client_id),
+            client_id TEXT NOT NULL,
             user_id BIGINT NOT NULL,
             user_login TEXT NOT NULL,
             code_challenge TEXT NOT NULL,
@@ -979,11 +981,23 @@ pub async fn init_auth_schema(pool: &PgPool) -> Result<()> {
             expires_at TIMESTAMPTZ NOT NULL,
             used_at TIMESTAMPTZ
         );
+        CREATE TABLE IF NOT EXISTS mcp_oauth_pending_consents (
+            consent_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            user_id BIGINT NOT NULL,
+            user_login TEXT NOT NULL,
+            client_id TEXT NOT NULL,
+            client_name TEXT,
+            redirect_uri TEXT NOT NULL,
+            oauth_state TEXT NOT NULL,
+            code_challenge TEXT NOT NULL,
+            expires_at TIMESTAMPTZ NOT NULL,
+            used_at TIMESTAMPTZ
+        );
         ",
     )
     .execute(pool)
     .await
-    .context("Failed to create mcp_oauth tables")?;
+    .context("Failed to migrate mcp_oauth tables (CIMD)")?;
 
     info!("Auth schema initialised successfully");
     Ok(())

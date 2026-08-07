@@ -522,7 +522,14 @@ fn build_test_config(
         ingest_quota_tokens_per_window: 5_000_000,
         ingest_quota_window_secs: 3600,
         ingest_quota_enabled: false,
-        mcp_cimd_allow_loopback: false,
+
+        // Task 5 (spec §4, CIMD): the bench's fixture CIMD documents are
+        // served by a temporary axum server on 127.0.0.1:0 (same pattern as
+        // `cimd.rs`'s own tests) — loopback must be allowed for
+        // `GET /oauth/authorize` to be able to fetch them. Test-only; the
+        // default (`false`) is what production uses, and
+        // `Config::validate_for_production` hard-rejects `true`.
+        mcp_cimd_allow_loopback: true,
     }
 }
 
@@ -688,7 +695,7 @@ pub async fn reset_state(pg: &PgPool, neo: &Graph) -> Result<()> {
             sessions, mcp_tokens, device_flow_pending, \
             revoked_passthrough_tokens, audit_log, llm_usage, publish_tokens, \
             corpus_versions, corpus_files, \
-            mcp_oauth_codes, mcp_oauth_clients \
+            mcp_oauth_codes, mcp_oauth_pending_consents \
          RESTART IDENTITY CASCADE",
     )
     .execute(pg)
