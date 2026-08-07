@@ -382,6 +382,25 @@ impl TestEnv {
     pub fn neo4j(&self) -> &Graph {
         &self.neo4j_graph
     }
+
+    /// Mint a device-flow `ak_*` MCP bearer token for the bench actor.
+    ///
+    /// Task 3 (spec §3): every `/mcp` request now requires authentication —
+    /// there is no anonymous path left, not even for read tools — so every
+    /// contract test that drives `McpClient` needs a real bearer, not just
+    /// the write-tool tests that needed one before. `user_id: 42` mirrors
+    /// the pre-populated session actor `start()` sets up above
+    /// (`insert_session(..., Some(42))`), though the two token kinds
+    /// (session cookie vs. MCP bearer) are otherwise unrelated.
+    pub async fn mint_mcp_token(&self) -> String {
+        let (_id, plaintext) = self
+            .state
+            .auth_store
+            .issue_mcp_token(42, "test-user", Some("test"))
+            .await
+            .expect("issue mcp token");
+        plaintext
+    }
 }
 
 // ──────────────────────────────────────────────────────────────────────────

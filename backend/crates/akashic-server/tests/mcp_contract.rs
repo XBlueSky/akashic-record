@@ -69,15 +69,22 @@ async fn seed_repo(env: &TestEnv) {
     assert_eq!(resp.status(), 200);
 }
 
-/// Connect anonymously and call one tool. Panics on call failure.
-async fn anon_call(env: &TestEnv, tool: &str, args: Value) -> Value {
-    let client = McpClient::connect(&env.mcp_addr)
+/// Mint a bearer, connect, and call one tool. Panics on call failure.
+///
+/// Task 3 (spec §3): every `/mcp` request requires authentication now, so
+/// even the read-tool contract tests below (which have nothing to do with
+/// the write-tool auth gate) need a real bearer just to get past `mcp_auth`
+/// and reach the tool at all — a plain anonymous `McpClient::connect` no
+/// longer completes the streamable-http handshake.
+async fn call_tool(env: &TestEnv, tool: &str, args: Value) -> Value {
+    let token = env.mint_mcp_token().await;
+    let client = McpClient::connect_with_bearer(&env.mcp_addr, &token)
         .await
-        .expect("connect anon");
+        .expect("connect with bearer");
     client
         .tools_call(tool, args)
         .await
-        .unwrap_or_else(|e| panic!("anon call {tool} failed: {e}"))
+        .unwrap_or_else(|e| panic!("call {tool} failed: {e}"))
 }
 
 // ─── Docs corpus fixture (Plan-3 E5 smoke tests) ───────────────────────
@@ -156,7 +163,7 @@ async fn seed_corpus(env: &TestEnv, repo: &str) -> CorpusVersionMeta {
 async fn mcp_search_knowledge_returns_well_formed() {
     let env = TestEnv::start().await;
     seed_repo(&env).await;
-    let resp = anon_call(
+    let resp = call_tool(
         &env,
         "search_knowledge",
         json!({
@@ -179,7 +186,7 @@ async fn mcp_get_details_returns_well_formed() {
     let uuid = seed_note(&env, "D4 get_details target", "details body").await;
     // GetDetailsArgs takes `ids: Vec<String>` of note UUIDs (not
     // entity_id/entity_type as the plan's example suggested).
-    let resp = anon_call(
+    let resp = call_tool(
         &env,
         "get_details",
         json!({
@@ -198,7 +205,7 @@ async fn mcp_get_details_returns_well_formed() {
 async fn mcp_get_project_summary_returns_well_formed() {
     let env = TestEnv::start().await;
     seed_repo(&env).await;
-    let resp = anon_call(
+    let resp = call_tool(
         &env,
         "get_project_summary",
         json!({
@@ -219,7 +226,7 @@ async fn mcp_traverse_code_calls_returns_well_formed() {
     seed_repo(&env).await;
     // TraverseCallsArgs uses `symbol` + `repo` (not `start_symbol` /
     // `repo_name`).
-    let resp = anon_call(
+    let resp = call_tool(
         &env,
         "traverse_code_calls",
         json!({
@@ -243,7 +250,7 @@ async fn mcp_trace_execution_flow_returns_well_formed() {
     // TraceFlowArgs uses `symbol` + `repo` (not `entry_chunk` /
     // `repo_name`). `symbol` is optional but supplying it exercises
     // the search path.
-    let resp = anon_call(
+    let resp = call_tool(
         &env,
         "trace_execution_flow",
         json!({
@@ -264,7 +271,7 @@ async fn mcp_get_note_health_returns_well_formed() {
     let env = TestEnv::start().await;
     seed_repo(&env).await;
     // NoteHealthArgs takes `repo` (not `repo_name`).
-    let resp = anon_call(
+    let resp = call_tool(
         &env,
         "get_note_health",
         json!({
@@ -284,7 +291,7 @@ async fn mcp_list_sagas_returns_well_formed() {
     let env = TestEnv::start().await;
     seed_repo(&env).await;
     // ListSagasArgs requires `repo_name`.
-    let resp = anon_call(
+    let resp = call_tool(
         &env,
         "list_sagas",
         json!({
@@ -303,7 +310,10 @@ async fn mcp_list_sagas_returns_well_formed() {
 async fn mcp_get_saga_timeline_handles_missing_saga() {
     let env = TestEnv::start().await;
     let random_uuid = Uuid::new_v4().to_string();
-    let client = McpClient::connect(&env.mcp_addr).await.expect("connect");
+    let token = env.mint_mcp_token().await;
+    let client = McpClient::connect_with_bearer(&env.mcp_addr, &token)
+        .await
+        .expect("connect with bearer");
     let result = client
         .tools_call(
             "get_saga_timeline",
@@ -344,7 +354,10 @@ async fn mcp_global_query_returns_well_formed() {
     // bodies must be well-formed, and errors must match the known
     // empty-corpus signature. Once the backend bug is fixed the Err
     // branch can be tightened to `expect("ok")`.
-    let client = McpClient::connect(&env.mcp_addr).await.expect("connect");
+    let token = env.mint_mcp_token().await;
+    let client = McpClient::connect_with_bearer(&env.mcp_addr, &token)
+        .await
+        .expect("connect with bearer");
     let result = client
         .tools_call(
             "global_query",
@@ -380,7 +393,7 @@ async fn mcp_analyze_impact_returns_well_formed() {
     seed_repo(&env).await;
     // AnalyzeImpactArgs uses `target` + optional `repo` (not
     // `repo_name`).
-    let resp = anon_call(
+    let resp = call_tool(
         &env,
         "analyze_impact",
         json!({
@@ -399,7 +412,10 @@ async fn mcp_analyze_impact_returns_well_formed() {
 #[serial_test::serial]
 async fn mcp_tools_list_returns_exactly_twenty_seven() {
     let env = TestEnv::start().await;
-    let client = McpClient::connect(&env.mcp_addr).await.expect("connect");
+    let token = env.mint_mcp_token().await;
+    let client = McpClient::connect_with_bearer(&env.mcp_addr, &token)
+        .await
+        .expect("connect with bearer");
     let tools = client.tools_list().await.expect("list");
     assert_eq!(
         tools.len(),
@@ -422,7 +438,7 @@ async fn mcp_tools_list_returns_exactly_twenty_seven() {
 #[serial_test::serial]
 async fn mcp_get_docs_schema_returns_manifest_schema() {
     let env = TestEnv::start().await;
-    let resp = anon_call(&env, "get_docs_schema", json!({"which": "manifest"})).await;
+    let resp = call_tool(&env, "get_docs_schema", json!({"which": "manifest"})).await;
     // get_docs_schema returns a JSON-Schema string; McpClient::tools_call
     // auto-parses JSON text content into a structured Value, so `resp` IS
     // the already-parsed schema object (not a string to re-parse).
@@ -433,7 +449,7 @@ async fn mcp_get_docs_schema_returns_manifest_schema() {
 #[serial_test::serial]
 async fn mcp_get_docs_schema_returns_docs_toml_schema() {
     let env = TestEnv::start().await;
-    let resp = anon_call(&env, "get_docs_schema", json!({"which": "docs-toml"})).await;
+    let resp = call_tool(&env, "get_docs_schema", json!({"which": "docs-toml"})).await;
     // See mcp_get_docs_schema_returns_manifest_schema: resp is already parsed.
     assert_eq!(resp["title"], "DocsToml");
 }
@@ -442,9 +458,10 @@ async fn mcp_get_docs_schema_returns_docs_toml_schema() {
 #[serial_test::serial]
 async fn mcp_get_docs_schema_unknown_which_is_rejected() {
     let env = TestEnv::start().await;
-    let client = McpClient::connect(&env.mcp_addr)
+    let token = env.mint_mcp_token().await;
+    let client = McpClient::connect_with_bearer(&env.mcp_addr, &token)
         .await
-        .expect("connect anon");
+        .expect("connect with bearer");
     let err = client
         .tools_call("get_docs_schema", json!({"which": "bogus"}))
         .await
@@ -460,7 +477,7 @@ async fn mcp_get_docs_schema_unknown_which_is_rejected() {
 #[serial_test::serial]
 async fn mcp_list_authoring_sections_returns_seven_sections() {
     let env = TestEnv::start().await;
-    let resp = anon_call(&env, "list_authoring_sections", json!({})).await;
+    let resp = call_tool(&env, "list_authoring_sections", json!({})).await;
     // list_authoring_sections returns a JSON array; resp is already parsed
     // (see mcp_get_docs_schema_returns_manifest_schema).
     let sections = resp.as_array().expect("array body");
@@ -491,7 +508,7 @@ async fn mcp_list_authoring_sections_returns_seven_sections() {
 #[serial_test::serial]
 async fn mcp_get_authoring_guide_returns_section_body() {
     let env = TestEnv::start().await;
-    let resp = anon_call(&env, "get_authoring_guide", json!({"section": "overview"})).await;
+    let resp = call_tool(&env, "get_authoring_guide", json!({"section": "overview"})).await;
     let text = resp.as_str().expect("string body");
     assert!(text.contains("## Overview"));
 }
@@ -500,9 +517,10 @@ async fn mcp_get_authoring_guide_returns_section_body() {
 #[serial_test::serial]
 async fn mcp_get_authoring_guide_unknown_section_is_rejected() {
     let env = TestEnv::start().await;
-    let client = McpClient::connect(&env.mcp_addr)
+    let token = env.mint_mcp_token().await;
+    let client = McpClient::connect_with_bearer(&env.mcp_addr, &token)
         .await
-        .expect("connect anon");
+        .expect("connect with bearer");
     let err = client
         .tools_call("get_authoring_guide", json!({"section": "bogus"}))
         .await
@@ -518,7 +536,7 @@ async fn mcp_get_authoring_guide_unknown_section_is_rejected() {
 #[serial_test::serial]
 async fn mcp_check_docs_coverage_good_tree_has_no_findings() {
     let env = TestEnv::start().await;
-    let resp = anon_call(
+    let resp = call_tool(
         &env,
         "check_docs_coverage",
         json!({
@@ -549,7 +567,7 @@ async fn mcp_check_docs_coverage_good_tree_has_no_findings() {
 #[serial_test::serial]
 async fn mcp_check_docs_coverage_bad_fixture_matches_rust_validator() {
     let env = TestEnv::start().await;
-    let resp = anon_call(
+    let resp = call_tool(
         &env,
         "check_docs_coverage",
         json!({
@@ -581,7 +599,7 @@ async fn mcp_list_docs_and_get_docs_page_roundtrip() {
     seed_corpus(&env, repo).await;
 
     // list_docs without repo: seeded repo appears with its stamp
-    let resp = anon_call(&env, "list_docs", json!({})).await;
+    let resp = call_tool(&env, "list_docs", json!({})).await;
     let repos = resp["repos"].as_array().expect("repos array");
     let entry = repos
         .iter()
@@ -593,14 +611,14 @@ async fn mcp_list_docs_and_get_docs_page_roundtrip() {
     );
 
     // list_docs scoped to repo: nav tree with the seeded page
-    let resp = anon_call(&env, "list_docs", json!({"repo": repo})).await;
+    let resp = call_tool(&env, "list_docs", json!({"repo": repo})).await;
     assert_eq!(
         resp["nav"]["groups"][0]["pages"][0]["path"],
         "guide/setup.md"
     );
 
     // get_docs_page: byte-exact markdown + stamp
-    let resp = anon_call(
+    let resp = call_tool(
         &env,
         "get_docs_page",
         json!({"repo": repo, "path": "guide/setup.md"}),
@@ -618,9 +636,10 @@ async fn mcp_list_docs_and_get_docs_page_roundtrip() {
 #[serial_test::serial]
 async fn mcp_get_docs_page_unknown_repo_is_rejected() {
     let env = TestEnv::start().await;
-    let client = McpClient::connect(&env.mcp_addr)
+    let token = env.mint_mcp_token().await;
+    let client = McpClient::connect_with_bearer(&env.mcp_addr, &token)
         .await
-        .expect("connect anon");
+        .expect("connect with bearer");
     let err = client
         .tools_call(
             "get_docs_page",
@@ -635,35 +654,21 @@ async fn mcp_get_docs_page_unknown_repo_is_rejected() {
 }
 
 // ─── Write tools ──────────────────────────────────────────────────────
-
-/// Mint a real `ak_<32hex>` MCP bearer token via the auth_store. The MCP
-/// proxy's `device_flow_auth` middleware validates the bearer against
-/// the same `mcp_tokens` table this writes to, so the docker container's
-/// MCP listener will accept this token even though it was minted from
-/// the in-process test router.
-///
-/// NOTE: the original D4 Task 6 plan instructed `connect_with_cookie`,
-/// but cookies are only honored on REST. The MCP proxy chain
-/// (`/sse` + `/message`) reads only `Authorization: Bearer ak_*` or
-/// `glpat-*`; an anonymous (cookie-only) `tools/call` of a write tool
-/// hits `auth_gate` and is rejected. So write-tool tests must use a
-/// real bearer token here.
-async fn mint_mcp_bearer(env: &TestEnv) -> String {
-    let (_token_id, plaintext) = env
-        .state
-        .auth_store
-        .issue_mcp_token(424242, "d4-write-tool-test", Some("d4-mcp-contract"))
-        .await
-        .expect("issue mcp_token");
-    plaintext
-}
+//
+// NOTE: the original D4 Task 6 plan instructed `connect_with_cookie`, but
+// cookies are only honored on REST. The MCP proxy chain (`/sse` +
+// `/message`) reads only `Authorization: Bearer ak_*` or `glpat-*`; an
+// anonymous (cookie-only) `tools/call` of a write tool never reaches the
+// handler at all (Task 3: `mcp_auth` 401s it first). So write-tool tests
+// use `TestEnv::mint_mcp_token` — the same bearer-minting helper the
+// now-authenticated read-tool tests above use via `call_tool`.
 
 #[tokio::test]
 #[serial_test::serial]
 async fn mcp_save_note_creates_row_and_audit() {
     let env = TestEnv::start().await;
     seed_repo(&env).await;
-    let bearer = mint_mcp_bearer(&env).await;
+    let bearer = env.mint_mcp_token().await;
     let client = McpClient::connect_with_bearer(&env.mcp_addr, &bearer)
         .await
         .expect("connect with bearer");
@@ -828,7 +833,7 @@ async fn extract_uuid_from_save_note(resp: &Value, env: &TestEnv, title: &str) -
 async fn mcp_supersede_note_chains_correctly() {
     let env = TestEnv::start().await;
     seed_repo(&env).await;
-    let bearer = mint_mcp_bearer(&env).await;
+    let bearer = env.mint_mcp_token().await;
     let client = McpClient::connect_with_bearer(&env.mcp_addr, &bearer)
         .await
         .expect("connect with bearer");
@@ -952,9 +957,54 @@ async fn mcp_supersede_note_chains_correctly() {
 
 // ─── Auth gate ────────────────────────────────────────────────────────
 
+/// Spec §3: every anonymous /mcp request — any method, including reads and
+/// tools/list — gets 401 + an RFC 9728 resource_metadata challenge. Drives
+/// raw reqwest directly against `/mcp` rather than through `McpClient`: an
+/// anonymous connection now fails at the streamable-http handshake itself
+/// (before any JSON-RPC method is even sent), so asserting at the HTTP
+/// layer is both more precise and the only way to observe the 401 + header
+/// for each of these method/body shapes individually.
 #[tokio::test]
 #[serial_test::serial]
-async fn mcp_anonymous_save_note_rejected() {
+async fn mcp_anonymous_request_gets_401_challenge() {
+    let env = TestEnv::start().await;
+    let client = reqwest::Client::new();
+    for body in [
+        r#"{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}"#,
+        r#"{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"search_knowledge","arguments":{"query":"x","repository":"r"}}}"#,
+        r#"{"jsonrpc":"2.0","id":3,"method":"server/discover","params":{}}"#,
+    ] {
+        let resp = client
+            .post(format!("{}/mcp", env.mcp_addr))
+            .header("content-type", "application/json")
+            .header("accept", "application/json, text/event-stream")
+            .body(body)
+            .send()
+            .await
+            .expect("mcp request");
+        assert_eq!(resp.status(), 401, "body: {body}");
+        let challenge = resp
+            .headers()
+            .get("www-authenticate")
+            .expect("WWW-Authenticate header")
+            .to_str()
+            .unwrap();
+        assert!(challenge.contains("resource_metadata="), "{challenge}");
+    }
+}
+
+/// Task 3 (spec §3): `mcp_auth` now rejects every anonymous request with a
+/// real HTTP 401 + RFC 9728 challenge before rmcp ever sees it — including
+/// `tools/call` of a write tool. This supersedes the pre-Task-3
+/// `mcp_anonymous_save_note_rejected`, which drove the rmcp client and
+/// asserted on the in-handler write-gate's isError tool result (the
+/// anonymous request used to reach the handler; now it never does — see
+/// `mcp_anonymous_request_gets_401_challenge` above for the HTTP-layer
+/// rationale). Reuses that same direct-reqwest pattern so the assertion is
+/// on the actual wire response, not on what `McpClient` chooses to surface.
+#[tokio::test]
+#[serial_test::serial]
+async fn mcp_anonymous_write_gets_401_challenge() {
     let env = TestEnv::start().await;
 
     // Count audit_log save_note rows before — assert this doesn't
@@ -965,33 +1015,42 @@ async fn mcp_anonymous_save_note_rejected() {
             .await
             .expect("count save_note rows");
 
-    // Slice E: write tools are gated in-handler (`require_actor`). An anonymous
-    // (no bearer) streamable-http client calling save_note gets an isError tool
-    // result whose message mentions auth; `McpClient::tools_call` surfaces that
-    // as `Err`. Args must be COMPLETE so rmcp deserializes Parameters before the
-    // handler runs (else the failure would be invalid-params, not the gate).
-    let client = McpClient::connect(&env.mcp_addr)
-        .await
-        .expect("connect anon");
-    let err = client
-        .tools_call(
-            "save_note",
+    let client = reqwest::Client::new();
+    let resp = client
+        .post(format!("{}/mcp", env.mcp_addr))
+        .header("content-type", "application/json")
+        .header("accept", "application/json, text/event-stream")
+        .body(
             json!({
-                "repo_name": "akashic-record",
-                "branch_name": "main",
-                "category": "ARCHITECTURE",
-                "title": "anonymous rejected",
-                "summary": "should never persist",
-                "content": "should never persist",
-            }),
+                "jsonrpc": "2.0",
+                "id": 1,
+                "method": "tools/call",
+                "params": {
+                    "name": "save_note",
+                    "arguments": {
+                        "repo_name": "akashic-record",
+                        "branch_name": "main",
+                        "category": "ARCHITECTURE",
+                        "title": "anonymous rejected",
+                        "summary": "should never persist",
+                        "content": "should never persist",
+                    }
+                }
+            })
+            .to_string(),
         )
+        .send()
         .await
-        .expect_err("anonymous save_note must be rejected by the in-handler write gate");
-    let msg = err.to_string().to_lowercase();
-    assert!(
-        msg.contains("unauthor") || msg.contains("auth"),
-        "anonymous rejection should mention auth; got: {msg}",
-    );
+        .expect("mcp request");
+    assert_eq!(resp.status(), 401);
+    let challenge = resp
+        .headers()
+        .get("www-authenticate")
+        .expect("WWW-Authenticate header")
+        .to_str()
+        .unwrap()
+        .to_string();
+    assert!(challenge.contains("resource_metadata="), "{challenge}");
 
     // No audit row should be inserted as a side effect of the rejection.
     let (post_count,): (i64,) =

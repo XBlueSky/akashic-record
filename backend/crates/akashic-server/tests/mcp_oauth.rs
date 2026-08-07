@@ -396,6 +396,19 @@ async fn authorize_rejects_unknown_client_id_without_redirecting() {
     assert_eq!(body["error"], "invalid_client");
 }
 
+/// Task 4 introduced this as a narrow carve-out: only an anonymous
+/// `tools/call` naming a write tool got the RFC 9728 challenge, via a
+/// body-peek in `mcp_auth`. Task 3 replaced that with full-auth,
+/// fail-closed: `mcp_auth` now 401s EVERY anonymous `/mcp` request the
+/// same way, peek machinery removed entirely (see
+/// `akashic-mcp/src/mcp_middleware.rs`'s module doc comment). The
+/// assertions below still hold unchanged under the new policy — a write
+/// tool call is one anonymous shape among many that now get this
+/// response — so this test is kept as an extra guard on the OAuth
+/// integration surface; `mcp_contract.rs`'s
+/// `mcp_anonymous_request_gets_401_challenge` and
+/// `mcp_anonymous_write_gets_401_challenge` cover the same behavior (plus
+/// non-write shapes) from the contract-test side.
 #[tokio::test]
 #[serial_test::serial]
 async fn mcp_anonymous_write_tool_call_gets_401_challenge() {
