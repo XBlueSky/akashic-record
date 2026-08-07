@@ -60,6 +60,7 @@ impl fmt::Debug for Config {
             )
             .field("oauth_validation_mode", &self.oauth_validation_mode)
             .field("migrate_on_boot", &self.migrate_on_boot)
+            .field("mcp_cimd_allow_loopback", &self.mcp_cimd_allow_loopback)
             .finish()
     }
 }

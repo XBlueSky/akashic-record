@@ -6,6 +6,12 @@
 // Re-export everything from akashic-identity so `crate::auth::X` keeps working.
 pub use akashic_identity::*;
 
+// SEP-991 Client ID Metadata Document fetcher (Task 4). No `AppState`
+// coupling — a standalone fetch/validate/cache building block. Unused by
+// any handler yet; Task 5 wires it into `/oauth/authorize` for the CIMD
+// client-registration path (spec §4).
+pub mod cimd;
+
 // Handler modules (Router<AppState> coupling — cannot move to identity).
 pub mod account;
 mod exchange;

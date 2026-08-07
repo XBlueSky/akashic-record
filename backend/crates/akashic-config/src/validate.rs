@@ -317,6 +317,7 @@ mod tests {
             ingest_quota_tokens_per_window: 5_000_000,
             ingest_quota_window_secs: 3600,
             ingest_quota_enabled: false,
+            mcp_cimd_allow_loopback: false,
         };
         let dbg = format!("{cfg:?}");
         for canary in [
@@ -872,6 +873,7 @@ mod tests {
             ingest_quota_tokens_per_window: 5_000_000,
             ingest_quota_window_secs: 3600,
             ingest_quota_enabled: false,
+            mcp_cimd_allow_loopback: false,
         };
 
         unsafe { env::remove_var("AKASHIC_ENV") };

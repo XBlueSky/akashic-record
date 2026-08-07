@@ -247,6 +247,12 @@ impl Config {
             ingest_quota_enabled: env::var("INGEST_QUOTA_ENABLED")
                 .map(|v| matches!(v.to_lowercase().as_str(), "true" | "1" | "yes"))
                 .unwrap_or(false),
+
+            // Same bool-parsing convention as `ingest_quota_enabled` above
+            // (case-insensitive true/1/yes, default false).
+            mcp_cimd_allow_loopback: env::var("MCP_CIMD_ALLOW_LOOPBACK")
+                .map(|v| matches!(v.to_lowercase().as_str(), "true" | "1" | "yes"))
+                .unwrap_or(false),
         };
 
         if is_production() {

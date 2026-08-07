@@ -313,5 +313,6 @@ pub fn test_config_minimal() -> Config {
         ingest_quota_tokens_per_window: 5_000_000,
         ingest_quota_window_secs: 3600,
         ingest_quota_enabled: false,
+        mcp_cimd_allow_loopback: false,
     }
 }

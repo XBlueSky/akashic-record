@@ -436,6 +436,7 @@ mod tests {
             ingest_quota_tokens_per_window: 1000,
             ingest_quota_window_secs: 60,
             ingest_quota_enabled: false,
+            mcp_cimd_allow_loopback: false,
         }
     }
 
