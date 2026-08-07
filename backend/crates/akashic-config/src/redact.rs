@@ -17,8 +17,7 @@ impl fmt::Debug for Config {
             .field("llm", &self.llm)
             .field("module_max_files", &self.module_max_files)
             .field("module_min_files", &self.module_min_files)
-            .field("mcp_sse_host", &self.mcp_sse_host)
-            .field("mcp_sse_port", &self.mcp_sse_port)
+            .field("api_host", &self.api_host)
             .field(
                 "gitlab_webhook_secret",
                 &self.gitlab_webhook_secret.as_ref().map(|_| "[REDACTED]"),

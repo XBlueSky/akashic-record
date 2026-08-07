@@ -49,10 +49,10 @@ async fn sigterm_yields_clean_exit_within_cap() {
         .await;
     let mock_base_url = mock_openai.uri(); // e.g. http://127.0.0.1:54321
 
-    // Pre-pick free ports for the binary's two TCP listeners. `#[serial]`
-    // keeps these stable for the duration of this test.
+    // Pre-pick a free port for the binary's one TCP listener (Task 2: MCP
+    // is now a `/mcp` branch of this same REST app, not a second listener).
+    // `#[serial]` keeps this stable for the duration of this test.
     let api_port = pick_free_port();
-    let mcp_sse_port = pick_free_port();
 
     let mut child = Command::new(env!("CARGO_BIN_EXE_akashic-server"))
         // ── Database fixtures (from TestEnv) ─────────────────────────
@@ -75,10 +75,9 @@ async fn sigterm_yields_clean_exit_within_cap() {
         // ── Frontend / public URL ────────────────────────────────────
         .env("FRONTEND_URL", "http://localhost:3000")
         .env("COOKIE_SECURE", "false")
-        // ── Ports — pre-picked free locals ───────────────────────────
-        .env("MCP_SSE_HOST", "127.0.0.1")
+        // ── Ports — pre-picked free local ────────────────────────────
+        .env("API_HOST", "127.0.0.1")
         .env("API_PORT", api_port.to_string())
-        .env("MCP_SSE_PORT", mcp_sse_port.to_string())
         // ── Migrations — TestEnv already ran Up. We pick `true` (not
         //    `false` → Verify) because there is a pre-existing C3 bug in
         //    backend/src/migrate.rs: `PG_TABLES` lists table names

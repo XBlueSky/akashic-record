@@ -25,12 +25,21 @@ use axum::http::{
 use tower_http::cors::CorsLayer;
 use tower_http::trace::TraceLayer;
 
-/// Build the production axum router from a fully-constructed `AppState`.
+/// Build the production axum router from a fully-constructed `AppState` and
+/// a pre-built MCP branch.
 ///
 /// D2: extracted from `main.rs` so integration tests under `backend/tests/`
 /// can serve the exact production router on an ephemeral port without
 /// duplicating the route wiring and middleware-layer order.
-pub fn build_router(state: AppState) -> Router {
+///
+/// Task 2 (single-port merge, spec §2): `mcp_branch` is `akashic-mcp`'s
+/// `mcp::http::build_mcp_branch(...)` output, injected as a plain
+/// `axum::Router` rather than built here — `akashic-http` must NOT depend on
+/// `akashic-mcp` (that dependency would point the wrong way; `akashic-mcp`
+/// already depends on lower-level crates `akashic-http` also depends on).
+/// `akashic-server` (main.rs and the integration-test harness) builds the
+/// branch and passes it in.
+pub fn build_router(state: AppState, mcp_branch: Router) -> Router {
     let cfg = state.config.clone();
 
     use akashic_platform::middleware::rate_limit::{
@@ -99,6 +108,25 @@ pub fn build_router(state: AppState) -> Router {
         crate::api::routes::test_fixtures::router(),
     );
 
+    // Task 2: resolve `AppState` NOW — turning `app` from `Router<AppState>`
+    // into a fully self-contained `Router<()>` — so `mcp_branch` (itself a
+    // state-resolved `Router<()>`; `akashic-mcp` bakes `AppState` into its
+    // handlers/middleware via `from_fn_with_state` rather than axum's
+    // `State<S>` extractor) can be `.merge()`d in. This isn't just
+    // ordering-for-style: axum's `Router::merge<R>` requires `R: Into<Router<S>>`,
+    // and there is no `Router<()> -> Router<AppState>` conversion — so
+    // `mcp_branch` can only merge into `app` once `app` is ALSO `Router<()>`.
+    // Every REST route above (including the test-fixtures nest, which still
+    // needs `AppState`) is merged/nested BEFORE this call, so nothing loses
+    // its state.
+    let app = app.with_state(state).merge(mcp_branch);
+
+    // MUST merge `mcp_branch` (above) before any `.layer()` call below.
+    // axum's `.layer()` only wraps routes already present in the router at
+    // the time it's called — routes merged in afterward never pass through
+    // it. Doing the merge first is what gives `/mcp` traffic the same
+    // Metrics/RequestId/Trace/CORS coverage the REST routes get (spec §2:
+    // single-port merge is the whole point of this ordering).
     app.layer(TraceLayer::new_for_http())
         .layer({
             let mut origins: Vec<HeaderValue> = vec![
@@ -130,5 +158,4 @@ pub fn build_router(state: AppState) -> Router {
         // order, so RequestIdLayer (last .layer call) is the outermost.
         .layer(akashic_platform::middleware::metrics::MetricsLayer)
         .layer(akashic_platform::middleware::request_id::RequestIdLayer)
-        .with_state(state)
 }

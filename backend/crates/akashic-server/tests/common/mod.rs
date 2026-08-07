@@ -228,9 +228,13 @@ pub struct TestEnv {
     pub neo4j_user: String,
     pub neo4j_pass: String,
     pub app_addr: std::net::SocketAddr,
-    /// MCP proxy base URL — `http://host:port` (no trailing slash).
-    /// Honors `TEST_MCP_URL` env var; defaults to `http://localhost:13002`
-    /// (the docker-compose.test.yml backend-test MCP port mapping).
+    /// MCP base URL — `http://host:port` (no trailing slash). Task 2: MCP
+    /// is a `/mcp` branch of the same app as `app_addr`, not a standalone
+    /// listener, so in-process this is just `http://{app_addr}`. Honors
+    /// `TEST_MCP_URL` env var to instead point at an external daemon (e.g.
+    /// docker-compose.test.yml's backend-test container), which now serves
+    /// MCP on its existing REST port mapping (`http://localhost:13001`) —
+    /// there is no separate `13002` MCP mapping anymore.
     pub mcp_addr: String,
     /// Pre-populated session API key. Pass as `Authorization: Bearer <token>`
     /// or as the `ak_session` cookie value to hit protected routes.
@@ -262,10 +266,6 @@ impl TestEnv {
         //    testcontainers (D2's original behavior) when env vars unset.
         let (pg_url, neo4j_url, neo_user, neo_password) = acquire_endpoints().await;
 
-        // MCP base URL — set after the in-process streamable-http MCP server is
-        // bound below (Slice E: the bench serves the MCP router itself rather
-        // than requiring an external TEST_MCP_URL daemon). `TEST_MCP_URL`, if
-        // set, still overrides (to point at a real external daemon).
         // 2. Build a Config wired to the resolved endpoints.
         let cfg = build_test_config(&pg_url, &neo4j_url, &neo_user, &neo_password);
 
@@ -288,9 +288,19 @@ impl TestEnv {
             .await
             .expect("reset state");
 
-        // 5. Build AppState with TestEmbedder + TestLlm injected, build router.
+        // 5. Build AppState with TestEmbedder + TestLlm injected. Task 2:
+        //    the MCP streamable-http router is no longer a standalone app —
+        //    it's a branch (`build_mcp_branch`) merged into the SAME router
+        //    `build_router` returns, on the SAME (ephemeral) port. The
+        //    Neo4j pool it needs (AppState carries neither pg nor db — A2a)
+        //    is opened here, before building either the branch or the
+        //    router, so it's available regardless of whether `TEST_MCP_URL`
+        //    later overrides where the test CLIENT connects.
         let state = build_test_app_state(cfg.clone(), pg_pool.clone()).await;
-        let router = build_router(state.clone());
+        let mcp_db = Neo4jPool::connect(&cfg).await.expect("mcp neo4j pool");
+        let mcp_branch =
+            akashic_record::mcp::http::build_mcp_branch(state.clone(), pg_pool.clone(), mcp_db);
+        let router = build_router(state.clone(), mcp_branch);
 
         // 6. Serve on ephemeral port. We use `axum::serve(listener, router)`
         //    rather than `into_make_service_with_connect_info`. That leaves
@@ -326,40 +336,14 @@ impl TestEnv {
             }
         }
 
-        // 6b. Serve the streamable-http MCP router in-process on its own
-        //     ephemeral port (Slice E). `build_mcp_router` needs the pg + a
-        //     Neo4j pool explicitly (AppState carries neither). `TEST_MCP_URL`
-        //     overrides to target an external daemon instead.
-        let mcp_addr = if let Ok(url) = std::env::var("TEST_MCP_URL") {
-            url
-        } else {
-            let mcp_db = Neo4jPool::connect(&cfg).await.expect("mcp neo4j pool");
-            let mcp_router =
-                akashic_record::mcp::http::build_mcp_router(state.clone(), pg_pool.clone(), mcp_db);
-            let mcp_listener = tokio::net::TcpListener::bind("127.0.0.1:0")
-                .await
-                .expect("bind ephemeral MCP port");
-            let mcp_sock = mcp_listener.local_addr().expect("mcp local addr");
-            tokio::spawn(async move {
-                axum::serve(
-                    mcp_listener,
-                    mcp_router.into_make_service_with_connect_info::<std::net::SocketAddr>(),
-                )
-                .await
-                .ok();
-            });
-            let deadline = std::time::Instant::now() + Duration::from_secs(5);
-            loop {
-                match tokio::net::TcpStream::connect(mcp_sock).await {
-                    Ok(_) => break,
-                    Err(_) if std::time::Instant::now() < deadline => {
-                        tokio::time::sleep(Duration::from_millis(10)).await;
-                    }
-                    Err(e) => panic!("in-process MCP server did not start within 5s: {e}"),
-                }
-            }
-            format!("http://{mcp_sock}")
-        };
+        // MCP base URL — Task 2: `build_mcp_branch` is now served by the SAME
+        // app on the SAME `app_addr` bound above (it's merged into `router`
+        // as a `/mcp` branch, not a standalone listener), so this is just
+        // `app_addr` unless `TEST_MCP_URL` overrides to point at an external
+        // daemon (e.g. docker-compose.test.yml's backend-test container —
+        // see :13001 note on the `mcp_addr` field doc above).
+        let mcp_addr =
+            std::env::var("TEST_MCP_URL").unwrap_or_else(|_| format!("http://{app_addr}"));
 
         // 7. Pre-populate a logged-in actor.
         let token = Uuid::new_v4().to_string();
@@ -458,9 +442,9 @@ fn build_test_config(
         module_max_files: 12,
         module_min_files: 3,
 
-        // ── MCP SSE server (unused by REST tests) ─────────────────────
-        mcp_sse_host: "127.0.0.1".to_string(),
-        mcp_sse_port: 18080,
+        // ── API bind host (bench binds its own ephemeral port — see
+        //    `api_port: 0` below; this value is unused by REST tests) ───
+        api_host: "127.0.0.1".to_string(),
 
         // ── GitLab ────────────────────────────────────────────────────
         gitlab_webhook_secret: None,
@@ -648,7 +632,9 @@ async fn build_test_app_state(cfg: Config, pg_pool: PgPool) -> AppState {
         oauth_health_cache: Arc::new(tokio::sync::RwLock::new(None)),
         shutdown: tokio_util::sync::CancellationToken::new(),
         metrics_handle,
-        readiness: readiness::new_state(&["postgres", "neo4j", "mcp", "embedding"]),
+        // Task 2: no standalone "mcp" probe — MCP is a branch of this same
+        // router now, not a separately-probed process/port.
+        readiness: readiness::new_state(&["postgres", "neo4j", "embedding"]),
         raw_embedder: test_embedder,
         // A2a Task 0: service ports
         search_service: retrieval_svc.clone(),

@@ -123,11 +123,7 @@ impl Config {
                 .and_then(|v| v.parse().ok())
                 .unwrap_or(3),
 
-            mcp_sse_host: env::var("MCP_SSE_HOST").unwrap_or_else(|_| "0.0.0.0".into()),
-            mcp_sse_port: env::var("MCP_SSE_PORT")
-                .ok()
-                .and_then(|v| v.parse().ok())
-                .unwrap_or(8080),
+            api_host: env::var("API_HOST").unwrap_or_else(|_| "0.0.0.0".into()),
 
             gitlab_webhook_secret: env::var("GITLAB_WEBHOOK_SECRET")
                 .ok()

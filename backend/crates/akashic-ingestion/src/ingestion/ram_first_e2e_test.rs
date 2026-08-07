@@ -129,8 +129,7 @@ fn test_config(database_url: &str, neo4j_uri: &str) -> akashic_config::Config {
         // Every directory its own module: never roll up, never split.
         module_max_files: 1000,
         module_min_files: 1,
-        mcp_sse_host: "127.0.0.1".into(),
-        mcp_sse_port: 8080,
+        api_host: "127.0.0.1".into(),
         gitlab_webhook_secret: None,
         gitlab_url: "http://localhost".into(),
         gitlab_app_id: String::new(),

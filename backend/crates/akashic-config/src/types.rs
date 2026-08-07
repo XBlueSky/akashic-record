@@ -104,9 +104,10 @@ pub struct Config {
     pub module_max_files: u32,
     pub module_min_files: u32,
 
-    // MCP SSE server
-    pub mcp_sse_host: String,
-    pub mcp_sse_port: u16,
+    // REST API bind host (Task 2: merged with the former standalone MCP SSE
+    // host — MCP now shares this port via the `/mcp` branch, single-port
+    // deploy per spec §2).
+    pub api_host: String,
     // GitLab webhook
     pub gitlab_webhook_secret: Option<SecretString>,
 
