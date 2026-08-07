@@ -146,27 +146,43 @@ struct AuthorizeQuery {
 /// consent screen instead of minting a code directly — [`consent`] (the
 /// paired `POST` handler below) does that, on approval.
 ///
-/// Error handling follows RFC 6749 §4.1.2.1's spirit, extended for CIMD:
-/// EVERY check up to and including "does `redirect_uri` exactly match one of
-/// the CIMD document's `redirect_uris`" returns 400 directly, never a
-/// redirect — until the document is fetched and its `redirect_uris` list is
-/// checked, there is no trustworthy location to send the browser to. This is
-/// why `response_type`/`code_challenge_method`/`code_challenge` are checked
-/// BEFORE the CIMD fetch (Task 4 checked them after `client_id`/`redirect_uri`
-/// validation, when a redirect was already safe — that early-redirect target
-/// no longer exists pre-CIMD, so these structural checks moved ahead of it).
-/// Once CIMD + `redirect_uri` validation both pass, the trust boundary is
-/// fully established and failures downstream of it (server errors persisting
-/// the pending consent) fall back to `redirect_with_error`, matching the
-/// pre-CIMD precedent.
+/// Ordered early-return chain (fix-round-1, controller ruling — see the
+/// review this addressed): **structural 400 → session 303 → CIMD 400 →
+/// `redirect_uri` 400 → consent page**.
+///
+/// 1. `response_type`/`code_challenge_method`/`code_challenge` — 400,
+///    never a redirect (no trustworthy `redirect_uri` exists yet). Cheapest
+///    checks, no I/O, so they run first regardless of what else changes.
+/// 2. **Web session** — checked BEFORE the CIMD fetch. This is the load-
+///    bearing reorder: [`cimd`]'s `fetch_and_validate` makes a real outbound
+///    HTTP request (SSRF-guarded, but still a distinguishing oracle —
+///    reachable vs. blocked vs. malformed-document vs. wrong-`client_id`
+///    all read differently). Fetching before authenticating would let ANY
+///    anonymous caller drive that oracle against arbitrary `https://` URLs
+///    of their choosing. Requiring a session first means only an
+///    already-authenticated user can ever trigger a fetch. No session →
+///    303 to the login page (unchanged mechanics from Task 4).
+/// 3. **CIMD fetch/validate** — any `CimdError` collapses to the SAME fixed,
+///    non-leaking `error_description` (see [`invalid_client_response`]) —
+///    the specific error is logged via `tracing::warn!` for operators only,
+///    never echoed to the caller. This is the other half of the same fix:
+///    even an authenticated caller must not be able to distinguish *why* an
+///    arbitrary URL's CIMD fetch failed.
+/// 4. **`redirect_uri` match** — must be EXACTLY one of the CIMD document's
+///    own `redirect_uris`, else 400 (still pre-trust: this specific URI
+///    isn't validated yet even though the document is).
+/// 5. Past this point `redirect_uri` is fully CIMD-trusted — the pending
+///    consent is created and the consent screen rendered; a `server_error`
+///    persisting it falls back to `redirect_with_error`, since redirecting
+///    is safe now.
 async fn authorize(
     State(state): State<AppState>,
     Query(q): Query<AuthorizeQuery>,
     uri: Uri,
     headers: HeaderMap,
 ) -> Response {
-    // Structural checks — BEFORE `redirect_uri` is trusted, so 400, never a
-    // redirect (spec §4 failure-response principle).
+    // 1. Structural checks — BEFORE `redirect_uri` is trusted, so 400, never
+    // a redirect (spec §4 failure-response principle).
     if q.response_type != "code" {
         return oauth_authorize_400(
             "unsupported_response_type",
@@ -180,31 +196,15 @@ async fn authorize(
         return oauth_authorize_400("invalid_request", "code_challenge is required");
     }
 
-    // CIMD (SEP-991): `client_id` IS the document URL — fetch, validate, and
-    // cache it (`crate::auth::cimd::CimdFetcher`, Task 4). Any failure —
-    // unreachable, wrong shape, `client_id` mismatch, SSRF-blocked host,
-    // etc. — collapses to the same 400 `invalid_client`, body carrying the
-    // specific `CimdError`'s `Display` for operator/client debuggability.
-    let doc = match cimd(&state).fetch_and_validate(&q.client_id).await {
-        Ok(doc) => doc,
-        Err(e) => return invalid_client_response(e),
-    };
-    if !doc.redirect_uris.iter().any(|u| u == &q.redirect_uri) {
-        return invalid_client_response(
-            "redirect_uri is not one of the client's registered redirect_uris",
-        );
-    }
-
-    // From here on `redirect_uri` is CIMD-validated — every further failure
-    // is safe to redirect to it with `?error=...&state=...`.
-
+    // 2. Web session — BEFORE the CIMD fetch (see fn-doc point 2: closes the
+    // unauthenticated-fetch-oracle finding). No session: bounce to the login
+    // page with `next` set to THIS authorize request (raw path+query, never
+    // re-encoded), so a successful login lands the browser back here to
+    // resume. `next` is a same-origin PATH only (validated on the login
+    // side) — never the full URL with a host, which would fail that
+    // same-origin check.
     let Some(session) = crate::auth::oauth_device::extract_session_user(&state, &headers).await
     else {
-        // No web session: bounce to the login page with `next` set to THIS
-        // authorize request (raw path+query, never re-encoded), so a
-        // successful login lands the browser back here to resume. `next` is
-        // a same-origin PATH only (validated on the login side) — never the
-        // full URL with a host, which would fail that same-origin check.
         let base = base_url(&state);
         let next = match uri.query() {
             Some(query) => format!("{}?{query}", uri.path()),
@@ -214,6 +214,31 @@ async fn authorize(
         return Redirect::to(&login_url).into_response();
     };
 
+    // 3. CIMD (SEP-991): `client_id` IS the document URL — fetch, validate,
+    // and cache it (`crate::auth::cimd::CimdFetcher`, Task 4). Every failure
+    // shape collapses to the same fixed `invalid_client_response()` message
+    // (see that fn's doc comment for why); the specific `CimdError` is
+    // logged here, operator-only.
+    let doc = match cimd(&state).fetch_and_validate(&q.client_id).await {
+        Ok(doc) => doc,
+        Err(e) => {
+            tracing::warn!(event = "mcp_oauth_cimd_validation_failed", error = %e);
+            return invalid_client_response(
+                "client_id metadata document could not be fetched or validated",
+            );
+        }
+    };
+    // 4. `redirect_uri` must exactly match one of the CIMD document's own
+    // declared URIs — still pre-trust (this specific URI isn't validated
+    // yet even though the document itself is), so 400, never a redirect.
+    if !doc.redirect_uris.iter().any(|u| u == &q.redirect_uri) {
+        return invalid_client_response(
+            "redirect_uri is not one of the client's registered redirect_uris",
+        );
+    }
+
+    // 5. From here on `redirect_uri` is CIMD-validated — every further
+    // failure is safe to redirect to it with `?error=...&state=...`.
     let meta = PendingConsentInput {
         client_id: q.client_id.clone(),
         client_name: doc.client_name.clone(),
@@ -238,20 +263,32 @@ async fn authorize(
 
 /// 400 response for the CIMD/`redirect_uri` validation that must never
 /// redirect — there is no CIMD-trusted URI to send the browser to yet.
-/// `description` carries the specific reason (a `CimdError`'s `Display`, or
-/// a fixed string for the `redirect_uri`-mismatch case).
-fn invalid_client_response(description: impl std::fmt::Display) -> Response {
+///
+/// `description` is `&'static str` BY CONSTRUCTION, never a caller-derived
+/// `Display` (fix-round-1): the underlying `CimdError` can contain raw
+/// fetch/DNS/HTTP-status detail, and echoing it into the response body would
+/// hand a caller — even an authenticated one, now that the session check
+/// runs before the CIMD fetch (see [`authorize`]) — a distinguishing oracle
+/// over this server's outbound CIMD fetch for any `https://` URL of their
+/// choosing (reachable vs. SSRF-blocked vs. malformed-document vs. ... all
+/// read differently). The specific error is logged via `tracing::warn!` at
+/// the call site instead, for operators only.
+fn invalid_client_response(description: &'static str) -> Response {
     oauth_authorize_400("invalid_client", description)
 }
 
 /// 400 RFC 6749 §5.2-shaped error body shared by every `/oauth/authorize`
 /// and `/oauth/authorize/consent` failure that must not redirect.
-fn oauth_authorize_400(error: &'static str, description: impl std::fmt::Display) -> Response {
+/// `description` is `&'static str`, not a caller-derived `Display` — every
+/// body on this path is one of our own fixed literals, never echoed-back
+/// input or a wrapped internal error (see [`invalid_client_response`]'s doc
+/// comment for the finding this closes).
+fn oauth_authorize_400(error: &'static str, description: &'static str) -> Response {
     (
         StatusCode::BAD_REQUEST,
         Json(serde_json::json!({
             "error": error,
-            "error_description": description.to_string(),
+            "error_description": description,
         })),
     )
         .into_response()
@@ -354,7 +391,11 @@ async fn consent(
         }
         Err(e) => {
             tracing::warn!(event = "mcp_oauth_redeem_pending_consent_failed", error = %e);
-            return oauth_authorize_400("server_error", "failed to redeem consent");
+            // A repo failure is a server fault, not a client error — 500,
+            // matching `token_exchange`'s existing `server_error` convention
+            // (same body shape: `oauth_token_error`, no `error_description`
+            // wrapping an internal error into the client-facing message).
+            return oauth_token_error(StatusCode::INTERNAL_SERVER_ERROR, "server_error");
         }
     };
 
@@ -381,7 +422,7 @@ async fn consent(
     }
 }
 
-/// 302 to `redirect_uri` carrying `?error=<error>&state=<state>` (RFC 6749
+/// 303 to `redirect_uri` carrying `?error=<error>&state=<state>` (RFC 6749
 /// §4.1.2.1). `state` is echoed back from the request and percent-encoded
 /// since it is caller-controlled and may contain `&`/`=`/etc; `error` is
 /// always one of our own fixed literals so needs no encoding.
@@ -394,7 +435,7 @@ fn redirect_with_error(redirect_uri: &str, error: &'static str, state: &str) -> 
     .into_response()
 }
 
-/// 302 to `redirect_uri` carrying `?code=<code>&state=<state>` (RFC 6749
+/// 303 to `redirect_uri` carrying `?code=<code>&state=<state>` (RFC 6749
 /// §4.1.2). `code` is our own hex string (URL-safe as-is); `state` is
 /// caller-controlled and percent-encoded for the same reason as above.
 fn redirect_with_code(redirect_uri: &str, code: &str, state: &str) -> Response {

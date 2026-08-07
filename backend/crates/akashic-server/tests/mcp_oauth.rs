@@ -455,7 +455,6 @@ async fn token_rejects_wrong_pkce_verifier() {
 #[serial_test::serial]
 async fn authorize_without_session_redirects_to_login_with_next() {
     let env = common::TestEnv::start().await;
-    let (client_id, redirect_uri) = spawn_test_client("t5-no-session").await;
     let challenge = pkce_challenge("some-verifier-value-not-used-here");
 
     let client = no_redirect_client();
@@ -463,16 +462,20 @@ async fn authorize_without_session_redirects_to_login_with_next() {
         .get(url(&env, "/oauth/authorize"))
         .query(&[
             ("response_type", "code"),
-            ("client_id", client_id.as_str()),
-            ("redirect_uri", redirect_uri.as_str()),
+            // fix-round-1: the session check now runs BEFORE any CIMD
+            // fetch, so `client_id` never needs to resolve to anything for
+            // this test — no fixture server spun up at all. This is a
+            // stronger proof of the ordering than the old
+            // fixture-then-no-session setup: if CIMD ran first, this
+            // never-fetchable URL would 400 `invalid_client`, not redirect
+            // to login.
+            ("client_id", "https://client.example/never-fetched.json"),
+            ("redirect_uri", "http://127.0.0.1:33418/callback"),
             ("state", "state-noauth"),
             ("code_challenge", challenge.as_str()),
             ("code_challenge_method", "S256"),
         ])
-        // Deliberately no `cookie` header — no web session. CIMD validation
-        // still succeeds first (the fixture is reachable and well-formed),
-        // so this proves the session check happens AFTER CIMD, not instead
-        // of it.
+        // Deliberately no `cookie` header — no web session.
         .send()
         .await
         .expect("GET /oauth/authorize");
