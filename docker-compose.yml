@@ -61,7 +61,6 @@ services:
         # before `docker compose build`. Falls back to 'unknown' if unset.
         AKASHIC_BUILD_COMMIT: ${AKASHIC_BUILD_COMMIT:-unknown}
     ports:
-      - "${MCP_SSE_PORT:-8080}:8080"
       - "${API_PORT:-8081}:8081"
     env_file:
       - .env

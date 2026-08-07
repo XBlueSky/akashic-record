@@ -1,5 +1,6 @@
 //! Integration tests for `PgOauthCodeRepo` (Task 4: MCP OAuth authorize +
-//! token, RFC 6749 §4.1).
+//! token, RFC 6749 §4.1; `client_id` moved from a `mcp_oauth_clients` FK to
+//! a free-text CIMD URL in Task 5, spec §4).
 //!
 //! Requires a live Postgres reachable via `DATABASE_URL` (falls back to
 //! `akashic_test_support::test_pg_pool`'s :5433 default, which is a dead
@@ -11,11 +12,10 @@
 //! persists/redeems the code and its bound `code_challenge`/`redirect_uri`,
 //! so there is no "repo rejects a PKCE mismatch" case to test here.
 
-use akashic_domain::ports::{OauthClientRepo, OauthCodeRepo};
-use akashic_store_pg::repos::{PgOauthClientRepo, PgOauthCodeRepo};
+use akashic_domain::ports::OauthCodeRepo;
+use akashic_store_pg::repos::PgOauthCodeRepo;
 use akashic_test_support::test_pg_pool;
 use sqlx::PgPool;
-use uuid::Uuid;
 
 async fn setup() -> PgPool {
     let pool = test_pg_pool().await;
@@ -25,26 +25,8 @@ async fn setup() -> PgPool {
     pool
 }
 
-/// Register a throwaway client so `mcp_oauth_codes.client_id`'s FK is
-/// satisfied, returning its `client_id`.
-async fn register_client(pool: &PgPool, name: &str) -> Uuid {
-    let repo = PgOauthClientRepo::new(pool.clone());
-    repo.register_client(
-        vec!["http://127.0.0.1:33418/callback".to_string()],
-        Some(name.to_string()),
-    )
-    .await
-    .expect("register_client")
-    .client_id
-}
-
-async fn cleanup(pool: &PgPool, client_id: Uuid) {
+async fn cleanup(pool: &PgPool, client_id: &str) {
     sqlx::query("DELETE FROM mcp_oauth_codes WHERE client_id = $1")
-        .bind(client_id)
-        .execute(pool)
-        .await
-        .ok();
-    sqlx::query("DELETE FROM mcp_oauth_clients WHERE client_id = $1")
         .bind(client_id)
         .execute(pool)
         .await
@@ -54,7 +36,7 @@ async fn cleanup(pool: &PgPool, client_id: Uuid) {
 #[tokio::test]
 async fn issue_then_consume_round_trips_bound_fields() {
     let pool = setup().await;
-    let client_id = register_client(&pool, "test_t4_issue_consume").await;
+    let client_id = "https://client.example/issue-consume.json";
     let repo = PgOauthCodeRepo::new(pool.clone());
 
     let code = repo
@@ -87,7 +69,7 @@ async fn issue_then_consume_round_trips_bound_fields() {
 #[tokio::test]
 async fn consume_code_is_one_time_use() {
     let pool = setup().await;
-    let client_id = register_client(&pool, "test_t4_one_time").await;
+    let client_id = "https://client.example/one-time.json";
     let repo = PgOauthCodeRepo::new(pool.clone());
 
     let code = repo
@@ -116,7 +98,7 @@ async fn consume_code_is_one_time_use() {
 #[tokio::test]
 async fn consume_code_rejects_expired_code() {
     let pool = setup().await;
-    let client_id = register_client(&pool, "test_t4_expired").await;
+    let client_id = "https://client.example/expired.json";
 
     // Seed an already-expired row directly (bypassing issue_code's fixed
     // 10-minute TTL) to exercise the expiry branch of the atomic CAS.

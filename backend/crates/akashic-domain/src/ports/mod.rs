@@ -47,7 +47,7 @@ pub use graph_traversal::{
 };
 pub use graph_write::GraphWriteRepo;
 pub use identity::{
-    AccountAuditRepo, DeviceFlowRepo, McpTokenRepo, OauthClientRepo, OauthCodeRepo,
+    AccountAuditRepo, DeviceFlowRepo, McpTokenRepo, OauthCodeRepo, OauthConsentRepo,
     PassthroughTokenRepo, PublishTokenRepo, QuotaRepo, SessionTokenRepo,
 };
 pub use ingest_edge::{FlowGraphRepo, IngestEdgeRepo, RepoGraphRepo};

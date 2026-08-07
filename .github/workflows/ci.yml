@@ -390,7 +390,7 @@ jobs:
           TEST_NEO4J_URI: bolt://localhost:57687
           TEST_NEO4J_USER: neo4j
           TEST_NEO4J_PASSWORD: akashic-test
-          TEST_MCP_URL: http://localhost:13002
+          TEST_MCP_URL: http://localhost:13001
         run: cargo test -p akashic-server --features test-fixtures --test mcp_contract --release
       - name: Collect compose logs
         if: failure()

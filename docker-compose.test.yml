@@ -102,7 +102,6 @@ services:
         condition: service_healthy
     ports:
       - "13001:8081"
-      - "13002:8080"   # MCP proxy SSE — D4 contract tests connect here
     healthcheck:
       test: ["CMD", "curl", "-sf", "http://localhost:8081/health"]
       interval: 3s

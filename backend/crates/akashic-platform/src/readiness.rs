@@ -39,7 +39,8 @@ pub trait Probe: Send + Sync {
     /// human-readable reason otherwise.
     async fn probe(&self) -> Result<()>;
     /// Stable label used in metrics + JSON output. Closed set of values
-    /// (e.g. "postgres", "neo4j", "mcp", "embedding").
+    /// (e.g. "postgres", "neo4j", "embedding" — Task 2: no standalone "mcp"
+    /// probe anymore, MCP rides the single-port REST app's own probes).
     fn name(&self) -> &'static str;
 }
 
@@ -225,28 +226,6 @@ pub mod probes {
         }
     }
 
-    /// MCP loopback rmcp upstream readiness — TCP connect with 1s timeout.
-    /// Cheaper than HTTP because rmcp's /sse is a streaming endpoint.
-    pub struct McpLoopbackProbe {
-        pub port: u16,
-    }
-
-    #[async_trait]
-    impl Probe for McpLoopbackProbe {
-        async fn probe(&self) -> Result<()> {
-            let addr = format!("127.0.0.1:{}", self.port);
-            let connect_fut = tokio::net::TcpStream::connect(&addr);
-            let _ = tokio::time::timeout(Duration::from_secs(1), connect_fut)
-                .await
-                .map_err(|_| anyhow::anyhow!("mcp loopback connect timed out at {addr}"))?
-                .with_context(|| format!("mcp loopback connect failed at {addr}"))?;
-            Ok(())
-        }
-        fn name(&self) -> &'static str {
-            "mcp"
-        }
-    }
-
     /// Embedding provider readiness — active probe with a 1-token text.
     /// Uses the **raw** provider (bypassing QuotaEmbedding) so health
     /// probes never burn an actor's quota bucket.
@@ -399,8 +378,5 @@ mod tests {
             sqlx::PgPool::connect_lazy("postgres://x:y@127.0.0.1:1/z").expect("connect_lazy");
         let pg_probe = PgProbe { pool: pg_pool };
         assert_eq!(pg_probe.name(), "postgres");
-
-        let mcp_probe = McpLoopbackProbe { port: 0 };
-        assert_eq!(mcp_probe.name(), "mcp");
     }
 }

@@ -1,5 +1,6 @@
 //! PostgreSQL adapter for `OauthCodeRepo` — MCP OAuth authorization-code
-//! persistence (RFC 6749 §4.1, Task 4 — "MCP OAuth (二)").
+//! persistence (RFC 6749 §4.1, Task 4 — "MCP OAuth (二)"; `client_id` moved
+//! from a `mcp_oauth_clients` FK to a free-text CIMD URL in Task 5, spec §4).
 //!
 //! Mirrors [`super::identity::PgMcpTokenRepo`]'s hashing discipline: only
 //! `sha256(code)` is ever persisted, the plaintext is returned once by
@@ -34,7 +35,7 @@ impl PgOauthCodeRepo {
 impl OauthCodeRepo for PgOauthCodeRepo {
     async fn issue_code(
         &self,
-        client_id: Uuid,
+        client_id: &str,
         user_id: i64,
         user_login: &str,
         code_challenge: &str,
@@ -78,7 +79,7 @@ impl OauthCodeRepo for PgOauthCodeRepo {
         // window between checking and claiming for a second caller to slip
         // through. `RETURNING` reads the row's bound data from the exact
         // same statement that claimed it.
-        let row: Option<(Uuid, i64, String, String, String)> = sqlx::query_as(
+        let row: Option<(String, i64, String, String, String)> = sqlx::query_as(
             "UPDATE mcp_oauth_codes \
              SET used_at = now() \
              WHERE code_hash = $1 AND used_at IS NULL AND expires_at > now() \

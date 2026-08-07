@@ -397,8 +397,7 @@ mod tests {
             alerts: AlertsConfig::default(),
             module_max_files: 1000,
             module_min_files: 1,
-            mcp_sse_host: "127.0.0.1".into(),
-            mcp_sse_port: 8080,
+            api_host: "127.0.0.1".into(),
             gitlab_webhook_secret: None,
             gitlab_url: "http://unused".into(),
             gitlab_app_id: "unused".into(),
@@ -437,6 +436,7 @@ mod tests {
             ingest_quota_tokens_per_window: 1000,
             ingest_quota_window_secs: 60,
             ingest_quota_enabled: false,
+            mcp_cimd_allow_loopback: false,
         }
     }
 

@@ -46,6 +46,7 @@ url.workspace = true
 secrecy.workspace = true
 anyhow.workspace = true
 tracing.workspace = true
+thiserror.workspace = true
 
 [dev-dependencies]
 akashic-test-support.workspace = true

@@ -19,9 +19,9 @@ use async_trait::async_trait;
 use uuid::Uuid;
 
 use crate::types::{
-    AuditEntryRow, ClientRegistration, ConsumedOauthCode, DevicePollResult, McpTokenSummaryRow,
-    PublishTokenSummaryRow, QuotaCheck, SessionRow, UsageKind, ValidatedMcpToken,
-    ValidatedPublishToken,
+    AuditEntryRow, ConsumedOauthCode, DevicePollResult, McpTokenSummaryRow, PendingConsent,
+    PendingConsentInput, PublishTokenSummaryRow, QuotaCheck, SessionRow, UsageKind,
+    ValidatedMcpToken, ValidatedPublishToken,
 };
 
 // ── SessionTokenRepo ──────────────────────────────────────────────────────────
@@ -373,35 +373,6 @@ pub trait AccountAuditRepo: Send + Sync {
     async fn list_my_audit(&self, user_id: i64, limit: i64) -> anyhow::Result<Vec<AuditEntryRow>>;
 }
 
-// ── OauthClientRepo ───────────────────────────────────────────────────────────
-
-/// Repository contract for MCP OAuth dynamic client registration
-/// (RFC 7591, Task 3 — "MCP OAuth (一)").
-///
-/// Registered clients are always public clients (`token_endpoint_auth_method:
-/// "none"`) — no `client_secret` is ever issued or stored. `redirect_uris`
-/// are persisted as a JSONB array in the `mcp_oauth_clients` PG table.
-/// Redirect-URI format validation (loopback-http or https) happens at the
-/// HTTP handler layer, NOT here — this trait persists whatever it is given.
-///
-/// Implementations are `Send + Sync` so they can be held behind
-/// `Arc<dyn OauthClientRepo>`.
-#[async_trait]
-pub trait OauthClientRepo: Send + Sync {
-    /// Register a new public OAuth client. Returns the generated
-    /// `client_id` alongside the persisted `client_name`/`redirect_uris`.
-    async fn register_client(
-        &self,
-        redirect_uris: Vec<String>,
-        client_name: Option<String>,
-    ) -> anyhow::Result<ClientRegistration>;
-
-    /// Look up a registered client by id. Returns `None` if unknown — Task
-    /// 4's `/oauth/authorize` and `/oauth/token` handlers use this to
-    /// validate an incoming `client_id` + `redirect_uri` pair.
-    async fn get_client(&self, client_id: Uuid) -> anyhow::Result<Option<ClientRegistration>>;
-}
-
 // ── OauthCodeRepo ─────────────────────────────────────────────────────────────
 
 /// Repository contract for MCP OAuth authorization-code persistence (RFC 6749
@@ -418,14 +389,19 @@ pub trait OauthClientRepo: Send + Sync {
 pub trait OauthCodeRepo: Send + Sync {
     /// Issue a new one-time authorization code for `client_id` + `user_id`,
     /// binding the PKCE `code_challenge` and the exact `redirect_uri` this
-    /// code may be redeemed against. Returns the plaintext code (64 lowercase
-    /// hex chars — 32 random bytes); the row stores only its sha256.
-    /// `expires_at` is fixed at `now() + 10 minutes` (RFC 6749 §4.1.2
-    /// recommends a short-lived code) and is not configurable per call.
+    /// code may be redeemed against. `client_id` is a CIMD `client_id` URL
+    /// (spec §4, MCP refactor 2026-08-07) — NOT a database identifier —
+    /// persisted verbatim as the exact string the client presented, so the
+    /// `/oauth/token` handler can compare it byte-for-byte against the
+    /// `client_id` the token request presents. Returns the plaintext code
+    /// (64 lowercase hex chars — 32 random bytes); the row stores only its
+    /// sha256. `expires_at` is fixed at `now() + 10 minutes` (RFC 6749
+    /// §4.1.2 recommends a short-lived code) and is not configurable per
+    /// call.
     #[allow(clippy::too_many_arguments)]
     async fn issue_code(
         &self,
-        client_id: Uuid,
+        client_id: &str,
         user_id: i64,
         user_login: &str,
         code_challenge: &str,
@@ -444,4 +420,60 @@ pub trait OauthCodeRepo: Send + Sync {
     /// single RFC 6749 `invalid_grant` response, which is both spec-correct
     /// and avoids leaking which specific reason a presented code failed.
     async fn consume_code(&self, presented: &str) -> anyhow::Result<Option<ConsumedOauthCode>>;
+}
+
+// ── OauthConsentRepo ──────────────────────────────────────────────────────────
+
+/// Repository contract for the MCP OAuth pending-consent handshake (spec §4,
+/// MCP refactor 2026-08-07 — CIMD validation + consent screen replace DCR).
+///
+/// `GET /oauth/authorize` no longer mints a code directly: once CIMD
+/// validation passes and a web session is present, it creates a *pending
+/// consent* row (bound to the session's `user_id` — see the CSRF note below)
+/// and renders a confirmation page. `POST /oauth/authorize/consent` redeems
+/// that row and, on approval, calls [`OauthCodeRepo::issue_code`] to mint the
+/// actual authorization code. Rows live in `mcp_oauth_pending_consents` with a
+/// fixed 10-minute TTL, mirroring [`OauthCodeRepo`]'s short-lived-artifact
+/// discipline.
+///
+/// **CSRF note**: [`Self::redeem_pending`] requires the SAME `user_id` that
+/// created the row (`AND user_id = $2` in the adapter's SQL, not just
+/// `consent_id`). Combined with the id being an unguessable `UUID` and the
+/// atomic CAS making it single-use, a third party cannot forge or replay a
+/// consent approval even if they can make the victim's browser POST to this
+/// endpoint (classic CSRF) — the row simply won't belong to whatever session
+/// the forged request carries, if any.
+///
+/// Implementations are `Send + Sync` so they can be held behind
+/// `Arc<dyn OauthConsentRepo>`.
+#[async_trait]
+pub trait OauthConsentRepo: Send + Sync {
+    /// Create a new pending-consent row for `user_id`/`user_login`, carrying
+    /// the CIMD-validated client + PKCE/state metadata from the authorize
+    /// request. Returns the generated `consent_id` (rendered into the
+    /// consent page's hidden form field). `expires_at` is fixed at
+    /// `now() + 10 minutes`.
+    async fn issue_pending(
+        &self,
+        user_id: i64,
+        user_login: &str,
+        meta: &PendingConsentInput,
+    ) -> anyhow::Result<Uuid>;
+
+    /// Atomically redeem a presented `consent_id`: the adapter's `UPDATE ...
+    /// SET used_at = now() WHERE consent_id = $1 AND user_id = $2 AND
+    /// used_at IS NULL AND expires_at > now() RETURNING ...` mirrors
+    /// [`OauthCodeRepo::consume_code`]'s CAS exactly, with the additional
+    /// `user_id` bind that makes this the CSRF defense described on the
+    /// trait doc comment.
+    ///
+    /// Returns `None` for: unknown consent_id, already-used, expired, or
+    /// `user_id` mismatch — the `/oauth/authorize/consent` handler collapses
+    /// all four into a single 400 `invalid_request`, avoiding an oracle that
+    /// would tell a caller which specific reason a presented id failed.
+    async fn redeem_pending(
+        &self,
+        consent_id: Uuid,
+        user_id: i64,
+    ) -> anyhow::Result<Option<PendingConsent>>;
 }

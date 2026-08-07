@@ -15,6 +15,13 @@ pub enum Violation {
     ContainerLocalhost { field: &'static str, host: String },
     /// A field has invalid shape (e.g., `DATABASE_URL` does not parse).
     InvalidSecretShape { field: &'static str, reason: String },
+    /// A security-relevant boolean flag is set to the value that disables a
+    /// safety guard — never acceptable in production, regardless of operator
+    /// intent (see e.g. `MCP_CIMD_ALLOW_LOOPBACK`).
+    InsecureFlag {
+        field: &'static str,
+        reason: &'static str,
+    },
 }
 
 impl fmt::Display for Violation {
@@ -32,6 +39,9 @@ impl fmt::Display for Violation {
             ),
             Self::InvalidSecretShape { field, reason } => {
                 write!(f, "{field}: invalid shape ({reason})")
+            }
+            Self::InsecureFlag { field, reason } => {
+                write!(f, "{field}: must be false in production — {reason}")
             }
         }
     }

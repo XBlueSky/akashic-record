@@ -6,14 +6,14 @@ A self-hosted knowledge-about-code platform that bridges **GitLab repositories**
 
 | Service | Tech | Port | Role |
 |---------|------|------|------|
-| **backend** | Rust (axum + rmcp) | 8080 (MCP SSE), 8081 (REST API) | MCP server, ingestion pipeline, GitLab OAuth, REST API |
+| **backend** | Rust (axum + rmcp) | 8081 (REST API + MCP at `/mcp`) | MCP server, ingestion pipeline, GitLab OAuth, REST API |
 | **frontend** | Svelte 5 + Vite | 3000 | Knowledge viewer with constellation graph, search, modules, sagas |
 | **postgresql** | PostgreSQL 16 + pgvector | 5432 | Content, embeddings, full-text search (BM25 + vector) |
 | **neo4j** | Neo4j 5.x Community | 7474 (HTTP), 7687 (Bolt) | Graph topology (nodes + relationships, CALLS, EXPLAINS, PART_OF) |
 
 ## Features
 
-- **MCP Interface** — Claude Code reads/writes knowledge via 21 tools (`search_knowledge`, `save_note`, `get_details`, and more)
+- **MCP Interface** — Claude Code reads/writes knowledge via 27 tools (`search_knowledge`, `save_note`, `get_details`, and more) at a single `/mcp` endpoint. Every tool call requires a Bearer token; see [Authenticating MCP requests](#authenticating-mcp-requests)
 - **Code Ingestion** — Parses repositories into Module/Chunk nodes with CALLS edges and confidence scores
 - **Dual-Layer Search** — BM25 keyword + vector semantic search across code, docs, and knowledge notes (GraphRAG)
 - **Sagas** — Group related notes into narrative threads keyed by issue ref, branch, or topic
@@ -47,9 +47,11 @@ docker-compose up -d
 This starts all 4 services. On first run the backend will:
 - Connect to Neo4j and PostgreSQL, initialize schema (constraints, indexes, seed categories)
 - Download the embedding model if `EMBEDDING_PROVIDER=local`
-- Start the MCP SSE server on `:8080` and the REST API on `:8081`
+- Start the single backend listener on `:8081`, serving both the REST API and the MCP endpoint at `/mcp` (streamable HTTP, MCP protocol revision 2026-07-28; a legacy sessionless `initialize` handshake is still accepted for older clients)
 
 ### 3. Connect Claude Code
+
+There is a single MCP endpoint, `/mcp`, on the same port as the REST API — streamable HTTP with JSON responses, not SSE. Every one of the 27 MCP tools requires a Bearer token; anonymous requests (including `tools/list`) get an HTTP 401 with an RFC 9728 `WWW-Authenticate` challenge. See [Authenticating MCP requests](#authenticating-mcp-requests) below for how to obtain a token.
 
 Add to your `.mcp.json`:
 
@@ -57,19 +59,28 @@ Add to your `.mcp.json`:
 {
   "mcpServers": {
     "akashic-record": {
-      "type": "sse",
-      "url": "http://localhost:8080/sse"
+      "type": "http",
+      "url": "https://<host>/mcp",
+      "headers": {
+        "Authorization": "Bearer ak_..."
+      }
     }
   }
 }
 ```
 
+For local development, `url` is `http://localhost:8081/mcp` instead. A `glpat-...` GitLab Personal Access Token also works as the bearer value in place of an `ak_...` token.
+
 ### 4. Authenticate
+
+This is a *separate* credential from the MCP bearer token in step 3 —
+it's a web/REST session for browsing the app and calling protected
+`/api/v1/...` routes directly, not an `ak_...` MCP token.
 
 1. Open `http://localhost:8081/auth/login` in your browser
 2. Authorize with GitLab
 3. Copy the session token from the redirect
-4. Use it as a `Bearer` token or `ak_session` cookie for protected endpoints
+4. Use it as a `Bearer` token or `ak_session` cookie for protected REST endpoints
 
 ### 5. Browse
 
@@ -107,9 +118,15 @@ The production compose file:
   reachable only inside the compose network. TLS termination and
   public exposure are an external responsibility — see
   [Public exposure](#public-exposure) below.
-- **Does not publish MCP SSE port 8080.** External MCP client access is
-  gated by tracks **A7** (read/write split) and **B1** (MCP auth);
-  publishing the port without those is unsafe.
+- **Publishes no separate MCP port — there is only one backend port,
+  8081, and it is not published either.** MCP shares the REST API's
+  listener at `/mcp`; external MCP client access goes through the
+  frontend nginx's `/mcp` (+ `/oauth/` + `/.well-known/`) forwarding
+  rules, the same public hostname as the web UI. Safety does not rest
+  on non-exposure: every `/mcp` request is authenticated end-to-end by
+  the `mcp_auth` layer (Bearer-only — `ak_*` device-flow/OAuth token or
+  `glpat-*` GitLab PAT — fail-closed 401 for anything else). See
+  [Authenticating MCP requests](#authenticating-mcp-requests).
 - **Has no insecure built-in defaults.** Every credential
   must be present in `/etc/akashic/akashic.env`.
 
@@ -129,11 +146,18 @@ Note that the frontend nginx already denies public access to
 running on the same compose network reach `backend:8081/api/v1/metrics`
 directly, bypassing nginx.
 
+`frontend/nginx.conf` also forwards `/mcp`, `/oauth/`, and
+`/.well-known/` to `backend:8081` — this is what makes the MCP
+endpoint and its OAuth/CIMD flow reachable at the same public hostname
+as the web UI. The `/mcp` location forwards the `Host` header intact
+(`proxy_set_header Host $host`), which the backend's rmcp
+`allowed_hosts` guard validates against `PUBLIC_BASE_URL`.
+
 ### Dev vs prod compose
 
 | File | Purpose | Publishes | Source of secrets |
 |---|---|---|---|
-| `docker-compose.yml` | Local development | DB ports (7474, 7687, 5433), backend ports (8080, 8081) for native `cargo run` workflows | `.env` (or placeholder defaults) |
+| `docker-compose.yml` | Local development | DB ports (7474, 7687, 5433), backend port (8081) for native `cargo run` workflows | `.env` (or placeholder defaults) |
 | `docker-compose.prod.yml` | Production deployments | Only `127.0.0.1:3000` (frontend) | `/etc/akashic/akashic.env` (mode 0600, root:root) |
 
 The two files are intentionally fully separate. Do not mix flags
@@ -230,37 +254,131 @@ audience.
 
 ## MCP Tools
 
-| Tool | Description |
-|------|-------------|
-| `search_knowledge` | Dual-level (BM25 + vector) search across code, docs, and notes. Supports modes: `explore`, `saga`, `code`, `notes`. |
-| `get_details` | Fetch full content for specific IDs from `search_knowledge` results. With `repo` only: lists modules. |
-| `save_note` | Save knowledge linked to a Git repo and branch. Category: `ARCHITECTURE`, `BUG_FIX`, `CONFIG`, `ONBOARDING`, `DECISION`. Includes dedup gate. |
-| `get_project_summary` | Aggregated overview: branches, note counts by category, recent entries, module and chunk counts. |
-| `traverse_code_calls` | Traverse CALLS edges upstream/downstream from a symbol with confidence filtering. |
-| `trace_execution_flow` | Trace execution flows from entry points (API handlers, main, tests). |
-| `get_note_health` | Check health of knowledge notes: stale detection, usage stats, auto-archived notes. |
-| `supersede_note` | Mark an old note as superseded by a new one; retires it from search results. |
-| `list_sagas` | List narrative sagas (issue/branch/topic threads) for a repository. Filter by status. |
-| `get_saga_timeline` | Get the chronological timeline of notes within a saga, including superseded notes. |
-| `global_query` | Answer architecture questions using community detection (Leiden algorithm). |
-| `analyze_impact` | Evaluate blast radius of changing a symbol or file. Weighted scoring across CALLS, IMPORTS_FROM, EXPLAINS, flows. |
+All 27 tools live at the single `/mcp` endpoint and **all require a Bearer
+token** — there is no anonymous tier. `save_note`, `supersede_note`, and
+`link_cross_service_calls` additionally mutate Neo4j/PostgreSQL and are
+audited (see [Audit log](#audit-log)); the other 24 are read-only. The
+read/write split below is retained purely for the audit trail and this
+table — it no longer affects access control (see [Authenticating MCP
+requests](#authenticating-mcp-requests)).
 
-### MCP write tool authentication
+| Tool | Tier | Description |
+|------|------|-------------|
+| `search_knowledge` | read | Dual-level (BM25 + vector) search across code, docs, and notes. Supports modes: `explore`, `saga`, `code`, `notes`. |
+| `get_details` | read | Fetch full content for specific IDs from `search_knowledge` results. With `repo` only: lists modules. |
+| `save_note` | **write** | Save knowledge linked to a Git repo and branch. Category: `ARCHITECTURE`, `BUG_FIX`, `CONFIG`, `ONBOARDING`, `DECISION`. Includes dedup gate. |
+| `get_project_summary` | read | Aggregated overview: branches, note counts by category, recent entries, module and chunk counts. |
+| `traverse_code_calls` | read | Traverse CALLS edges upstream/downstream from a symbol with confidence filtering. |
+| `trace_execution_flow` | read | Trace execution flows from entry points (API handlers, main, tests). |
+| `get_note_health` | read | Check health of knowledge notes: stale detection, usage stats, auto-archived notes. |
+| `supersede_note` | **write** | Mark an old note as superseded by a new one; retires it from search results. |
+| `list_sagas` | read | List narrative sagas (issue/branch/topic threads) for a repository. Filter by status. |
+| `get_saga_timeline` | read | Get the chronological timeline of notes within a saga, including superseded notes. |
+| `global_query` | read | Answer architecture questions using community detection (Leiden algorithm). |
+| `analyze_impact` | read | Evaluate blast radius of changing a symbol or file. Weighted scoring across CALLS, IMPORTS_FROM, EXPLAINS, flows. |
+| `goto_definition` | read | Resolve a symbol name to its precise definition(s) by exact fqn/name match. |
+| `find_references` | read | Find direct call-site references to a precise fqn. |
+| `find_implementations` | read | Find who implements/extends a trait or class (incoming), or what a type declares it implements/extends (outgoing). |
+| `detect_code_communities` | read | Cluster the call graph into communities (Leiden algorithm). |
+| `detect_dead_code` | read | List ranked dead-code candidates (zero-inbound-CALLS functions, entry points excluded). |
+| `analyze_change_impact` | read | Combined blast radius for a SET of changed symbols (e.g. the functions/types touched by a diff or PR). |
+| `link_cross_service_calls` | **write** | Rebuild cross-service HTTP_CALLS edges across all repos. |
+| `trace_decision_history` | read | Trace the DECISION-note history for a code symbol (attached decisions + their SUPERSEDES chains). |
+| `get_decision_lineage` | read | Full SUPERSEDES lineage for one decision note plus the code it is attached to. |
+| `get_docs_schema` | read | Canonical JSON Schema for the docs-kit manifest or docs-toml contract. |
+| `list_authoring_sections` | read | Table of contents for the docs-authoring guide. |
+| `get_authoring_guide` | read | Fetch one docs-authoring guide section's markdown. |
+| `check_docs_coverage` | read | Validate a docs corpus tree with the same nav/link/anchor checker the platform's ingest path runs. |
+| `list_docs` | read | Published docs corpora: repo list with version stamps, or one repo's full nav tree. |
+| `get_docs_page` | read | Read one full docs page (raw markdown + version stamp) by corpus path. |
 
-The 21 MCP tools are split into two tiers:
+The classification is enforced by an exhaustive unit test
+(`backend/crates/akashic-mcp/src/mcp/tools/mod.rs::tests::all_tools_classified`,
+which also pins the total at exactly 27) that fails the build if a tool
+is added without being classified as read or write.
 
-- **Read tier (anonymous-callable, 18 tools):** `search_knowledge`, `get_details`, `get_project_summary`, `traverse_code_calls`, `trace_execution_flow`, `get_note_health`, `list_sagas`, `get_saga_timeline`, `global_query`, `analyze_impact`, `goto_definition`, `find_references`, `find_implementations`, `detect_code_communities`, `detect_dead_code`, `analyze_change_impact`, `trace_decision_history`, `get_decision_lineage`. Anyone with network reach to the MCP SSE port may invoke these.
-- **Write tier (auth-required, 3 tools):** `save_note`, `supersede_note`, `link_cross_service_calls`. Anonymous callers receive a JSON-RPC `error.code = -32001` envelope (`{"error":"unauthorized","tool":"<name>"}`).
+### Authenticating MCP requests
 
-The classification is enforced by an exhaustive unit test (`backend/crates/akashic-mcp/src/mcp/tools/mod.rs::tests::all_tools_classified`) that fails the build if a tool is added without being classified as read or write.
+**Every** MCP tool call — reads and writes alike, including `tools/list`
+and the legacy `initialize` handshake — requires an
+`Authorization: Bearer <token>` header. A request with no bearer, a
+malformed bearer, an expired/revoked `ak_*` token, or a `glpat-*` PAT
+that fails GitLab validation (including on a GitLab 5xx — this fails
+closed, not open) gets an immediate HTTP 401 with an RFC 9728
+`WWW-Authenticate: Bearer resource_metadata="<base>/.well-known/oauth-protected-resource"`
+challenge, before the request ever reaches the MCP tool dispatcher.
 
-### Authenticating MCP writes
+There are three ways to obtain a bearer:
 
-Anonymous callers may invoke read tools (`search_knowledge`, `get_details`, etc.). Write tools (`save_note`, `supersede_note`) require authentication via one of two mechanisms.
+#### Option 1 — OAuth Authorization Code + CIMD (for MCP clients with SEP-991 support)
 
-#### Option 1 — OAuth Device Flow (recommended for Claude Code)
+This is the flow a CIMD-aware MCP client (one that supports [Client ID
+Metadata Documents](https://modelcontextprotocol.io), SEP-991) drives
+automatically. There is **no dynamic client registration** — a client's
+`client_id` IS an `https://` URL it hosts itself, pointing at a small
+JSON document describing the client:
 
-Initiated by the MCP client, completed in your browser via the existing GitLab OAuth login.
+```json
+{
+  "client_id": "https://your-client.example/client-metadata.json",
+  "client_name": "My MCP Client",
+  "redirect_uris": ["http://127.0.0.1:33418/callback"]
+}
+```
+
+1. Client discovers this server's OAuth endpoints via
+   `GET /.well-known/oauth-protected-resource` (RFC 9728) and
+   `GET /.well-known/oauth-authorization-server` (RFC 8414 — advertises
+   `client_id_metadata_document_supported: true`, not a
+   `registration_endpoint`; there is no dynamic-client-registration
+   endpoint).
+2. Client opens a browser at `GET /oauth/authorize` with
+   `response_type=code`, its `client_id` metadata URL, `redirect_uri`,
+   `state`, and PKCE `code_challenge`/`code_challenge_method=S256`
+   (mandatory — `plain` is never accepted).
+3. If the browser has no existing Akashic web session, it's redirected
+   to `/auth/web/login?next=...` to complete GitLab OAuth login first,
+   then bounced back to `/oauth/authorize`.
+4. The server fetches and validates the client's metadata document
+   (`https://` only, no redirects followed, 5s timeout, 64 KiB cap,
+   private/loopback/link-local IPs rejected — unless
+   `MCP_CIMD_ALLOW_LOOPBACK=true`, a dev/test-only escape hatch that
+   production config validation refuses to boot with), confirms the
+   document's own `client_id` field matches the URL it was fetched
+   from, and confirms `redirect_uri` is exactly one of the document's
+   declared `redirect_uris`. Any failure here is a flat 400
+   `invalid_client` — never a redirect, since `redirect_uri` isn't
+   trusted yet.
+5. On success, the server renders a server-rendered HTML **consent
+   screen** (client name, client_id URL, redirect_uri — all
+   HTML-escaped) with a hidden, single-use, session-bound `consent_id`.
+6. User clicks **Approve** → `POST /oauth/authorize/consent` (CSRF-safe:
+   redemption requires the same session that created the consent row) →
+   303 redirect to `redirect_uri?code=...&state=...`. **Deny** → 303
+   with `?error=access_denied&state=...`.
+7. Client exchanges the one-time code:
+   ```bash
+   curl -s -X POST https://akashic.example/oauth/token \
+     -H 'content-type: application/x-www-form-urlencoded' \
+     -d 'grant_type=authorization_code&code=...&redirect_uri=...&client_id=https://your-client.example/client-metadata.json&code_verifier=...'
+   # → {"access_token":"ak_...","token_type":"Bearer","expires_in":7776000}
+   ```
+
+The minted `ak_...` token is the same token family as the device flow
+below: a **90-day sliding TTL** — `issue_mcp_token` sets `expires_at =
+now() + interval '90 days'` at mint time, and every successful
+`validate_mcp_token` call (debounced to once per 60s) slides it forward
+by another 90 days from that use. An actively-used token effectively
+never expires; one that goes untouched for 90 days does. There is
+**no OAuth refresh-token grant and no scope** — clients never receive a
+`refresh_token`; once a token does expire, re-run this flow (or the
+device flow) to mint a new one.
+
+#### Option 2 — OAuth Device Flow (fallback for clients without CIMD support)
+
+Initiated by the MCP client, completed in your browser via the existing
+GitLab OAuth login. No client-hosted metadata document required — only
+the fixed, server-allowlisted `client_id` value `"claude-code"`.
 
 ```bash
 # Step 1: Client requests a device code
@@ -279,21 +397,48 @@ curl -s -X POST https://akashic.example/oauth/token \
 # → {"access_token":"ak_...","token_type":"Bearer","expires_in":7776000}
 ```
 
-Add the resulting `ak_...` token to your Claude Code MCP config under the Akashic server's `Authorization: Bearer ak_...` header. Tokens have a 90-day sliding TTL and refresh on every use.
+Add the resulting `ak_...` token to your Claude Code MCP config under
+the Akashic server's `Authorization: Bearer ak_...` header. Same
+90-day **sliding** TTL as Option 1 (each use — debounced to once per
+60s — slides `expires_at` another 90 days forward; only an unused
+token actually expires) and no scope; both options mint via the same
+`issue_mcp_token`, and there is no OAuth refresh-token grant either
+way — re-run this flow to mint a new token once an old one does
+expire.
 
-#### Option 2 — GitLab Personal Access Token passthrough
+#### Option 3 — GitLab Personal Access Token passthrough
 
-For environments that cannot complete an interactive device flow (CI scripts, air-gapped containers):
+For environments that cannot complete an interactive browser flow (CI
+scripts, air-gapped containers):
 
 ```
 Authorization: Bearer glpat-yourtoken...
 ```
 
-Akashic validates the PAT against `GET <gitlab>/api/v4/user` on each request, with a 60-second positive cache. Revocation in GitLab takes effect within 60s on Akashic; revocation via Akashic's tombstone table is immediate.
+Akashic validates the PAT against `GET <gitlab>/api/v4/user` on each
+request, with a 60-second positive cache. Revocation in GitLab takes
+effect within 60s on Akashic; revocation via Akashic's tombstone table
+is immediate.
 
 #### Token revocation
 
-A token-management UI ships in B4. Until then, an operator with database access can revoke a device-flow token directly:
+The web UI's "My Tokens" tab is **planned, not yet mounted**
+(`frontend/src/lib/api/tokens.ts` has the client-side API calls, but no
+page routes to it yet). Until it ships, use the SQL runbook in
+[`docs/operations/token-revocation.md`](docs/operations/token-revocation.md),
+or drive the same underlying REST API directly — it exists and is live
+even without a UI:
+
+| Method | Path | Description |
+|---|---|---|
+| GET | `/api/v1/auth/tokens` | List my MCP tokens |
+| POST | `/api/v1/auth/tokens/{id}/revoke` | Revoke one of mine |
+| POST | `/api/v1/auth/passthrough/revoke` | Tombstone a `glpat-` PAT (body: `{token}` or `{prefix}`) |
+| GET | `/api/v1/auth/audit?limit=50` | My recent audit rows |
+
+These endpoints require a valid `ak_session` cookie (the web login
+session, not an MCP bearer). For operators without a session, the SQL
+path:
 
 ```sql
 UPDATE mcp_tokens SET revoked_at = now() WHERE id = '<uuid>';
@@ -305,6 +450,11 @@ UPDATE mcp_tokens SET revoked_at = now() WHERE id = '<uuid>';
 INSERT INTO revoked_passthrough_tokens (token_id_hash)
 VALUES (substring(encode(sha256('<token-without-glpat-prefix>'::bytea), 'hex') for 16));
 ```
+
+**Passthrough revoke has no ownership check** — anyone authenticated can
+write a tombstone for any prefix. Blast radius is bounded: the
+tombstone only blocks future use of that specific GitLab PAT; no
+privilege escalation.
 
 #### Audit log
 
@@ -320,15 +470,17 @@ ORDER BY ts DESC
 LIMIT 50;
 ```
 
-A token-management UI ships in B4; until then operators query `audit_log` directly.
+Until the "My Tokens" web UI ships, operators query `audit_log`
+directly, or use `GET /api/v1/auth/audit?limit=50` with a session
+cookie (see [Token revocation](#token-revocation) above).
 
 #### Per-actor LLM/embedding quota
 
 REST API requests that invoke the LLM or embedding providers are tracked per-actor in the `llm_usage` Postgres table. Before each call, the rolling-window sum of tokens for the actor is compared against `MCP_QUOTA_TOKENS_PER_WINDOW` (default 100,000) over `MCP_QUOTA_WINDOW_SECS` seconds (default 3600). Over-cap requests return HTTP 429 with body `{"error":"quota_exceeded","used":...,"cap":...,"window_secs":...}` and write a `quota_exceeded:<llm|embedding>` row to `audit_log`.
 
-**v1 limitation:** MCP tool invocations bypass quota in v1 because rmcp 0.1.x does not allow middleware to install the actor task-local on the loopback service. MCP-side coverage lands in B3.5 after the rmcp upgrade tracked under finding.md P1-2.
+**MCP is fully metered.** Now that every `/mcp` request is authenticated, `mcp_auth` always establishes the `CURRENT_ACTOR` quota scope before the tool handler runs — there is no anonymous path left to bypass it, and the earlier MCP-bypasses-quota gap (rmcp couldn't install the actor task-local on the old standalone MCP listener) is closed by construction: `mcp_auth` is a normal tower layer on the merged `/mcp` branch, exactly like REST's `require_auth`.
 
-**Second v1 limitation:** Public REST routes that don't go through `require_auth` (e.g., `/api/v1/search`, `/api/v1/graphrag/query`, `/api/v1/relink-explains/:name`) bypass quota entirely because `CURRENT_ACTOR` is never set on those request paths. For multi-user / public-facing deployments, gate these routes behind authentication (or a coarser IP-rate-limit) before relying on B3 for cost protection.
+**Remaining limitation:** Public REST routes that don't go through `require_auth` (e.g., `/api/v1/search`, `/api/v1/graphrag/query`, `/api/v1/relink-explains/:name`) still bypass quota entirely because `CURRENT_ACTOR` is never set on those request paths. For multi-user / public-facing deployments, gate these routes behind authentication (or a coarser IP-rate-limit) before relying on quota for cost protection.
 
 **Disabling enforcement** (still records usage rows): set `MCP_QUOTA_ENABLED=false`.
 
@@ -342,14 +494,6 @@ GROUP BY actor_user_id, kind
 ORDER BY tokens DESC
 LIMIT 20;
 ```
-
-#### Managing MCP tokens (Web UI)
-
-Logged-in users see an Account icon next to logout in the sidebar. Clicking it opens a modal with three tabs:
-
-- **My Tokens** — list of MCP tokens you've issued via the device flow. Each row shows label, issued/last-used/expires timestamps, and status. Click **Revoke** to immediately invalidate a token.
-- **Revoke PAT** — paste a GitLab Personal Access Token (`glpat-...`) or its 16-character hex prefix from the audit log. The server writes a tombstone in `revoked_passthrough_tokens`; future requests using that PAT are rejected.
-- **Recent Activity** — your last 50 write actions from `audit_log`, newest first. Read-only.
 
 #### OAuth runtime validation
 
@@ -375,16 +519,7 @@ The 6 checks:
 
 Each check carries `name`, `status` (ok/warn/fail), `detail` (the upstream message or specific value), and `remediation` (which env var to fix). Operators get actionable errors, not "OAuth failed somewhere".
 
-The endpoints sit under `/api/v1/auth/` and require a valid `ak_session` cookie:
-
-| Method | Path | Description |
-|---|---|---|
-| GET | `/api/v1/auth/tokens` | List my MCP tokens |
-| POST | `/api/v1/auth/tokens/{id}/revoke` | Revoke one of mine |
-| POST | `/api/v1/auth/passthrough/revoke` | Tombstone a `glpat-` PAT (body: `{token}` or `{prefix}`) |
-| GET | `/api/v1/auth/audit?limit=50` | My recent audit rows |
-
-**Passthrough revoke has no ownership check** — anyone authenticated can write a tombstone for any prefix. Blast radius is bounded: the tombstone only blocks future use of that specific GitLab PAT; no privilege escalation.
+(The `/api/v1/auth/*` token-management endpoints referenced above are documented in full under [Token revocation](#token-revocation).)
 
 ## REST API
 
@@ -481,8 +616,9 @@ Categories (closed enum): `ARCHITECTURE`, `BUG_FIX`, `CONFIG`, `ONBOARDING`, `DE
 | `LLM_PROVIDER` | `local` | `local` or `openai` — used for module grouping and EXPLAINS edges |
 | `LLM_API_KEY` | — | Required when LLM provider is `openai` |
 | `LLM_MODEL` | `gpt-5-nano` | LLM model name |
-| `MCP_SSE_PORT` | `8080` | MCP SSE server port |
-| `API_PORT` | `8081` | REST API port |
+| `API_HOST` | `0.0.0.0` | Bind host for the single backend listener (REST API + `/mcp`) |
+| `API_PORT` | `8081` | Bind port for the single backend listener (REST API + `/mcp`) |
+| `PUBLIC_BASE_URL` | `http://localhost:8081` | This server's own externally-visible base URL — used to build OAuth/CIMD metadata URLs, the RFC 9728 `resource_metadata` challenge, and the rmcp `allowed_hosts` allowlist |
 | `GITLAB_URL` | — | GitLab instance URL |
 | `GITLAB_APP_ID` | — | GitLab OAuth Application ID |
 | `GITLAB_APP_SECRET` | — | GitLab OAuth Application Secret |
@@ -503,6 +639,7 @@ Categories (closed enum): `ARCHITECTURE`, `BUG_FIX`, `CONFIG`, `ONBOARDING`, `DE
 | `MCP_QUOTA_ENABLED` | `true` | Enforce quota on REST traffic. `false` records usage but allows over-cap calls (B3) |
 | `MCP_PASSTHROUGH_USER_CACHE_TTL_SECS` | `60` | TTL for the in-process cache of GitLab user-info during PAT passthrough validation. `0` bypasses the cache (every call hits GitLab) (B4) |
 | `OAUTH_VALIDATION_MODE` | `warn` | Startup OAuth validation behavior. `off` skips, `warn` logs and continues, `strict` exits non-zero on Fail (B5) |
+| `MCP_CIMD_ALLOW_LOOPBACK` | `false` | Dev/test-only escape hatch: allows `http://` and loopback/private-network hosts for OAuth `client_id` Client ID Metadata Document URLs, which the CIMD SSRF guard otherwise rejects. Production config validation hard-fails startup if this is `true`. |
 
 ## Development
 
@@ -531,7 +668,7 @@ npm run check      # svelte-check type validation
 
 Akashic Record applies a per-IP rate limit on every externally reachable
 HTTP surface (REST `/api/`, `/auth/`, ingestion sub-paths, and the MCP
-SSE endpoints). The `/health` and `/ready` probes are exempt.
+`/mcp` endpoint). The `/health` and `/ready` probes are exempt.
 
 Per-route quotas (hard-coded; not env-configurable in this release):
 
@@ -541,25 +678,26 @@ Per-route quotas (hard-coded; not env-configurable in this release):
 | `/auth/` | 10 | 1 token / 6 s | 10 / min |
 | `/api/v1/.../ingest`, `.../reingest`, `.../resume`, `/api/v1/sources/add` | 5 | 1 token / 12 s | 5 / min |
 | `/api/` (general) | 60 | 1 token / 1 s | 60 / min |
-| MCP `/sse`, `/message` | 30 | 1 token / 2 s | 30 / min |
+| `/mcp` | 30 | 1 token / 2 s | 30 / min |
 
 Configuration:
 
 - `RATE_LIMIT_ENABLED` — `true` (default) / `false`. Disables the layer.
 - `RATE_LIMIT_TRUSTED_PROXIES` — CIDR list. Default: loopback + RFC1918.
 - `RATE_LIMIT_ALLOWLIST` — CIDR list. Default empty.
-- `MCP_LOOPBACK_PORT` — pinned loopback port the A6 axum proxy uses to
-  talk to the rmcp SSE upstream. Default `18080`.
 
 When a client exceeds the limit, the response is `429 Too Many Requests`
 with a `Retry-After` header (seconds) and `X-RateLimit-*` headers.
 
-**Deployment note:** the MCP public binding is unchanged from operators'
-perspective — the same `MCP_SSE_HOST:MCP_SSE_PORT` (default `0.0.0.0:8080`)
-is what external clients connect to. Internally the rmcp SSE server now
-binds on `127.0.0.1:<MCP_LOOPBACK_PORT>` and an axum proxy on the public
-port forwards `/sse` and `/message`. This is the seam where the rate
-limit (and, in track A7, MCP read/write auth) attaches.
+**Deployment note:** MCP is no longer a separate listener. `/mcp` is a
+branch of the same main router the REST API is on, merged in **before**
+the global layers are applied — so it inherits `MetricsLayer`,
+`RequestIdLayer`, `TraceLayer`, and CORS exactly like any REST route.
+Inside the `/mcp` branch specifically, the layer order (outer to inner)
+is: this rate limit → `mcp_auth` (Bearer validation — see
+[Authenticating MCP requests](#authenticating-mcp-requests)) →
+the rmcp streamable-HTTP service. There is no internal loopback proxy
+step anymore.
 
 ## License
 

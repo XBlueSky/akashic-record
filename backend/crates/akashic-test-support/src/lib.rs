@@ -213,12 +213,9 @@ pub async fn build_app_state(gitlab_url: String) -> AppState {
         oauth_health_cache: std::sync::Arc::new(tokio::sync::RwLock::new(None)),
         shutdown: tokio_util::sync::CancellationToken::new(),
         metrics_handle: test_metrics_handle(),
-        readiness: akashic_platform::readiness::new_state(&[
-            "postgres",
-            "neo4j",
-            "mcp",
-            "embedding",
-        ]),
+        // Task 2: no standalone "mcp" probe — MCP is a branch of this same
+        // router now, not a separately-probed process/port.
+        readiness: akashic_platform::readiness::new_state(&["postgres", "neo4j", "embedding"]),
         raw_embedder: Arc::new(NoOpEmbedder),
         // A2a Task 0: service ports
         search_service: retrieval_svc.clone(),
@@ -277,8 +274,7 @@ pub fn test_config_minimal() -> Config {
         alerts: AlertsConfig::default(),
         module_max_files: 12,
         module_min_files: 3,
-        mcp_sse_host: "0.0.0.0".into(),
-        mcp_sse_port: 8080,
+        api_host: "0.0.0.0".into(),
         gitlab_webhook_secret: None,
         gitlab_url: "http://unused".into(),
         gitlab_app_id: "test-app-id".into(),
@@ -317,5 +313,6 @@ pub fn test_config_minimal() -> Config {
         ingest_quota_tokens_per_window: 5_000_000,
         ingest_quota_window_secs: 3600,
         ingest_quota_enabled: false,
+        mcp_cimd_allow_loopback: false,
     }
 }

@@ -167,6 +167,22 @@ impl Config {
             }
         }
 
+        // ── CIMD loopback bypass must never be on in prod (Task 5 review) ─
+        //
+        // `mcp_cimd_allow_loopback` (Task 4) disables the SSRF guard in
+        // `akashic-http`'s `CimdFetcher` — see that module's threat-model
+        // doc comment. Unlike `cookie_secure`/`rate_limit_enabled` (no
+        // precedent check here — see Task 4's report), a `true` value here
+        // has a direct, severe security consequence (SSRF into the
+        // production network via an attacker-chosen `client_id`), so this
+        // is a hard error, not left to operator discipline.
+        if self.mcp_cimd_allow_loopback {
+            violations.push(Violation::InsecureFlag {
+                field: "MCP_CIMD_ALLOW_LOOPBACK",
+                reason: "it disables the CIMD SSRF guard (dev/test-only escape hatch)",
+            });
+        }
+
         // ── Container-localhost check for NEO4J_URI (AC-4) ───────────────
         if containerized {
             match url::Url::parse(&self.neo4j_uri) {
@@ -278,8 +294,7 @@ mod tests {
             alerts: AlertsConfig::default(),
             module_max_files: 12,
             module_min_files: 3,
-            mcp_sse_host: "0.0.0.0".into(),
-            mcp_sse_port: 8080,
+            api_host: "0.0.0.0".into(),
             gitlab_webhook_secret: Some(SecretString::from("CANARY-WEBHOOK".to_string())),
             gitlab_url: "https://gitlab.example.com".into(),
             gitlab_app_id: "id".into(),
@@ -318,6 +333,7 @@ mod tests {
             ingest_quota_tokens_per_window: 5_000_000,
             ingest_quota_window_secs: 3600,
             ingest_quota_enabled: false,
+            mcp_cimd_allow_loopback: false,
         };
         let dbg = format!("{cfg:?}");
         for canary in [
@@ -365,6 +381,7 @@ mod tests {
         unsafe { env::remove_var("EMBEDDING_API_KEY") };
         unsafe { env::remove_var("LLM_API_KEY") };
         unsafe { env::remove_var("AKASHIC_FORCE_CONTAINER") };
+        unsafe { env::remove_var("MCP_CIMD_ALLOW_LOOPBACK") };
     }
 
     fn clear_prod_env() {
@@ -383,6 +400,7 @@ mod tests {
             "EMBEDDING_API_KEY",
             "LLM_API_KEY",
             "AKASHIC_FORCE_CONTAINER",
+            "MCP_CIMD_ALLOW_LOOPBACK",
         ] {
             unsafe { env::remove_var(v) };
         }
@@ -636,6 +654,31 @@ mod tests {
         assert_placeholder_violation(cfg.unwrap_err(), "DATABASE_URL");
     }
 
+    #[test]
+    #[serial(config_env)]
+    fn mcp_cimd_allow_loopback_true_fails_in_production() {
+        set_valid_prod_env();
+        unsafe { env::set_var("MCP_CIMD_ALLOW_LOOPBACK", "true") };
+        let cfg = Config::from_env();
+        clear_prod_env();
+        let err = cfg.expect_err("MCP_CIMD_ALLOW_LOOPBACK=true must fail prod validation");
+        match err {
+            ConfigError::ValidationFailed { violations } => {
+                assert!(
+                    violations.iter().any(|v| matches!(
+                        v,
+                        Violation::InsecureFlag {
+                            field: "MCP_CIMD_ALLOW_LOOPBACK",
+                            ..
+                        }
+                    )),
+                    "expected InsecureFlag(MCP_CIMD_ALLOW_LOOPBACK), got {violations:?}"
+                );
+            }
+            other => panic!("expected ValidationFailed, got {other:?}"),
+        }
+    }
+
     fn assert_container_localhost(err: ConfigError, expected_field: &'static str) {
         match err {
             ConfigError::ValidationFailed { violations } => {
@@ -834,8 +877,7 @@ mod tests {
             alerts: AlertsConfig::default(),
             module_max_files: 12,
             module_min_files: 3,
-            mcp_sse_host: "0.0.0.0".into(),
-            mcp_sse_port: 8080,
+            api_host: "0.0.0.0".into(),
             gitlab_webhook_secret: None,
             gitlab_url: "https://gitlab.acme.example.org".into(),
             gitlab_app_id: "id".into(),
@@ -874,6 +916,7 @@ mod tests {
             ingest_quota_tokens_per_window: 5_000_000,
             ingest_quota_window_secs: 3600,
             ingest_quota_enabled: false,
+            mcp_cimd_allow_loopback: false,
         };
 
         unsafe { env::remove_var("AKASHIC_ENV") };

@@ -9,13 +9,17 @@
 #   See docs/operations/rotation-sop.md §5.1 step 2 for the full contract.
 #
 # Posture:
-#   - Database (PostgreSQL, Neo4j) and backend (MCP SSE 8080, REST 8081)
-#     ports are NOT published. They are reachable only inside the compose
-#     network.
+#   - Database (PostgreSQL, Neo4j) and backend (single port 8081 — REST
+#     API + MCP at /mcp) ports are NOT published. They are reachable only
+#     inside the compose network.
 #   - Frontend nginx is published on 127.0.0.1:3000 (loopback only). A
 #     host-level reverse proxy or smoke test can reach it; the public
 #     internet cannot. Track C7 will replace this binding with a
 #     caddy/Let's Encrypt service.
+#   - MCP exposure to external clients is established (spec §2): nginx
+#     forwards `/mcp` to the backend, which is reachable only through
+#     that single port 8081. Authentication is enforced end-to-end by
+#     mcp_auth (spec §3) — no separate gating remains here.
 #   - No inline ${VAR:-default} fallbacks. Every required value is sourced
 #     from /etc/akashic/akashic.env. Missing required vars cause this file
 #     to fail before any container starts.
@@ -26,7 +30,6 @@
 #   - Reverse proxy + TLS  →  C7
 #   - Non-root user        →  C4
 #   - Backend config validation that rejects placeholder values  →  A3
-#   - MCP exposure decisions  →  A7 + B1
 # ─────────────────────────────────────────────────────────────────────────────
 
 services:
@@ -77,9 +80,10 @@ services:
         # before `docker compose build` (or persists in deploy .env).
         # Falls back to 'unknown' if unset.
         AKASHIC_BUILD_COMMIT: ${AKASHIC_BUILD_COMMIT:-unknown}
-    # No ports: published. MCP SSE (8080) and REST (8081) are reached only
-    # via the frontend nginx reverse proxy and the compose network. MCP
-    # exposure for external clients is gated by A7 + B1.
+    # No ports: published. Single port 8081 (REST API + MCP at /mcp) is
+    # reached only via the frontend nginx reverse proxy and the compose
+    # network. MCP exposure for external clients is established (spec
+    # §2); authentication is enforced end-to-end by mcp_auth (spec §3).
     #
     # D6 alerting (optional, sourced from akashic.env via env_file below):
     #   ALERTS_WEBHOOK_URL — incoming-webhook URL for the alert sink.

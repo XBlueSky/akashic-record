@@ -123,11 +123,7 @@ impl Config {
                 .and_then(|v| v.parse().ok())
                 .unwrap_or(3),
 
-            mcp_sse_host: env::var("MCP_SSE_HOST").unwrap_or_else(|_| "0.0.0.0".into()),
-            mcp_sse_port: env::var("MCP_SSE_PORT")
-                .ok()
-                .and_then(|v| v.parse().ok())
-                .unwrap_or(8080),
+            api_host: env::var("API_HOST").unwrap_or_else(|_| "0.0.0.0".into()),
 
             gitlab_webhook_secret: env::var("GITLAB_WEBHOOK_SECRET")
                 .ok()
@@ -249,6 +245,12 @@ impl Config {
                 .and_then(|s| s.parse().ok())
                 .unwrap_or(3600),
             ingest_quota_enabled: env::var("INGEST_QUOTA_ENABLED")
+                .map(|v| matches!(v.to_lowercase().as_str(), "true" | "1" | "yes"))
+                .unwrap_or(false),
+
+            // Same bool-parsing convention as `ingest_quota_enabled` above
+            // (case-insensitive true/1/yes, default false).
+            mcp_cimd_allow_loopback: env::var("MCP_CIMD_ALLOW_LOOPBACK")
                 .map(|v| matches!(v.to_lowercase().as_str(), "true" | "1" | "yes"))
                 .unwrap_or(false),
         };

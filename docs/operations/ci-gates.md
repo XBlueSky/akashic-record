@@ -23,7 +23,7 @@ them as required status checks; the list below is the source of truth
 | `backend-rate-limit-smoke` | check | A6 | `cargo test -p akashic-platform rate_limit` |
 | `backend-mcp-auth-smoke` | check | B1 | `cargo test -p akashic-mcp mcp_middleware` + `cargo test -p akashic-http --lib mcp_oauth` (DB-backed — same Postgres + Neo4j service containers as `backend-check`) |
 | **`frontend-e2e`** | test | D3 → **D1** | **4 Playwright golden paths** against `docker-compose.test.yml` |
-| **`mcp-contract`** | test | D4 → **D1** | **MCP tool contract tests** via rmcp client through the public proxy |
+| **`mcp-contract`** | test | D4 → **D1** | **MCP tool contract tests** via an rmcp 3.1 client (Discover lifecycle, protocol 2026-07-28) against the single-port `/mcp` endpoint |
 
 **Service containers on `check`-stage jobs.** Two jobs spin up
 short-lived Postgres (`pgvector/pgvector:pg16`) + Neo4j
@@ -99,7 +99,7 @@ cd backend
 TEST_DATABASE_URL="postgres://akashic:akashic@localhost:55432/akashic" \
 TEST_NEO4J_URI=bolt://localhost:57687 \
 TEST_NEO4J_USER=neo4j TEST_NEO4J_PASSWORD=akashic-test \
-TEST_MCP_URL=http://localhost:13002 \
+TEST_MCP_URL=http://localhost:13001 \
   cargo test -p akashic-server --features test-fixtures --test mcp_contract --release
 cd .. && docker compose -f docker-compose.test.yml down -v
 ```

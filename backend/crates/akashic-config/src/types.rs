@@ -104,9 +104,10 @@ pub struct Config {
     pub module_max_files: u32,
     pub module_min_files: u32,
 
-    // MCP SSE server
-    pub mcp_sse_host: String,
-    pub mcp_sse_port: u16,
+    // REST API bind host (Task 2: merged with the former standalone MCP SSE
+    // host — MCP now shares this port via the `/mcp` branch, single-port
+    // deploy per spec §2).
+    pub api_host: String,
     // GitLab webhook
     pub gitlab_webhook_secret: Option<SecretString>,
 
@@ -190,6 +191,16 @@ pub struct Config {
     pub ingest_quota_tokens_per_window: u32,
     pub ingest_quota_window_secs: i64,
     pub ingest_quota_enabled: bool,
+
+    // CIMD (SEP-991) client-metadata fetch — Task 4 adds only the fetcher
+    // (`akashic_http::auth::cimd`); Task 5 wires it into `/oauth/authorize`.
+    // Dev/test escape hatch: permits the `http://` scheme and
+    // loopback/private-network `client_id` URL hosts that the fetcher's SSRF
+    // guard otherwise rejects. Must stay false in production. No
+    // `validate_for_production` check enforces this (mirrors
+    // `cookie_secure`/`rate_limit_enabled`, which also rely on operator
+    // discipline rather than a startup gate).
+    pub mcp_cimd_allow_loopback: bool,
 }
 
 impl Config {

@@ -375,15 +375,14 @@ async fn main() -> Result<()> {
     let event_tx = events::create_channel();
 
     // C6: build readiness probes + state (poller spawned after AppState).
-    let readiness_state = readiness::new_state(&["postgres", "neo4j", "mcp", "embedding"]);
+    // Task 2: no more standalone "mcp" probe — MCP is now a branch of the
+    // single REST router (no separate port/process to TCP-probe); its
+    // liveness rides on the same postgres/neo4j/embedding probes below,
+    // since a request to /mcp goes through the exact same axum app.
+    let readiness_state = readiness::new_state(&["postgres", "neo4j", "embedding"]);
     let probes: Vec<Arc<dyn readiness::Probe>> = vec![
         Arc::new(readiness::probes::PgProbe { pool: pg.clone() }),
         Arc::new(readiness::probes::Neo4jProbe { pool: db.clone() }),
-        Arc::new(readiness::probes::McpLoopbackProbe {
-            // Slice E: the MCP server now serves streamable-http directly on the
-            // public port (no loopback). Probe that port.
-            port: cfg.mcp_sse_port,
-        }),
         Arc::new(readiness::probes::EmbeddingProbe::new(
             raw_embedder_for_readiness.clone(),
             // Throttle the (possibly billed) upstream embed call to once/min
@@ -560,28 +559,15 @@ async fn main() -> Result<()> {
         });
     }
 
-    // 1. Start the MCP streamable-http server (Slice E) on the public MCP port.
-    //    A single axum router nests rmcp's StreamableHttpService behind the
-    //    rate-limit + mcp_auth (sets Authenticated ext + CURRENT_ACTOR quota
-    //    scope) + trace layers — no loopback proxy.
-    mcp::http::start(
-        state.clone(),
-        pg.clone(),
-        db.clone(),
-        shutdown.token().clone(),
-    )
-    .await?;
+    // MCP branch: merged into the main router (single port) so MCP traffic
+    // shares Metrics/RequestId/Trace/CORS with REST (spec §2).
+    let mcp_branch = mcp::http::build_mcp_branch(state.clone(), pg.clone(), db.clone());
+    let app = akashic_record::build_router(state, mcp_branch);
 
-    // 2. Build axum router for REST API + GitLab webhook.
-    //    D2 (2026-05-09): wiring moved to akashic_record::build_router so
-    //    integration tests can serve the production router on an ephemeral
-    //    port without duplicating route/middleware order.
-    let app = akashic_record::build_router(state);
-
-    // Bind the REST API server on its own configured port
-    let api_addr = format!("{}:{}", cfg.mcp_sse_host, cfg.api_port);
+    // Bind the REST API server (now also serving /mcp) on its configured port
+    let api_addr = format!("{}:{}", cfg.api_host, cfg.api_port);
     let listener = TcpListener::bind(&api_addr).await?;
-    info!(%api_addr, "API server listening (REST + webhook)");
+    info!(%api_addr, "API server listening (REST + MCP + webhook)");
     // Bind with into_make_service_with_connect_info so the allowlist_layer's
     // ConnectInfo<SocketAddr> extractor receives the peer address (review
     // fix #5 / A6 plan Step 5.5).

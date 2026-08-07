@@ -1,5 +1,7 @@
-//! Integration tests for Task 3 (MCP OAuth metadata + dynamic client
-//! registration — RFC 8414 / RFC 9728 / RFC 7591).
+//! Integration tests for MCP OAuth: discovery metadata (RFC 8414 / RFC 9728),
+//! CIMD client validation (SEP-991, spec §4 — Task 5), the consent screen,
+//! and the authorization-code + PKCE token exchange (RFC 6749 §4.1 / §4.1.3,
+//! RFC 7636).
 //!
 //! Requires the live Postgres bench (`common::TestEnv::start()`); export
 //! `DATABASE_URL`/`TEST_DATABASE_URL` at :5432 (the akashic_test_support
@@ -7,11 +9,11 @@
 //!
 //! NOTE: written for CI — not run against the persistent dev stack in this
 //! session (per task instructions, to avoid burning host resources on the
-//! full `common::TestEnv` bring-up). The metadata content and redirect_uri
-//! validation logic are already covered by pure unit tests in
-//! `akashic-http/src/auth/mcp_oauth.rs`, and the repo round-trip by
-//! `akashic-store-pg/tests/oauth_client.rs` (both run and green this
-//! session — see task-3-report.md).
+//! full `common::TestEnv` bring-up). `common::TestEnv`'s `build_test_config`
+//! sets `mcp_cimd_allow_loopback: true` (test-only — production hard-rejects
+//! it via `Config::validate_for_production`), so every CIMD fixture below is
+//! a plain `http://127.0.0.1:<port>` server spun up inside the test itself,
+//! same pattern as `cimd.rs`'s own `#[cfg(test)]` fixtures (Task 4).
 
 mod common;
 
@@ -40,7 +42,7 @@ async fn protected_resource_metadata_returns_expected_shape() {
 
 #[tokio::test]
 #[serial_test::serial]
-async fn authorization_server_metadata_advertises_register_authorize_token() {
+async fn authorization_server_metadata_advertises_cimd_support_not_registration() {
     let env = common::TestEnv::start().await;
     let client = reqwest::Client::new();
     let resp = client
@@ -57,10 +59,6 @@ async fn authorization_server_metadata_advertises_register_authorize_token() {
     );
     assert_eq!(body["token_endpoint"], format!("{issuer}/oauth/token"));
     assert_eq!(
-        body["registration_endpoint"],
-        format!("{issuer}/oauth/register")
-    );
-    assert_eq!(
         body["response_types_supported"],
         serde_json::json!(["code"])
     );
@@ -76,68 +74,23 @@ async fn authorization_server_metadata_advertises_register_authorize_token() {
         body["token_endpoint_auth_methods_supported"],
         serde_json::json!(["none"])
     );
+    // Task 5 (spec §4): CIMD replaces DCR — no more registration_endpoint.
+    assert_eq!(body["client_id_metadata_document_supported"], true);
+    assert!(body.get("registration_endpoint").is_none());
 }
 
-#[tokio::test]
-#[serial_test::serial]
-async fn register_happy_path_returns_201_public_client() {
-    let env = common::TestEnv::start().await;
-    let client = reqwest::Client::new();
-    let resp = client
-        .post(url(&env, "/oauth/register"))
-        .json(&serde_json::json!({
-            "redirect_uris": ["http://127.0.0.1:33418/callback"],
-            "client_name": "claude-code-test",
-        }))
-        .send()
-        .await
-        .expect("POST /oauth/register");
-    assert_eq!(resp.status(), 201);
-    let body: Value = resp.json().await.expect("json body");
-    assert!(body["client_id"].as_str().is_some_and(|s| !s.is_empty()));
-    assert_eq!(
-        body["redirect_uris"],
-        serde_json::json!(["http://127.0.0.1:33418/callback"])
-    );
-    assert_eq!(body["client_name"], "claude-code-test");
-    assert_eq!(body["token_endpoint_auth_method"], "none");
-
-    sqlx::query("DELETE FROM mcp_oauth_clients WHERE client_name = 'claude-code-test'")
-        .execute(env.pg_pool())
-        .await
-        .ok();
-}
-
-#[tokio::test]
-#[serial_test::serial]
-async fn register_rejects_non_loopback_non_https_redirect_uri() {
-    let env = common::TestEnv::start().await;
-    let client = reqwest::Client::new();
-    let resp = client
-        .post(url(&env, "/oauth/register"))
-        .json(&serde_json::json!({
-            "redirect_uris": ["http://evil.com/callback"],
-        }))
-        .send()
-        .await
-        .expect("POST /oauth/register");
-    assert_eq!(resp.status(), 400);
-    let body: Value = resp.json().await.expect("json body");
-    assert_eq!(body["error"], "invalid_redirect_uri");
-}
-
-// ── Task 4: authorize + token (PKCE, one-time code) ──────────────────────────
+// ── Task 5: CIMD validation + consent screen + token (PKCE, one-time code) ──
 //
 // NOTE: written for CI — NOT run against the persistent dev stack in this
 // session (TEST ENV POLICY: `common::TestEnv::start()` → `reset_state`
 // TRUNCATEs, which would wipe dev data if pointed at the persistent :5432
 // stack; do not run this file locally). PKCE math (S256 + the RFC 7636
-// Appendix B vector) and the `next` same-origin-path validator are already
-// covered by pure unit tests in `akashic-http/src/auth/mcp_oauth.rs` and
-// `akashic-http/src/auth/web.rs` (both run and green this session — see
-// task-4-report.md). This file exercises the full HTTP round trip those unit
-// tests can't: real client registration, a real web session cookie, the
-// 302 redirects, and the MCP 401 challenge.
+// Appendix B vector), CIMD fetch/validate/SSRF-guard, and the `next`
+// same-origin-path validator are already covered by pure/fixture-backed unit
+// tests in `akashic-http/src/auth/mcp_oauth.rs`, `akashic-http/src/auth/cimd.rs`,
+// and `akashic-http/src/auth/web.rs`. This file exercises the full HTTP round
+// trip those can't: a real web session cookie, a real (loopback) CIMD fetch,
+// the consent screen + POST, the 303 redirects, and the MCP 401 challenge.
 
 use sha2::{Digest, Sha256};
 
@@ -170,7 +123,7 @@ fn pkce_challenge(verifier: &str) -> String {
 }
 
 /// A client that does NOT follow redirects, so the test can assert on the
-/// `Location` header of a 302 directly instead of chasing it.
+/// `Location` header of a 303 directly instead of chasing it.
 fn no_redirect_client() -> reqwest::Client {
     reqwest::Client::builder()
         .redirect(reqwest::redirect::Policy::none())
@@ -178,36 +131,90 @@ fn no_redirect_client() -> reqwest::Client {
         .expect("build no-redirect client")
 }
 
-/// Register a throwaway client for the authorize/token flow, returning
-/// `(client_id, redirect_uri)`.
-async fn register_test_client(env: &common::TestEnv, name: &str) -> (String, String) {
-    let redirect_uri = "http://127.0.0.1:33418/callback".to_string();
-    let client = reqwest::Client::new();
-    let resp = client
-        .post(url(env, "/oauth/register"))
-        .json(&serde_json::json!({
-            "redirect_uris": [redirect_uri],
-            "client_name": name,
-        }))
-        .send()
-        .await
-        .expect("POST /oauth/register");
-    assert_eq!(resp.status(), 201, "register_test_client setup failed");
-    let body: Value = resp.json().await.expect("json body");
-    let client_id = body["client_id"].as_str().expect("client_id").to_string();
-    (client_id, redirect_uri)
+// ── CIMD fixture server (spec §4, SEP-991) ───────────────────────────────────
+//
+// Mirrors `akashic-http/src/auth/cimd.rs`'s own `#[cfg(test)]` fixture
+// pattern (Task 4): bind a loopback listener first (so its URL is known),
+// build the JSON body via `body_fn(&url)` (the document's own `client_id`
+// field must equal the URL it's served from), then serve it. Loopback is
+// allowed because `common::TestEnv`'s `build_test_config` sets
+// `mcp_cimd_allow_loopback: true` for this exact reason.
+
+#[derive(Clone)]
+struct CimdFixtureState {
+    body: std::sync::Arc<String>,
 }
 
-/// `GET /oauth/authorize` with the `TestEnv`'s pre-populated session cookie,
-/// returning the parsed `Location` header (the redirect target) so callers
-/// can assert on its `code`/`state`/`error` query params.
-async fn authorize_with_session(
+async fn cimd_fixture_handler(
+    axum::extract::State(fx): axum::extract::State<CimdFixtureState>,
+) -> impl axum::response::IntoResponse {
+    (*fx.body).clone()
+}
+
+async fn spawn_cimd_fixture(body_fn: impl FnOnce(&str) -> String) -> String {
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:0")
+        .await
+        .expect("bind cimd fixture listener");
+    let addr = listener.local_addr().expect("local_addr");
+    let doc_url = format!("http://{addr}/cimd");
+    let body = body_fn(&doc_url);
+    let app = axum::Router::new()
+        .route("/cimd", axum::routing::get(cimd_fixture_handler))
+        .with_state(CimdFixtureState {
+            body: std::sync::Arc::new(body),
+        });
+    tokio::spawn(async move {
+        axum::serve(listener, app)
+            .await
+            .expect("cimd fixture server");
+    });
+    doc_url
+}
+
+fn cimd_doc_body(client_id_url: &str, redirect_uri: &str, client_name: &str) -> String {
+    serde_json::json!({
+        "client_id": client_id_url,
+        "redirect_uris": [redirect_uri],
+        "client_name": client_name,
+        "logo_uri": null,
+    })
+    .to_string()
+}
+
+/// Spawn a well-formed CIMD fixture and return `(client_id_url, redirect_uri)`
+/// for the authorize/token flow tests below.
+async fn spawn_test_client(name: &str) -> (String, String) {
+    const REDIRECT_URI: &str = "http://127.0.0.1:33418/callback";
+    let name = name.to_string();
+    let client_id = spawn_cimd_fixture(move |url| cimd_doc_body(url, REDIRECT_URI, &name)).await;
+    (client_id, REDIRECT_URI.to_string())
+}
+
+/// Extract the `consent_id` hidden-field value from the consent page HTML
+/// `authorize_with_session_get_consent_id` fetches — a small, deliberately
+/// simple string search rather than pulling in an HTML parser dependency for
+/// one field in a page this test suite itself controls the shape of.
+fn extract_consent_id(html: &str) -> String {
+    let marker = r#"name="consent_id" value=""#;
+    let start = html
+        .find(marker)
+        .unwrap_or_else(|| panic!("consent_id hidden field not found in: {html}"))
+        + marker.len();
+    let rest = &html[start..];
+    let end = rest.find('"').expect("closing quote after consent_id");
+    rest[..end].to_string()
+}
+
+/// `GET /oauth/authorize` with the `TestEnv`'s pre-populated session cookie
+/// and a CIMD-valid `client_id`/`redirect_uri` pair — asserts 200 + a consent
+/// screen and returns the extracted `consent_id`.
+async fn authorize_with_session_get_consent_id(
     env: &common::TestEnv,
     client_id: &str,
     redirect_uri: &str,
     state_param: &str,
     code_challenge: &str,
-) -> url::Url {
+) -> String {
     let client = no_redirect_client();
     let resp = client
         .get(url(env, "/oauth/authorize"))
@@ -223,36 +230,68 @@ async fn authorize_with_session(
         .send()
         .await
         .expect("GET /oauth/authorize");
-    // axum's `Redirect::to()` deliberately emits 303 See Other (never 302);
-    // for these GET-initiated OAuth redirects 303 is spec-compliant and this
-    // preserves current production behavior — the tests were written against
-    // an assumed 302 that never shipped.
-    assert_eq!(resp.status(), 303, "authorize should redirect");
-    let location = resp
-        .headers()
-        .get("location")
-        .expect("Location header")
-        .to_str()
-        .expect("Location is valid ascii")
-        .to_string();
-    url::Url::parse(&location).expect("Location parses as a URL")
+    assert_eq!(
+        resp.status(),
+        200,
+        "authorize should render the consent screen for a CIMD-valid client + active session"
+    );
+    let html = resp.text().await.expect("body text");
+    assert!(html.contains("Authorize MCP client"));
+    extract_consent_id(&html)
+}
+
+/// `POST /oauth/authorize/consent` with the `TestEnv`'s pre-populated
+/// session cookie.
+async fn post_consent(
+    env: &common::TestEnv,
+    consent_id: &str,
+    decision: &str,
+) -> reqwest::Response {
+    no_redirect_client()
+        .post(url(env, "/oauth/authorize/consent"))
+        .form(&[("consent_id", consent_id), ("decision", decision)])
+        .header("cookie", format!("ak_session={}", env.session_token))
+        .send()
+        .await
+        .expect("POST /oauth/authorize/consent")
 }
 
 #[tokio::test]
 #[serial_test::serial]
-async fn authorize_then_token_round_trips_ak_token() {
+async fn authorize_then_consent_then_token_round_trips_ak_token() {
     let env = common::TestEnv::start().await;
-    let (client_id, redirect_uri) = register_test_client(&env, "t4-happy-path").await;
+    let (client_id, redirect_uri) = spawn_test_client("t5-happy-path").await;
     let verifier = "dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk"; // RFC 7636 App. B
     let challenge = pkce_challenge(verifier);
 
-    let location =
-        authorize_with_session(&env, &client_id, &redirect_uri, "state-abc", &challenge).await;
-    assert!(
-        location.as_str().starts_with(&redirect_uri),
-        "must redirect back to the registered redirect_uri, got {location}"
+    let consent_id = authorize_with_session_get_consent_id(
+        &env,
+        &client_id,
+        &redirect_uri,
+        "state-abc",
+        &challenge,
+    )
+    .await;
+
+    let consent_resp = post_consent(&env, &consent_id, "approve").await;
+    assert_eq!(
+        consent_resp.status(),
+        303,
+        "consent approve should redirect"
     );
-    let params: std::collections::HashMap<_, _> = location.query_pairs().into_owned().collect();
+    let location = consent_resp
+        .headers()
+        .get("location")
+        .expect("Location header")
+        .to_str()
+        .expect("ascii")
+        .to_string();
+    let location_url = url::Url::parse(&location).expect("Location parses as a URL");
+    assert!(
+        location_url.as_str().starts_with(&redirect_uri),
+        "must redirect back to the CIMD-registered redirect_uri, got {location_url}"
+    );
+    let params: std::collections::HashMap<_, _> = location_url.query_pairs().into_owned().collect();
     assert_eq!(params.get("state").map(String::as_str), Some("state-abc"));
     let code = params.get("code").expect("code present").clone();
     assert!(!code.is_empty());
@@ -302,14 +341,96 @@ async fn authorize_then_token_round_trips_ak_token() {
 
 #[tokio::test]
 #[serial_test::serial]
+async fn consent_deny_redirects_with_access_denied() {
+    let env = common::TestEnv::start().await;
+    let (client_id, redirect_uri) = spawn_test_client("t5-deny").await;
+    let challenge = pkce_challenge("verifier-not-used-because-denied");
+
+    let consent_id = authorize_with_session_get_consent_id(
+        &env,
+        &client_id,
+        &redirect_uri,
+        "state-deny",
+        &challenge,
+    )
+    .await;
+
+    let resp = post_consent(&env, &consent_id, "deny").await;
+    assert_eq!(resp.status(), 303, "consent deny should still redirect");
+    let location = resp
+        .headers()
+        .get("location")
+        .expect("Location header")
+        .to_str()
+        .expect("ascii")
+        .to_string();
+    let location_url = url::Url::parse(&location).expect("Location parses as a URL");
+    assert!(location_url.as_str().starts_with(&redirect_uri));
+    let params: std::collections::HashMap<_, _> = location_url.query_pairs().into_owned().collect();
+    assert_eq!(
+        params.get("error").map(String::as_str),
+        Some("access_denied")
+    );
+    assert_eq!(params.get("state").map(String::as_str), Some("state-deny"));
+    assert!(
+        !params.contains_key("code"),
+        "denied consent must not carry a code"
+    );
+}
+
+#[tokio::test]
+#[serial_test::serial]
+async fn consent_rejects_unknown_consent_id_with_400_not_redirect() {
+    let env = common::TestEnv::start().await;
+    let resp = post_consent(&env, &uuid::Uuid::new_v4().to_string(), "approve").await;
+    assert_eq!(resp.status(), 400);
+    let body: Value = resp.json().await.expect("json body");
+    assert_eq!(body["error"], "invalid_request");
+}
+
+#[tokio::test]
+#[serial_test::serial]
+async fn consent_without_session_is_401() {
+    let env = common::TestEnv::start().await;
+    // Deliberately no `cookie` header — no web session.
+    let resp = reqwest::Client::new()
+        .post(url(&env, "/oauth/authorize/consent"))
+        .form(&[
+            ("consent_id", uuid::Uuid::new_v4().to_string().as_str()),
+            ("decision", "approve"),
+        ])
+        .send()
+        .await
+        .expect("POST /oauth/authorize/consent");
+    assert_eq!(resp.status(), 401);
+}
+
+#[tokio::test]
+#[serial_test::serial]
 async fn token_rejects_wrong_pkce_verifier() {
     let env = common::TestEnv::start().await;
-    let (client_id, redirect_uri) = register_test_client(&env, "t4-wrong-verifier").await;
+    let (client_id, redirect_uri) = spawn_test_client("t5-wrong-verifier").await;
     let challenge = pkce_challenge("dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk");
 
-    let location =
-        authorize_with_session(&env, &client_id, &redirect_uri, "state-xyz", &challenge).await;
-    let params: std::collections::HashMap<_, _> = location.query_pairs().into_owned().collect();
+    let consent_id = authorize_with_session_get_consent_id(
+        &env,
+        &client_id,
+        &redirect_uri,
+        "state-xyz",
+        &challenge,
+    )
+    .await;
+    let consent_resp = post_consent(&env, &consent_id, "approve").await;
+    assert_eq!(consent_resp.status(), 303);
+    let location = consent_resp
+        .headers()
+        .get("location")
+        .expect("Location header")
+        .to_str()
+        .expect("ascii")
+        .to_string();
+    let location_url = url::Url::parse(&location).expect("Location parses as a URL");
+    let params: std::collections::HashMap<_, _> = location_url.query_pairs().into_owned().collect();
     let code = params.get("code").expect("code present").clone();
 
     let http = reqwest::Client::new();
@@ -334,7 +455,6 @@ async fn token_rejects_wrong_pkce_verifier() {
 #[serial_test::serial]
 async fn authorize_without_session_redirects_to_login_with_next() {
     let env = common::TestEnv::start().await;
-    let (client_id, redirect_uri) = register_test_client(&env, "t4-no-session").await;
     let challenge = pkce_challenge("some-verifier-value-not-used-here");
 
     let client = no_redirect_client();
@@ -342,8 +462,15 @@ async fn authorize_without_session_redirects_to_login_with_next() {
         .get(url(&env, "/oauth/authorize"))
         .query(&[
             ("response_type", "code"),
-            ("client_id", client_id.as_str()),
-            ("redirect_uri", redirect_uri.as_str()),
+            // fix-round-1: the session check now runs BEFORE any CIMD
+            // fetch, so `client_id` never needs to resolve to anything for
+            // this test — no fixture server spun up at all. This is a
+            // stronger proof of the ordering than the old
+            // fixture-then-no-session setup: if CIMD ran first, this
+            // never-fetchable URL would 400 `invalid_client`, not redirect
+            // to login.
+            ("client_id", "https://client.example/never-fetched.json"),
+            ("redirect_uri", "http://127.0.0.1:33418/callback"),
             ("state", "state-noauth"),
             ("code_challenge", challenge.as_str()),
             ("code_challenge_method", "S256"),
@@ -372,14 +499,15 @@ async fn authorize_without_session_redirects_to_login_with_next() {
 
 #[tokio::test]
 #[serial_test::serial]
-async fn authorize_rejects_unknown_client_id_without_redirecting() {
+async fn authorize_rejects_unreachable_cimd_client_without_redirecting() {
     let env = common::TestEnv::start().await;
     let client = no_redirect_client();
     let resp = client
         .get(url(&env, "/oauth/authorize"))
         .query(&[
             ("response_type", "code"),
-            ("client_id", "00000000-0000-0000-0000-000000000000"),
+            // Loopback port nothing is listening on — CIMD fetch fails.
+            ("client_id", "http://127.0.0.1:1/cimd"),
             ("redirect_uri", "http://127.0.0.1:33418/callback"),
             ("state", "s"),
             ("code_challenge", "challenge"),
@@ -389,13 +517,118 @@ async fn authorize_rejects_unknown_client_id_without_redirecting() {
         .send()
         .await
         .expect("GET /oauth/authorize");
-    // An unrecognized client_id must 400 directly — never redirect to an
-    // unvalidated URI (RFC 6749 §4.1.2.1).
+    // An unreachable/invalid CIMD client must 400 directly — never redirect
+    // to an unvalidated URI (spec §4 failure-response principle).
     assert_eq!(resp.status(), 400);
     let body: Value = resp.json().await.expect("json body");
     assert_eq!(body["error"], "invalid_client");
 }
 
+#[tokio::test]
+#[serial_test::serial]
+async fn authorize_rejects_cimd_document_with_mismatched_client_id_without_redirecting() {
+    let env = common::TestEnv::start().await;
+    // The document's own `client_id` field deliberately does NOT match the
+    // URL it's served from — CimdError::ClientIdMismatch.
+    let client_id = spawn_cimd_fixture(|_url| {
+        serde_json::json!({
+            "client_id": "https://mismatched.example.com/other.json",
+            "redirect_uris": ["http://127.0.0.1:33418/callback"],
+            "client_name": "Mismatched",
+            "logo_uri": null,
+        })
+        .to_string()
+    })
+    .await;
+
+    let client = no_redirect_client();
+    let resp = client
+        .get(url(&env, "/oauth/authorize"))
+        .query(&[
+            ("response_type", "code"),
+            ("client_id", client_id.as_str()),
+            ("redirect_uri", "http://127.0.0.1:33418/callback"),
+            ("state", "s"),
+            ("code_challenge", "challenge"),
+            ("code_challenge_method", "S256"),
+        ])
+        .header("cookie", format!("ak_session={}", env.session_token))
+        .send()
+        .await
+        .expect("GET /oauth/authorize");
+    assert_eq!(resp.status(), 400);
+    let body: Value = resp.json().await.expect("json body");
+    assert_eq!(body["error"], "invalid_client");
+}
+
+#[tokio::test]
+#[serial_test::serial]
+async fn authorize_rejects_redirect_uri_not_in_cimd_document_without_redirecting() {
+    let env = common::TestEnv::start().await;
+    let (client_id, _registered_redirect_uri) = spawn_test_client("t5-redirect-mismatch").await;
+
+    let client = no_redirect_client();
+    let resp = client
+        .get(url(&env, "/oauth/authorize"))
+        .query(&[
+            ("response_type", "code"),
+            ("client_id", client_id.as_str()),
+            // Not the redirect_uri the CIMD document declared.
+            ("redirect_uri", "http://127.0.0.1:33418/not-registered"),
+            ("state", "s"),
+            ("code_challenge", "challenge"),
+            ("code_challenge_method", "S256"),
+        ])
+        .header("cookie", format!("ak_session={}", env.session_token))
+        .send()
+        .await
+        .expect("GET /oauth/authorize");
+    assert_eq!(resp.status(), 400);
+    let body: Value = resp.json().await.expect("json body");
+    assert_eq!(body["error"], "invalid_client");
+}
+
+#[tokio::test]
+#[serial_test::serial]
+async fn authorize_rejects_bad_structural_params_before_cimd_fetch() {
+    let env = common::TestEnv::start().await;
+    let client = no_redirect_client();
+    // client_id points nowhere reachable — if this ever got to the CIMD
+    // fetch it would fail differently (invalid_client). It must not: the
+    // structural response_type check runs first and 400s without ever
+    // dialing out.
+    let resp = client
+        .get(url(&env, "/oauth/authorize"))
+        .query(&[
+            ("response_type", "token"),
+            ("client_id", "http://127.0.0.1:1/cimd"),
+            ("redirect_uri", "http://127.0.0.1:33418/callback"),
+            ("state", "s"),
+            ("code_challenge", "challenge"),
+            ("code_challenge_method", "S256"),
+        ])
+        .header("cookie", format!("ak_session={}", env.session_token))
+        .send()
+        .await
+        .expect("GET /oauth/authorize");
+    assert_eq!(resp.status(), 400);
+    let body: Value = resp.json().await.expect("json body");
+    assert_eq!(body["error"], "unsupported_response_type");
+}
+
+/// Task 4 introduced this as a narrow carve-out: only an anonymous
+/// `tools/call` naming a write tool got the RFC 9728 challenge, via a
+/// body-peek in `mcp_auth`. Task 3 replaced that with full-auth,
+/// fail-closed: `mcp_auth` now 401s EVERY anonymous `/mcp` request the
+/// same way, peek machinery removed entirely (see
+/// `akashic-mcp/src/mcp_middleware.rs`'s module doc comment). The
+/// assertions below still hold unchanged under the new policy — a write
+/// tool call is one anonymous shape among many that now get this
+/// response — so this test is kept as an extra guard on the OAuth
+/// integration surface; `mcp_contract.rs`'s
+/// `mcp_anonymous_request_gets_401_challenge` and
+/// `mcp_anonymous_write_gets_401_challenge` cover the same behavior (plus
+/// non-write shapes) from the contract-test side.
 #[tokio::test]
 #[serial_test::serial]
 async fn mcp_anonymous_write_tool_call_gets_401_challenge() {

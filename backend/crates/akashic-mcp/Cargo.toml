@@ -8,6 +8,7 @@ description.workspace = true
 workspace = true
 
 [dependencies]
+akashic-config.workspace = true
 akashic-context.workspace = true
 akashic-domain.workspace = true
 akashic-identity.workspace = true
@@ -21,7 +22,6 @@ akashic-curation.workspace = true
 akashic-platform = { path = "../akashic-platform" }
 axum.workspace = true
 tower.workspace = true
-tower-http.workspace = true
 rmcp.workspace = true
 schemars.workspace = true
 sqlx.workspace = true
@@ -29,15 +29,14 @@ neo4rs.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 tokio.workspace = true
-tokio-util.workspace = true
 futures.workspace = true
 reqwest.workspace = true
-anyhow.workspace = true
 async-trait.workspace = true
 tracing.workspace = true
 metrics.workspace = true
 uuid.workspace = true
 sha2.workspace = true
+url.workspace = true
 
 [dev-dependencies]
 akashic-test-support.workspace = true

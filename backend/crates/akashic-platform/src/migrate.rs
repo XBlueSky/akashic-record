@@ -102,10 +102,14 @@ const PG_TABLES: &[&str] = &[
     // Task 5 (C1, docs corpus): versioned raw corpus layer.
     "corpus_versions",
     "corpus_files",
-    // Task 3 (MCP OAuth, docs-kit kit enablers): dynamic client registration
-    // (RFC 7591) + authorization-code storage.
-    "mcp_oauth_clients",
+    // Task 3 (MCP OAuth, docs-kit kit enablers): authorization-code storage.
+    // Spec §4 (MCP refactor, 2026-08-07): CIMD replaces DCR — the client
+    // registration table (`mcp_oauth_clients`) is gone; codes reference the
+    // client by its CIMD URL. `mcp_oauth_pending_consents` (Task 5) holds
+    // the short-lived (10-minute) rows created between `GET /oauth/authorize`
+    // and `POST /oauth/authorize/consent`.
     "mcp_oauth_codes",
+    "mcp_oauth_pending_consents",
 ];
 
 /// Canonical list of Neo4j constraints. Sourced from

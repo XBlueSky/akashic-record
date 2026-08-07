@@ -21,7 +21,7 @@ revocation procedure.
 
 | Type | Storage | Lifetime | Use case |
 |---|---|---|---|
-| **MCP device-flow PAT** | `mcp_tokens` PG table | 90 days (configurable) | Long-lived bearer for MCP clients (Claude Code, custom agents) |
+| **MCP device-flow PAT** | `mcp_tokens` PG table | 90 days, sliding (each authenticated use, debounced to once per 60s, resets `expires_at` to now + 90 days — an actively-used token effectively never expires) | Long-lived bearer for MCP clients (Claude Code, custom agents) |
 | **Web session cookie** | `sessions` PG table | 24 hours (refreshed on activity) | Browser session after GitLab OAuth login |
 | **GitLab OAuth grant** | GitLab admin UI | Until user revokes at GitLab | Underlying authorization that mints the above two |
 
@@ -63,28 +63,33 @@ docker exec akashic-postgres psql -U akashic -d akashic -c \
 
 ### Verify
 
-The MCP middleware's token-validation cache may hold the token for up
-to its TTL (default 60 seconds per B1 spec). Force-flush by restarting
-the backend container, OR wait for the cache TTL to elapse and confirm
-the next tool call from that bearer returns 401:
+A revoked `mcp_tokens` row is checked on every request (`validate_mcp_token`
+queries Postgres directly, `WHERE revoked_at IS NULL AND expires_at >
+now()` — no positive cache on the `ak_*` path), so revocation is
+effective immediately, no wait needed. Confirm the next call from that
+bearer returns 401:
 
 ```bash
-# Wait 65 seconds.
-sleep 65
-
-# Try a tool call with the revoked token (should fail).
-curl -i -m 5 -X POST http://localhost:13002/message?sessionId=$(curl -sN -m 2 http://localhost:13002/sse | head -3 | grep -oE 'sessionId=[a-f0-9]+' | cut -d= -f2) \
+# MCP is a single streamable-HTTP endpoint at /mcp — no SSE session
+# handshake required. Any request shape (even tools/list) is rejected
+# the same way once the bearer is revoked.
+curl -i -m 5 -X POST http://localhost:13001/mcp \
   -H 'Content-Type: application/json' \
+  -H 'Accept: application/json, text/event-stream' \
   -H "Authorization: Bearer <revoked-token>" \
   -d '{"jsonrpc":"2.0","method":"tools/call","id":1,"params":{"name":"save_note","arguments":{"repo_name":"akashic-record","title":"test","content":"test","category":"ARCHITECTURE"}}}'
 
-# Expected: HTTP 200 with JSON-RPC error envelope code=-32001
-#           (auth_gate's unauthorized-write response).
+# Expected: HTTP 401, WWW-Authenticate: Bearer resource_metadata="..."
+#           (RFC 9728 challenge — mcp_auth's fail-closed response; the
+#           request never reaches the tool dispatcher). Port 13001 is
+#           the dev/test single-port mapping (docker-compose.test.yml);
+#           against a live deployment use the public host's /mcp
+#           instead (e.g. https://akashic.example.com/mcp).
 ```
 
 If the call still succeeds: the backend was deployed from a build
-predating B1 (impossible if Phase B shipped). Restart container, check
-build commit.
+predating the full-auth `mcp_auth` layer (MCP refactor, 2026-08-07).
+Restart container, check build commit.
 
 ### Audit cleanup
 

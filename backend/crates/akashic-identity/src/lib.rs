@@ -62,8 +62,7 @@ pub mod test_support {
             alerts: AlertsConfig::default(),
             module_max_files: 12,
             module_min_files: 3,
-            mcp_sse_host: "0.0.0.0".into(),
-            mcp_sse_port: 8080,
+            api_host: "0.0.0.0".into(),
             gitlab_webhook_secret: None,
             gitlab_url: "http://unused".into(),
             gitlab_app_id: "test-app-id".into(),
@@ -102,6 +101,7 @@ pub mod test_support {
             ingest_quota_tokens_per_window: 5_000_000,
             ingest_quota_window_secs: 3600,
             ingest_quota_enabled: false,
+            mcp_cimd_allow_loopback: false,
         }
     }
 }

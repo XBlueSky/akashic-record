@@ -16,15 +16,16 @@ use super::types::{
 };
 
 use akashic_domain::ports::{
-    McpTokenRepo, OauthClientRepo, OauthCodeRepo, PassthroughTokenRepo, PublishTokenRepo,
+    McpTokenRepo, OauthCodeRepo, OauthConsentRepo, PassthroughTokenRepo, PublishTokenRepo,
     SessionTokenRepo,
 };
 use akashic_domain::types::{
-    ClientRegistration, ConsumedOauthCode, PublishTokenSummaryRow, ValidatedPublishToken,
+    ConsumedOauthCode, PendingConsent, PendingConsentInput, PublishTokenSummaryRow,
+    ValidatedPublishToken,
 };
 use akashic_store_pg::repos::{
-    PgMcpTokenRepo, PgOauthClientRepo, PgOauthCodeRepo, PgPassthroughTokenRepo, PgPublishTokenRepo,
-    PgSessionTokenRepo,
+    PgMcpTokenRepo, PgOauthCodeRepo, PgOauthConsentRepo, PgPassthroughTokenRepo,
+    PgPublishTokenRepo, PgSessionTokenRepo,
 };
 
 /// Authentication store.
@@ -42,10 +43,11 @@ pub struct AuthStore {
     passthrough_repo: Arc<dyn PassthroughTokenRepo>,
     /// Task 6 (B1, docs corpus): repo-scoped publish tokens (`akp_<32hex>`).
     publish_repo: Arc<dyn PublishTokenRepo>,
-    /// Task 3 (MCP OAuth): dynamic client registration (RFC 7591).
-    oauth_client_repo: Arc<dyn OauthClientRepo>,
     /// Task 4 (MCP OAuth): authorization-code issue/redeem (RFC 6749 §4.1).
     oauth_code_repo: Arc<dyn OauthCodeRepo>,
+    /// Task 5 (MCP OAuth, spec §4): pending-consent issue/redeem — CIMD
+    /// validation + consent screen replace DCR.
+    oauth_consent_repo: Arc<dyn OauthConsentRepo>,
 }
 
 impl AuthStore {
@@ -61,8 +63,8 @@ impl AuthStore {
             mcp_repo: Arc::new(PgMcpTokenRepo::new(pg.clone())),
             passthrough_repo: Arc::new(PgPassthroughTokenRepo::new(pg.clone())),
             publish_repo: Arc::new(PgPublishTokenRepo::new(pg.clone())),
-            oauth_client_repo: Arc::new(PgOauthClientRepo::new(pg.clone())),
-            oauth_code_repo: Arc::new(PgOauthCodeRepo::new(pg)),
+            oauth_code_repo: Arc::new(PgOauthCodeRepo::new(pg.clone())),
+            oauth_consent_repo: Arc::new(PgOauthConsentRepo::new(pg)),
         }
     }
 
@@ -276,43 +278,18 @@ impl AuthStore {
             .map_err(|e| sqlx::Error::Protocol(e.to_string()))
     }
 
-    // ── Task 3 (MCP OAuth): dynamic client registration (RFC 7591) ──────────
-
-    /// Register a new public MCP OAuth client. `redirect_uris` is persisted
-    /// verbatim — format validation (loopback-http or https) happens in the
-    /// HTTP handler before this is called.
-    pub async fn register_oauth_client(
-        &self,
-        redirect_uris: Vec<String>,
-        client_name: Option<String>,
-    ) -> Result<ClientRegistration, sqlx::Error> {
-        self.oauth_client_repo
-            .register_client(redirect_uris, client_name)
-            .await
-            .map_err(|e| sqlx::Error::Protocol(e.to_string()))
-    }
-
-    /// Look up a registered OAuth client by id. Returns `None` if unknown.
-    pub async fn get_oauth_client(
-        &self,
-        client_id: uuid::Uuid,
-    ) -> Result<Option<ClientRegistration>, sqlx::Error> {
-        self.oauth_client_repo
-            .get_client(client_id)
-            .await
-            .map_err(|e| sqlx::Error::Protocol(e.to_string()))
-    }
-
     // ── Task 4 (MCP OAuth): authorization-code issue/redeem (RFC 6749 §4.1) ─
 
     /// Issue a new one-time authorization code bound to `client_id`,
     /// `user_id`/`user_login`, the PKCE `code_challenge`, and the exact
-    /// `redirect_uri` it may be redeemed against. Returns the plaintext code
-    /// (64 lowercase hex chars); the row stores only its sha256. Fixed
-    /// 10-minute TTL (RFC 6749 §4.1.2 recommends a short-lived code).
+    /// `redirect_uri` it may be redeemed against. `client_id` is a CIMD URL
+    /// (spec §4, MCP refactor 2026-08-07), persisted verbatim. Returns the
+    /// plaintext code (64 lowercase hex chars); the row stores only its
+    /// sha256. Fixed 10-minute TTL (RFC 6749 §4.1.2 recommends a
+    /// short-lived code).
     pub async fn issue_oauth_code(
         &self,
-        client_id: uuid::Uuid,
+        client_id: &str,
         user_id: i64,
         user_login: &str,
         code_challenge: &str,
@@ -333,6 +310,45 @@ impl AuthStore {
     ) -> Result<Option<ConsumedOauthCode>, sqlx::Error> {
         self.oauth_code_repo
             .consume_code(presented)
+            .await
+            .map_err(|e| sqlx::Error::Protocol(e.to_string()))
+    }
+
+    // ── Task 5 (MCP OAuth, spec §4): pending-consent issue/redeem ───────────
+    //
+    // CIMD validation + a consent screen replace DCR: `GET /oauth/authorize`
+    // creates a pending-consent row instead of minting a code directly;
+    // `POST /oauth/authorize/consent` redeems it and, on approval, calls
+    // `issue_oauth_code` above. Mirrors the two `*_oauth_code` methods
+    // exactly in shape.
+
+    /// Create a new pending-consent row for `user_id`/`user_login`, carrying
+    /// the CIMD-validated client + PKCE/state metadata from the authorize
+    /// request. Returns the generated `consent_id`. Fixed 10-minute TTL.
+    pub async fn issue_pending_consent(
+        &self,
+        user_id: i64,
+        user_login: &str,
+        meta: &PendingConsentInput,
+    ) -> Result<uuid::Uuid, sqlx::Error> {
+        self.oauth_consent_repo
+            .issue_pending(user_id, user_login, meta)
+            .await
+            .map_err(|e| sqlx::Error::Protocol(e.to_string()))
+    }
+
+    /// Atomically redeem a presented `consent_id`, bound to the SAME
+    /// `user_id` that created it (CSRF defense — see `OauthConsentRepo`'s
+    /// trait doc comment). Returns `None` for: unknown consent_id,
+    /// already-used, expired, or `user_id` mismatch — the consent handler
+    /// collapses all four into a single 400 `invalid_request`.
+    pub async fn redeem_pending_consent(
+        &self,
+        consent_id: uuid::Uuid,
+        user_id: i64,
+    ) -> Result<Option<PendingConsent>, sqlx::Error> {
+        self.oauth_consent_repo
+            .redeem_pending(consent_id, user_id)
             .await
             .map_err(|e| sqlx::Error::Protocol(e.to_string()))
     }
