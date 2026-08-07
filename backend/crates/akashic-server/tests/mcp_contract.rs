@@ -1004,3 +1004,98 @@ async fn mcp_anonymous_save_note_rejected() {
         "audit_log save_note count grew despite anonymous rejection (pre={pre_count}, post={post_count})",
     );
 }
+
+// ─── Task 2 regression: /mcp inherits build_router's global layers ────
+//
+// Task 2 merged the MCP branch into `akashic_http::build_router` BEFORE
+// its four global `.layer()` calls specifically so `/mcp` traffic gets
+// the same Metrics/RequestId/Trace/CORS coverage REST traffic gets —
+// axum's `.layer()` only wraps routes already present in the router at
+// the time it's called, so that ordering is the entire point (see
+// `build_router`'s doc comment). Nothing else in this suite (or
+// `mcp_oauth.rs`) checks this: every other test here goes through
+// `McpClient`, which only surfaces the JSON-RPC payload, never the raw
+// HTTP response headers. Without a test pinning this from the outside, a
+// future edit that reorders `.merge(mcp_branch)` to land AFTER those
+// `.layer()` calls would silently strip global coverage from all MCP
+// traffic and nothing in CI would catch it.
+
+/// Guards `RequestIdLayer` (one of `build_router`'s four global layers)
+/// wrapping the `/mcp` branch. Body/status are irrelevant — this reuses
+/// the anonymous write-tool envelope from `mcp_oauth.rs`'s
+/// `mcp_anonymous_write_tool_call_gets_401_challenge` (known to reliably
+/// produce a real HTTP response) purely to get *a* response back; the
+/// only thing under test is whether `RequestIdLayer` echoed
+/// `x-request-id` onto it (see
+/// `akashic_platform::middleware::request_id`'s "Echoes on the
+/// response" doc comment) — that header can only appear if
+/// `RequestIdLayer` actually wraps this response.
+#[tokio::test]
+#[serial_test::serial]
+async fn mcp_branch_inherits_global_request_id_layer() {
+    let env = TestEnv::start().await;
+    let mcp_url = format!("{}/mcp", env.mcp_addr.trim_end_matches('/'));
+
+    let client = reqwest::Client::new();
+    let resp = client
+        .post(&mcp_url)
+        .header("content-type", "application/json")
+        .body(
+            json!({
+                "jsonrpc": "2.0",
+                "id": 1,
+                "method": "tools/call",
+                "params": {"name": "save_note", "arguments": {}}
+            })
+            .to_string(),
+        )
+        .send()
+        .await
+        .expect("POST /mcp");
+
+    assert!(
+        resp.headers().contains_key("x-request-id"),
+        "/mcp response missing x-request-id (status {}) — RequestIdLayer is not \
+         wrapping the MCP branch; check build_router's merge-before-.layer() ordering",
+        resp.status(),
+    );
+}
+
+/// Guards `CorsLayer` (another of `build_router`'s four global layers)
+/// wrapping the `/mcp` branch: a CORS preflight (`OPTIONS` +
+/// `Origin` + `Access-Control-Request-Method`) against `/mcp` should get
+/// `Access-Control-Allow-Origin` back. `CorsLayer` answers preflights
+/// itself and short-circuits BEFORE axum routing (and therefore before
+/// rmcp's `StreamableHttpService`) ever runs, so this doesn't depend on
+/// or get blocked by rmcp's own (nonexistent) `OPTIONS` handling.
+#[tokio::test]
+#[serial_test::serial]
+async fn mcp_branch_inherits_global_cors_layer() {
+    let env = TestEnv::start().await;
+    let mcp_url = format!("{}/mcp", env.mcp_addr.trim_end_matches('/'));
+    let origin = env.state.config.frontend_url.clone();
+
+    let client = reqwest::Client::new();
+    let resp = client
+        .request(reqwest::Method::OPTIONS, &mcp_url)
+        .header("origin", &origin)
+        .header("access-control-request-method", "POST")
+        .send()
+        .await
+        .expect("OPTIONS /mcp (CORS preflight)");
+
+    let status = resp.status();
+    let allow_origin = resp
+        .headers()
+        .get("access-control-allow-origin")
+        .unwrap_or_else(|| {
+            panic!(
+                "/mcp preflight missing Access-Control-Allow-Origin (status {status}) — \
+                 CorsLayer is not wrapping the MCP branch; check build_router's \
+                 merge-before-.layer() ordering",
+            )
+        })
+        .to_str()
+        .expect("ascii header value");
+    assert_eq!(allow_origin, origin);
+}
