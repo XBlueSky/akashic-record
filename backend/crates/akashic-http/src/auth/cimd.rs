@@ -38,10 +38,17 @@
 //!   `https://[::ffff:127.0.0.1]/x` sail past the guard while resolving to
 //!   the exact same loopback socket `127.0.0.1` does. This is the one
 //!   documented hardening beyond the brief's guard sketch.
-//! - **Response size capped** at `MAX_DOCUMENT_BYTES`, checked from
-//!   `Content-Length` before buffering and re-checked against the actual
-//!   buffer length (a malicious/misconfigured server can lie about or omit
-//!   `Content-Length`).
+//! - **Response size capped** at `MAX_DOCUMENT_BYTES`, enforced BEFORE
+//!   buffering: `Content-Length` is checked first as a fast-path rejection
+//!   (a malicious/misconfigured server can lie about or omit it — chunked
+//!   responses have none at all), and the body is then read via
+//!   `bytes_stream()` with a running total checked after every chunk,
+//!   bailing with `CimdError::TooLarge` the instant the cap is crossed.
+//!   This is the actual enforcement point: a naive `resp.bytes().await`
+//!   buffers the ENTIRE body up front regardless of the cap and only
+//!   checks the length afterward, so a chunked/no-`Content-Length`
+//!   response would stream unbounded into memory until `FETCH_TIMEOUT`
+//!   fires instead of being rejected early.
 //! - **5s fetch timeout** so a slow/hanging internal target can't tie up a
 //!   request thread indefinitely.
 //!
@@ -67,6 +74,8 @@ use std::collections::HashMap;
 use std::net::IpAddr;
 use std::sync::Mutex;
 use std::time::{Duration, Instant};
+
+use futures::StreamExt;
 
 /// Wall-clock budget for the outbound fetch. Short enough that a hung
 /// internal target (see TOCTOU note above) can't pin a request thread.
@@ -196,13 +205,7 @@ impl CimdFetcher {
         {
             return Err(CimdError::TooLarge);
         }
-        let bytes = resp
-            .bytes()
-            .await
-            .map_err(|e| CimdError::FetchFailed(e.to_string()))?;
-        if bytes.len() > MAX_DOCUMENT_BYTES {
-            return Err(CimdError::TooLarge);
-        }
+        let bytes = Self::read_capped_body(resp).await?;
         let doc: ClientMetadata = serde_json::from_slice(&bytes)
             .map_err(|e| CimdError::InvalidDocument(e.to_string()))?;
         if doc.client_id.trim_end_matches('/') != client_id_url.trim_end_matches('/') {
@@ -217,6 +220,32 @@ impl CimdFetcher {
             .unwrap()
             .insert(client_id_url.to_string(), (Instant::now(), doc.clone()));
         Ok(doc)
+    }
+
+    /// Read `resp`'s body up to `MAX_DOCUMENT_BYTES`, bailing with
+    /// `CimdError::TooLarge` the instant the running total crosses the cap
+    /// — never after. This is the fix for the case the `Content-Length`
+    /// fast-path check in `fetch_and_validate` can't catch: a chunked (or
+    /// otherwise no-`Content-Length`) response has nothing for that check
+    /// to inspect, so without this, a plain `resp.bytes().await` call would
+    /// buffer the ENTIRE body — regardless of size — before its own
+    /// length check ever ran, streaming unbounded attacker-controlled data
+    /// into memory until `FETCH_TIMEOUT` cuts it off. Streaming via
+    /// `bytes_stream()` (reqwest's `stream` feature, already enabled on
+    /// the workspace `reqwest` dependency) and checking after each chunk
+    /// bounds the worst case to `MAX_DOCUMENT_BYTES` plus at most one
+    /// chunk.
+    async fn read_capped_body(resp: reqwest::Response) -> Result<bytes::Bytes, CimdError> {
+        let mut stream = resp.bytes_stream();
+        let mut buf = bytes::BytesMut::new();
+        while let Some(chunk) = stream.next().await {
+            let chunk = chunk.map_err(|e| CimdError::FetchFailed(e.to_string()))?;
+            buf.extend_from_slice(&chunk);
+            if buf.len() > MAX_DOCUMENT_BYTES {
+                return Err(CimdError::TooLarge);
+            }
+        }
+        Ok(buf.freeze())
     }
 
     /// Reject hosts that are, or resolve to, private/loopback/link-local
@@ -397,6 +426,43 @@ mod tests {
     #[tokio::test]
     async fn oversize_document_is_rejected() {
         let (url, _hits) = spawn_fixture(StatusCode::OK, |_url| "a".repeat(70 * 1024)).await;
+        let fetcher = CimdFetcher::new(true);
+        let err = fetcher.fetch_and_validate(&url).await.unwrap_err();
+        assert!(matches!(err, CimdError::TooLarge), "got {err:?}");
+    }
+
+    // ── (5b) oversize document, no Content-Length (chunked) ───────────
+    // Regression for the streaming-cap fix: unlike (5) above — whose
+    // fixture returns a plain `String` body, which axum gives a known
+    // `Content-Length` up front, so the fast-path check in
+    // `fetch_and_validate` alone would already catch it — this fixture
+    // streams its body via `axum::body::Body::from_stream`, which axum/
+    // hyper cannot precompute a length for, so the response has NO
+    // `Content-Length` header and falls back to chunked transfer
+    // encoding. Before the fix, `resp.bytes().await` would buffer this
+    // entire (unbounded) body before ever checking its length; the fix
+    // (`CimdFetcher::read_capped_body`) must catch it mid-stream instead.
+    // 12 chunks of 8KiB = 96KiB, comfortably over `MAX_DOCUMENT_BYTES`
+    // (64KiB).
+    #[tokio::test]
+    async fn chunked_oversize_document_without_content_length_is_rejected() {
+        async fn streaming_oversize_handler() -> axum::body::Body {
+            let chunks = (0..12).map(|_| {
+                Ok::<bytes::Bytes, std::io::Error>(bytes::Bytes::from("a".repeat(8 * 1024)))
+            });
+            axum::body::Body::from_stream(futures::stream::iter(chunks))
+        }
+
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0")
+            .await
+            .expect("bind fixture listener");
+        let addr = listener.local_addr().expect("local_addr");
+        let url = format!("http://{addr}/cimd");
+        let app = axum::Router::new().route("/cimd", get(streaming_oversize_handler));
+        tokio::spawn(async move {
+            axum::serve(listener, app).await.expect("fixture server");
+        });
+
         let fetcher = CimdFetcher::new(true);
         let err = fetcher.fetch_and_validate(&url).await.unwrap_err();
         assert!(matches!(err, CimdError::TooLarge), "got {err:?}");

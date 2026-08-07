@@ -1109,11 +1109,24 @@ async fn mcp_anonymous_write_gets_401_challenge() {
 /// `akashic_platform::middleware::request_id`'s "Echoes on the
 /// response" doc comment) — that header can only appear if
 /// `RequestIdLayer` actually wraps this response.
+///
+/// Deliberately targets `env.app_addr`, NOT `env.mcp_addr`. The invariant
+/// under test — `build_router` merges the MCP branch before its four
+/// global `.layer()` calls — is a router-construction property of the
+/// in-process app; `app_addr` always serves that same router no matter
+/// what `TEST_MCP_URL` is set to. `mcp_addr` honors `TEST_MCP_URL` and in
+/// CI points at the external docker-compose.test.yml daemon instead
+/// (`http://localhost:13001`), a separate process whose own router
+/// construction this test has no way to observe and isn't trying to.
+/// Retargeting to `app_addr` makes this hermetic: it can't fail because
+/// an out-of-process daemon's config drifted from the in-process test
+/// config (see the CORS sibling test below for the concrete way that
+/// happened). Do NOT "fix" this back to `mcp_addr`.
 #[tokio::test]
 #[serial_test::serial]
 async fn mcp_branch_inherits_global_request_id_layer() {
     let env = TestEnv::start().await;
-    let mcp_url = format!("{}/mcp", env.mcp_addr.trim_end_matches('/'));
+    let mcp_url = format!("http://{}/mcp", env.app_addr);
 
     let client = reqwest::Client::new();
     let resp = client
@@ -1147,11 +1160,25 @@ async fn mcp_branch_inherits_global_request_id_layer() {
 /// itself and short-circuits BEFORE axum routing (and therefore before
 /// rmcp's `StreamableHttpService`) ever runs, so this doesn't depend on
 /// or get blocked by rmcp's own (nonexistent) `OPTIONS` handling.
+///
+/// Deliberately targets `env.app_addr`, NOT `env.mcp_addr`, and sends
+/// `Origin: env.state.config.frontend_url` — the in-process test config's
+/// value. This is load-bearing, not stylistic: in CI, `TEST_MCP_URL`
+/// points `mcp_addr` at the external docker-compose.test.yml daemon
+/// (`http://localhost:13001`), whose OWN `FRONTEND_URL` is
+/// `http://localhost:18080` — a different process with a different
+/// config. Sending the in-process origin to that out-of-process daemon
+/// makes `CorsLayer` there reject the origin and omit
+/// `Access-Control-Allow-Origin` entirely, panicking this test for a
+/// reason that has nothing to do with the merge-before-`.layer()`
+/// invariant it exists to pin. `app_addr` always serves the router built
+/// from THIS test's own config, so origin and target agree regardless of
+/// `TEST_MCP_URL`. Do NOT "fix" this back to `mcp_addr`.
 #[tokio::test]
 #[serial_test::serial]
 async fn mcp_branch_inherits_global_cors_layer() {
     let env = TestEnv::start().await;
-    let mcp_url = format!("{}/mcp", env.mcp_addr.trim_end_matches('/'));
+    let mcp_url = format!("http://{}/mcp", env.app_addr);
     let origin = env.state.config.frontend_url.clone();
 
     let client = reqwest::Client::new();
