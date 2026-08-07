@@ -14,7 +14,8 @@
 //! - `GET /.well-known/oauth-protected-resource` — RFC 9728.
 //! - `GET /.well-known/oauth-authorization-server` — RFC 8414 (now
 //!   advertises `client_id_metadata_document_supported: true` instead of a
-//!   `registration_endpoint` — there is no more `/oauth/register`).
+//!   `registration_endpoint` — there is no more dynamic-client-registration
+//!   endpoint).
 //! - `GET /oauth/authorize` — RFC 6749 §4.1.1 + CIMD validation + PKCE
 //!   (RFC 7636); renders the consent screen.
 //! - `POST /oauth/authorize/consent` — redeems the consent, mints the
@@ -81,7 +82,8 @@ fn protected_resource_body(base: &str) -> serde_json::Value {
 /// RFC 8414 authorization-server metadata body. `client_id_metadata_document_supported`
 /// (SEP-991) tells a discovering client it may present any `https://` URL as
 /// its `client_id` directly — there is no `registration_endpoint` to call
-/// first (Task 5 removed `/oauth/register`; CIMD replaces DCR).
+/// first (Task 5 removed the dynamic-client-registration endpoint; CIMD
+/// replaces DCR).
 fn authorization_server_body(base: &str) -> serde_json::Value {
     serde_json::json!({
         "issuer": base,
@@ -605,7 +607,7 @@ mod tests {
         assert_eq!(v["client_id_metadata_document_supported"], true);
         assert!(
             v.get("registration_endpoint").is_none(),
-            "registration_endpoint must be gone — there is no more /oauth/register"
+            "registration_endpoint must be gone — there is no more dynamic-client-registration endpoint"
         );
     }
 

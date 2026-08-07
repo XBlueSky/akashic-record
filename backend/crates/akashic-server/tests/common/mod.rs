@@ -234,7 +234,7 @@ pub struct TestEnv {
     /// `TEST_MCP_URL` env var to instead point at an external daemon (e.g.
     /// docker-compose.test.yml's backend-test container), which now serves
     /// MCP on its existing REST port mapping (`http://localhost:13001`) —
-    /// there is no separate `13002` MCP mapping anymore.
+    /// there is no separate additional MCP port mapping anymore.
     pub mcp_addr: String,
     /// Pre-populated session API key. Pass as `Authorization: Bearer <token>`
     /// or as the `ak_session` cookie value to hit protected routes.

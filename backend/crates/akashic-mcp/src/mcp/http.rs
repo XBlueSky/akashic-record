@@ -91,7 +91,7 @@ pub fn build_mcp_branch(app_state: akashic_context::AppState, pg: PgPool, db: Ne
     );
 
     let http_config = StreamableHttpServerConfig::default()
-        .with_legacy_session_mode(false) // 1.7's `stateful_mode` renamed; 2026-07-28 is always stateless
+        .with_legacy_session_mode(false) // renamed from rmcp 1.7's session-mode boolean of the same purpose; 2026-07-28 is always stateless
         .with_json_response(true)
         .with_allowed_hosts(allowed_hosts_for(&cfg));
 
