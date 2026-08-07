@@ -365,8 +365,14 @@ JSON document describing the client:
    ```
 
 The minted `ak_...` token is the same token family as the device flow
-below: a fixed 90-day TTL from issuance (`expires_at = now() + interval
-'90 days'`), **no refresh token, no scope**.
+below: a **90-day sliding TTL** — `issue_mcp_token` sets `expires_at =
+now() + interval '90 days'` at mint time, and every successful
+`validate_mcp_token` call (debounced to once per 60s) slides it forward
+by another 90 days from that use. An actively-used token effectively
+never expires; one that goes untouched for 90 days does. There is
+**no OAuth refresh-token grant and no scope** — clients never receive a
+`refresh_token`; once a token does expire, re-run this flow (or the
+device flow) to mint a new one.
 
 #### Option 2 — OAuth Device Flow (fallback for clients without CIMD support)
 
@@ -392,10 +398,13 @@ curl -s -X POST https://akashic.example/oauth/token \
 ```
 
 Add the resulting `ak_...` token to your Claude Code MCP config under
-the Akashic server's `Authorization: Bearer ak_...` header. Tokens have
-a fixed 90-day TTL from issuance — no refresh, no scope (same token
-family as Option 1's authorization-code grant; both call the same
-`issue_mcp_token`).
+the Akashic server's `Authorization: Bearer ak_...` header. Same
+90-day **sliding** TTL as Option 1 (each use — debounced to once per
+60s — slides `expires_at` another 90 days forward; only an unused
+token actually expires) and no scope; both options mint via the same
+`issue_mcp_token`, and there is no OAuth refresh-token grant either
+way — re-run this flow to mint a new token once an old one does
+expire.
 
 #### Option 3 — GitLab Personal Access Token passthrough
 

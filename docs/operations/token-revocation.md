@@ -21,7 +21,7 @@ revocation procedure.
 
 | Type | Storage | Lifetime | Use case |
 |---|---|---|---|
-| **MCP device-flow PAT** | `mcp_tokens` PG table | 90 days (configurable) | Long-lived bearer for MCP clients (Claude Code, custom agents) |
+| **MCP device-flow PAT** | `mcp_tokens` PG table | 90 days, sliding (each authenticated use, debounced to once per 60s, resets `expires_at` to now + 90 days — an actively-used token effectively never expires) | Long-lived bearer for MCP clients (Claude Code, custom agents) |
 | **Web session cookie** | `sessions` PG table | 24 hours (refreshed on activity) | Browser session after GitLab OAuth login |
 | **GitLab OAuth grant** | GitLab admin UI | Until user revokes at GitLab | Underlying authorization that mints the above two |
 
