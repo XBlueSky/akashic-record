@@ -1,4 +1,4 @@
-//! MCP streamable-http server (rmcp 1.x) served directly from axum.
+//! MCP streamable-http server (rmcp 3.x) served directly from axum.
 //!
 //! Replaces the rmcp 0.1 SSE `SseServer` + loopback proxy (Slice E). The
 //! `StreamableHttpService` is a tower `Service` nested into an axum `Router` at
@@ -15,6 +15,15 @@
 //!
 //! Write-tool gating (anonymous → error) is enforced in-handler via
 //! `require_actor` (no body-peek); B2 audit is recorded in-handler.
+//!
+//! Transport is configured sessionless (`legacy_session_mode: false`,
+//! `NeverSessionManager`): the 2026-07-28 spec removes sessions entirely (all
+//! requests are served statelessly regardless of this flag for that protocol
+//! version), and this deploy never negotiates an older, session-carrying
+//! version. `json_response: true` prefers a plain JSON response body over SSE
+//! for simple request/response tool calls (falls back to `text/event-stream`
+//! only if the handler emits a notification/request before the final
+//! response).
 
 use std::net::SocketAddr;
 use std::sync::Arc;
@@ -22,7 +31,7 @@ use std::sync::Arc;
 use anyhow::{Context, Result};
 use axum::Router;
 use rmcp::transport::streamable_http_server::{
-    StreamableHttpServerConfig, StreamableHttpService, session::local::LocalSessionManager,
+    StreamableHttpServerConfig, StreamableHttpService, session::never::NeverSessionManager,
 };
 use sqlx::PgPool;
 use tokio::net::TcpListener;
@@ -34,6 +43,29 @@ use akashic_platform::middleware::rate_limit::apply_mcp_rate_limit;
 use akashic_store_neo4j::Neo4jPool;
 
 use super::tools::AkashicMcp;
+
+/// Hosts rmcp's DNS-rebinding guard accepts for the `Host` header. Loopback
+/// (dev/tests) plus the public host from `PUBLIC_BASE_URL` (prod behind
+/// nginx, which forwards the original `Host` header). Entries carry no port,
+/// so `host_is_allowed` matches any port on that host (rmcp 3.1's
+/// `NormalizedAuthority` comparison treats a port-less allowed entry as a
+/// wildcard on port) — this is what lets tests connect to
+/// `127.0.0.1:<ephemeral>` without enumerating ports.
+fn allowed_hosts_for(cfg: &akashic_config::Config) -> Vec<String> {
+    let mut hosts: Vec<String> = ["localhost", "127.0.0.1", "::1"]
+        .into_iter()
+        .map(String::from)
+        .collect();
+    if let Ok(url) = url::Url::parse(&cfg.public_base_url)
+        && let Some(h) = url.host_str()
+    {
+        let h = h.trim_start_matches('[').trim_end_matches(']').to_string();
+        if !hosts.contains(&h) {
+            hosts.push(h);
+        }
+    }
+    hosts
+}
 
 /// Build the axum `Router` serving the MCP streamable-http endpoint at `/mcp`,
 /// with rate-limit + auth + trace layers. `pg`/`db` are taken explicitly
@@ -52,10 +84,15 @@ pub fn build_mcp_router(app_state: akashic_context::AppState, pg: PgPool, db: Ne
         app_state.corpus_store.clone(),
     );
 
+    let http_config = StreamableHttpServerConfig::default()
+        .with_legacy_session_mode(false) // 1.7's `stateful_mode` renamed; 2026-07-28 is always stateless
+        .with_json_response(true)
+        .with_allowed_hosts(allowed_hosts_for(&cfg));
+
     let service = StreamableHttpService::new(
         move || Ok(mcp.clone()),
-        Arc::new(LocalSessionManager::default()),
-        StreamableHttpServerConfig::default(),
+        Arc::new(NeverSessionManager::default()),
+        http_config,
     );
 
     let router = Router::new()
@@ -113,4 +150,17 @@ pub async fn start(
     });
 
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn allowed_hosts_includes_loopback_and_public_host() {
+        let mut cfg = akashic_test_support::test_config_minimal();
+        cfg.public_base_url = "https://akashic.example.com".into();
+        let hosts = super::allowed_hosts_for(&cfg);
+        assert!(hosts.contains(&"localhost".to_string()));
+        assert!(hosts.contains(&"127.0.0.1".to_string()));
+        assert!(hosts.contains(&"akashic.example.com".to_string()));
+    }
 }

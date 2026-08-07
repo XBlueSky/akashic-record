@@ -1,5 +1,5 @@
 //! MCP test client (Slice E). Drives `tools/list` and `tools/call` against a
-//! live MCP server over the rmcp 1.x **streamable-http** transport (replaces
+//! live MCP server over the rmcp 3.x **streamable-http** transport (replaces
 //! the rmcp 0.1 SSE transport). Used by the `mcp_contract` bench.
 //!
 //! `connect()` is anonymous. `connect_with_bearer()` sets the `Authorization:
@@ -9,7 +9,7 @@
 
 use anyhow::{Result, anyhow};
 use rmcp::{
-    model::{CallToolRequestParams, ClientInfo, Implementation, RawContent},
+    model::{CallToolRequestParams, ClientInfo, ContentBlock, Implementation},
     service::{RoleClient, RunningService, ServiceExt},
     transport::streamable_http_client::{
         StreamableHttpClientTransport, StreamableHttpClientTransportConfig,
@@ -49,7 +49,7 @@ impl McpClient {
         // `from_config` builds rmcp's own (reqwest-backed) client internally —
         // avoids a type mismatch with the workspace's separate reqwest version.
         let transport = StreamableHttpClientTransport::from_config(config);
-        // ClientInfo (InitializeRequestParams) is #[non_exhaustive] in rmcp 1.x —
+        // ClientInfo (InitializeRequestParams) is #[non_exhaustive] in rmcp 3.x —
         // start from Default and override only the implementation identity.
         let mut client_info = ClientInfo::default();
         client_info.client_info = Implementation::new(CLIENT_NAME, CLIENT_VERSION);
@@ -94,8 +94,8 @@ impl McpClient {
         let text = resp
             .content
             .iter()
-            .filter_map(|c| match &c.raw {
-                RawContent::Text(t) => Some(t.text.as_str()),
+            .filter_map(|c| match c {
+                ContentBlock::Text(t) => Some(t.text.as_str()),
                 _ => None,
             })
             .collect::<Vec<_>>()

@@ -92,7 +92,7 @@ futures = "0.3"
 tower = "0.5"
 tower_governor = "0.8"
 governor = "0.10"
-rmcp = { version = "1", features = ["server", "transport-streamable-http-server", "client", "transport-streamable-http-client", "transport-streamable-http-client-reqwest", "macros"] }
+rmcp = { version = "3.1", features = ["server", "transport-streamable-http-server", "client", "transport-streamable-http-client", "transport-streamable-http-client-reqwest", "macros"] }
 schemars = "1"
 neo4rs = "0.8"
 sqlx = { version = "0.8", features = ["runtime-tokio", "tls-rustls-aws-lc-rs", "postgres", "uuid", "chrono", "json"] }
