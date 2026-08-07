@@ -1,12 +1,23 @@
 #![cfg(feature = "test-fixtures")]
-//! MCP twelve-tool contract tests. Drives the real wire path (SSE +
-//! JSON-RPC) through the public proxy at `env.mcp_addr`. Asymmetric
-//! coverage:
-//!   - 10 read tools (this file): response is well-formed JSON, not a
+//! MCP contract tests. Drives the real wire path — rmcp 3.1 streamable-http
+//! JSON (sessionless, `json_response: true`) over the single-port `/mcp`
+//! route (`mcp::http`, merged into `build_router`) — via `McpClient`
+//! (`common::mcp_client`), which as of this task connects with the
+//! 2026-07-28 **Discover** lifecycle rather than the legacy `initialize`
+//! handshake. Coverage:
+//!   - read tools (this file): response is well-formed JSON, not a
 //!     JSON-RPC error envelope, shape matches the tool's declared
 //!     return type.
-//!   - 2 write tools + 1 auth-gate (added in Tasks 6-8): see later
-//!     test fns.
+//!   - write tools (`save_note`, `supersede_note`): row + audit-log
+//!     assertions, below.
+//!   - auth-gate layer tests (`mcp_anonymous_request_gets_401_challenge`,
+//!     `mcp_anonymous_write_gets_401_challenge`): every anonymous `/mcp`
+//!     request — any JSON-RPC method, read or write — gets a real HTTP 401
+//!     with an RFC 9728 challenge from `mcp_auth` before rmcp ever sees it
+//!     (Task 3's fail-closed policy).
+//!   - protocol pin (`mcp_negotiates_2026_07_28_and_sorts_tools`): the
+//!     Discover-negotiated version is 2026-07-28 and `tools/list` stays
+//!     name-sorted.
 //!
 //! Run with:
 //!   TEST_DATABASE_URL=... TEST_NEO4J_URI=... TEST_MCP_URL=... \
@@ -153,7 +164,7 @@ async fn seed_corpus(env: &TestEnv, repo: &str) -> CorpusVersionMeta {
 // ─── Read tools ───────────────────────────────────────────────────────
 //
 // Argument shapes below are derived from the `*Args` structs in
-// `backend/src/mcp/types.rs`. Where the plan's example args used
+// `backend/crates/akashic-mcp/src/mcp/types.rs`. Where the plan's example args used
 // different field names (e.g. `repo_name` vs `repo`, `start_symbol` vs
 // `symbol`, `entity_id`/`entity_type` vs `ids`), the tests use the
 // names the live structs actually deserialize.
@@ -656,11 +667,12 @@ async fn mcp_get_docs_page_unknown_repo_is_rejected() {
 // ─── Write tools ──────────────────────────────────────────────────────
 //
 // NOTE: the original D4 Task 6 plan instructed `connect_with_cookie`, but
-// cookies are only honored on REST. The MCP proxy chain (`/sse` +
-// `/message`) reads only `Authorization: Bearer ak_*` or `glpat-*`; an
-// anonymous (cookie-only) `tools/call` of a write tool never reaches the
-// handler at all (Task 3: `mcp_auth` 401s it first). So write-tool tests
-// use `TestEnv::mint_mcp_token` — the same bearer-minting helper the
+// cookies are only honored on REST. The single-port `/mcp` route (rmcp 3.1
+// streamable-http, `mcp_auth` layer) reads only `Authorization: Bearer
+// ak_*` or `glpat-*`; an anonymous (cookie-only) `tools/call` of a write
+// tool never reaches the handler at all — `mcp_auth` 401s every anonymous
+// request, any method, before rmcp is even invoked (Task 3). So write-tool
+// tests use `TestEnv::mint_mcp_token` — the same bearer-minting helper the
 // now-authenticated read-tool tests above use via `call_tool`.
 
 #[tokio::test]
@@ -730,17 +742,19 @@ async fn mcp_save_note_creates_row_and_audit() {
 
     // (b) audit_log row inserted with action=save_note.
     //
-    // NOTE: per `extract_target_id` in backend/src/mcp/audit.rs the
-    // `target_id` column is intentionally NULL for save_note (the
-    // server-assigned id is not in the request payload). So we cannot
-    // correlate by target_id; instead take the most-recent save_note
-    // row. #[serial_test::serial] guarantees no concurrent writer; the
-    // test bench TRUNCATEs audit_log on `reset_state`, so the row from
-    // *this* save_note call is the only candidate.
+    // NOTE: per `extract_target_id` in
+    // backend/crates/akashic-store-pg/src/repos/audit.rs the `target_id`
+    // column is intentionally NULL for save_note (the server-assigned id
+    // is not in the request payload). So we cannot correlate by
+    // target_id; instead take the most-recent save_note row.
+    // #[serial_test::serial] guarantees no concurrent writer; the test
+    // bench TRUNCATEs audit_log on `reset_state`, so the row from *this*
+    // save_note call is the only candidate.
     //
-    // The audit hook is fire-and-forget (tokio::spawn'd from
-    // proxy_message), so it may not have committed by the time
-    // tools_call returns. Poll for up to ~3s with backoff.
+    // The audit hook is fire-and-forget (`spawn_write_audit` in
+    // backend/crates/akashic-mcp/src/mcp/tools/mod.rs, `tokio::spawn`'d
+    // from the write-tool handler), so it may not have committed by the
+    // time tools_call returns. Poll for up to ~3s with backoff.
     //
     // audit_log.target_id is TEXT (not UUID) — no `::uuid` cast.
     let mut attempts = 0u32;
@@ -815,8 +829,10 @@ async fn extract_uuid_from_save_note(resp: &Value, env: &TestEnv, title: &str) -
 ///
 /// Unlike the plan's first sketch, `supersede_note` does NOT create a
 /// new note — its args are `{ old_note_id, new_note_id }`, and both
-/// notes must already exist (see backend/src/mcp/types.rs and
-/// backend/src/mcp/tools.rs:1102+). The flow is therefore:
+/// notes must already exist (see
+/// backend/crates/akashic-mcp/src/mcp/types.rs and
+/// backend/crates/akashic-mcp/src/mcp/tools/notes.rs). The flow is
+/// therefore:
 ///   (1) save_note for the parent (the doomed note)
 ///   (2) save_note for the child (the replacement)
 ///   (3) supersede_note to link them
@@ -827,7 +843,8 @@ async fn extract_uuid_from_save_note(resp: &Value, env: &TestEnv, title: &str) -
 ///   (b) audit_log contains two save_note rows (target_id NULL, per
 ///       Task 6's contract finding) and one supersede_note row whose
 ///       target_id is the parent UUID (per `extract_target_id`'s
-///       supersede_note arm in backend/src/mcp/audit.rs).
+///       supersede_note arm in
+///       backend/crates/akashic-store-pg/src/repos/audit.rs).
 #[tokio::test]
 #[serial_test::serial]
 async fn mcp_supersede_note_chains_correctly() {
@@ -909,8 +926,10 @@ async fn mcp_supersede_note_chains_correctly() {
     // (b) audit_log: two save_note rows (target_id NULL by contract) and
     //     one supersede_note row whose target_id is the parent UUID.
     //
-    //     The audit hook is fire-and-forget (tokio::spawn'd from
-    //     proxy_message); poll for up to ~3s for the supersede row.
+    //     The audit hook is fire-and-forget (`spawn_write_audit` in
+    //     backend/crates/akashic-mcp/src/mcp/tools/mod.rs, `tokio::spawn`'d
+    //     from the write-tool handler); poll for up to ~3s for the
+    //     supersede row.
     let mut attempts = 0u32;
     let (sup_action, sup_target, sup_actor) = loop {
         let row: Result<(String, Option<String>, String), _> = sqlx::query_as(
@@ -934,7 +953,8 @@ async fn mcp_supersede_note_chains_correctly() {
         sup_target.as_deref(),
         Some(parent_uuid.as_str()),
         "supersede_note target_id should be the old_note_id (parent UUID); \
-         see extract_target_id in backend/src/mcp/audit.rs",
+         see extract_target_id in \
+         backend/crates/akashic-store-pg/src/repos/audit.rs",
     );
     assert!(
         sup_actor.starts_with("mcp_token:"),
@@ -1157,4 +1177,35 @@ async fn mcp_branch_inherits_global_cors_layer() {
         .to_str()
         .expect("ascii header value");
     assert_eq!(allow_origin, origin);
+}
+
+// ─── Protocol lifecycle (2026-07-28) ───────────────────────────────────
+//
+// Task 6: `McpClient` now connects via the Discover lifecycle
+// (`ClientLifecycleMode::Discover`) instead of the legacy `initialize`
+// handshake. Pin the two behaviors that lifecycle switch depends on so a
+// regression in either rmcp's version negotiation or the server's
+// `tools/list` ordering (`akashic-mcp/src/mcp/tools/mod.rs`'s
+// `#[tool_router]`-generated dispatch, sorted by rmcp 3.1 automatically) is
+// caught here rather than downstream.
+
+/// Spec §6: the negotiated protocol must be 2026-07-28 (discover lifecycle),
+/// and tools/list must be sorted by name (deterministic ordering, automatic
+/// in rmcp 3.1 — this pins the behavior against regressions).
+#[tokio::test]
+#[serial_test::serial]
+async fn mcp_negotiates_2026_07_28_and_sorts_tools() {
+    let env = TestEnv::start().await;
+    let token = env.mint_mcp_token().await;
+    let client = McpClient::connect_with_bearer(&env.mcp_addr, &token)
+        .await
+        .expect("connect with bearer");
+    assert_eq!(
+        client.protocol_version(),
+        rmcp::model::ProtocolVersion::V_2026_07_28
+    );
+    let tools = client.tools_list().await.expect("list");
+    let mut sorted = tools.clone();
+    sorted.sort();
+    assert_eq!(tools, sorted, "tools/list must be name-sorted");
 }
