@@ -81,6 +81,5 @@ ENV HF_HOME=/home/akashic/.cache/huggingface
 
 USER akashic
 
-EXPOSE 8080
 EXPOSE 8081
 CMD ["akashic-record"]
